@@ -1,24 +1,52 @@
-# Overview
 
-Every Chef installation needs a Chef Repository. This is the place where cookbooks, roles, config files and other artifacts for managing systems with Chef will live. We strongly recommend storing this repository in a version control system such as Git and treat it like source code.
+# Install Chef-Server
+- `sudo su`
+- `yum install vim make gcc wget -y`
+- `vim /etc/sysconfig/selinux` change to SELINUX=disabled
+- `echo preserve_hostname: true >> /etc/cloud/cloud.cfg` ec2 Issue https://aws.amazon.com/premiumsupport/knowledge-center/linux-static-hostname-rhel7-centos7/
+- `hostnamectl set-hostname ec2-52-16-90-217.eu-west-1.compute.amazonaws.com --static`
+- `reboot`
+- `wget https://packages.chef.io/files/stable/chef-server/12.15.6/el/7/chef-server-core-12.15.6-1.el7.x86_64.rpm`
+- `rpm -ivh chef-server-core-*.rpm`
+- `chef-server-ctl reconfigure`
+- `chef-server-ctl install chef-manage`
+- `opscode-manage-ctl reconfigure`
+- `chef-server-ctl reconfigure`
+- `mkdir /root/.chef/`
+- `chef-server-ctl user-create ffaerber Felix Faerber ffaerber@gmail.com 12345678 --filename /root/.chef/ffaerber.pem`
+- `chef-server-ctl org-create myorg 'MyOrganization' --association_user ffaerber --filename /root/.chef/myorg-validator.pem`
+- copy ffaerber.pem and myorg-validator.pem in your chef-repo under .chef
+- `knife ssl fetch ` for info to fix the ssl errors
 
-While we prefer Git, and make this repository available via GitHub, you are welcome to download a tar or zip archive and use your favorite version control system to manage the code.
+# add ssh key
+- `chmod 600 .chef/keys/ffaerber.pem && ssh-add .chef/keys/ffaerber.pem`
 
-# Repository Directories
+# Upload environment
+- `bundle exec knife environment from file environments/production.rb`
 
-This repository contains several directories, and each directory contains a README file that describes what it is for in greater detail, and how to use it for managing your systems with Chef.
+# Upload Roles
+- `bundle exec knife upload roles`
 
-- `cookbooks/` - Cookbooks you download or create.
-- `data_bags/` - Store data bags and items in .json in the repository.
-- `roles/` - Store roles in .rb or .json in the repository.
-- `environments/` - Store environments in .rb or .json in the repository.
+# Upload cookbooks
+- `bundle exec berks upload --force`
 
-# Configuration
+# Create a node
+- `bundle exec knife ec2 server create -r "role[cumulocity-base],role[cumulocity-mongo]" -E production`
 
-The config file, `.chef/knife.rb` is a repository specific configuration file for knife. If you're using the Chef Platform, you can download one for your organization from the management console. If you're using the Open Source Chef Server, you can generate a new one with `knife configure`. For more information about configuring Knife, see the Knife documentation.
+# Delete a node
+- `bundle exec knife ec2 server delete i-034a033eb794592f4 --purge -y`
 
-<https://docs.chef.io/knife.html>
+# Add tags to a node
+- `bundle exec knife tag create i-0c8648e8 migrate sidekiq whenever`
 
-# Next Steps
+# Search nodes
+- `bundle exec knife search node 'chef_environment:staging AND role:buzzn'`
 
-Read the README file in each of the subdirectories for more information about what goes in those directories.
+# run chef-client on Nodes
+- `bundle exec knife ssh 'role:cumulocity-base AND chef_environment:production' 'sudo chef-client'`
+
+# create a full cluster
+- `bundle exec chef-client -z provisioning/aws/full.rb`
+
+# create a small cluster
+- `bundle exec chef-client -z provisioning/aws/small.rb`
