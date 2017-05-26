@@ -1,7 +1,7 @@
 require 'chef/provisioning'
 
-running = false
-auto_batch_machines = false
+running = true
+auto_batch_machines = false # create machines not in parallel.
 with_chef_environment 'production'
 with_driver 'fog:AWS:cumulocity'
 
@@ -35,8 +35,17 @@ if running
     tag 'standalone:mongod7:'
   end
 
+  machine "#{project}_core_master" do
+    role 'cumulocity-base'
+    role 'cumulocity-common-cores'
+  end
+
+
 else
   machine "#{project}_dbs" do
+    action :destroy
+  end
+  machine "#{project}_core_master" do
     action :destroy
   end
 end
