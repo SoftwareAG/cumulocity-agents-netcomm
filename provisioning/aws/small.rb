@@ -31,21 +31,35 @@ if running
     role 'cumulocity-base'
     role 'cumulocity-sql-db'
     role 'cumulocity-mongo'
+    role 'cumulocity-mongo-standalone'
+    role 'cumulocity-common-dbs-standalone-mongo'
     role 'cumulocity-mongo-configsvr'
     tag 'standalone:mongod7:'
   end
 
   machine "#{project}_core_master" do
     role 'cumulocity-base'
+    role 'cumulocity-external-lb'
+    role 'cumulocity-internal-lb'
     role 'cumulocity-common-cores'
+    role 'cumulocity-cep-server'
+    role 'cumulocity-mn-active-core'
   end
 
+  # machine "#{project}_ontop_lb" do
+  #   role 'cumulocity-base'
+  #   role 'cumulocity-external-lb'
+  #   role 'cumulocity-ontop-lb'
+  # end
 
 else
   machine "#{project}_dbs" do
     action :destroy
   end
   machine "#{project}_core_master" do
+    action :destroy
+  end
+  machine "#{project}_ontop_lb" do
     action :destroy
   end
 end
