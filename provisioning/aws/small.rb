@@ -46,11 +46,11 @@ if running
     role 'cumulocity-mn-active-core'
   end
 
-  # machine "#{project}_ontop_lb" do
-  #   role 'cumulocity-base'
-  #   role 'cumulocity-external-lb'
-  #   role 'cumulocity-ontop-lb'
-  # end
+  machine "#{project}_ontop_lb" do
+    role 'cumulocity-base'
+    role 'cumulocity-external-lb'
+    role 'cumulocity-ontop-lb'
+  end
 
 else
   machine "#{project}_dbs" do
