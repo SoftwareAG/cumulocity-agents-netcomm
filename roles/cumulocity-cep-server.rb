@@ -17,8 +17,8 @@ override_attributes(
 )
 
 run_list(
-    "role[cumulocity-base]",
-    "recipe[cumulocity-core::cep]",
-    "recipe[cumulocity-karaf::cep]",
-    "recipe[cumulocity-internal-lb::mongos]"
+  "role[cumulocity-base]",
+  "recipe[cumulocity::core_cep]",
+  "recipe[cumulocity::karaf_cep]",
+  "recipe[cumulocity::internal-lb_mongos]"
 )

@@ -57,6 +57,6 @@ override_attributes(
 run_list(
  "role[cumulocity-base]",
  "role[cumulocity-internal-lb]",
- "recipe[cumulocity-core]",
+ "recipe[cumulocity::core]",
  "role[cumulocity-external-lb]"
 )
