@@ -1,0 +1,9 @@
+{
+  "id": "lucafuso",
+  "comment": "lucafuso",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/5SCcuVMAeZZ4QXlUgNUkS/nEIgeU41dlFqc7Pgbnjoal6L5SgrLftWHrpXdAUwpK/qilRCtNZs2VCaBJ51jkJtjSZqd75E9g41Ttf7Q8tiz4UYmIm/ABdMZIMkLTVvci50gioSON5+I1y/WceJE1kKE1rYTaSh8sFEBwTfgg8iDruYLslifzodHBDOowKtZgNQFepZRJMHGRPJKF1Jr664VIYUB+5BPa8PDtM4Gf0+JcQJXyknqLC9nQQMOaH6+GYnZiAPoqD5No5Q5eDwqW7c15DB8CPtxS2ZuiDNYhFW6jgomKxvdAUqp3AJoXaNZP9xPbjwQBNCOw5v/L7RsL lucafuso@everything"
+  ],
+  "groups": ["sysadmin"],
+  "shell": "\/bin\/bash"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "ffaerber",
+  "comment": "Felix Faerber",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC07UxaLZzmJjmOyH7+p1LtLYD57jWo1htHtMZldr/5QAnRcd5zVtlcoLu3J3g1ZP/x0iip7TvMs18RV11Ol0txAw//sHJRGYU45hd2VMupsh7TSQb5YLcuQ/jSviBb/ckSp3LJhzerL68KxH01FXmgT7+cym/x6+vIk2qiGBa3tSOdiPQqlv2lmgqkqEz0/TXphJ3wffpEte9QLLr7BTXE1447eI+9NoVgySp5rH1tRtW4/f/4FKjVXSfxjvkUujfZexD5Gn/ak8VfKulHhaA8GQYP/YfC77oYtQgKAL+/KC65+jn5nRjhs0NSF4PeTzbzXniHA+NrpsmNoM9w7PLx ffaerber@gmail.com"
+  ],
+  "groups": ["sysadmin"],
+  "shell": "\/bin\/bash"
+}

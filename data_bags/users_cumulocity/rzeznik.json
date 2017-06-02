@@ -1,0 +1,9 @@
+{
+  "id": "rzeznik",
+  "comment": "jacek rzeznik",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAw6K/nI8uIhcynZSNJvSA7EUu0HrBkhNHALF/2IohFB7LisnZqypsC7uhOurruChdPFKmSkhrno6YH/s2KLI4oodmBFh8HBjIOWWCjQh2TM3k7f14EbHzhZA+Qn1YRqLMzDBA7+55vdrrvjhWRyjQQKdq5Rs6ePURGdHDXED4BeB5JxIjeBDERo467dNw4+p3j5vVNYKgy+UnMFx5zM7mL+nE+LbC2mgMw+o3gzcNe2cDJ8Qss6o2zwOH3JF92T5+HVQGcOz+ewgf9Cqp/Pnmrreu3c+jl0NVGvphbUdXnVBTM0qIBXESHZX+JwpogqcHAQ7vAfbNi5rz2nn68cBafw== jrze@localhost.localdomain"
+  ],
+  "groups": ["sysadmin"],
+  "shell": "\/bin\/bash"
+}

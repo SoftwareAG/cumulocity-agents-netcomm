@@ -1,0 +1,9 @@
+{
+  "id": "centos",
+  "comment": "centos chef cumulocity",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEAzzBUhcdr4BWIuN7TalGMxGCIStdwba6Nti6vldkqU+M66EogelIK2Y4UeiwmZmtuhM003Qf1UP7YdckBDtoCpCaPQwo2dBwm1Xs/CGaHQQomi7i/lBrsHSEsnMm4deyrgCTFS+klugNjWD31ZWjIhVHG+Pj783NY1zhYcwKY6CIa5xBRw+Cq52/Uj4uPMo1s/h3jGCzmZOH0ShrMwa2tiLZi7OCetEbC84IxBDZxmYvBNOUcOrjK2jvTyxbPYmPAPeqCYc7PpfRVkEeYGIjgETNNt9r/wfudCXWJoydE/5YCxaPSg38V7lyipYotpWhOc4+zyiTFL0dpROuLBy+NWqFLB1ODLVUobNFOYvWiTGyzwM8/ZHQoa7QfwLr3UbqPXcKzzTW392VUpXpFEp/Gg5PeCKsIeryhU7D8KvCRySyiW4ECHbRauAUj1qGFHuB8zMB4b/MOO46UdD2hOxfGHeTsa7cOh0bI2/J71yGPYTvqY11DyWsLJyK5UgVrgPuQuWln2XuQjvLlwYGF84ziSvgF6Yw8odgUjShURcXXb7R/OwZBD0LMv9VzS5C9wm2cqS+VKSAxoDc7ZXcqkVJU2CdHjFcPVGGY7RFiwDJxc4smA6QVokuPxpin7d6bEa17V+lBo1w53MZbR9ZcetYOnJnwO7B2DhE5loVFTdXew== chef@cumulocity.com"
+  ],
+  "groups": ["sysadmin"],
+  "shell": "\/bin\/bash"
+}
