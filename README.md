@@ -19,7 +19,7 @@
 - `knife ssl fetch ` for info to fix the ssl errors
 
 # add ssh key
-- `chmod 600 .chef/keys/ffaerber.pem && ssh-add .chef/keys/ffaerber.pem`
+- `chmod 600 .chef/keys/chef_cumulocity.pem`
 
 # Upload environment
 - `bundle exec knife environment from file environments/production.rb`
@@ -27,8 +27,11 @@
 # Upload Roles
 - `bundle exec knife upload roles`
 
-# Upload cookbooks
-- `bundle exec berks upload --force`
+# Upload cookbook
+- `bundle exec berks upload cumulocity --force`
+
+# Upload databags
+- `bundle exec knife data bag from file users_cumulocity -a`
 
 # Create a node
 - `bundle exec knife ec2 server create -r "role[cumulocity-base],role[cumulocity-mongo]" -E production`
@@ -45,8 +48,8 @@
 # run chef-client on Nodes
 - `bundle exec knife ssh 'role:cumulocity-base AND chef_environment:production' 'sudo chef-client'`
 
-# create a full cluster
+# deploy a full cluster
 - `bundle exec chef-client -z provisioning/aws/full.rb`
 
-# create a small cluster
+# deploy a small cluster
 - `bundle exec chef-client -z provisioning/aws/small.rb`

@@ -1,7 +1,7 @@
 require 'chef/provisioning'
 
 running = true
-auto_batch_machines = false # create machines not in parallel.
+auto_batch_machines = true # create machines in parallel.
 with_chef_environment 'production'
 with_driver 'fog:AWS:cumulocity'
 
@@ -18,7 +18,7 @@ with_machine_options({
 
 add_machine_options(
   bootstrap_options: {
-    key_name: 'ffaerber',
+    key_name: 'chef_cumulocity',
     flavor_id: 'm4.large',
     image_id: 'ami-0d063c6b'
   })

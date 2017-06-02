@@ -13,7 +13,7 @@ cookbook_path            ["#{current_dir}/../cookbooks"]
 # AWS
 # chmod 600 .chef/.aws/ffaerber.pem
 # ssh-add .chef/.aws/ffaerber.pem
-knife[:ssh_key_name]          = 'ffaerber'
+knife[:ssh_key_name]          = 'chef_cumulocity'
 knife[:aws_access_key_id]     = "AKIAJFCZY74TCITUMZYQ"
 knife[:aws_secret_access_key] = "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"
 knife[:availability_zone]     = 'eu-west-1a'
