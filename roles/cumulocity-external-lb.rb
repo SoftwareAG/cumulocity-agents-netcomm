@@ -2,25 +2,19 @@ name "cumulocity-external-lb"
 description "Cumulocity External LB"
 
 override_attributes(
-  "ulimit" => {
-    "root" => {
-      "nofile" => {
-        "soft" => "10240",
-        "hard" => "20480"
+  "ulimit": {
+    "users": {
+      "root": {
+        "filehandle_soft_limit": 10240,
+        "filehandle_hard_limit": 20480,
+        "process_soft_limit": 1024,
+        "process_hard_limit": 2048
       },
-      "nproc" => {
-        "soft" => "1024",
-        "hard" => "2048"
-      }
-    },
-    "nginx" => {
-      "nofile" => {
-        "soft" => "10240",
-        "hard" => "20480"
-      },
-      "nproc" => {
-        "soft" => "1024",
-        "hard" => "2048"
+      "nginx": {
+        "filehandle_soft_limit": 10240,
+        "filehandle_hard_limit": 20480,
+        "process_soft_limit": 1024,
+        "process_hard_limit": 2048
       }
     }
   }

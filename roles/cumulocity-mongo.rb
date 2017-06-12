@@ -2,28 +2,25 @@ name "cumulocity-mongo"
 description "Mongo setup for replica sets"
 
 override_attributes(
-  "ulimit" => {
-    "root" => {
-      "nofile" => {
-        "soft" => "60000",
-        "hard" => "64000"
+
+  "ulimit": {
+    "users": {
+      "root": {
+        "filehandle_soft_limit": 60000,
+        "filehandle_hard_limit": 64000,
+        "process_soft_limit": 60000,
+        "process_hard_limit": 64000
       },
-      "nproc" => {
-        "soft" => "60000",
-        "hard" => "64000"
-      }
-    },
-    "mongod" => {
-      "nofile" => {
-        "soft" => "60000",
-        "hard" => "64000"
-      },
-      "nproc" => {
-        "soft" => "60000",
-        "hard" => "64000"
+      "mongod": {
+        "filehandle_soft_limit": 60000,
+        "filehandle_hard_limit": 64000,
+        "process_soft_limit": 60000,
+        "process_hard_limit": 64000
       }
     }
   },
+
+
   "nagios" => {
     "checks" => {
       "memory" => {

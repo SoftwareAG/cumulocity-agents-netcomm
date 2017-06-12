@@ -2,35 +2,25 @@ name "cumulocity-common-cores"
 description "Cumulocity Multinode Core Karaf"
 
 override_attributes(
-  "ulimit" => {
-    "root" => {
-      "nofile" => {
-        "soft" => "10240",
-        "hard" => "20480"
+  "ulimit": {
+    "users": {
+      "root": {
+        "filehandle_soft_limit": 10240,
+        "filehandle_hard_limit": 20480,
+        "process_soft_limit": 1024,
+        "process_hard_limit": 2048
       },
-      "nproc" => {
-        "soft" => "1024",
-        "hard" => "2048"
-      }
-    },
-    "karaf" => {
-      "nofile" => {
-        "soft" => "20240",
-        "hard" => "30480"
+      "karaf": {
+        "filehandle_soft_limit": 20240,
+        "filehandle_hard_limit": 30480,
+        "process_soft_limit": 3072,
+        "process_hard_limit": 8000
       },
-      "nproc" => {
-        "soft" => "3072",
-        "hard" => "8000"
-      }
-    },
-    "nginx" => {
-      "nofile" => {
-        "soft" => "1024",
-        "hard" => "8192"
-      },
-      "nproc" => {
-        "soft" => "1024",
-        "hard" => "2048"
+      "nginx": {
+        "filehandle_soft_limit": 1024,
+        "filehandle_hard_limit": 8192,
+        "process_soft_limit": 1024,
+        "process_hard_limit": 2048
       }
     }
   },

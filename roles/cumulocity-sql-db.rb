@@ -16,16 +16,15 @@ override_attributes(
       "c8ymonitoring.password" => "fiWs.d2Ecr^4sXedsR"
     }
   },
-  "ulimit" => {
-    "postgres" => {
-      "nofile" => {
-        "soft" => "1024",
-        "hard" => "8192"
-      },
-      "nproc" => {
-        "soft" => "1024",
-        "hard" => "2048"
+  "ulimit": {
+    "users": {
+      "postgres": {
+        "filehandle_soft_limit": 1024,
+        "filehandle_hard_limit": 8192,
+        "process_soft_limit": 1024,
+        "process_hard_limit": 2048
       }
+
     }
   }
 )
