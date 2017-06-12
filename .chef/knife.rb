@@ -11,6 +11,8 @@ cookbook_path            ["#{current_dir}/../cookbooks"]
 
 
 # AWS
+# ami-0d063c6b default centos7
+# ami-ac524fca custom centos7 without SELinux
 # chmod 600 .chef/.aws/ffaerber.pem
 # ssh-add .chef/.aws/ffaerber.pem
 knife[:ssh_key_name]          = 'chef_cumulocity'
@@ -19,5 +21,5 @@ knife[:aws_secret_access_key] = "e670cHytLx1A7BuyBP5xKkIIE/C9Smdaxo8ZkKUh"
 knife[:availability_zone]     = 'eu-west-1a'
 knife[:region]                = 'eu-west-1'
 knife[:ssh_user]              = 'centos'
-knife[:image]                 = 'ami-0d063c6b' # https://wiki.centos.org/Cloud/AWS
+knife[:image]                 = 'ami-ac524fca' # https://wiki.centos.org/Cloud/AWS
 knife[:flavor]                = 'm4.large'
