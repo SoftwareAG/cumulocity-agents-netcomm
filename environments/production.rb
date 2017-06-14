@@ -34,6 +34,11 @@ override_attributes(
     "mongodb.initPassword" => "felix"
   },
 
+  "cumulocity-GUI" => {
+    "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/axians/366d235f0648",
+    "version" => '8.2.0'
+  },
+
   "cumulocity-core" => {
     "properties" => {
       "system.connectivity.microservice.url" => "http://localhost:8092/jwireless",
