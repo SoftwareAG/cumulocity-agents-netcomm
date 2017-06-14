@@ -3,6 +3,7 @@ description 'Base role applied to all nodes'
 
 run_list(
                     # 'recipe[swap::swapfile]',
+  'recipe[cumulocity]',
   'recipe[ulimit]',
   # 'recipe[el-sysctl]',
   # 'recipe[security-scripts::tmout]',
@@ -11,8 +12,6 @@ run_list(
   # 'recipe[chef-client::config]',
   # 'recipe[chef-client::service]',
                     # 'recipe[chef-client::logrotate]',
-  # 'recipe[users::admin]',
-  # 'recipe[sudo]',
                     # 'recipe[pam::login]',
                     # 'recipe[yum::epel]',
   # 'recipe[cumulocity-repository]',
