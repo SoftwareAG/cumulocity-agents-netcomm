@@ -38,11 +38,11 @@ if running
 
   machine "#{project}_core_master" do
     role 'cumulocity-base'
-    role 'cumulocity-external-lb'
-    role 'cumulocity-internal-lb'
     role 'cumulocity-common-cores'
     role 'cumulocity-cep-server'
     role 'cumulocity-mn-active-core'
+    role 'cumulocity-internal-lb'
+    role 'cumulocity-external-lb'
   end
 
   machine "#{project}_ontop_lb" do
