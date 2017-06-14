@@ -1,25 +1,5 @@
-
-# Install Chef-Server
-- `sudo su`
-- `yum install vim make gcc wget -y`
-- `vim /etc/sysconfig/selinux` change to SELINUX=disabled
-- `echo preserve_hostname: true >> /etc/cloud/cloud.cfg` ec2 Issue https://aws.amazon.com/premiumsupport/knowledge-center/linux-static-hostname-rhel7-centos7/
-- `hostnamectl set-hostname ec2-52-16-90-217.eu-west-1.compute.amazonaws.com --static`
-- `reboot`
-- `wget https://packages.chef.io/files/stable/chef-server/12.15.6/el/7/chef-server-core-12.15.6-1.el7.x86_64.rpm`
-- `rpm -ivh chef-server-core-*.rpm`
-- `chef-server-ctl reconfigure`
-- `chef-server-ctl install chef-manage`
-- `opscode-manage-ctl reconfigure`
-- `chef-server-ctl reconfigure`
-- `mkdir /root/.chef/`
-- `chef-server-ctl user-create ffaerber Felix Faerber ffaerber@gmail.com 12345678 --filename /root/.chef/ffaerber.pem`
-- `chef-server-ctl org-create myorg 'MyOrganization' --association_user ffaerber --filename /root/.chef/myorg-validator.pem`
-- copy ffaerber.pem and myorg-validator.pem in your chef-repo under .chef
-- `knife ssl fetch ` for info to fix the ssl errors
-
 # add ssh key
-- `chmod 600 .chef/keys/chef_cumulocity.pem`
+- `chmod 600 .chef/keys/chef_cumulocity.pem && ssh-add .chef/keys/chef_cumulocity.pem`
 
 # Upload environment
 - `bundle exec knife environment from file environments/production.rb`
@@ -48,8 +28,34 @@
 # run chef-client on Nodes
 - `bundle exec knife ssh 'role:cumulocity-base AND chef_environment:production' 'sudo chef-client'`
 
-# deploy a full cluster
-- `bundle exec chef-client -z provisioning/aws/full.rb`
-
 # deploy a small cluster
-- `bundle exec chef-client -z provisioning/aws/small.rb`
+- start the cluster `bundle exec chef-client -z provisioning/aws/small.rb`
+- run it again to connect everthing `bundle exec chef-client -z provisioning/aws/small.rb`
+- get core node ip `bundle exec knife ec2 server list`
+- ssh to core node and stop karaf `sudo /etc/init.d/cumulocity-core-karaf stop`
+- than start karaf and wait 30 secends for startup `sudo /etc/init.d/cumulocity-core-karaf start`
+- test if karaf is running by `curl -X GET http://localhost:80/tenant/health` it should return `{}`
+- change user `sudo su`
+- cd into the ui install directory `cd /webapps/2Install`
+- download the GUIpackage `wget https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/366d235f0648/8.2.0.zip`
+- test if the instalation is done by open the ontop_lb ip in your browser. you should see the cumulocity default web GUI
+
+
+# Install Chef-Server
+- `sudo su`
+- `yum install vim make gcc wget -y`
+- `vim /etc/sysconfig/selinux` change to SELINUX=disabled
+- `echo preserve_hostname: true >> /etc/cloud/cloud.cfg` ec2 Issue https://aws.amazon.com/premiumsupport/knowledge-center/linux-static-hostname-rhel7-centos7/
+- `hostnamectl set-hostname ec2-52-16-90-217.eu-west-1.compute.amazonaws.com --static`
+- `reboot`
+- `wget https://packages.chef.io/files/stable/chef-server/12.15.6/el/7/chef-server-core-12.15.6-1.el7.x86_64.rpm`
+- `rpm -ivh chef-server-core-*.rpm`
+- `chef-server-ctl reconfigure`
+- `chef-server-ctl install chef-manage`
+- `opscode-manage-ctl reconfigure`
+- `chef-server-ctl reconfigure`
+- `mkdir /root/.chef/`
+- `chef-server-ctl user-create ffaerber Felix Faerber ffaerber@gmail.com 12345678 --filename /root/.chef/ffaerber.pem`
+- `chef-server-ctl org-create myorg 'MyOrganization' --association_user ffaerber --filename /root/.chef/myorg-validator.pem`
+- copy ffaerber.pem and myorg-validator.pem in your chef-repo under .chef
+- `knife ssl fetch ` for info to fix the ssl errors
