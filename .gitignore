@@ -30,6 +30,7 @@ nodes
 # ##Chef
 # .kitchen/
 # .vagrant
+.chef/local-mode-cache/
 # nodes
 # metadata.json
 
