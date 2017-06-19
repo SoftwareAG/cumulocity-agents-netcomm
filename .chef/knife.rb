@@ -8,7 +8,7 @@ if ENV['ORGNAME'] # export ORGNAME='myorg' or unset ORGNAME
   if organization
     puts "knife is running with organization: #{organization_name}"
   else
-    puts "Organization is '#{organization_name}' but it is not found in /organizations/index.yml"
+    puts "Organization is '#{organization_name}' but it is not found in ./chef/organizations/index.yml"
     exit!
   end
 else
