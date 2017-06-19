@@ -1,0 +1,12 @@
+myorg:
+  node_name: cli
+  client_key: cli.pem
+  pub: https://ec2-52-16-90-217.eu-west-1.compute.amazonaws.com/organizations/myorg
+  knife:
+    ssh_key_name: chef_cumulocity
+    aws_access_key_id: AKIAJFCZY74TCITUMZYQ
+    aws_secret_access_key: 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
+
+cumulocity-virginia:
+  pub: 10.120.0.145
+  priv: 10.120.0.145
