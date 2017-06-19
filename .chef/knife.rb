@@ -12,8 +12,9 @@ if ENV['ORGNAME'] # export ORGNAME='myorg' or unset ORGNAME
     exit!
   end
 else
-  puts "You must specify organization. Possible organizations: #{organizations.keys}"
-  puts "export ORGNAME=name_of_the_organization"
+  puts
+  puts "You must specify a organization. Possible organizations: #{organizations.keys.join(', ')}"
+  puts "set the organization via: export ORGNAME=name_of_the_organization"
   exit!
 end
 
