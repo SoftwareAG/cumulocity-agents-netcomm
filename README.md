@@ -42,6 +42,7 @@
 
 
 # Install Chef-Server
+- `ssh -i '.chef/keys/ffaerber.pem' centos@52.16.90.217`
 - `sudo su`
 - `yum install vim make gcc wget -y`
 - `vim /etc/sysconfig/selinux` change to SELINUX=disabled
@@ -55,7 +56,8 @@
 - `opscode-manage-ctl reconfigure`
 - `chef-server-ctl reconfigure`
 - `mkdir /root/.chef/`
-- `chef-server-ctl user-create ffaerber Felix Faerber ffaerber@gmail.com 12345678 --filename /root/.chef/ffaerber.pem`
-- `chef-server-ctl org-create myorg 'MyOrganization' --association_user ffaerber --filename /root/.chef/myorg-validator.pem`
+- `chef-server-ctl user-create cli Admin Cumulocity admin@cumulocity.com 12345678 --filename /root/.chef/cli.pem`
+- `chef-server-ctl org-create myorg 'MyOrganization' /root/.chef/myorg-validator.pem`
+- `chef-server-ctl org-user-add myorg cli`
 - copy ffaerber.pem and myorg-validator.pem in your chef-repo under .chef
 - `knife ssl fetch ` for info to fix the ssl errors
