@@ -2,7 +2,8 @@ name "production"
 description "The production environment"
 
 override_attributes(
-  "domainname" => "iot.felix.com",
+  "domainname" => "app.domain.com",
+  "licence" => "da713a45a9fd049e8e040bcbc9378ebac1dc89f31ff59b9f608865b9cb8c437969378406cb533135f0475168f11146200d951db0755bffbaa0b7e324f46dd5de",
 
   'yum' => {
     'repositories' => {
@@ -16,6 +17,7 @@ override_attributes(
   },
 
   "cumulocity-karaf" => {
+    "CUMULOCITY_LICENCE_KEY" => "da713a45a9fd049e8e040bcbc9378ebac1dc89f31ff59b9f608865b9cb8c437969378406cb533135f0475168f11146200d951db0755bffbaa0b7e324f46dd5de",
     "version" => "7.47.18-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
@@ -57,43 +59,43 @@ override_attributes(
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => "false",
       "smsGateway.host" => "http://10.17.21.5:8688/sms-gateway",
-      "email.from" => "no-reply@iot.felix.com",
+      "email.from" => "no-reply@app.domain.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "passwordReset.email.subject" => "Password reset",
-      "passwordReset.token.email.template" => 'Dear iot.felix.com user,\n\n\
-            You or someone else entered this email address when trying to change the password of a iot.felix.com portal user.\n\n\
+      "passwordReset.token.email.template" => 'Dear app.domain.com user,\n\n\
+            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\n\n\
             Please use the following link to reset your password: \n\
             {host}?token={token}&showTenant\n\n\
             If you were not expecting this email, please ignore it. \n\n\
             Kind regards,\n\
-            iot.felix.com support team\n',
+            app.domain.com support team\n',
             "passwordReset.user.not.found.email.template" => 'Hi there,\n\n\
-            you or someone else entered this email address when trying to change the password of a iot.felix.com portal user.\n\n\
+            you or someone else entered this email address when trying to change the password of a app.domain.com portal user.\n\n\
             However, we could not find the email address in your account. Please contact the administrator of your \
             account to set your email address and password. If you are the administrator of the account,\
             please use the email address that you registered with.\n\n\
-            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of iot.felix.com portal. \n\n\
+            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of app.domain.com portal. \n\n\
             Kind regards,\n\
-            iot.felix.com support team\n',
-            "passwordReset.success.email.template" => 'Dear iot.felix.com user,\n\n\
+            app.domain.com support team\n',
+            "passwordReset.success.email.template" => 'Dear app.domain.com user,\n\n\
             Your password on {host} has been recently changed. \n\
             If you or your administrator made this change, you do not need to do anything more. \n\
             If you did not make this change, please contact your administrator.\n\n\
             Kind regards,\n\
-            iot.felix.com support team\n',
+            app.domain.com support team\n',
             "passwordReset.invite.template" => 'Hi there,\n\n\
             Please use the following link to reset your password: \n\
             {host}/apps/devicemanagement/index.html?token={token}\n\n\
             If you were not expecting this email, please ignore it. \n\n\
             Kind regards,\n\n\
-            iot.felix.com support team\n'
+            app.domain.com support team\n'
     }
   },
 
   "cumulocity-external-lb" => {
-    "landing_page" => "https://iot.felix.com/apps/devicemanagement",
+    "landing_page" => "https://app.domain.com/apps/devicemanagement",
     "paas_default_page" => "https://$http_host/apps/devicemanagement",
-    "paas_public_default_page" => "https://iot.felix.com/apps/dmpublic",
+    "paas_public_default_page" => "https://app.domain.com/apps/dmpublic",
     "usePostgresForPaaS" => false,
     "paas_redirection" => true,
     "proxy_cache" => true,
