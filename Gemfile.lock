@@ -96,6 +96,7 @@ GEM
       fog-softlayer (~> 1.1.0)
       google-api-client (~> 0.8.0)
       retryable
+    chef-vault (3.0.3)
     chef-zero (4.9.0)
       ffi-yajl (~> 2.2)
       hashie (>= 2.0, < 4.0)
@@ -458,6 +459,7 @@ DEPENDENCIES
   berkshelf
   chef (= 12.20.3)
   chef-provisioning-fog (= 0.19.0)
+  chef-vault
   knife-ec2
 
 BUNDLED WITH
