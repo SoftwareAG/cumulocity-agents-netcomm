@@ -3,7 +3,6 @@ description "The production environment"
 
 override_attributes(
   "domainname" => "app.domain.com",
-  "licence" => "da713a45a9fd049e8e040bcbc9378ebac1dc89f31ff59b9f608865b9cb8c437969378406cb533135f0475168f11146200d951db0755bffbaa0b7e324f46dd5de",
 
   'yum' => {
     'repositories' => {
