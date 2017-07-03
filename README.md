@@ -23,7 +23,7 @@
 - `bundle exec knife tag create i-0c8648e8 migrate sidekiq whenever`
 
 # Search nodes
-- `bundle exec knife search node 'chef_environment:staging AND role:buzzn'`
+- `bundle exec knife search node 'chef_environment:staging AND role:cumulocity-common-cores'`
 
 # run chef-client on Nodes
 - `bundle exec knife ssh 'role:cumulocity-base AND chef_environment:production' 'sudo chef-client'`
@@ -35,6 +35,7 @@
 - ssh to core node and stop karaf `sudo /etc/init.d/cumulocity-core-karaf stop`
 - than start karaf and wait 30 secends for startup `sudo /etc/init.d/cumulocity-core-karaf start`
 - test if karaf is running by `curl -X GET http://localhost:80/tenant/health` it should return `{}`
+- test if the certificate is working by `wget http://localhost:8181/platform` you should get a `401 Unauthorized`
 - change user `sudo su`
 - cd into the ui install directory `cd /webapps/2Install`
 - download the GUIpackage `wget https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/366d235f0648/8.2.0.zip`
