@@ -1,0 +1,2 @@
+sed -i '/smsagent_cleanup/d' /etc/crontabs/crontab.root
+rm -f /etc/init.d/rc3.d/S950smsagent

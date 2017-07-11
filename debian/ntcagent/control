@@ -1,0 +1,8 @@
+Package: smartrest-agent
+Priority: optional
+Section: Misc
+Version: ask
+Architecture: arm
+Maintainer: support@cumulocity.com
+Depends:
+Description: NTC SmartREST agent for Cumulocity.

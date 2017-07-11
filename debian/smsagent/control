@@ -1,0 +1,8 @@
+Package: smsagent
+Priority: optional
+Section: Misc
+Version: 1.1.0
+Architecture: arm
+Maintainer: xinlei.cao@cumulocity.com
+Depends:
+Description: SMS agent for NetComm device.

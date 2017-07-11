@@ -1,0 +1,8 @@
+Package: vncproxy
+Priority: optional
+Section: Misc
+Version: 1.0
+Architecture: arm
+Maintainer: support@cumulocity.com
+Depends:
+Description: Generic TCP to WebSocket proxy that can be used for Cumulocity's VNC feature.

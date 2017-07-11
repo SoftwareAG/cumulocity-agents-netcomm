@@ -1,0 +1,113 @@
+<po>
+<message msgid="cumulocityConfiguration" msgstr="Agent Configuration"/>
+<message msgid="cumulocityEnable" msgstr="Agent"/>
+<message msgid="on" msgstr="ON"/>
+<message msgid="off" msgstr="OFF"/>
+<message msgid="cumulocityAgentVer" msgstr="Version: "/>
+<message msgid="cumulocityDevid" msgstr="Device ID: "/>
+<message msgid="cumulocityStatus" msgstr="Status: "/>
+<message msgid="cumulocityReg" msgstr="Registered: "/>
+<message msgid="cumulocityServer" msgstr="Server"/>
+<message msgid="cumulocityGpioInterval" msgstr="GPIO analog measurements (s)"/>
+<message msgid="cumulocityGpsUpdate" msgstr="GPS posistion update interval (s)"/>
+<message msgid="cumulocityGpsInterval" msgstr="GPS posistion event (s)"/>
+<message msgid="cumulocitySysInterval" msgstr="System resources measurements (s)"/>
+<message msgid="cumulocitySignalVal" msgstr="Connection signal measurements (s)"/>
+<message msgid="cumulocityModBusPort" msgstr="ModBus TCP port"/>
+<message msgid="cumulocityModBusReadOnly" msgstr="ModBus read only"/>
+<message msgid="cumulocityModBusSerPort" msgstr="ModBus serial port"/>
+<message msgid="cumulocityLogLevel" msgstr="Log level"/>
+<message msgid="CSsave" msgstr="Save"/>
+<message msgid="powered by netComm" msgstr="Powered by NetComm Wireless Limited"/>
+<message msgid="status" msgstr="Status"/>
+<message msgid="CSinternet" msgstr="Networking"/>
+<message msgid="services" msgstr="Services"/>
+<message msgid="system" msgstr="System"/>
+<message msgid="help" msgstr="Help"/>
+<message msgid="wireless WAN" msgstr="Wireless WAN"/>
+<message msgid="dataConnection" msgstr="Data connection"/>
+<message msgid="dialonDemand" msgstr="Connect on demand"/>
+<message msgid="band operatorSettings" msgstr="Operator settings"/>
+<message msgid="simSecurity" msgstr="SIM security settings"/>
+<message msgid="lan" msgstr="LAN"/>
+<message msgid="DHCP" msgstr="DHCP"/>
+<message msgid="ethernet lanwan" msgstr="Ethernet LAN/WAN"/>
+<message msgid="ethernetGroupMenu" msgstr="Interface assignment"/>
+<message msgid="ethernetWANMenu" msgstr="WAN configuration"/>
+<message msgid="WAN failover" msgstr="WAN failover"/>
+<message msgid="routing" msgstr="Routing"/>
+<message msgid="static" msgstr="Static"/>
+<message msgid="RIP" msgstr="RIP"/>
+<message msgid="VRRP" msgstr="Redundancy (VRRP)"/>
+<message msgid="treeapp port forwarding" msgstr="Port forwarding"/>
+<message msgid="treeapp dmz" msgstr="DMZ"/>
+<message msgid="router firewall" msgstr="Router firewall"/>
+<message msgid="port basic filter" msgstr="MAC / IP / Port filtering"/>
+<message msgid="VPN" msgstr="VPN"/>
+<message msgid="IPsec" msgstr="IPSec"/>
+<message msgid="OpenVPN" msgstr="Open VPN"/>
+<message msgid="pptpClient" msgstr="PPTP client"/>
+<message msgid="GRE" msgstr="GRE tunnelling"/>
+<message msgid="man ddns" msgstr="Dynamic DNS"/>
+<message msgid="NTP" msgstr="Network time (NTP)"/>
+<message msgid="dataStreamSwitch" msgstr="Data stream manager"/>
+<message msgid="endPoints" msgstr="Endpoints"/>
+<message msgid="streams" msgstr="Streams"/>
+<message msgid="legacyDataManagers" msgstr="Legacy data managers"/>
+<message msgid="modemEmulator" msgstr="Modem emulator"/>
+<message msgid="PADD" msgstr="PADD"/>
+<message msgid="remoteManagement" msgstr="Remote management"/>
+<message msgid="SNMP" msgstr="SNMP"/>
+<message msgid="tr069" msgstr="TR-069"/>
+<message msgid="LWM2M" msgstr="OMA-LWM2M"/>
+<message msgid="gps" msgstr="GPS"/>
+<message msgid="gps configuration" msgstr="GPS configuration"/>
+<message msgid="agps" msgstr="MSB (A-GPS)"/>
+<message msgid="odometer" msgstr="Odometer"/>
+<message msgid="ioConfiguration" msgstr="IO configuration"/>
+<message msgid="event noti" msgstr="Event notification"/>
+<message msgid="eventNotificationConf" msgstr="Notification configuration"/>
+<message msgid="eventDestinationConf" msgstr="Destination configuration"/>
+<message msgid="email settings" msgstr="Email settings"/>
+<message msgid="sms title" msgstr="SMS messaging"/>
+<message msgid="setup" msgstr="Setup"/>
+<message msgid="newmsg" msgstr="New message"/>
+<message msgid="inbox" msgstr="Inbox"/>
+<message msgid="sentItems" msgstr="Sent items"/>
+<message msgid="diag" msgstr="Diagnostics"/>
+<message msgid="log" msgstr="Log"/>
+<message msgid="systemLog" msgstr="System log"/>
+<message msgid="IPsecLog" msgstr="IPSec log"/>
+<message msgid="event noti log" msgstr="Event notification log"/>
+<message msgid="systemLogSettings" msgstr="System log settings"/>
+<message msgid="systemConfiguration" msgstr="System configuration"/>
+<message msgid="settingsBackupRestore" msgstr="Settings backup and restore"/>
+<message msgid="upload" msgstr="Upload"/>
+<message msgid="pkg manager" msgstr="Package manager"/>
+<message msgid="administration" msgstr="Administration"/>
+<message msgid="administrationSettings" msgstr="Administration settings"/>
+<message msgid="serverCertificate" msgstr="Server certificate"/>
+<message msgid="sshManagement" msgstr="SSH key management"/>
+<message msgid="led operation mode" msgstr="LED operation mode"/>
+<message msgid="customMenu" msgstr="Custom menu"/>
+<message msgid="treeapp sysMonitor" msgstr="Watchdogs"/>
+<message msgid="powerManagement" msgstr="Power management"/>
+<message msgid="setman reboot" msgstr="Reboot"/>
+<message msgid="HTML title" msgstr="NetComm Wireless Router"/>
+<message msgid="CSok" msgstr="OK"/>
+<message msgid="cancel" msgstr="Cancel"/>
+<message msgid="errorsTitle" msgstr="Oops, something went wrong..."/>
+<message msgid="succCongratulations" msgstr="Success!"/>
+<message msgid="submitSuccess" msgstr="Your configuration changes were successfully saved and applied"/>
+<message msgid="log Error" msgstr="Error"/>
+<message msgid="errorsSummary" msgstr="Please correct these error(s)"/>
+<message msgid="validatorTitle" msgstr="Sorry there has been {number} error(s)"/>
+<message msgid="fieldRequired" msgstr="This field is required."/>
+<message msgid="groupRequiredError" msgstr="You must fill in one of these fields"/>
+<message msgid="passwordMismatch" msgstr="Password mismatched!"/>
+<message msgid="clear credentials now" msgstr="Clear credentials"/>
+<message msgid="credentials cleared" msgstr="Credential cleared, please reboot the device again to register again."/>
+<message msgid="credentials clear failed" msgstr="Credentials clear failed!"/>
+<message msgid="registeredNo" msgstr="No"/>
+<message msgid="registeredYes" msgstr="Yes"/>
+</po>

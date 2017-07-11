@@ -1,0 +1,5 @@
+if ! grep -q "/usr/bin/smsagent_cleanup.sh" /etc/crontabs/crontab.root; then
+    echo "0 0 * * * /usr/bin/smsagent_cleanup.sh" >> /etc/crontabs/crontab.root
+fi
+cd /etc/init.d/rc3.d && ln -sf ../rc.d/smsagent.sh S950smsagent
+rm -f /etc/cdcs/conf/mgr_templates/sms_enable.template

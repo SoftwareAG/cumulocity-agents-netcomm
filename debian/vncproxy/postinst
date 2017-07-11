@@ -1,0 +1,1 @@
+cd /etc/init.d/rc3.d && ln -sf ../rc.d/vncproxy.sh S950vncproxy
