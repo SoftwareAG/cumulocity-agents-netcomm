@@ -25,7 +25,7 @@ add_machine_options(
 
 running     = true
 first_run   = true
-core_count  = 3
+core_count  = 2
 project     = "devops_#{environment}"
 
 if running
@@ -74,6 +74,7 @@ if running
   machine "#{project}_cep" do
     role 'cumulocity-base'
     role 'cumulocity-cep-server'
+    role 'cumulocity-internal-lb'
   end
   machine "#{project}_ontop_lb" do
     role 'cumulocity-base'
