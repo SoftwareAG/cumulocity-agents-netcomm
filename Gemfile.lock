@@ -458,9 +458,10 @@ PLATFORMS
 DEPENDENCIES
   berkshelf
   chef (= 12.20.3)
+  chef-provisioning (= 1.9.1)
   chef-provisioning-fog (= 0.19.0)
   chef-vault
   knife-ec2
 
 BUNDLED WITH
-   1.15.1
+   1.15.2
