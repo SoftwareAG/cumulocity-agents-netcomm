@@ -141,7 +141,6 @@ int main()
 
     GPIOManager gm(rdb.get(keyGpioList), rdb, agent);
     UdpAlarm ua(agent, rdb);
-    TCSBUS tcsbus(agent, rdb);
     VncHandler vnc(agent);
     SrReporter *rpt = nullptr;
     SrDevicePush *push = nullptr;
