@@ -61,30 +61,30 @@ if step >= 1
       role 'cumulocity-base'
       role 'cumulocity-sql-db' if step >= 2
     end
-    1.upto(core_count) do |i|
-      machine "#{project}_core_#{i}" do
-        role 'cumulocity-base'
-        if step >= 4
-          role 'cumulocity-common-cores'
-          role 'cumulocity-mn-active-core'
-          role 'cumulocity-internal-lb'
-          role 'cumulocity-external-lb'
-        end
-      end
-    end
-    machine "#{project}_cep" do
+  end
+  1.upto(core_count) do |i|
+    machine "#{project}_core_#{i}" do
       role 'cumulocity-base'
-      if step >= 5
-        role 'cumulocity-cep-server'
+      if step >= 4
+        role 'cumulocity-common-cores'
+        role 'cumulocity-mn-active-core'
         role 'cumulocity-internal-lb'
+        role 'cumulocity-external-lb'
       end
     end
-    machine "#{project}_ontop_lb" do
-      role 'cumulocity-base'
-      if step >= 5
-        role 'cumulocity-external-lb'
-        role 'cumulocity-ontop-lb'
-      end
+  end
+  machine "#{project}_cep" do
+    role 'cumulocity-base'
+    if step >= 5
+      role 'cumulocity-cep-server'
+      role 'cumulocity-internal-lb'
+    end
+  end
+  machine "#{project}_ontop_lb" do
+    role 'cumulocity-base'
+    if step >= 5
+      role 'cumulocity-external-lb'
+      role 'cumulocity-ontop-lb'
     end
   end
 else
