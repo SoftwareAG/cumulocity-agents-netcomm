@@ -1,7 +1,7 @@
 require 'chef/provisioning'
 
-running = true
-with_chef_environment 'production'
+environment = 'production'
+with_chef_environment environment
 with_driver 'fog:AWS:cumulocity'
 
 with_chef_server(
@@ -20,9 +20,11 @@ add_machine_options(
     key_name: 'chef_cumulocity',
     flavor_id: 'm4.large',
     image_id: 'ami-ac524fca'
-  })
+  }
+)
 
-project = 'felix'
+running = false
+project = "devops_#{environment}"
 
 if running
 
