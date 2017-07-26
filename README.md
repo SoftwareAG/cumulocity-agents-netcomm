@@ -1,36 +1,45 @@
-# add ssh key
+##### add ssh key
 - `chmod 600 .chef/keys/chef_cumulocity.pem && ssh-add .chef/keys/chef_cumulocity.pem`
 
-# Upload environment
+##### Upload environment
 - `bundle exec knife environment from file environments/production.rb`
 
-# Upload Roles
+##### Upload Roles
 - `bundle exec knife upload roles`
 
-# Upload cookbook
+##### Upload cookbook
 - `bundle exec berks upload cumulocity --force`
 
-# Upload databags
+##### Create and upload vault data bag
+- `bundle exec knife vault create secrets core -A 'cli,ffaerber' -M client -S 'name:devops_production_core_*' -J .chef/secrets/core.json`
+
+##### create and Upload databags
+- `bundle exec knife data bag create users_cumulocity`
 - `bundle exec knife data bag from file users_cumulocity -a`
 
-# Create a node
+##### Create a node
 - `bundle exec knife ec2 server create -r "role[cumulocity-base],role[cumulocity-mongo]" -E production`
 
-# Delete a node
-- `bundle exec knife ec2 server delete i-034a033eb794592f4 --purge -y`
+##### Delete a node
+- `bundle exec knife ec2 server delete i-0bcb9cc5525912bcc --purge -y`
 
-# Add tags to a node
-- `bundle exec knife tag create i-0c8648e8 migrate sidekiq whenever`
+##### Add tags to a node
+- `bundle exec knife tag create i-0c8648e8 mytag`
 
-# Search nodes
+##### Search nodes
 - `bundle exec knife search node 'chef_environment:staging AND role:cumulocity-common-cores'`
 
-# run chef-client on Nodes
+##### run chef-client on Nodes
 - `bundle exec knife ssh 'role:cumulocity-base AND chef_environment:production' 'sudo chef-client'`
 
-# deploy a small cluster
-- start the cluster `bundle exec chef-client -z provisioning/aws/small.rb`
-- run it again to connect everthing `bundle exec chef-client -z provisioning/aws/small.rb`
+
+##### start a cluster
+- change step to 1 `provisioning/aws/full.rb`
+- update the cluster `bundle exec chef-client -z provisioning/aws/full.rb`
+- upload the core secrets `bundle exec knife vault create secrets core -A 'cli' -M client -S 'name:devops_production_core_*' -J .chef/secrets/core.json`
+- change step to 2 `provisioning/aws/full.rb`
+- run it again to connect everthing `bundle exec chef-client -z provisioning/aws/full.rb`
+- repeat until step 5
 - get core node ip `bundle exec knife ec2 server list`
 - ssh to core node and stop karaf `sudo /etc/init.d/cumulocity-core-karaf stop`
 - than start karaf and wait 30 secends for startup `sudo /etc/init.d/cumulocity-core-karaf start`
@@ -39,10 +48,15 @@
 - change user `sudo su`
 - cd into the ui install directory `cd /webapps/2Install`
 - download the GUIpackage `wget https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/366d235f0648/8.2.0.zip`
-- test if the instalation is done by open the ontop_lb ip in your browser. you should see the cumulocity default web GUI
+- test if the installation is done by open the ontop_lb ip in your browser. you should see the cumulocity default web GUI
+
+##### stop a cluster
+- change step to 0 `provisioning/aws/full.rb`
+- update the cluster `bundle exec chef-client -z provisioning/aws/full.rb`
+- delete the secrets `bundle exec knife data bag delete secrets -y`
 
 
-# Install Chef-Server
+##### Install Chef-Server
 - `ssh -i '.chef/keys/ffaerber.pem' centos@52.16.90.217`
 - `sudo su`
 - `yum install vim make gcc wget -y`
