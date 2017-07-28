@@ -32,6 +32,10 @@
 ##### run chef-client on Nodes
 - `bundle exec knife ssh 'role:cumulocity-base AND chef_environment:production' 'sudo chef-client'`
 
+##### chef-server-12
+- go to `https://52.16.90.217`
+- username `cli`
+- password `12345678`
 
 ##### start a cluster
 - change step to 1 `provisioning/aws/full.rb`

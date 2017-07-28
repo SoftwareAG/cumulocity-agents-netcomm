@@ -23,17 +23,17 @@ add_machine_options(
   }
 )
 
-running     = true
-first_run   = true
-core_count  = 2
 project     = "devops_#{environment}"
+step        = 0 # step from 0 to 5
+core_count  = 3
 
-if running
+
+if step >= 1
   machine_batch do
     machine "#{project}_mongo_cluster_rs01" do
       role 'cumulocity-mongo'
-      role 'cumulocity-mongo-configsvr'
-      if !first_run
+      role 'cumulocity-mongo-configsvr' if step >= 2
+      if step >= 3
         tag 'replicaset:rs01:P'
         tag 'replicaset:rs02:A'
         tag 'replicaset:rs03:S'
@@ -41,8 +41,8 @@ if running
     end
     machine "#{project}_mongo_cluster_rs02" do
       role 'cumulocity-mongo'
-      role 'cumulocity-mongo-configsvr'
-      if !first_run
+      role 'cumulocity-mongo-configsvr' if step >= 2
+      if step >= 3
         tag 'replicaset:rs01:S'
         tag 'replicaset:rs02:P'
         tag 'replicaset:rs03:A'
@@ -50,38 +50,43 @@ if running
     end
     machine "#{project}_mongo_cluster_rs03" do
       role 'cumulocity-mongo'
-      role 'cumulocity-mongo-configsvr'
-      if !first_run
+      role 'cumulocity-mongo-configsvr' if step >= 2
+      if step >= 3
         tag 'replicaset:rs01:A'
         tag 'replicaset:rs02:S'
         tag 'replicaset:rs03:P'
       end
     end
-  end
-  machine "#{project}_sql_db" do
-    role 'cumulocity-base'
-    role 'cumulocity-sql-db'
+    machine "#{project}_sql_db" do
+      role 'cumulocity-base'
+      role 'cumulocity-sql-db' if step >= 2
+    end
   end
   1.upto(core_count) do |i|
     machine "#{project}_core_#{i}" do
       role 'cumulocity-base'
-      role 'cumulocity-common-cores'
-      role 'cumulocity-mn-active-core'
-      role 'cumulocity-internal-lb'
-      role 'cumulocity-external-lb'
+      if step >= 4
+        role 'cumulocity-common-cores'
+        role 'cumulocity-mn-active-core'
+        role 'cumulocity-internal-lb'
+        role 'cumulocity-external-lb'
+      end
     end
   end
   machine "#{project}_cep" do
     role 'cumulocity-base'
-    role 'cumulocity-cep-server'
-    role 'cumulocity-internal-lb'
+    if step >= 5
+      role 'cumulocity-cep-server'
+      role 'cumulocity-internal-lb'
+    end
   end
   machine "#{project}_ontop_lb" do
     role 'cumulocity-base'
-    role 'cumulocity-external-lb'
-    role 'cumulocity-ontop-lb'
+    if step >= 5
+      role 'cumulocity-external-lb'
+      role 'cumulocity-ontop-lb'
+    end
   end
-
 else
   machine "#{project}_mongo_cluster_rs01" do
     action :destroy
