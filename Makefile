@@ -52,7 +52,9 @@ ntc: $(BIN_DIR)/$(NTC_BIN)
 	@mkdir -p $(NTC_PKG_DIR)/usr/local/bin $(NTC_PKG_DIR)/CONTROL
 	@mkdir -p $(NTC_PKG_DIR)/usr/local/ntcagent
 	@mkdir -p $(NTC_PKG_DIR)/etc/init.d/rc.d
+	@mkdir -p $(NTC_PKG_DIR)/etc/cdcs/conf/mgr_templates/
 	@cp scripts/ntcagent.sh $(NTC_PKG_DIR)/etc/init.d/rc.d
+	@cp scripts/ntcagent.template $(NTC_PKG_DIR)/etc/cdcs/conf/mgr_templates/
 	@cp -r www $(NTC_PKG_DIR)/
 	@cp $<  $(NTC_PKG_DIR)/usr/local/bin
 	@cp $(BIN_DIR)/srwatchdogd $(NTC_PKG_DIR)/usr/local/bin/

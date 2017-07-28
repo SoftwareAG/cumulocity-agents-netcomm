@@ -43,7 +43,7 @@ static void loadConfig(RdbManager &rdb);
 int main()
 {
 #ifdef LOG_TO_FILE
-    srLogSetDest("/opt/ntcagent.log");
+    srLogSetDest("/opt/ntcagent/ntcagent.log");
 #endif
 
     RdbManager rdb;

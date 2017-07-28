@@ -4,10 +4,13 @@
 #include "integrate.h"
 
 using namespace std;
-const char *key = "service.cumulocity.connection.password";
 
-int Integrate::integrate(const SrAgent &agent, const string &srv,
-        const string &srt)
+namespace
+{
+const char* const key = "service.cumulocity.connection.password";
+}
+
+int Integrate::integrate(const SrAgent &agent, const string &srv, const string &srt)
 {
     SrNetHttp http(agent.server() + "/s", srv, agent.auth());
     http.setTimeout(60);
@@ -40,6 +43,7 @@ int Integrate::integrate(const SrAgent &agent, const string &srv,
         if (r.size() && r[0].second == "50")
         { // MO not found
             http.clear();
+
             const string model = rdb.get("uboot.hw_id");
             if (http.post("301,\"" + model + " (S/N " + rdb.get("uboot.sn") + ")\",20") <= 0)
             {

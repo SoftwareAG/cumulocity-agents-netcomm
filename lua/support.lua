@@ -82,24 +82,31 @@ end
 
 function uploadRDB(r)
    local filepath = '/opt/ntcagent/rdbdump.txt'
+   
    if dumpRDB(filepath) ~= 0 then
       c8y:send('304,' .. r:value(2) .. ',"Dump RDB failed"', 1)
       return
    end
+   
    c8y:send('303,' .. r:value(2) .. ',EXECUTING')
    if c8y:postf('rdbdump.txt', 'text/plain', filepath) < 0 then
       c8y:send('304,' .. r:value(2) .. ',"Upload RDB failed"', 1)
       return
    end
+   
    local url = getURL(c8y.resp)
    if not url then
       c8y:send('304,' .. r:value(2) .. ',"Parse URL failed"', 1)
       return
    end
+   
    local name = '"NTC-6200 RDB dump"'
    local desc = os.date('"Upload at %x %X"', os.time())
    c8y:send(table.concat({'336', c8y.ID, name, desc, url}, ','), 1)
    c8y:send('303,' .. r:value(2) .. ',SUCCESSFUL', 1)
+   
+   -- remove tmp file --
+   os.remove(filepath);
 end
 
 

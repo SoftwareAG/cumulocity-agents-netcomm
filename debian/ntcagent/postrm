@@ -1,0 +1,2 @@
+rm -f /etc/init.d/rc3.d/S950ntcagent
+rm -rf /opt/ntcagent

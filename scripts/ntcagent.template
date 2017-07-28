@@ -1,0 +1,15 @@
+#!/bin/sh
+#/etc/cdcs/conf/mgr_templates/ntcagent.template
+
+ENABLED=?<service.cumulocity.enable>; 
+RUNNING=`pgrep ntcagent`
+                        
+if [ $ENABLED = "1" ]; then
+    if [ -z $RUNNING ]; then
+        /etc/init.d/rc.d/ntcagent.sh start
+    fi                                    
+elif [ $ENABLED = "0" ]; then
+    if [ -n $RUNNING ]; then 
+        /etc/init.d/rc.d/ntcagent.sh stop
+    fi                                   
+fi
