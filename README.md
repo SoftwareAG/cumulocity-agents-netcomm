@@ -21,7 +21,7 @@
 - `bundle exec knife ec2 server create -r "role[cumulocity-base],role[cumulocity-mongo]" -E production`
 
 ##### Delete a node
-- `bundle exec knife ec2 server delete i-0bcb9cc5525912bcc --purge -y`
+- `bundle exec knife ec2 server delete i-014ede1a035cb39cc --purge -y`
 
 ##### Add tags to a node
 - `bundle exec knife tag create i-0c8648e8 mytag`
@@ -40,7 +40,7 @@
 ##### start a cluster
 - change step to 1 `provisioning/aws/full.rb`
 - update the cluster `bundle exec chef-client -z provisioning/aws/full.rb`
-- upload the core secrets `bundle exec knife vault create secrets core -A 'cli' -M client -S 'name:devops_production_core_*' -J .chef/secrets/core.json`
+- upload the core secrets `bundle exec knife vault create secrets core -A 'cli' -M client -S 'name:devops_production_*' -J .chef/secrets/core.json`
 - change step to 2 `provisioning/aws/full.rb`
 - run it again to connect everthing `bundle exec chef-client -z provisioning/aws/full.rb`
 - repeat until step 5
@@ -53,6 +53,14 @@
 - cd into the ui install directory `cd /webapps/2Install`
 - download the GUIpackage `wget https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/366d235f0648/8.2.0.zip`
 - test if the installation is done by open the ontop_lb ip in your browser. you should see the cumulocity default web GUI
+
+##### scale core
+- increase core_count in `provisioning/aws/full.rb`
+- update the cluster `bundle exec chef-client -z provisioning/aws/full.rb`
+- it will fail becouse the new node dont have access to the core secret
+- delete the core secret `bundle exec knife data bag delete secrets -y`
+- upload core secred again `bundle exec knife vault create secrets core -A 'cli' -M client -S 'name:devops_production_*' -J .chef/secrets/core.json`
+- update the cluster `bundle exec chef-client -z provisioning/aws/full.rb`
 
 ##### stop a cluster
 - change step to 0 `provisioning/aws/full.rb`
