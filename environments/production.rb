@@ -1,6 +1,8 @@
 name "production"
 description "The production environment"
 
+cookbook_versions 'cumulocity' => '= 0.1.0'
+
 override_attributes(
   "domainname" => "app.domain.com",
 
