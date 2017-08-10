@@ -32,11 +32,33 @@ but there is already a running chef-server-12 ready to use.
 - username `cli`
 - password `12345678`
 
+
+#### setup workstation
+this chef-repo is a ruby based project and needs ruby and gems(plugins) to work.
+to install ruby you need a ruby version manager like rbenv or rvm.
+you can find the needed ruby version in file ./.ruby-version
+after the installation of ruby you need a gem management gem called bundler.
+run `gem install bundler` to install bundler. after that you can manage your gems via the file ./Gemfile
+and by installing these gems via `bundle install`.
+now after all the gems are installed you can test the connection between the chef-repo and the chef-server with knife.
+run `bundle exec knife node list` this will ask the chef-server for registered nodes on the chef-server.
+(the bundler exec means 'run this command with local gems, not with the system gems')
+it will ask you in which organization you are running knife. run `export ORGNAME=myorg` to use the organization that is already installed on the existing chef-server-12. you can change or add organization settings in ./.chef/organizations/index.yml
+
+
+
 There are two ways to create a cluster, via knife(manually) or via chef-provisioning(automatic).
 
 ## chef-provisioning
 
 there are three cluster types.
+
+- full
+- small
+- single
+
+
+
 
 ##### start a full cluster
 - change step to 1 `provisioning/aws/full.rb`
