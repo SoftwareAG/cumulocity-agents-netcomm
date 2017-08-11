@@ -24,14 +24,14 @@ add_machine_options(
 )
 
 project     = "devops_#{environment}"
-step        = 0 # step from 0 to 5
+step        = 1 # step from 0 to 5
 core_count  = 2
 
 
 if step >= 1
   machine_batch do
     machine "#{project}_mongo_cluster_rs01" do
-      role 'cumulocity-mongo'
+      role 'cumulocity-mongo'  if step >= 2
       role 'cumulocity-mongo-configsvr' if step >= 2
       if step >= 3
         tag 'replicaset:rs01:P'
@@ -40,7 +40,7 @@ if step >= 1
       end
     end
     machine "#{project}_mongo_cluster_rs02" do
-      role 'cumulocity-mongo'
+      role 'cumulocity-mongo' if step >= 2
       role 'cumulocity-mongo-configsvr' if step >= 2
       if step >= 3
         tag 'replicaset:rs01:S'
@@ -49,7 +49,7 @@ if step >= 1
       end
     end
     machine "#{project}_mongo_cluster_rs03" do
-      role 'cumulocity-mongo'
+      role 'cumulocity-mongo' if step >= 2
       role 'cumulocity-mongo-configsvr' if step >= 2
       if step >= 3
         tag 'replicaset:rs01:A'
