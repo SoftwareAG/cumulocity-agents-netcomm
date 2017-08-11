@@ -40,12 +40,14 @@ you can find the needed ruby version in file ./.ruby-version
 after the installation of ruby you need a gem management gem called bundler.
 run `gem install bundler` to install bundler. after that you can manage your gems via the file ./Gemfile
 and by installing these gems via `bundle install`.
-now after all the gems are installed you can test the connection between the chef-repo and the chef-server with knife.
+after all the gems are installed you can test the connection between the chef-repo and the chef-server with knife.
 run `bundle exec knife node list` this will ask the chef-server for registered nodes on the chef-server.
 (the bundler exec means 'run this command with local gems, not with the system gems')
 it will ask you in which organization you are running knife. run `export ORGNAME=myorg` to use the organization that is already installed on the existing chef-server-12. you can change or add organization settings in ./.chef/organizations/index.yml
+`bundle exec knife node list` should return with no error.
 
-
+#### creating and provisioning new nodes
+with knife you can provisioning
 
 There are two ways to create a cluster, via knife(manually) or via chef-provisioning(automatic).
 
@@ -113,6 +115,7 @@ create ontop_lb `bundle exec knife ec2 server create -r "role[cumulocity-base],r
 
 
 ## knife cheat sheet
+run all commands from this repo
 
 ##### add ssh key
 - `chmod 600 .chef/keys/chef_cumulocity.pem && ssh-add .chef/keys/chef_cumulocity.pem`
