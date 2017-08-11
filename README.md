@@ -2,7 +2,7 @@
 this documentation is for installing the cumulocity software on a centos7 OS with chef12.
 first you need a chef-server 12
 
-##### Install Chef-Server
+## Install Chef-Server
 - create a new ec2 server on the AWS GUI
 - `ssh -i '.chef/keys/ffaerber.pem' centos@xxx.xxx.xxx.xxx`
 - `sudo su`
@@ -25,15 +25,16 @@ first you need a chef-server 12
 - `knife ssl fetch ` for info to fix the ssl errors
 - test the connection by running `bundle exec knife node list` No error should be seen.
 
-but there is already a running chef-server-12 ready to use.
 
-##### chef-server-12
+
+### chef-server-12
+but there is already a running chef-server-12 ready to use.
 - go to `https://52.16.90.217`
 - username `cli`
 - password `12345678`
 
 
-#### setup workstation
+## setup workstation
 this chef-repo is a ruby based project and needs ruby and gems(plugins) to work.
 to install ruby you need a ruby version manager like rbenv or rvm.
 you can find the needed ruby version in file ./.ruby-version
@@ -44,23 +45,29 @@ after all the gems are installed you can test the connection between the chef-re
 run `bundle exec knife node list` this will ask the chef-server for registered nodes on the chef-server.
 (the bundler exec means 'run this command with local gems, not with the system gems')
 it will ask you in which organization you are running knife. run `export ORGNAME=myorg` to use the organization that is already installed on the existing chef-server-12. you can change or add organization settings in ./.chef/organizations/index.yml
-`bundle exec knife node list` should return with no error.
+`bundle exec knife node list` should return now with no error.
 
-#### creating and provisioning new nodes
+## creating and provisioning new nodes
 with knife you can provisioning
 
 There are two ways to create a cluster, via knife(manually) or via chef-provisioning(automatic).
+lets start with knife
+
+
+## knife
+run all commands from this repo
+
+- set organization `export ORGNAME=myorg`
+- create a ec2 server with knife(more about knife-ec2 in the links section) `bundle exec knife ec2 server create -r "role[cumulocity-base]" -E production -N my-node`
+- upload the core vault(more about chef-vault in the links section) `bundle exec knife vault create secrets core -A 'cli' -M client -S 'name:my-*' -J .chef/secrets/core.json`
+- add tag `bundle exec knife tag create my-dbs standalone:mongod7:`
+- add role `bundle exec knife role run_list add cumulocity-dev-singlenode my-node`
+- run chef-client on all nodes that starts with the name 'my-' in production `bundle exec knife ssh 'name:my-* AND chef_environment:production' 'sudo chef-client'`
+
+
 
 ## chef-provisioning
-
-there are three cluster types.
-
-- full
-- small
-- single
-
-
-
+more about chef-provisioning in the links section at the bottom of this file.
 
 ##### start a full cluster
 - change step to 1 `provisioning/aws/full.rb`
@@ -94,59 +101,58 @@ there are three cluster types.
 
 
 
-
-
-
-## knife
-add ssh key `chmod 600 .chef/keys/chef_cumulocity.pem && ssh-add .chef/keys/chef_cumulocity.pem`
-
-create db `bundle exec knife ec2 server create -r "role[cumulocity-base],role[cumulocity-sql-db],role[cumulocity-mongo],role[cumulocity-mongo-standalone],role[cumulocity-common-dbs-standalone-mongo],role[cumulocity-mongo-configsvr]" -E production -N my-dbs`
-
-add tag `bundle exec knife tag create my-dbs standalone:mongod7:`
-
-create core `bundle exec knife ec2 server create -r "role[cumulocity-base],role[cumulocity-common-cores],role[cumulocity-cep-server],role[cumulocity-mn-active-core],role[cumulocity-internal-lb],role[cumulocity-external-lb]" -E production -N my-core`
-
-create ontop_lb `bundle exec knife ec2 server create -r "role[cumulocity-base],role[cumulocity-external-lb],role[cumulocity-ontop-lb]" -E production -N my-ontop_lb`
-
-
-##### update nodes
-`bundle exec knife ssh 'name:my-* AND chef_environment:production' 'sudo chef-client'`
+### make changes in the cumulocity cookbook.
+the cumulocity-cookbook is not part of this chef-repo the reason is that some external partner can use their own chef-repo.
+the cumulocity-cookbook shoud be placed like in the ./Berksfile described.
+berkshelf(more about berkshelf in the links section) is managing the external cookbook and his dependencies.
+so if you what to add or update a cookbook like java or chef-client you can do this in the cumulocity-cookbook metadata.rb.
+than you can run from this cumulocity-chef repo `bundle exec berks install` to download the community cookbooks from the supermarket.
+to upload the cumulocity cookbooks run `bundle exec berks upload cumulocity --force` the force will ignore the version number that is already on the chef-server and will reupload the cumulocity cookbook with his dependencie community cookbooks.
 
 
 
 ## knife cheat sheet
 run all commands from this repo
 
-##### add ssh key
+###### add ssh key
 - `chmod 600 .chef/keys/chef_cumulocity.pem && ssh-add .chef/keys/chef_cumulocity.pem`
 
-##### Upload environment
+###### Upload environment
 - `bundle exec knife environment from file environments/production.rb`
 
-##### Upload Roles
+###### Upload Roles
 - `bundle exec knife upload roles`
 
-##### Upload cookbook
+###### Upload cookbook
 - `bundle exec berks upload cumulocity --force`
 
-##### Create and upload vault data bag
+###### Create and upload vault data bag
 - `bundle exec knife vault create secrets core -A 'cli,ffaerber' -M client -S 'name:devops_production_core_*' -J .chef/secrets/core.json`
 
-##### create and Upload databags
+###### create and Upload databags
 - `bundle exec knife data bag create users_cumulocity`
 - `bundle exec knife data bag from file users_cumulocity -a`
 
-##### Create a node
+###### Create a node
 - `bundle exec knife ec2 server create -r "role[cumulocity-base],role[cumulocity-mongo]" -E production`
 
-##### Delete a node
+###### Delete a node
 - `bundle exec knife ec2 server delete i-089c27e666415e4b0 --purge -y`
 
-##### Add tags to a node
+###### Add tags to a node
 - `bundle exec knife tag create i-0c8648e8 mytag`
 
-##### Search nodes
+###### Search nodes
 - `bundle exec knife search node 'chef_environment:production AND role:cumulocity-common-cores'`
 
-##### run chef-client on Nodes
+###### run chef-client on Nodes
 - `bundle exec knife ssh 'role:cumulocity-base AND chef_environment:production' 'sudo chef-client'`
+
+
+
+# links
+- knife-ec2 https://github.com/chef/knife-ec2
+- chef-vault https://blog.chef.io/2013/09/19/managing-secrets-with-chef-vault/
+- chef-provisioning https://github.com/chef/chef-provisioning
+- berkshelf https://docs.chef.io/berkshelf.html
+- rbenv https://github.com/rbenv/rbenv

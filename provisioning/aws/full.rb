@@ -24,7 +24,7 @@ add_machine_options(
 )
 
 project     = "devops_#{environment}"
-step        = 1 # step from 0 to 5
+step        = 0 # step from 0 to 5
 core_count  = 2
 
 
