@@ -25,9 +25,42 @@ first you need a chef-server 12
 - `knife ssl fetch ` for info to fix the ssl errors
 - test the connection by running `bundle exec knife node list` No error should be seen.
 
+## Install Chef-Server  (the way how chef12.cumulocity.com has been deployed)
+- `yum install vim make gcc wget mc telnet mlocate -y`
+- `vim /etc/sysconfig/selinux`
+- `curl http://169.254.169.254/latest/meta-data/public-ipv4`
+- `echo preserve_hostname: true >> /etc/cloud/cloud.cfg`
+- `hostnamectl set-hostname chef12.cumulocity.com --static`
+- `reboot`
+- `cd /tmp`
+- `wget https://packages.chef.io/files/stable/chef-server/12.15.8/el/7/chef-server-core-12.15.8-1.el7.x86_64.rpm`
+- `rpm -ivh chef-server-core-*.rpm`
+- `chef-server-ctl reconfigure`
+- `chef-server-ctl install chef-manage`
+- `opscode-manage-ctl reconfigure`
+- `chef-server-ctl reconfigure`
+- `mkdir /root/.chef/`
+- `chef-server-ctl user-create <username> Admin Chef12 C8Y chef12@cumulocity.com <password> --filename /root/.chef/<username>.pem`
+- `chef-server-ctl org-delete cumulocity-devel`
+- `chef-server-ctl org-create cumulocity-devel 'Cumulocity Development' --filename /root/.chef/cumulocity-devel-validator.pem`
+- `chef-server-ctl org-user-add cumulocity-devel <username> --admin`
 
+Use the following files to create your organization on the local chef's workstation:
+- `cat /root/.chef/cumulocity-devel-validator.pem`
+- `cat /root/.chef/<username>.pem`
 
-### chef-server-12
+Put these files into cumulocity-chef/.chef/organizations/cumulocity-devel
+Add the following entry in cumulocity-chef/.chef/organizations/index.json
+cumulocity-devel:
+  node_name: <username>
+  client_key: <username>.pem
+  pub: https://chef12.cumulocity.com/organizations/cumulocity-devel
+  knife:
+    ssh_key_name: <name-of-the-AWS-region-key.pem>
+    aws_access_key_id: XXXXXX
+    aws_secret_access_key: YYYYYYY
+
+### chef-server-12  (Felix' chef server)
 but there is already a running chef-server-12 ready to use.
 - go to `https://52.16.90.217`
 - username `cli`
@@ -45,7 +78,7 @@ after all the gems are installed you can test the connection between the chef-re
 run `bundle exec knife node list` this will ask the chef-server for registered nodes on the chef-server.
 (the bundler exec means 'run this command with local gems, not with the system gems')
 it will ask you in which organization you are running knife. run `export ORGNAME=myorg` to use the organization that is already installed on the existing chef-server-12. you can change or add organization settings in ./.chef/organizations/index.yml
-`bundle exec knife node list` should return now with no error.
+`bundle exec knife node list` should return now with no error.  AWS credentials are also kept in organization's index.yml
 
 ## alternative setup workstation
 instead of installing an alternative ruby version and install component piece by piece, you can alternatively download the latest chefdk package from https://downloads.chef.io/chefdk (latest tested version is 2.3.4), install it and install/update knife-ec2 with 'gem install knife-ec2' command as root.
@@ -133,12 +166,18 @@ run all commands from this repo
 ###### Create and upload vault data bag
 - `bundle exec knife vault create secrets core -A 'cli,ffaerber' -M client -S 'name:devops_production_core_*' -J .chef/secrets/core.json`
 
+###### Update vault data bag by adding new clients or nodes
+- `bundle exec knife vault update secrets core -A 'cli' -M client -S 'name:*' -J .chef/secrets/core.json`
+
 ###### create and Upload databags
 - `bundle exec knife data bag create users_cumulocity`
 - `bundle exec knife data bag from file users_cumulocity -a`
 
 ###### Create a node
 - `bundle exec knife ec2 server create -r "role[cumulocity-base],role[cumulocity-mongo]" -E production`
+
+###### Create a node with vault auto-update
+- `knife ec2 server create -r "role[cumulocity-dev-singlenode]" -E luca-non-production -i .chef/keys/chef_cumulocity.pem -N luca_dev --bootstrap-vault-item secrets:core`
 
 ###### Delete a node
 - `bundle exec knife ec2 server delete i-089c27e666415e4b0 --purge -y`
