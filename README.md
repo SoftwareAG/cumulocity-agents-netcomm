@@ -47,6 +47,10 @@ run `bundle exec knife node list` this will ask the chef-server for registered n
 it will ask you in which organization you are running knife. run `export ORGNAME=myorg` to use the organization that is already installed on the existing chef-server-12. you can change or add organization settings in ./.chef/organizations/index.yml
 `bundle exec knife node list` should return now with no error.
 
+## alternative setup workstation
+instead of installing an alternative ruby version and install component piece by piece, you can alternatively download the latest chefdk package from https://downloads.chef.io/chefdk (latest tested version is 2.3.4), install it and install/update knife-ec2 with 'gem install knife-ec2' command as root.
+This will install all the main components and you will not need to use 'bundle exec' before every command.
+
 ## creating and provisioning new nodes
 with knife you can provisioning
 
