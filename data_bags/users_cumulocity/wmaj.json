@@ -1,0 +1,9 @@
+{
+  "id": "wmaj",
+  "comment": "wmaj",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDT9Biroo4p49+PTKqxgzGLwLIOwBUQ2KK9c8oxPn/bAcGT4EWjVyq6OMLdCafOLlH0c2Hm/LdRQ8YHX0JD6MDJyWyM+f5a1SjDAgJ6yKzDgcFdcNYFEXbtTGJkMylu2PIJwp7hI6xPUe4Ad3nLYM/cSqB87ASMlpZyJp355llGnIgwWdiG7f3NMCpuWOGmNkYfX62v7SfKS0uxHL02A4IgyTLUiieGCRP+FBizhhaJfPT2++SK+2Yu4ewiPFuEie7LJC83HlzcV4ibXFNzrvWseQrL6ALffkGY8LzM9sGzPp8CJJ3SMh/mBWpKju7H0tkIF6jsSWaHqnBe5YFINmgd wmaj@POZ-WMAJ"
+  ],
+  "groups": ["sysadmin"],
+  "shell": "\/bin\/bash"
+}
