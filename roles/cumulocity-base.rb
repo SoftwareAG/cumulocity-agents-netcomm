@@ -1,6 +1,14 @@
 name 'cumulocity-base'
 description 'Base role applied to all nodes'
 
+override_attributes(
+  'authorization' => {
+    'sudo'  => {
+      'groups' => ['wheel']
+    }
+  }
+)
+
 run_list(
                     # 'recipe[swap::swapfile]',
   'recipe[cumulocity]',
