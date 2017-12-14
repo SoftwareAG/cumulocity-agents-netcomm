@@ -30,6 +30,6 @@ run_list(
                     # 'recipe[nagios::client]',
                     # 'recipe[nagios::knife_client]',
   # 'recipe[tools]',
-  'recipe[openssh]'
-  # 'recipe[ntp]'
+  'recipe[openssh]',
+  'recipe[ntp]'
 )
