@@ -1,0 +1,9 @@
+{
+  "id": "tovukman",
+  "comment": "tovukman",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+lhwjC/Tt8eMILXT5cEcyYOTL9NdLxizDGqmeLtVS5TAhKTjqwkKPMmcRX+tlCacJ8u3KdpZCriFGh2tQxpZZhn21T7sFk/b3g3Gal81jGdKDVRhB1Tefoq9JPS3v5YFrj2e6iNGJqUTGpWJJqHtFlXRhsVDMnD9PJ4PIkZypCK+qVuZWiKilS4q5DYKbIDDy2JfvqtZpnNvRrIwnywdqYxRojAqlFcHWPFi/NNbVIZkfV6xhGS8FastbOLWcLuMfqOnrTQw6FdvgVO/NOJfdQ9n+/eN63I7rVBmOmu5yWTsPn3jTrCKnvbPqykh0iUl/X1m5EHASoaxFYImmtT0T tovukman@tovukman-XPS-13-9360"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}

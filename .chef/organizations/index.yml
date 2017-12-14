@@ -1,11 +1,29 @@
+telstra-preprod:
+  node_name: admin
+  client_key: admin.pem
+  pub: https://c8y-preprod-chef12/organizations/telstra-preprod
+  knife:
+    ssh_key_name: cumulocity-telstra.pem
+    aws_access_key_id: AAAAAAAAAAAAAAAAAAAA
+    aws_secret_access_key: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
 myorg:
   node_name: cli
   client_key: cli.pem
   pub: https://ec2-52-16-90-217.eu-west-1.compute.amazonaws.com/organizations/myorg
   knife:
     ssh_key_name: chef_cumulocity
-    aws_access_key_id: AKIAJFCZY74TCITUMZYQ
-    aws_secret_access_key: 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
+    aws_access_key_id: AKIAIVNXBZD76HNCLQJA
+    aws_secret_access_key: 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
+
+cumulocity-devel:
+  node_name: admin12
+  client_key: admin12.pem
+  pub: https://chef12.cumulocity.com/organizations/cumulocity-devel
+  knife:
+    ssh_key_name: chef_cumulocity
+    aws_access_key_id: AKIAIVNXBZD76HNCLQJA
+    aws_secret_access_key: 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
 
 cumulocity-virginia:
   pub: 10.120.0.145

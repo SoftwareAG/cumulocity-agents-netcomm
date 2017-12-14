@@ -1,0 +1,9 @@
+{
+  "id": "lundsten",
+  "comment": "lundsten",
+  "ssh_keys": [
+    "ssh-rsa X AAAAB3NzaC1yc2EAAAADAQABAAABAQCkl7v9eedvBCOO60auzSIj+vPl/1qaRHU2LPYX8LxpiFEkFjQCKLQHBiTPRp9xE3wPuO7AMilDQRQDIUBgykPBWmQt7t3AiRD0qOtAsXPf6C6VJ2qABxKDWZvdtsvzoXkOvay98XjNoXmoImeiw0sKK2RlPUNIpTz+N04hyeu6TjLP/jaEitjZoi2QG635I50Y4gAhyk+Oh22oDiKS0AAxgpoSeFDH5Ua1VPdmeyhTamOhmfrIplZX5jcsLo99SNycR4CdS3ags1e2b8e0KBp1XNeC6ZTHNF3YteUJazAARDILjdSS5o8oXplr3fiAYSuAWp0T7JrYiiaF2McoAwE5 alflundsten@Alfs-MacBook-Pro.local"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}
