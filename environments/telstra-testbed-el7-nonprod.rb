@@ -2,7 +2,11 @@ name "telstra-testbed-el7-nonprod"
 
 description "The Telstra Testbed CentOS 7 environment in Frankfurt"
 
-cookbook_versions 'cumulocity' => '= 0.5.0'
+cookbook_versions({
+'cumulocity'=>'= 0.6.0',
+'cumulocity-kubernetes'=>'= 0.4.0',
+'cumulocity-ssagents'=>'= 0.4.0'
+})
 
 default_attributes(
  "elb" => {
@@ -40,9 +44,21 @@ override_attributes(
         "checksum" => "adb04a255a3bb1574840ebd4a0f2eb76"
         }
     },
+  "cumulocity-kubernetes" => {
+     "deployK8S4env" => "telstra-testbed-el7-nonprod",
+     "attachedEnvs" => ["telstra-testbed-el7-nonprod"],
+     "token" => "1e3145.2ff901841c48af2e",
+     "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
+     "images-version" => "8.19.0",
+     "images2install" => [ "cep" ]
+  },
+  "cumulocity-GUI" => {
+    "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/telstra/2a299258977c",
+    "version" => '8.19.4'
+  },
   "cumulocity-karaf" => {
     ## "version" => "8.3.14-1",
-    "version" => "8.19.4-1",
+    "version" => "8.19.5-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "oort-enabled" => false,
@@ -161,12 +177,5 @@ override_attributes(
   } 
 
 )
-
-#cookbook_versions(ChefConfig.cookbook_versions_for_env)
-#cookbook 'cumulocity-core',  '= 8.15.0'
-#cookbook 'cumulocity-external-lb', '= 8.15.0'
-#cookbook 'cumulocity-internal-lb', '= 8.15.0'
-#cookbook 'cumulocity-karaf', '= 8.15.0'
-#cookbook 'cumulocity-postgres', '= 8.15.0'
 
 
