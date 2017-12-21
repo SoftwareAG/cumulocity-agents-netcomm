@@ -58,7 +58,7 @@ override_attributes(
   },
   "cumulocity-karaf" => {
     ## "version" => "8.3.14-1",
-    "version" => "8.19.5-1",
+    "version" => "8.19.7-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "oort-enabled" => false,
@@ -157,7 +157,7 @@ override_attributes(
  	"useKarafWebsocket" => true,
         "useSSL" => false,
         "force_proto_for_link_processor" => "https",
-	"certificate_domain" => "acme.com",
+	"certificate_domain" => "staging.c8y.io",
 	"temp_chunkin" => false,
 	"nginx" => {
             "NGinxPort" => "openresty",
