@@ -1,7 +1,11 @@
 name "cumulocity-staging7-nonprod"
 description "The production environment"
 
-cookbook_versions 'cumulocity' => '= 0.2.0'
+cookbook_versions({
+'cumulocity'=>'= 0.6.0',
+'cumulocity-kubernetes'=>'= 0.4.0',
+'cumulocity-ssagents'=>'= 0.3.0'
+})
 
 override_attributes(
   "domainname" => "staging7.c8y.io",
@@ -9,6 +13,7 @@ override_attributes(
   "environment" => {
       "address" => "management.staging7.c8y.io"
   },
+  "swapfilesize" => 768,
   'yum' => {
     'repositories' => {
       'cumulocity-testing' => {
@@ -25,11 +30,14 @@ override_attributes(
   "cumulocity-kubernetes" => {
      "deployK8S4env" => "cumulocity-staging7-nonprod",
      "attachedEnvs" => ["cumulocity-staging7-nonprod","cumulocity-small7-nonprod"],
-     "token" => "1e3145.2ff901841c48af2e"
+     "token" => "1e3145.2ff901841c48af2e",
+     "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
+     "images-version" => "8.18.0-SNAPSHOT",
+     "images2install" => [ "cep","test" ]
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "17adb8fe8848af81a75d175bace5d013bf71ee4fa374aafb30313f3d245de270b5f953ab29861044ef6e169406fb469fc50407d31c81ba874e1a3b9b37a33bfc",
-    "version" => "8.16.1-1",
+    "version" => "8.19.7-1",
     "ssa-version" => "8.15.2-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
@@ -63,7 +71,7 @@ override_attributes(
   "cumulocity-core" => {
     "properties" => {
       "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
-      "default.tenant.microservices" => "device-simulator, smartrule",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
       "sendDashboardAgent.url" => "http://localhost:19191/report",
@@ -125,8 +133,11 @@ override_attributes(
     "useKarafWebsocket" => true,
     "proxy_cache" => true,
     "certificate_domain" => "staging.c8y.io",
+    "useLUAforLimits" => true,
+    "useLUAforHealthCheck" => true,
     "nginx" => {
-        "version" => "1.10.1-1.el7.centos.ngx.c8y.8.15.0"
+        "NGinxPort" => "openresty",
+        "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
     }
   },
 
