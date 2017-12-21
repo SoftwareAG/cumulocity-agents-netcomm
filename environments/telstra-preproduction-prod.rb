@@ -47,9 +47,17 @@ override_attributes(
         "checksum" => "adb04a255a3bb1574840ebd4a0f2eb76"
         }
     },
+  "cumulocity-kubernetes" => {
+     "deployK8S4env" => "telstra-preproduction-prod",
+     "attachedEnvs" => ["telstra-preproduction-prod"],
+     "token" => "1e3145.2ff901841c48af2e",
+     "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
+     "images-version" => "8.18.0-SNAPSHOT",
+     "images2install" => [ "cep" ]
+  },
   "cumulocity-karaf" => {
     ## "version" => "8.7.5-1",
-    "version" => "8.11.10-1",
+    "version" => "8.19.7-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "oort-enabled" => true,
@@ -74,8 +82,9 @@ override_attributes(
       "default.tenant.applications" => "administration,devicemanagement,cockpit",
       "management.admin.password" => "5abf4845cb3478e00c1c02825e950e3ee057c85165ae3c9b733b82b88e562614",
       "tenant.admin.password" => "5abf4845cb3478e00c1c02825e950e3ee057c85165ae3c9b733b82b88e562614",
-      "admin.password" => "5abf4845cb3478e00c1c02825e950e3ee057c85165ae3c9b733b82b88e562614",
-      "system.two-factor-authentication.enabled" => true,
+#      "admin.password" => "5abf4845cb3478e00c1c02825e950e3ee057c85165ae3c9b733b82b88e562614",
+      "admin.password" => "4a893cafa79e1dd5a028a062d021994201c06eeaa463cc598a75fa88a95623af",
+      "system.two-factor-authentication.enabled" => false,
       #"system.two-factor-authentication.enforced.group" => "admins",
       "system.two-factor-authentication.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
       "system.two-factor-authentication.senderAddress" => "+61418368753",
@@ -87,7 +96,8 @@ override_attributes(
       "system.two-factor-authentication.telstra.baseUrl" => "https://free.rcs.telstra.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",             
       "system.two-factor-authentication.telstra.username" => "cumulocity",                                                                                        
       "system.two-factor-authentication.telstra.password" => "xBg5Wa8M",                                                                                          
-      "default.tenant.microservices" => "device-simulator, smartrule",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep",
+      "migration.tomongo.default" => "MONGO_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,
       "system.support-user.enabled" => false, 
       "tenantSuspend.mail.sendtosuspended" => false,
@@ -145,8 +155,9 @@ override_attributes(
         "useMQTTsupport" => true,
         "useSSL" => false,
         "force_proto_for_link_processor" => "https",
-        "certificate_domain" => "acme.com",
+        "certificate_domain" => "staging.c8y.io",
         "temp_chunkin" => false,
+        "useKarafWebsocket" => true,
 	"useLUAforSSLcerts" => nil,
 	"useLUAforLimits" => true,
         "nginx" => {
