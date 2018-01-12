@@ -160,6 +160,7 @@ override_attributes(
         "useKarafWebsocket" => true,
 	"useLUAforSSLcerts" => nil,
 	"useLUAforLimits" => true,
+	"useLUAforHealthCheck" => true,
         "nginx" => {
             "NGinxPort" => "openresty",
 #            "version" => "1.11.2.4-20.el6.c8y.8.7.2"
