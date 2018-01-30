@@ -1,0 +1,9 @@
+{
+  "id": "michaelwe",
+  "comment": "Michael Welsing",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH7hXexF42G+JF0wTIiqPGXLoVFlIg5gJdO983R022GyjTG+Y31JyBee7zRkSP8ive659kO1M4yl8ftq5Z3vCqhO+B2AeeyYrzUGMUVvj3cYOanuXsnVy1EiLMwMsvISbjwDTmY2yD0DoptYfLxugmzmcdmADAaM86KCwWmYuLiy5pzAMHZqoMy8MT7WeI1o/8i2sXnYoBBFFmTwKoxg2T+Cu2xQwTcSb0sh1sN5+vHEFGcec34S2bQZ3xKvAWNX/+UiFV/7KUWK4OYP/LBiBg3aQNnea8vgr9tm9gaZjTlsleMCJQcy4Jk05waN64MZ5GrVYbSJQ9MAZKdPRaffYL michaelwelsing@Michaels-MacBook-Pro.local"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}
