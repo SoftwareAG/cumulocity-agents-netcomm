@@ -109,7 +109,8 @@ echo
 
 ##########
 
-cat > "chef-solo-v${karafver}.sh" <<< '#!/bin/bash
+prefixName="cumulocity-chef-solo"
+cat > "${prefixName}-v${karafver}.sh" <<< '#!/bin/bash
 
 EXTRACTONLY=false
 AUTO=false
@@ -142,7 +143,9 @@ $(
  )
 "'
 
-sed -n "/^__ARCHIVE_BELOW__$/{s///;:a;n;p;ba;}" "$0" | tar xz${VERBOSE+v}f - -C "${outputFolder:=/var}"
+f_color_pr wht "extract chef-solo folder in ${outputFolder:=/var}..."
+sed -n "/^__ARCHIVE_BELOW__$/{s///;:a;n;p;ba;}" "$0" | tar xz${VERBOSE+v}f - -C "${outputFolder}"
+f_color_pr wht "Done!"
 
 ${EXTRACTONLY} && exit
 
@@ -255,6 +258,7 @@ while ! [[ ${runSoloQ,,} =~ ^(y(es)?|no?)$ ]] ; do
       "${soloDir}/chefrun.sh" && break
       [[ $x -ge $limit ]] && f_color_pr red "ERROR: could not run chef-solo until the end!"
     done
+    break
   fi
 done
 
@@ -265,6 +269,6 @@ __ARCHIVE_BELOW__'
 
 ( cd "${thisdir}"
   tar cz${VERBOSE+v}f - "chef-solo"
-) >> "chef-solo-v${karafver}.sh"
-chmod a+x "chef-solo-v${karafver}.sh"
+) >> "${prefixName}-v${karafver}.sh"
+chmod a+x "${prefixName}-v${karafver}.sh"
 
