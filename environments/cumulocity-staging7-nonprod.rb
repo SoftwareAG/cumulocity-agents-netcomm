@@ -71,7 +71,7 @@ override_attributes(
   "cumulocity-core" => {
     "properties" => {
       "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
-      "default.tenant.microservices" => "device-simulator, smartrule, cep",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep, tenant-sla-monitoring",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
       "sendDashboardAgent.url" => "http://localhost:19191/report",
@@ -83,7 +83,7 @@ override_attributes(
       "contextService.tenantManagementDB" => "management",
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => "false",
-      "smsGateway.host" => "http://localhost:8688/sms-gateway",
+      "smsGateway.host" => "http://telstra-testbed-el7-core:8688/sms-gateway",
       "email.from" => "no-reply@app.domain.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "default.tenant.applications" => "administration,devicemanagement,cockpit",
