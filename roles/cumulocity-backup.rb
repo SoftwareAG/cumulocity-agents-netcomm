@@ -1,5 +1,3 @@
-require  File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'config', 'chef_config'))
-
 name "cumulocity-backup"
 description "Install and configure AWS backup script"
 

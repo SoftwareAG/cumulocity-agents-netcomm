@@ -19,7 +19,7 @@ first you need a chef-server 12
 - `chef-server-ctl reconfigure`
 - `mkdir /root/.chef/`
 - `chef-server-ctl user-create cli Admin Cumulocity admin@cumulocity.com 12345678 --filename /root/.chef/cli.pem`
-- `chef-server-ctl org-create myorg 'MyOrganization' /root/.chef/myorg-validator.pem`
+- `chef-server-ctl org-create myorg 'MyOrganization' --filename /root/.chef/myorg-validator.pem`
 - `chef-server-ctl org-user-add myorg cli`
 - copy cli.pem and myorg-validator.pem in your chef-repo under .chef
 - `knife ssl fetch ` for info to fix the ssl errors
