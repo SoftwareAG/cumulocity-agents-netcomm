@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SOLO=false
+
 f_color_pr(){
   case $1 in
     grn) COLOR='\e[1;32m' ;;
@@ -12,8 +14,9 @@ f_color_pr(){
   printf "$COLOR""$@\n"'\e[m'
 }
 
-while getopts "vik:c:" opt ; do
+while getopts "Svik:c:" opt ; do
   case $opt in
+    S) SOLO=true ;;
     v) VERBOSE=true ;;
     i) interactive=true ;;
     k) karafver="${OPTARG}" ;;
@@ -30,6 +33,8 @@ thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
   c8yCBdir="$( readlink -e "${thisdir}/../../cumulocity-cookbooks" )"
   comCBdir="$HOME/.berkshelf/cookbooks"
   solCBdir="${thisdir}/chef-solo/cookbooks"
+    relDir="${thisdir}/cumulocity-chef"
+  relCBdir="${relDir}/cookbooks"
 template_archive="${thisdir}/chef-solo-12-template.tgz"
 
 declare -A c8yCB
@@ -64,10 +69,34 @@ comCB=(
                  ["ohai"]=5.1.0
 )
 
+declare -A mnOnlyCB
+mnOnlyCB=(
+               ["docker"]=latest
+)
+
+declare -a mnRoles
+mnRoles=(
+  cumulocity-base
+  cumulocity-cep-server
+  cumulocity-common-cores
+  cumulocity-common-dbs-standalone-mongo
+  cumulocity-core-master
+  cumulocity-core
+  cumulocity-external-lb
+  cumulocity-internal-lb
+  cumulocity-kubernetes
+  cumulocity-mn-active-core
+  cumulocity-mongo-configsvr
+  cumulocity-mongo-standalone
+  cumulocity-mongo
+  cumulocity-ontop-lb
+  cumulocity-sql-db
+  cumulocity-ssagents
+)
+
 f_findLastVersion(){
-  dirPrefix="${1}"
+  local list="${1}"
   i=0
-  list="$( ls -d -w1 "${dirPrefix}"-* 2>/dev/null | sed -r "s|${dirPrefix}-||g" )" && \
   while [[ $( wc -l <<< "${list}" ) -gt 1 ]] ; do
     ((i++))
     tmplist="$( sort -n -t. -k${i} <<< "${list}" )"
@@ -79,38 +108,46 @@ f_findLastVersion(){
   return 0
 }
 
-if [[ -e ${template_archive} ]] ; then
-  f_color_pr cyn "Unpacking chef-solo template..."
-  tar xz${VERBOSE+v}f ${template_archive} -C "${thisdir}"
-else
-  f_color_pr red "ERROR: no template archive ${template_archive} found!" && exit 10
-fi
-echo
+f_cb_copy(){
+  wrkCBdir="${1}"
 
-f_color_pr cyn "Copying community cookbooks..."
-for cb in "${!comCB[@]}" ; do
-  f_color_pr wht "-- ${cb}-${comCB[$cb]}"
-  if [[ ${comCB[$cb]} == "latest" ]] ; then
-    version="$( f_findLastVersion "${comCBdir}/${cb}" )"
+  f_color_pr cyn "Copying community cookbooks..."
+  for cb in "${!comCB[@]}" ; do
+    f_color_pr wht "-- ${cb}-${comCB[$cb]}"
+    if [[ ${comCB[$cb]} == "latest" ]] ; then
+      verList="$( ls -d -w1 "${comCBdir}/${cb}"-* 2>/dev/null | sed -r "s|${comCBdir}/${cb}-||g" )" && \
+      version="$( f_findLastVersion "${verList}" )"
+    else
+      version="${comCB[$cb]}"
+    fi
+    cp -ar${VERBOSE+v} "${comCBdir}/${cb}-${version:-*}" "${wrkCBdir}/${cb}"
+  done
+  echo
+
+  f_color_pr cyn "Copying Cumulocity cookbooks..."
+  for cb in "${!c8yCB[@]}" ; do
+    f_color_pr wht "-- ${cb}"
+    version="${c8yCB[$cb]}"
+    cp -ar${VERBOSE+v} "${c8yCBdir}/${cb}" "${wrkCBdir}"
+  done
+  echo
+}
+
+if ${SOLO} ; then
+  if [[ -e ${template_archive} ]] ; then
+    f_color_pr cyn "Unpacking chef-solo template..."
+    tar xz${VERBOSE+v}f ${template_archive} -C "${thisdir}"
   else
-    version="${comCB[$cb]}"
+    f_color_pr red "ERROR: no template archive ${template_archive} found!" && exit 10
   fi
-  cp -ar${VERBOSE+v} "${comCBdir}/${cb}-${version:-*}" "${solCBdir}/${cb}"
-done
-echo
+  echo
 
-f_color_pr cyn "Copying Cumulocity cookbooks..."
-for cb in "${!c8yCB[@]}" ; do
-  f_color_pr wht "-- ${cb}"
-  version="${c8yCB[$cb]}"
-  cp -ar${VERBOSE+v} "${c8yCBdir}/${cb}" "${solCBdir}"
-done
-echo
+  f_cb_copy "${solCBdir}"
 
 ##########
 
-prefixName="cumulocity-chef-solo"
-cat > "${prefixName}-v${karafver}.sh" <<< '#!/bin/bash
+  export prefixName="cumulocity-chef-solo"
+  cat > "${prefixName}-v${karafver}.sh" <<< '#!/bin/bash
 
 EXTRACTONLY=false
 AUTO=false
@@ -267,8 +304,94 @@ exit
 
 __ARCHIVE_BELOW__'
 
-( cd "${thisdir}"
-  tar cz${VERBOSE+v}f - "chef-solo"
-) >> "${prefixName}-v${karafver}.sh"
-chmod a+x "${prefixName}-v${karafver}.sh"
+  ( cd "${thisdir}"
+    tar cz${VERBOSE+v}f - "chef-solo"
+  ) | tee "${prefixName}-v${karafver}.tgz" >> "${prefixName}-v${karafver}.sh"
+  chmod a+x "${prefixName}-v${karafver}.sh"
+else
+  f_color_pr cyn "Creating directory structure..."
+  for d in \
+    environments \
+    data_bags/users_cumulocity \
+    data_bags/certs \
+    roles \
+    cookbooks \
+    .chef/access_certs \
+    .chef/trusted_certs \
+    .chef/secrets \
+    .chef/keys \
+
+  do
+    mkdir -p "${relDir}/${d}" 2> /dev/null
+  done
+  echo
+
+  for c in "${!mnOnlyCB[@]}" ; do
+    eval "comCB[$c]"="${mnOnlyCB[$c]}"
+  done
+  f_cb_copy "${relCBdir}"
+
+  f_color_pr cyn "Copying role files..."
+  for r in "${mnRoles[@]}" ; do
+    f_color_pr wht "-- $r"
+    cp -a${VERBOSE+v} "${thisdir}/../roles/${r}.rb" "${relDir}/roles" || \
+    f_color_pr red "ERROR: role $r not found!"
+  done
+  echo
+
+  f_color_pr cyn "Copying misc files..."
+  f_color_pr wht "-- data_bags/certs/certificate.json"
+  cp -a${VERBOSE+v} "${thisdir}/../data_bags/certs/certificate.json" "${relDir}/data_bags/certs"
+  f_color_pr wht "-- environments/environment_template.rb"
+  cp -a${VERBOSE+v} "${thisdir}/../environments/environment_template.rb" "${relDir}/environments"
+  echo
+
+  f_color_pr cyn "Creating user template..."
+  cat > "${relDir}/data_bags/users_cumulocity/user_template.json" << EOF
+{
+  "id": "<username>",
+  "comment": "<User Name>",
+  "ssh_keys": [
+    "<ssh key>"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}
+EOF
+  echo
+
+  f_color_pr cyn "Creating knife skel config..."
+  cat > "${relDir}/.chef/knife.rb" << EOF
+current_dir = File.dirname(__FILE__)
+
+log_level                :info
+log_location             STDOUT
+node_name                "cli"
+client_key               "#{current_dir}/access_certs/___ORGNAME___-cli.pem"
+validation_client_name   "___ORGNAME___-validator"
+validation_key           "#{current_dir}/access_certs/___ORGNAME___-validator.pem"
+chef_server_url          "https://___CHEFNAME___/access_certs/___ORGNAME___"
+syntax_check_cache_path  "#{ENV['HOME']}/.chef/syntaxcache"
+cookbook_path            ["#{current_dir}/../cookbooks"]
+
+EOF
+  echo
+
+  f_color_pr cyn "Creating vault json template..."
+  cat > "${relDir}/.chef/secrets/environment_name.core.json" << EOF
+{
+#  "contextService.rdbmsPassword":"<postgres_password>",
+  "mongodb.password":"<mongodb_password>"
+}
+EOF
+  echo
+
+  f_color_pr cyn "Creating tarball..."
+  export prefixName="cumulocity-chef-release-pack"
+  ( cd "${thisdir}"
+    tar cz${VERBOSE+v}f "${prefixName}-v${karafver}.tgz" "cumulocity-chef"
+  )
+  echo
+fi
+
 
