@@ -39,39 +39,45 @@ template_archive="${thisdir}/chef-solo-12-template.tgz"
 
 declare -A c8yCB
 c8yCB=(
-           ["cumulocity"]=0.6.0
-  ["cumulocity-ssagents"]=0.4.0
+              ["cumulocity"]=0.6.0
+     ["cumulocity-ssagents"]=0.4.0
+["cumulocity-backup-script"]=latest
 )
 
 declare -A comCB
 comCB=(
-               ["ulimit"]=0.4.0
-                ["runit"]=4.0.0
-          ["chef-client"]=8.1.1
-              ["openssh"]=2.3.1
-                  ["ntp"]=3.4.0
-                 ["java"]=1.49.0
-                  ["yum"]=5.0.1
-                ["users"]=5.2.2
-                 ["sudo"]=4.0.0
-           ["chef-vault"]=3.0.0
-            ["hostsfile"]=3.0.1
-                 ["swap"]=2.0.0
-         ["packagecloud"]=0.3.0
-             ["yum-epel"]=2.1.2
-                 ["cron"]=4.1.3
-            ["logrotate"]=2.2.0
-              ["windows"]=3.1.0
-             ["iptables"]=4.2.0
-                  ["apt"]=6.1.0
-             ["homebrew"]=4.2.0
-      ["compat_resource"]=12.19.0
-                 ["ohai"]=5.1.0
+                  ["ulimit"]=0.4.0
+                   ["runit"]=4.0.0
+             ["chef-client"]=8.1.1
+                 ["openssh"]=2.3.1
+                     ["ntp"]=3.4.0
+                    ["java"]=1.49.0
+                     ["yum"]=5.0.1
+                   ["users"]=5.2.2
+                    ["sudo"]=4.0.0
+              ["chef-vault"]=3.0.0
+               ["hostsfile"]=3.0.1
+                    ["swap"]=2.0.0
+            ["packagecloud"]=0.3.0
+                ["yum-epel"]=2.1.2
+                    ["cron"]=4.1.3
+               ["logrotate"]=2.2.0
+                 ["windows"]=3.1.0
+                ["iptables"]=4.2.0
+                     ["apt"]=6.1.0
+                ["homebrew"]=4.2.0
+         ["compat_resource"]=12.19.0
+                    ["ohai"]=5.1.0
 )
 
-declare -A mnOnlyCB
-mnOnlyCB=(
-               ["docker"]=latest
+declare -A mnOnlyC8yCB
+mnOnlyC8yCB=(
+   ["cumulocity-kubernetes"]=latest
+)
+
+declare -A mnOnlyComCB
+mnOnlyComCB=(
+                  ["docker"]=latest
 )
 
 declare -a mnRoles
@@ -326,8 +332,11 @@ else
   done
   echo
 
-  for c in "${!mnOnlyCB[@]}" ; do
-    eval "comCB[$c]"="${mnOnlyCB[$c]}"
+  for c in "${!mnOnlyC8yCB[@]}" ; do
+    eval "c8yCB[$c]"="${mnOnlyC8yCB[$c]}"
+  done
+  for c in "${!mnOnlyComCB[@]}" ; do
+    eval "comCB[$c]"="${mnOnlyComCB[$c]}"
   done
   f_cb_copy "${relCBdir}"
 
@@ -370,7 +379,7 @@ node_name                "cli"
 client_key               "#{current_dir}/access_certs/___ORGNAME___-cli.pem"
 validation_client_name   "___ORGNAME___-validator"
 validation_key           "#{current_dir}/access_certs/___ORGNAME___-validator.pem"
-chef_server_url          "https://___CHEFNAME___/access_certs/___ORGNAME___"
+chef_server_url          "https://___CHEFNAME___/organizations/___ORGNAME___"
 syntax_check_cache_path  "#{ENV['HOME']}/.chef/syntaxcache"
 cookbook_path            ["#{current_dir}/../cookbooks"]
 
