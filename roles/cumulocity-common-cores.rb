@@ -38,8 +38,7 @@ override_attributes(
       "tenantCache.timeToIdleSeconds" => "1",
       "tenantCache.timeToLiveSeconds" => "1",
       "userCache.timeToIdleSeconds" => "1",
-      "userCache.timeToLiveSeconds" => "1",
-      "dbinit.enabled" => "true"
+      "userCache.timeToLiveSeconds" => "1"
     }
   }
 )
