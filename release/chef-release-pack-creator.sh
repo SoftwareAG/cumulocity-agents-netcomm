@@ -202,53 +202,53 @@ sed -i -r \
   -e "s/___CEPVERSION___/"'${cepver}'"/g" \
   ${soloDir}/roles/cumulocity-dev-singlenode.rb
 
-if [[ -e "${soloDir}/.systemUpdateTODO" ]] ; then
+if [[ ! -e "${soloDir}/.systemUpdateDONE" ]] ; then
   while ! [[ ${UpdateQ,,} =~ ^(y(es)?|no?)$ ]] ; do
     f_question "run a system update? [Y/n]: " UpdateQ $AUTO
     if [[ ${UpdateQ,,} =~ ^(y(es)?)?$ ]] ; then
-      sudo yum ${yes} update && \
-      rm "${soloDir}/.systemUpdateTODO"
+      sudo yum ${yes} update --exclude="mongodb* cumulocity-* postgresql* nginx *-agent-server* epel-release sms-gateway-server python2-boto vaisala-server nodejs* remote-access-server* openresty* kube*" --disablerepo=cumulocity* && \
+      touch "${soloDir}/.systemUpdateDONE"
       break
     fi
   done
 fi
 
-if [[ -e "${soloDir}/.rpmInstallTODO" ]] ; then
+if [[ ! -e "${soloDir}/.rpmInstallDONE" ]] ; then
   while ! [[ ${rpmQ,,} =~ ^(y(es)?|no?)$ ]] ; do
     f_question "install the necessary additional components? [Y/n]: " rpmQ $AUTO
     if [[ ${rpmQ,,} =~ ^(y(es)?)?$ ]] ; then
       sudo yum ${yes} install java-1.{7,8}.0-openjdk gcc{,-c++} patch readline{,-devel} zlib{,-devel} libyaml-devel libffi-devel openssl-devel make git bzip2 autoconf automake libtool bison libxml2-devel libxslt{,-devel} ruby{,gems,-libs,-devel} make wget mlocate telnet wireshark vim lsof strace && \
-      rm "${soloDir}/.rpmInstallTODO"
+      touch "${soloDir}/.rpmInstallDONE"
       break
     fi
   done
 fi
 
-if [[ -e "${soloDir}/.chefInstallTODO" ]] ; then
+if [[ ! -e "${soloDir}/.chefInstallDONE" ]] ; then
   while ! [[ ${ChefQ,,} =~ ^(y(es)?|no?)$ ]] ; do
     f_question "install chef engine? [Y/n]: " ChefQ $AUTO
     if [[ ${ChefQ,,} =~ ^(y(es)?)?$ ]] ; then
       installScript="$( wget -qO - https://omnitruck-direct.chef.io/chef/install.sh )"
       bash -s -- -v 12 <<< "${installScript}"
-      rm "${soloDir}/.chefInstallTODO"
+      touch "${soloDir}/.chefInstallDONE"
       break
     fi
   done
 fi
 
-if [[ -e "${soloDir}/.selinuxDisableTODO" ]] ; then
+if [[ ! -e "${soloDir}/.selinuxDisableDONE" ]] ; then
   while ! [[ ${SelinuxQ,,} =~ ^(y(es)?|no?)$ ]] ; do
     f_question "disable SELinux? [Y/n]: " SelinuxQ $AUTO
     if [[ ${SelinuxQ,,} =~ ^(y(es)?)?$ ]] ; then
       sed -i -r "s/(SELINUX=).*/\1disabled/g" /etc/selinux/config
       setenforce 0
-      rm "${soloDir}/.selinuxDisableTODO"
+      touch "${soloDir}/.selinuxDisableDONE"
       break
     fi
   done
 fi
 
-if [[ -e "${soloDir}/.iptablesDisableTODO" ]] ; then
+if [[ ! -e "${soloDir}/.iptablesDisableDONE" ]] ; then
   while ! [[ ${IptablesQ,,} =~ ^(y(es)?|no?)$ ]] ; do
     f_question "disable IPtables/firewalld? [Y/n]: " IptablesQ $AUTO
     if [[ ${IptablesQ,,} =~ ^(y(es)?)?$ ]] ; then
@@ -256,13 +256,29 @@ if [[ -e "${soloDir}/.iptablesDisableTODO" ]] ; then
         systemctl disable $s
         systemctl stop $s
       done
-      rm "${soloDir}/.iptablesDisableTODO"
+      touch "${soloDir}/.iptablesDisableDONE"
       break
     fi
   done
 fi
 
-if [[ -e "${soloDir}/.hostRenameTODO" ]] ; then
+if [[ ! -e "${soloDir}/.timeZoneSetDONE" ]] ; then
+  while ! [[ ${TimezoneQ,,} =~ ^(y(es)?|no?)$ ]] ; do
+    f_question "set Timezone? [Y/n]: " TimezoneQ $AUTO
+    if [[ ${TimezoneQ,,} =~ ^(y(es)?)?$ ]] ; then
+      f_question "  type the timezone [Europe/Berlin]: " timezone $AUTO
+      if [[ -z $timezone || $timezone == yes ]] ; then
+        timedatectl set-timezone "Europe/Berlin"
+      else
+        timedatectl set-timezone "$timezone"
+      fi
+      touch "${soloDir}/.timeZoneSetDONE"
+      break
+    fi
+  done
+fi
+
+if [[ ! -e "${soloDir}/.hostRenameDONE" ]] ; then
   while ! [[ ${HostnameQ,,} =~ ^(y(es)?|no?)$ ]] ; do
     f_question "rename host? [Y/n]: " HostnameQ $AUTO
     if [[ ${HostnameQ,,} =~ ^(y(es)?)?$ ]] ; then
@@ -286,7 +302,7 @@ if [[ -e "${soloDir}/.hostRenameTODO" ]] ; then
       if [[ ! -z $eth0ip ]] ; then
         printf "${eth0ip}\t${hostname} ${fqdn}\n" >> /etc/hosts
       fi
-      rm "${soloDir}/.hostRenameTODO"
+      touch "${soloDir}/.hostRenameDONE"
       break
     fi
   done
