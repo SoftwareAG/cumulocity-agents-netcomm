@@ -32,13 +32,13 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-staging7-nonprod","cumulocity-small7-nonprod"],
      "token" => "1e3145.2ff901841c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.18.0-SNAPSHOT",
+     "images-version" => "8.19.7",
      "images2install" => [ "cep","test" ]
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "17adb8fe8848af81a75d175bace5d013bf71ee4fa374aafb30313f3d245de270b5f953ab29861044ef6e169406fb469fc50407d31c81ba874e1a3b9b37a33bfc",
-    "version" => "8.19.7-1",
-    "ssa-version" => "8.15.2-1",
+    "version" => "8.19.11-1",
+    "ssa-version" => "8.19.5-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
@@ -83,10 +83,11 @@ override_attributes(
       "contextService.tenantManagementDB" => "management",
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => "false",
-      "smsGateway.host" => "http://telstra-testbed-el7-core:8688/sms-gateway",
+      "migration.tomongo.default" => "MONGO_READ_WRITE_POSTGRES_WRITE",
+      "smsGateway.host" => "http://localhost:8688/sms-gateway",
       "email.from" => "no-reply@app.domain.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
-      "default.tenant.applications" => "administration,devicemanagement,cockpit",
+      "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "passwordReset.email.subject" => "Password reset",
       "passwordReset.token.email.template" => 'Dear app.domain.com user,\n\n\
             You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\n\n\
