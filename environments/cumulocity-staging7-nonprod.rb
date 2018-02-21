@@ -3,13 +3,8 @@ description "The production environment"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-<<<<<<< Updated upstream
 'cumulocity-kubernetes'=>'= 0.5.0',
 'cumulocity-ssagents'=>'= 0.3.0'
-=======
-'cumulocity-kubernetes'=>'= 0.4.0',
-'cumulocity-ssagents'=>'= 0.4.0'
->>>>>>> Stashed changes
 })
 
 override_attributes(
@@ -38,14 +33,10 @@ override_attributes(
      "token" => "1e3145.2ff901841c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
      "images-version" => "9.0.3",
-<<<<<<< Updated upstream
      "images2install" => [ "cep","test" ],
      "heapster" => {
        "enabled" => true
      }
-=======
-     "images2install" => [ "cep","test" ]
->>>>>>> Stashed changes
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "17adb8fe8848af81a75d175bace5d013bf71ee4fa374aafb30313f3d245de270b5f953ab29861044ef6e169406fb469fc50407d31c81ba874e1a3b9b37a33bfc",
