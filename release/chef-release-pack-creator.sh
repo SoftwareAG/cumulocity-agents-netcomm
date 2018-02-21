@@ -217,7 +217,7 @@ if [[ ! -e "${soloDir}/.rpmInstallDONE" ]] ; then
   while ! [[ ${rpmQ,,} =~ ^(y(es)?|no?)$ ]] ; do
     f_question "install the necessary additional components? [Y/n]: " rpmQ $AUTO
     if [[ ${rpmQ,,} =~ ^(y(es)?)?$ ]] ; then
-      sudo yum ${yes} install java-1.{7,8}.0-openjdk gcc{,-c++} patch readline{,-devel} zlib{,-devel} libyaml-devel libffi-devel openssl-devel make git bzip2 autoconf automake libtool bison libxml2-devel libxslt{,-devel} ruby{,gems,-libs,-devel} make wget mlocate telnet wireshark vim lsof strace && \
+      sudo yum ${yes} install java-1.{7,8}.0-openjdk gcc{,-c++} patch readline{,-devel} zlib{,-devel} libyaml-devel libffi-devel openssl-devel make git bzip2 autoconf automake libtool bison libxml2-devel libxslt{,-devel} ruby{,gems,-libs,-devel} make wget mlocate telnet wireshark vim lsof strace psmisc && \
       touch "${soloDir}/.rpmInstallDONE"
       break
     fi
