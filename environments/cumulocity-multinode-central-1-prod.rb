@@ -73,7 +73,7 @@ override_attributes(
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => false,
 #            "errorMessageRepresentationBuilder.includeDebug" => "false",
-      "default.tenant.applications" => "administration,devicemanagement,cockpit",
+      "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "management.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "tenant.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
@@ -160,7 +160,7 @@ override_attributes(
         "useKarafWebsocket" => true,
 	"useLUAforSSLcerts" => nil,
 	"useLUAforLimits" => true,
-	"useLUAforHealthCheck" => true,
+	"useLUAforHealthCheck" => nil,
         "nginx" => {
             "NGinxPort" => "openresty",
              "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
