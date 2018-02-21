@@ -4,7 +4,7 @@ description "The production environment"
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
 'cumulocity-kubernetes'=>'= 0.5.0',
-'cumulocity-ssagents'=>'= 0.3.0'
+'cumulocity-ssagents'=>'= 0.4.0'
 })
 
 override_attributes(
