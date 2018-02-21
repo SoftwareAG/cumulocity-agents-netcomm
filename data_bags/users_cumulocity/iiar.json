@@ -1,0 +1,9 @@
+{
+  "id": "iiar",
+  "comment": "Yaroslav Yarovoy",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAqKASPQUMpa7tM+rIs6twPzHf2G7veBjf2zD3WPJKE8Ur1DZJguOq7saQk6eOtrZ/mTNBBxMEHaYn7DQkuFTjCb899HqsY/sb7iTOML27DZY/h+wi+vdIFZXT7NhtLYS+qR1Ba72C0H62qEmQigoAcdjrX7BtLOcsAWR3Kq7ttdnft/ULYX4wZhMC5Dx2jCaxypq86yp6X7f9AsU7MjvmHPI6Plif3UG6BvgSBBdWzz9sXYNNAa6N9BqC0U7II4LBT8XmiPIEmavUyJ8Mie+WT0hFJT/b8/R5pTWc4db5tx1LPpAuk908qA2ipr6EeDqDCoxu+7YllEOdOSiOrBrT jarek@jarek-HP-WAW03"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}

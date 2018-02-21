@@ -1,0 +1,9 @@
+{
+  "id": "piotrn",
+  "comment": "Piotr Nowak",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDTQXnYOpo9r9HP3d7j2Zh68nCgyC8PlfYV72Acd1ucDYnV1SDLgCCQeiNQ1u6f4QATSQNPWg9e9pAMazvNntbWpnIJ/krPGUXmonCktHlfolymx4oH38ipoY8nw9cikVNqohtBSj+RYokJe9/Wf6eA1df7N558sdzowUVg9DaC+UGZBoqt6cRwxM3vTxR5PW6kEkUvXCtcrrDWcl5JhMUxHgtwOVyOc4+nucKAE3FwqenfkLNyS/dJtwn8i01glrEgYFcIcB6tbowhyK7qXAwEMoaTRXjzstkJRaEAe5iQbzx/NZoWGdoxpm18zMGCZxsZ1tBhWY2Yt8l2FbBspDJ/HE2BdX6VSpLErjbv3zMX17+v7wFVHyNLqujoJis+di8v+/nHkJN6LMn0zZ3ujI56MIVcx84FSEVrLmibUDa3+q5tCDInfl1zSFAnvo7K/5flDnlZW6swaGm1MfsRTe8Z0z5iNulWRkmK8TOA+xgY6EzPx5hgcJkrIAZ/gj7HncT69D0/L04Tw1xgboB+sAq117TfMMrRq+qxdOKUc9R4qPLiAld4Thao+vw4zbz0nSG6/+TgilGuBhllM3m67HE7Zm3Yh2xrbewianUqE34KJ7B3lR24Ci0Y84FMSxETk2sz4ZlUy/PQXE6R/H2wpsaS4HqoPdL+RrvbsXfo9v9rXQ== piotr.nowak@impaqgroup.com"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}

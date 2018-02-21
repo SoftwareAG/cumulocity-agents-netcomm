@@ -1,0 +1,7 @@
+{
+  "id": "lukaszpospiech",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDVdRxjsMIIeSalFJKPI3aAu8HCONQ27cy8lk/5h9bnz9ah+7UXaselaKYcGv5yCB/xB8qCk7wfnw55T5pv0dqCvfows8edEwjWat5QwYqa0TKINyOWV85HrU3WsSgFbidqgIbV2LUBU04OmPoEbXJ+ZkKjO6Z7BzDAYT1LNzeuv6ugC7ZW/DhyFn9TBrsl6eGN/fVplO69XY05hMO76/Oor+zfu3ngpLBaLxkhXljKMZsqvrlUeTcXw1W08FgRhHSGn1HPQyrg/Tm+kugbaGenQuDp0W0TEyK/MH3mQsIOetlAu/Ob3WL20ebfU3sYgOialqtcpIsB5C2U0kVk+CyK4yYOpNH2XsnXYRY8yOiUbDX1i7YdeUz21cm1b8pBAWEFol3mWJsqa5O/KvGw7KUMKf6whf00IgKmCc8F9lIF5gJL6ILEqUhpDoQ1Zcteso2aQ7Bo0oHQchbHdIGYmYI/443oF88IuGg4W5HKXennYeNtuOR5fis0RXOWcwwa95u3hrXqhOEncMpe0sYXkWRV93azAndNGZBGl47COtKhyfbpGsZxTDgtDd19rHr1eOJJjuNuiKcz0m/5BP2DgS2znX/X7W6VJ7j/+48mNCm1RWtq9WkyTzN3TObjcW+4JAoSUoln4dSkK39WphIvy0J+OKTT7ZBklB7lPX9YvVhgOw== lukaszpospiech@zocimek.local"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Lukasz Pospiech"
+}

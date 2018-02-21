@@ -1,0 +1,9 @@
+{
+  "id": "dombiel",
+  "comment": "Dominik Bielick",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLE0UuYxFFy1da+GaQ7xm1nJqGg0ZtH9WCqZtzIg7YCP9DlVgGm8SM9uuB1VO0r1164uNZC5Heef2+gqVNMBe1xhWR1ICJR8l+hsYI5D6BRtTW700JSClSeeZPDB02Vw1iJ5RGsKvCLKk8mKvNICuS46V0wR+n2OH7a3fTashO8Y1FrBEMBN3oX8BeQuQq0HMSoEmMvqDXRtEgnH73ANZT1XjYXnwptfyFNmcnzyInA9OdIqqEtpQ4pdItf+CJyRG7GIJZZ9dCAZA6iNUYJbg9yQkQ8q+vXt+MmnBcaECr9v0XaWG54v6wG02xhDSgN00p8rjAVZxO426a42dMPi7L dombiel@dombiel"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}

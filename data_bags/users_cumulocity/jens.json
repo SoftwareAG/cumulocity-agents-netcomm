@@ -1,0 +1,7 @@
+{
+  "id": "jens",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvzyiH/5n5VxC5EausC0GnNFqEXgOnhskB60Wcw8b/Gj5LQCvnmMixYIjberNGWONJu8NYYQLwARiW8g21MCDCTiWM8zTg1Ur1QjMJxmWIX9x5rdFgR7uLQ12XwOAcXwt1zSd4ycJIawENFPubYDb2ZPBV9a3kLUvtHQn6opUg2YLJNuhSrSBCtrIG7d13//UtF/2PlZKHE2PlgkW9bP3k+UgQcU1n3wM58O4XjOX75ljRByi1U7dUtewNV4Ql1DuVFmM0Y0nzFZ8T3jhRbUgel2VZvtRgPif9MrMW7UYBBvFbylLVytvGFbh+jYe80kI9O+RH3bAKmQz0PEJgQ40v fabi@jens"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Jens"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "wtrzcinski",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDuts7Bmd2O4ME2AeN6YkYABqnzUcS8UJJgGmnOPLMoOaFeoS6Je9HdiZMZsJXWbucg8/6xVacggg6hIcwZrmy95Eo36h7/2RCsc9c7meWWL4UW0Dm6jjyKSWu+JHhcS80cW1pRXiIV79J85+SbbnKvaPwhxWNZpSSH3Lk8u9nxJsfLFjISYpIXeO39na9Sw2AldGK0e2BI3D8Dn4p0vkLsP7Z1hILt9Y6jXKdnW4C1//GzddRzIuw0UHqh+PT4IfZUlSrmGhA+kIUWYtvi+S05SZHAz8/B6JrXXnYCaI5U3jLNVS1nDSP85nVEAkso9pIsxJztPLNd2yW+ATw0Xfdl wtrzcinski@wtrzcinski-Latitude-E5540"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Wojciech Trzcinski"
+}

@@ -1,9 +1,7 @@
 {
   "id": "tsschuel",
-  "comment": "Thomas Schuller",
-  "ssh_keys": [
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDf27KTGNOs+tPp6xMPeNtk7jBXUvK9I0eQjOuJlH/PdpFEJfPxaojjZcaVP7vWiN3z5MFinq7sh6/CnKpYhHsJGUqIz1PHcrCNQK5JRIEtm93rZNTd7kx+iuyfjTcDWwVDlCoTUesTvPN3V1/B+F7rKSIrVjEyE/a0jSveM5pVe+K864iX6PDIHj5eteyQsBcues7BsKFn+TIdM937018Y/QoWsJVXN5a7mfLllhJw2rpE3cpTChj+pj2+RC19cgJCsgfj5xzeXp8bRWXStUFIUDpap/Fr+8g9jJ5Vblg0M+jG2Jx8uhYCKht3qSXSihciXdcEfaOxA+SPS2/5hSaR thomasschueller@Thomass-MacBook-Pro.local"
-  ],
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDf27KTGNOs+tPp6xMPeNtk7jBXUvK9I0eQjOuJlH/PdpFEJfPxaojjZcaVP7vWiN3z5MFinq7sh6/CnKpYhHsJGUqIz1PHcrCNQK5JRIEtm93rZNTd7kx+iuyfjTcDWwVDlCoTUesTvPN3V1/B+F7rKSIrVjEyE/a0jSveM5pVe+K864iX6PDIHj5eteyQsBcues7BsKFn+TIdM937018Y/QoWsJVXN5a7mfLllhJw2rpE3cpTChj+pj2+RC19cgJCsgfj5xzeXp8bRWXStUFIUDpap/Fr+8g9jJ5Vblg0M+jG2Jx8uhYCKht3qSXSihciXdcEfaOxA+SPS2/5hSaR thomasschueller@Thomass-MacBook-Pro.local"],
   "groups": ["wheel"],
-  "shell": "\/bin\/bash"
+  "shell": "\/bin\/bash",
+  "comment": "Thomas Schuller"
 }

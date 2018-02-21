@@ -1,0 +1,7 @@
+{
+  "id": "aborek",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCruRrawhS9zTAjYoaklXyZm3EfuFzcCaehjiT3u6MJYCyYD5OAXalteUKGwNDJ8ZPrIxgtuk80UwyUfANUZ5uZkwyN1ML1PYEdbbnzOD8FZKmOnhw5BkNz1rb6u1tVJT1jxZyjIkQtKpXGXh/fMtiUC5V3hInOqp/Ju2am2GhPpRnN7j9d7AlAiWlPXyiivJeiw99Olv7eaD5msdH2I8xij5PwHTCDP9gaGeHT5SPuNC/W8w1iM23ZlxJxo5nL/ylsFTgoc6e1uPFx3FJ4iL2Y09eHsr/Ij8kkR0dA3Crjob3sJiQdjMTMHj05wHDm0MJ5iSdSa8IM8Q9dQwg/CbSt aborek@aborek-impaq-dell"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Arkadiusz Borek"
+}

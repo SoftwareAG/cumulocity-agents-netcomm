@@ -1,0 +1,7 @@
+{
+  "id": "ozge",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbWSAQkeB5R5LqdYPq4DHhK/xykgYZkV+syXaTNVtX896foyQoN2mo9e/OwQ+24zACPRkGVX+fNTuspYH+/hZIN24q2Hj4rF89aBQGYG3GHH6vCryAPZ7yRgWAU9P2lm9NXvxmI7ekK2HNgA6j9zftliKbkJjuFa5zW5G548HBRPcTQrSwsXQfkX6cdkUMfEYiF8XbP2S29XwR3HUH8LF1VGMH6fuMxSbdOrVbzjPTjQ1q+5wpEWZI9d+2Vb7pxEqSwA2LnYKWPBAfVz2HDPPnUz3x4mI4QCOdvJfyeVewK88c+s+LOp2PxbnDDT6KnC2qOip75NZRnyAHGnbImkpV ozge@andre-P65-P67RGRERA"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Ozge"
+}
