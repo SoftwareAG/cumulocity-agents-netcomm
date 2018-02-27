@@ -47,11 +47,11 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-multinode-central-1-prod"],
      "token" => "ta0d1q.byxyv9wyee5rr7we",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.19.12",
+     "images-version" => "8.19.14",
      "images2install" => [ "cep" ]
   },
   "cumulocity-karaf" => {
-    "version" => "8.19.13-1",
+    "version" => "8.19.14-1",
     "ssa-version" => "8.19.5-1",
     "memory_left_for_system" => "2048",
     "management-access" => [ "172.31.10.100","172.31.10.104" ],
