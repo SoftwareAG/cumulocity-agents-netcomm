@@ -14,18 +14,23 @@ f_color_pr(){
   printf "$COLOR""$@\n"'\e[m'
 }
 
-while getopts "Svik:c:" opt ; do
+while getopts "Svik:c:a:" opt ; do
   case $opt in
     S) SOLO=true ;;
     v) VERBOSE=true ;;
     i) interactive=true ;;
     k) karafver="${OPTARG}" ;;
     c) cepver="${OPTARG}" ;;
+    a) ssaver="${OPTARG}" ;;
   esac
 done
 
 if [[ -z $karafver || -z $cepver ]] ; then
   f_color_pr red "ERROR: specify release version for both karaf and cep!" && exit 1
+fi
+
+if [[ -z $ssaver ]] ; then
+  ssaver="$( sed -r 's/^(([0-9]+[.]){2})[0-9]+-1/\11-1/g' <<< "${karafver}" )"
 fi
 
 thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
@@ -199,6 +204,7 @@ soloDir="${outputFolder}/chef-solo"
 
 sed -i -r \
   -e "s/___KARAFVERSION___/"'${karafver}'"/g" \
+  -e "s/___AGENTSVERSION___/"'${ssaver}'"/g" \
   -e "s/___CEPVERSION___/"'${cepver}'"/g" \
   ${soloDir}/roles/cumulocity-dev-singlenode.rb
 
