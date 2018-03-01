@@ -52,12 +52,12 @@ override_attributes(
      "attachedEnvs" => ["telstra-preproduction-prod"],
      "token" => "1e3145.2ff901841c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.18.0-SNAPSHOT",
+     "images-version" => "8.19.15",
      "images2install" => [ "cep" ]
   },
   "cumulocity-karaf" => {
     ## "version" => "8.7.5-1",
-    "version" => "8.19.7-1",
+    "version" => "8.19.15-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "oort-enabled" => true,
@@ -103,7 +103,7 @@ override_attributes(
       "tenantSuspend.mail.sendtosuspended" => false,
       "tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
-      "smartrule.microservice.url" => "http://127.0.0.1:8334",
+      "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
       "email.from" => "no-reply@iotpreprod.telstra.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "passwordReset.email.subject" => "Password reset",
