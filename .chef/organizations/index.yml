@@ -28,3 +28,41 @@ cumulocity-devel:
 cumulocity-virginia:
   pub: 10.120.0.145
   priv: 10.120.0.145
+
+telstra-testbed-el7:
+  node_name: admin12
+  client_key: admin12.pem
+  pub: https://chef12.cumulocity.com/organizations/telstra-testbed-el7
+  knife:
+    ssh_key_name: cumulocity-telstra.pem
+    aws_access_key_id: AAAAAAAAAAAAAAAAAAAA
+    aws_secret_access_key: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+cumulocity-staging7:
+  node_name: admin12
+  client_key: admin12.pem
+  pub: https://chef12.cumulocity.com/organizations/cumulocity-staging7
+  knife:
+    ssh_key_name: cumulocity-telstra.pem
+    aws_access_key_id: AAAAAAAAAAAAAAAAAAAA
+    aws_secret_access_key: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+adamos-preproduction:
+  node_name: admin
+  client_key: admin.pem
+  pub: https://jvchefserver-12.cumulocity.com/organizations/adamos-preproduction
+  knife:
+    ssh_key_name: <name-of-the-AWS-region-key.pem>
+    aws_access_key_id: XXXXXX
+    aws_secret_access_key: YYYYYYY
+
+cumulocity-production: 
+  node_name: admin12 
+  client_key: admin12.pem 
+  pub: https://chef12.cumulocity.com/organizations/cumulocity-production 
+  knife: 
+    ssh_key_name: chef_cumulocity 
+    aws_access_key_id: AKIAIVNXBZD76HNCLQJA 
+    aws_secret_access_key: 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
+
+
