@@ -96,7 +96,7 @@ override_attributes(
       "system.two-factor-authentication.telstra.username" => "cumulocity",                                                                                        
       "system.two-factor-authentication.telstra.password" => "xBg5Wa8M",                                                                                          
       "smsGateway.host" => "http://127.0.0.1:8688/sms-gateway",
-      "default.tenant.microservices" => "device-simulator, smartrule",
+      "default.tenant.microservices" => "device-simulator, smartrule, tenant-sla-monitoring",
       "tenant.admin.grants.disabled" => true,
       "system.support-user.enabled" => true, 
       "tenantSuspend.mail.sendtosuspended" => false,
