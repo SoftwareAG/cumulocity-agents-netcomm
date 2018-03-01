@@ -1,0 +1,7 @@
+{
+  "id": "karthnik",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAw8e1d+hCDhg5pWFlsbPJ5OpcksFdDnP7oaRoeh2R5r4K4RrbRTtssBma9IjbNeDjeLM3HiM3Si00bXcEQivl3RYkglWG7ahAm6g20ywrqse8corafTkh6pWjmbj7x3K5cbClb1eJLfdrwSRV4nqXZMp3JuedGlM943neCkG2X/M+xghIbeRUfgeyI5ecAcgH+Tr/sX5cpcd9yC5hQb2d8emc5ILNX65QwChEfUSk9ydgJGjBGQlcB2HkNZ9P8dTczQMOJy/6zDHNuHHzO7GwnD3MLaBfL6/x8hyeFV1sD/F7yG6rGW5LYoRc2GlRyhgsMV1krfWp8O1/tiBe/9Behw=="],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Karthik Bahaddurgatte Matha"
+}

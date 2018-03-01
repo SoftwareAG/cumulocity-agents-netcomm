@@ -1,0 +1,7 @@
+{
+  "id": "lpia",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDt9sVZ5IV6aKH/n6DJ5CmxBc4DNEtylFDa+tv4lsG2lrHBUx/aiJzHTfjqrnPvPgllq+Fb8BOZVI7NGlzqy2Bkm2Y6um6ESsbMbQZbPyvcwreiGE+sJ5zqDcWSS7+pKbq2nTvZtKxbQcl12LZs2oMrayjln78A2WobzQEcwAdF+VuM9ppNmS34elx2AS6YdebtHC9G89GCV9doxjcUGjXbiwzKjUkVRAa042CQKVu277gWpb099ZAXDEoKkze/pqoKXmrRKcF+VEGhLiBtC3uNbkYp20XIsTZkUw3LFZ4TQaNpJuiuLnK18Zy16M21mumqXks7Pqr7WmhnKE7Ax1IF lpia@localhost"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Lukasz Piasecki"
+}

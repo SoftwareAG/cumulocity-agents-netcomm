@@ -1,0 +1,7 @@
+{
+  "id": "elias",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFz0xygLKjkHw5u5QNNXbXqlWlm0BjE7eZJsr1gQdMIlBDICRO4tFK8STssDc32erOsV3XQ6m5YaLAIN/oHXwaCfkgKTnWqaxN9YDnth7AO3cnX2EPKPz/sHMw5qz0rTAO47+EeM+ezPIv9Ipms9G5QRY4OtlbwqLakc6J1KxH+hi9m2s0ozc6BrXjAGos+DDyvdLI2IsGvLXWC2DwW54U8t3hf3rtwzWhjUns1W+KHUVLP5Cp2VY/cqgu2jlV759MZb8thP8AxpbdmVSQWFm5tQS/daGqliycrTMqDbALiZyn8CJhxclOgnqpGTMT9uUkZACs1BpxuCs6wb452Xfq1O/90ZFgYfH2LsvKm2p5Fl+7z8LTzoqUP6PY7YMpPLc6nOWx0BLs7S3foIJoo6qsRAqoJVux4PrXk2D+hziGKIPkmYZQMNOcBUzg2QMjieapg7ZUkS6AiicSHPv4251DZG03COLR4cgl2tGXltBNxEqYZbPkn7ufsm+oT6wRRv9Z79hvE9vNRwPsncOZ+DyJ91Ze+Y8OAP7G/hfi3aQ825jLPE2NwoymoCjrtyG2InfaCGszqMDH+5YjYmsEPtLkAbTTPOBQWwM7hk8fRndalGzQeXSW9CrG5tseeo7aVeeC/PT3DP2kpIoku53oe7Om9uLXZZIIK0fLZUBYokaZ1w== elias.weingaertner@cumulocity.com"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Elias"
+}

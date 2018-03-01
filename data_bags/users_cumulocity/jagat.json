@@ -1,0 +1,9 @@
+{
+  "id": "jagat",
+  "comment": "Jagat Jyoti Mishra ",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEA0W408cJuUO3PtJ35rqPXznENdDUHOXIQ0NKMntuPMZSSVs0IN2z6B7lJ3sMJiRLIZFzXmaMuXlAf9G3Nyg4ITRivOa8nNToi2a7g06bSo7GfiMgEGdof2WMmhvV7miWDviZg6OIlzz7L1M6ZcPohctv0i3JRMwA5Nhb732DAN0UIKw7fcRavSNT/PGpZSYOqCpYJzDzIDwpT9jJ7yHuLOcwhwbYAeCIk7c1B6geo44ogsjwbrkB5KPxTN4VVBnVxo57GEGQgzMBExQcycLn2dlK3MBx6Gn75RghSAYgrZ9VkUy7NV30I4snx0OMaw/Sr9PF4UQzMguPnszYwtDX5mw=="
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}

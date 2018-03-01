@@ -1,0 +1,7 @@
+{
+  "id": "deeptanu",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAodEViUxXmn/buECPI+hCjjDWt9srjhKPZYnRQPZx+nMrfpZAd1bqS7Q3kq1Z5nsSH8nzsoHBRwFEDCyzOc1V3KEPRKPFSBArJ8NGJ67Rm1jjfIALuDdVsSME8elk4MAxrHC1KINUXDTt8UEqqMB0bMwGv+7KflfpzspKbPjmo55CtMtY7WQYY7M38GQKaUYi/DdU8UITmDuXXUcb/iUeOEsVeXwG6TZQS/HzXbEgM4oyQI/2DkBxVIcQskSUvWgj1WItb5zpeh5jdyjQI81UT+USU++xBiXHTFJ4bjCDDGbHAaMhJBb1cMbCRmeKimvV7AGp0VbUKSaBjJ5y4s+H6Q=="],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Deeptanu Paul"
+}

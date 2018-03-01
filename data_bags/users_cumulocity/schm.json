@@ -1,0 +1,7 @@
+{
+  "id": "schm",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuh3Fwardqxl6dYSNXqtsSlaDu0ZA6SPxYH547KW8DOWKiWT+4MBXlbXAkn0dtzTqvi5AjWhxjiqkzm1x8+a+x5mJCviG9/8VLSChzogXZ2rt4iOBsHKafW17UXwI5Cfy5giGcJ32Kd7lMuk9QaP5HwRahORChodIomMOkj/AeLud1WyhbyFNjRhRgReMk0YAAi7wloe4b3bQFrhKAGKXar8KhctiDb84ATG9KtTTOu6hcqypYaGnIkNTCrzWSjvSG3uMqsx/8ggR62tuWufE4vUe+KuT4eKGhcXWiOTlZIR0v8t6QjDm9YNNaEmYIie2LWG5PCvg6bluh16kr2FA3 schm@schm-laptop"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Slawek Chmiel"
+}

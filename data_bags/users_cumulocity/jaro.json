@@ -1,0 +1,9 @@
+{
+  "id": "jaro",
+  "comment": "jaro",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCa8G6KBheXCf2dCGw0ty+tN6GoBVNc6dZV2VwOxohrtMCxfV12ZzBXOTgL7vvjglt+4De503JmrmSNyJD93Bf/evjRpxfV+RDX57XA9ZZVCL4Xn7oPXQRslAzCvLammKKiYfmm/v0jHJ0imim7eiDBKpbnCoOL9+Xlu5Ja5yk1KWbG5LZ52n7FMxyUpUfKxxmfigF18tvpr1XIK9bqqgHWKpRjYWDIp0dLnGnakd7GS0y6FPl6KkOoKLoboeUIoqRxxI2U+aA978nVpvmVfESalTPtHR53N9jl85pZI5PyA63fXzU9oDQxtujs0NFaOTFU/8bMrZfYtSkFoNSoUGRPT8ayMUYi7xdZKSYyk8X5aFu07d+gQJhFMUODR4F2xcQ6BLla/+K1TctbUekGtoL+CFVt07sYCcLNAhcA8f9A9GSDYs1zGLO4NrePoznLEdZ8FacOmaRGOGpekyjy3YJdxoDQqT7MoHDfvWUHdjB7BHQCyCZLc1cTFO8XxTGq4omkaVN7HoV94c3Qr1fUW3z1erYxESKOGlpxnyFH5U/2b35Oyz6utTGi394RWpD37T2tb0Po3zkr5iQTnaVwIl+oX9KNm15p6SKx+mMOmqfs1W2c9lJIYVUb0Kls+pYT5XyYKh+ySbnyzRdTy0uNrMX+/4D3Kp+CQ3AUAeGMDfHDaQ== jaroslaw.herod@gmail.com"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}

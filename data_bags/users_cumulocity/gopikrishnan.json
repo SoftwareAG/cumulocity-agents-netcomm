@@ -1,0 +1,7 @@
+{
+  "id": "gopikrishnan",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAhXIbExWZyzkSfvEYd26RqWKBccOXSrqumRgvdCdEkiYJSfZNXbhEtnpwsxxvg6f4cwqTQt+ITgWatbFl8nMHsrwqyYsVXK7DMYxcaRZDtfDZd2SROV8TSiXcZqSc/dqEVP9HOwLJOHimP2lBQSn1D4SPxzAHVsqZXGWvBTJr22f9eRooFKByhLthzw9y3IjJYppQk6zY86i9Q/TTCKuITxXQGo7ObzO4oXlZuJAUjBzby877JdO5UdoI0ht3UMwno1dNsqfbdCTksBOn4mzjL55SfVs+DNc3czCnd6XBpyr2qBBIxcyTB5r8BV0ZwYyMkciPWJLgBvsLe+XoE8lp3Q=="],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Gopi Krishnan"
+}

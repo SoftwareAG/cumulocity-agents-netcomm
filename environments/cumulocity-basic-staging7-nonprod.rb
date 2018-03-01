@@ -1,17 +1,17 @@
-name "cumulocity-staging7-nonprod"
-description "The production environment"
+name "cumulocity-basic-staging7-nonprod"
+description "The Basic Staging 7 environment for test releases"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-'cumulocity-kubernetes'=>'= 0.5.0',
+'cumulocity-kubernetes'=>'= 0.4.0',
 'cumulocity-ssagents'=>'= 0.4.0'
 })
 
 override_attributes(
-  "domainname" => "staging7.c8y.io",
+  "domainname" => "staging.c8y.io",
 
   "environment" => {
-      "address" => "management.staging7.c8y.io"
+      "address" => "management.staging.c8y.io"
   },
   "swapfilesize" => 768,
   'yum' => {
@@ -28,26 +28,23 @@ override_attributes(
      "jdk_version" => "8"
   },
   "cumulocity-kubernetes" => {
-     "deployK8S4env" => "cumulocity-staging7-nonprod",
-     "attachedEnvs" => ["cumulocity-staging7-nonprod","cumulocity-small7-nonprod"],
-     "token" => "1e3145.2ff901841c48af2e",
+     "deployK8S4env" => "cumulocity-basic-staging7-nonprod",
+     "attachedEnvs" => ["cumulocity-basic-staging7-nonprod"],
+     "token" => "1e3145.2ff901941c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.0.3",
-     "images2install" => [ "cep","test" ],
-     "heapster" => {
-       "enabled" => true
-     }
+     "images-version" => "8.19.7",
+     "images2install" => [ "cep","test" ]
   },
   "cumulocity-karaf" => {
-    "CUMULOCITY_LICENCE_KEY" => "17adb8fe8848af81a75d175bace5d013bf71ee4fa374aafb30313f3d245de270b5f953ab29861044ef6e169406fb469fc50407d31c81ba874e1a3b9b37a33bfc",
-    "version" => "9.0.3-1",
-    "ssa-version" => "9.0.3-1",
+    "CUMULOCITY_LICENCE_KEY" => "9cfda1bd57553c744d813970705747ef3c3c1f97ad669c0ff9a3c8bba40675705f458e46b46bd9710d7bc99594fe3030d7637457e94c6982ab9de77acce75806",
+    "version" => "8.21.1-1",
+    "ssa-version" => "8.21.0-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
     "CUMULOCITY_LICENCE_DIR" => nil,
+    "openrelayIP" => "172.20.21.199",
     "management-access" => [ "0.0.0.0/0" ],
-    "openrelayIP" => "172.31.35.90",
       "karaf" => {
         "memory" => {
             "xms" => "1024M"
@@ -60,14 +57,14 @@ override_attributes(
     }
   },
   "cumulocity-mongo" => {
-    "sharedkey-content" => "1y7LbnZkJvDgtUOHN+8L++DAABlWdLO6kA+GXR23vl5QlslmqlB6goKQmDzgeMdA\nGC38ZcPLejm2Mnvk3TF7QHlhW1OvQZFOk600/Z9qbkzIjfQLNU4RIOdWq7pTq70w\nsyIbBXAZ+ZS2AUQnObxRiToIeDxakzjuiTQbwfYz7Z2bA/hJMrKNdI//IeRl93gt\nMAV5f07l5WQQ8OcKjqYlga1J2izcVmcbd6Q0PCtp38MrmBe3iEn34FpiAgDVZp06\ncuNJDUwr2YF90KWLs53g85vfhybNchxISXMSJBFApId8cuVeZ2oRKf7HjcyrsRR6\nUxk/74MMKvsXdxG2e2pfgTywyZ5Ndk5pGKXj6TZ5QY4Qw2QHryVPyRT90xogdDtg\nA4A8iSWRBgnrtJP+qvlfBSCpdN0EqmHqGuWcqzkc4sjpO9ubQdqvBFni9X0A6mxE\nWwGH2tk6uWQU4+OPfoQkVgUCFgepFWuzWHj9TA71sn0hmDLnBZDUh3yKcEz++qKy\nchfOPrnhSPpvZI0762F5LdIp7cuAwMC4wEYSSloawzqBnCpvQ0BsFAyprhZhFDdV\nUP67nmp/q5oaXgdr3TJOTGkRgcPXRSuf4zV4nKdMdyy7HM9o24LGXiJ40b3CZGhm\nyG0tRoTRNTd6hgFQWYp8hT4EK++kf60boGhUSPxvlkbERZ/mx4kPGY1fYWkRN8Y8\nbZXDnwu+A3kqCwSTJ6tjzrtqlQ51z5rJWl14eIo2Ienfym1tquoPNMeksQroivRB\n1ZXlA3v68+nHy2HljMsLUjt8oxho3HhN1RcDXazf4b39n5nZS4wOxjvPvqSrX4bw\n/Hwh8wL2+IDfOLl1yAO6isrEXApJSTiXFt5fSbaPW6T7hCiCkNPzdS+FYLArozNE\nYrzvmkbcHfMqqTCdWDSOWV7pRqvUARRFi0CvjWh85zmt4LG7IY/GBKJvmSAfFX1O\n5OCavvQrRbnH/m1xW7NHXbeWH80K",
+    "sharedkey-content" => "U1nZc+UvINPiri3RRriSERbpUcJpgtvITqiwHAIN+dYcdOEGAEv2P2nKCRhRaUvB\nXy1eI/gwcFjKGFcqB/iRQ4EPL/KRJ9LKajOmbmOuMTFeYQ276d9QnnXE5Wkj10sC\nBjjSkVAeF/erOKvFdJed15Q+QXsUslwswPOxFgkUYDw7emIvkJsd6BYRS0yD8Sj3\n4ykeHs/+UK/bnPstnQfLMBq+yyLNkbY/UbKOT1gBY9A6B1MBWLlaPU9gMYO+YKMd\nauARB5WolUVjbA5Hgt0WY14tao/KYEJPig3LCrlcBsoe+W4BRHXgcIqrYNO3c2Yy\nggpNSDP2cyU8LF6uaKzr6GQqa4Gw8CwgSUbR6ylp8i/EeCrzgklHdMqclF4E7b4R\n0nAk/hZu7am2TVRIU3Lzly30jInXh9Zcd34CId8Q14VWDPh+SN3gHeCfG5yPWEsS\nm6fDTzCFK84BV/6lPG1dBxSD8qYygK+GSHzkGc2SJEmbXUz+q1xMe5dzz8g7ukTa\n0HbjAseVS1/2dtSxNgJxzerC/zOhslN6Zu2dGl3pjUuuH+GcapBfn7kmSxtOTfw8\nsfi5OejOMHEtKSiKnBNwW7vpjgq+0F9H/pbJIhiYgNlENBFkZraU1EXxNLr/jdd6\nJS3eL3/T76MYHaBe48tUfbFhaGMLG8p9EbMEqg/x5EGhs+px/np9ci6qTDaeRbFP\nP764aXLoWyL6UcDyQDl6+Oge9TJaoq5STn9TngdJendQDuZTNUcsSAlK9Tz6mb0i\nGbzFMZqpqQHBmw+3WYannksDwA++1K1zS8z0JFhNIfAG0up2cIEUHSFOwe9F4isM\n3IA/razLXXZXIFdFxFcMg9vMY3DcBvgwXwgWAs56z+tzlY5SwswVpEbMAeUBpMIB\nIvMWtkHom9Bb4vDcHBw+HxRaevHyTS40eyKBqZMFROa6B78YOwRUssMulaCBb+cA\nFOWpBFHpH884t51c7jrBLPCmjL/8",
     "mongodb.initUser" => "init-root",
-    "mongodb.initPassword" => "felix"
+    "mongodb.initPassword" => "StagBasic777^^^"
   },
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '8.16.0'
+    "version" => '8.19.10'
   },
   "cumulocity-ssagents" => {
     "useTags" => true
@@ -75,7 +72,7 @@ override_attributes(
   "cumulocity-core" => {
     "properties" => {
       "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
-      "default.tenant.microservices" => "device-simulator, smartrule, cep, tenant-sla-monitoring",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
       "sendDashboardAgent.url" => "http://localhost:19191/report",
@@ -86,12 +83,17 @@ override_attributes(
       "contextService.rdbmsUser" => "postgres",
       "contextService.tenantManagementDB" => "management",
       "cumulocity.environment" => "PRODUCTION",
-      "auth.checkBlockingFromOutside" => "false",
-      "migration.tomongo.default" => "MONGO_READ_WRITE_POSTGRES_WRITE",
-      "smsGateway.host" => "http://localhost:8688/sms-gateway",
+      "auth.checkBlockingFromOutside" => "true",
+      "migration.tomongo.default" => "MONGO_READ_WRITE",
+      "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
       "email.from" => "no-reply@app.domain.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
+      "system.two-factor-authentication.enabled" => true,
+      "system.two-factor-authentication.max.inactive" => "10",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
+      "management.admin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
+      "admin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
+      "sysadmin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
       "passwordReset.email.subject" => "Password reset",
       "passwordReset.token.email.template" => 'Dear app.domain.com user,\n\n\
             You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\n\n\
@@ -124,9 +126,9 @@ override_attributes(
   },
 
   "cumulocity-external-lb" => {
-    "landing_page" => "https://staging7.c8y.io/apps/devicemanagement",
+    "landing_page" => "https://staging.c8y.io/apps/devicemanagement",
     "paas_default_page" => "https://$http_host/apps/devicemanagement",
-    "paas_public_default_page" => "https://staging7.c8y.io/apps/dmpublic",
+    "paas_public_default_page" => "https://staging.c8y.io/apps/dmpublic",
     "usePostgresForPaaS" => false,
     "paas_redirection" => true,
     "temp_chunkin" => false,

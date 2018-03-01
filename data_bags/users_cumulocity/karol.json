@@ -1,0 +1,7 @@
+{
+  "id": "karol",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDD8fEHCc+QPaOVvGQfHOzTX315e2OGuu1egb5h9fk7R1QvZcEQ+HkUzxUGVJDnRnHGZEJeQgAfBtODkUhM8c9K5VM8EprkEuutl+JjYHT7xPbA0uz18+0zfdbqsUUYNYF3jZk+hhiSt1PUN4Ig4+S3P9gxV0kQn505r0zpfk/HoS1cAo0yd/mVz+CmB/5ltQ/4bvtbu4fRXhz7JY4QLOeJXwXet83LDken2FXhG43hjk3k+iTjvl5J2Vf6HpMnTkZCHxn1u78nv7y/scodllA4qnHrtvXgMsMHWIhZWSTP7e02YDjYiH1sqlHxm1brUKdqpUi5flKXrGTAR7i148DF karol.kaczmarski@impaqgroup.com"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Karol Kaczmarski"
+}

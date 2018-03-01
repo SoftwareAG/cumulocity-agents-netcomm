@@ -1,0 +1,7 @@
+{
+  "id": "dariusz",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyn1nM1BkqbXBnS8Fqu58H1uj/3AL/OXYpybPXBomGcsG8RpTGIiywHMEJtliCKFI7xLoArqxoC42wtjHgaixx5BP5+5qWzX/rcpilPaV3eig0NeCIrmYGns0MD7GrMMn9EyLSA0IBDLkll04HYIXgbbN636J1m4RYyPKx/+/xUPquJ/dqfE8S3x4BnG+qWJ19zCyt1rzSA27zwZzypMlLduuyfClbuT+pIQiD2kGULZgKLXvEeyXBEBSbRgpxdJGuNgJJRWI6DgEWsaRnykB30GgrvF0ZEoVMxHDLnlaYQFDtVEzSVVh11mKlJs9QyS31MjIwa0ipOavUQt6tZeMR ddud@ddud-PC"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Dariusz Dudzinski"
+}
