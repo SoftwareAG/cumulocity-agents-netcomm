@@ -96,6 +96,7 @@ override_attributes(
       "system.support-user.enabled" => false, 
       "tenantSuspend.mail.sendtosuspended" => false,
       #"tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
+      "microservice.websocket.port" => 8303,
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
       "speechAgent.baseURL" => "${SPEECH-AGENT-SERVER}:8030",
