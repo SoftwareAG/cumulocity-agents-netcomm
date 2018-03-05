@@ -11,7 +11,13 @@ override_attributes(
         "process_hard_limit": 2048
       }
     }
-  }
+  },
+      "systemd": {
+        "ulimits": {
+            "DefaultLimitNOFILE": 20480,
+            "DefaultLimitNPROC": 8000,
+        }
+  },
 )
 
 run_list(

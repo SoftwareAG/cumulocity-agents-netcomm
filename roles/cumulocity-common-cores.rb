@@ -24,6 +24,12 @@ override_attributes(
       }
     }
   },
+      "systemd": {
+        "ulimits": {
+            "DefaultLimitNOFILE": 30480,
+            "DefaultLimitNPROC": 8000,
+        }
+  },
   "cumulocity-karaf" => { # FIXME remove it once core is migrated to version > 0.19.0
     "properties-filenames" => []
   },

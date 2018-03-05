@@ -24,8 +24,13 @@ override_attributes(
         "process_soft_limit": 1024,
         "process_hard_limit": 2048
       }
-
     }
+  },
+      "systemd": {
+        "ulimits": {
+            "DefaultLimitNOFILE": 8192,
+            "DefaultLimitNPROC": 2048,
+        }
   }
 )
 

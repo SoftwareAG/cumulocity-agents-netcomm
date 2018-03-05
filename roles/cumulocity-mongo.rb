@@ -19,8 +19,12 @@ override_attributes(
       }
     }
   },
-
-
+      "systemd": {
+        "ulimits": {
+            "DefaultLimitNOFILE": 64000,
+            "DefaultLimitNPROC": 64000,
+        }
+  },
   "nagios" => {
     "checks" => {
       "memory" => {
