@@ -51,8 +51,8 @@ override_attributes(
      "images2install" => [ "cep" ]
   },
   "cumulocity-karaf" => {
-    "version" => "8.19.14-1",
-    "ssa-version" => "8.19.5-1",
+    "version" => "8.18.10-1",
+    "ssa-version" => "8.18.5-1",
     "memory_left_for_system" => "2048",
     "management-access" => [ "172.31.10.100","172.31.10.104" ],
     "notification" => true,
@@ -175,7 +175,7 @@ override_attributes(
   },
    "cumulocity-cep" => {
        "properties" => {
-         "version" => "8.19.13-1",
+         "version" => "8.18.10-1",
          " esperha.storage" => "/mnt/esperha-storage/"
      },
   }
