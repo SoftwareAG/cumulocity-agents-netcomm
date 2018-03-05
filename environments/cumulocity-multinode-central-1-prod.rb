@@ -97,7 +97,7 @@ override_attributes(
       "tenantSuspend.mail.sendtosuspended" => false,
       #"tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
-      "smartrule.microservice.url" => "http://127.0.0.1:8334",
+      "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
       "speechAgent.baseURL" => "${SPEECH-AGENT-SERVER}:8030",
       "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
       "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
