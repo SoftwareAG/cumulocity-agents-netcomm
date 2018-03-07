@@ -2,9 +2,15 @@ name "cumulocity-multinode-central-1-prod"
 
 description "The production multinode environment in Frankfurt"
 
+cookbook_versions({
+'cumulocity'=>'= 8.18.0',
+'cumulocity-kubernetes'=>'= 8.18.0',
+'cumulocity-ssagents'=>'= 8.18.0'
+})
+
 default_attributes(
- "fixhostname" => true,
- "fixhostsfile" => true,
+ "fixhostname" => false,
+ "fixhostsfile" => false,
 # "fixhostname" => false,
 # "fixhostsfile" => false,
  "elb" => {
@@ -89,16 +95,17 @@ override_attributes(
       #"system.two-factor-authentication.<customer>.baseUrl" => "https://free.rcs.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",             
       #"system.two-factor-authentication.<customer>.username" => "cumulocity",                                                                                        
       #"system.two-factor-authentication.<customer>.password" => "xBg5Wa8M",                                                                                          
-      "default.tenant.microservices" => "device-simulator, smartrule, cep",
-#      "migration.tomongo.default" => "MONGO_READ_WRITE",
+#      "default.tenant.microservices" => "device-simulator, smartrule, cep",  <--for 8.19
+#      "migration.tomongo.default" => "MONGO_READ_WRITE", <--for 8.19
+      "default.tenant.microservices" => "device-simulator, smartrule",
       "migration.tomongo.default" => "POSTGRES_READ_WRITE",
-      #"tenant.admin.grants.disabled" => true,
+      #"tenant.admin.grants.disabled" => true,  
       "system.support-user.enabled" => false, 
       "tenantSuspend.mail.sendtosuspended" => false,
       #"tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
       "microservice.websocket.port" => 8303,
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
-      "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
+      "smartrule.microservice.url" => "http://127.0.0.1:8334",
       "speechAgent.baseURL" => "${SPEECH-AGENT-SERVER}:8030",
       "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
       "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
