@@ -77,7 +77,7 @@ override_attributes(
       "mongodb.admindb" => "admin",
       "contextService.tenantManagementDB" => "management",
       "cumulocity.environment" => "PRODUCTION",
-      "auth.checkBlockingFromOutside" => false,
+      "auth.checkBlockingFromOutside" => true,
 #            "errorMessageRepresentationBuilder.includeDebug" => "false",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "management.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
