@@ -177,6 +177,9 @@ override_attributes(
      "cumulocity-ssagents" => {
         "useTags" => true
   },
+    'cumulocity-application' => {
+      'vendme' => "application-vendme"
+  },
     'cumulocity-rsyslog' => {
 #      'cross-env-log-server' => "cumulocity-multinode-prod",
 #      'log-server-ext-address' => "monitoring.cumulocity.com"
