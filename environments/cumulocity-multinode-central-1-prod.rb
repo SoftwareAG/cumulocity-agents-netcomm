@@ -65,7 +65,7 @@ override_attributes(
     "oort-enabled" => true,
     "cep-server-enabled" => true,
     "revDNSname" => "cepfra.cumulocity.com",
-    "openrelayIP" => "172.31.10.100",
+    "openrelayIP" => "cepfra.cumulocity.com",
     "CUMULOCITY_LICENCE_KEY" => "654176766f1252e56d6eeaa877986f0737164b0e1c6110c048237e0d406f280c27d650ededb20ed6d9f0979696d2da05270a25dc76527ce89c722952e2ab7eb6"
   },
   "cumulocity-core" => {
@@ -100,7 +100,7 @@ override_attributes(
       "default.tenant.microservices" => "device-simulator, smartrule",
       "migration.tomongo.default" => "POSTGRES_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,  
-      "system.support-user.enabled" => false, 
+      "system.support-user.enabled" => true, 
       "tenantSuspend.mail.sendtosuspended" => false,
       #"tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
       "microservice.websocket.port" => 8303,
@@ -183,7 +183,7 @@ override_attributes(
   },
    "cumulocity-cep" => {
        "properties" => {
-         "version" => "8.18.10-1",
+         "version" => "8.15.4-1",
          " esperha.storage" => "/mnt/esperha-storage/"
      },
   }
