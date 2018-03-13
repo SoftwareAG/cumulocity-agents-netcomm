@@ -67,7 +67,7 @@ but there is already a running chef-server-12 ready to use.
 - password `12345678`
 
 
-## setup workstation via barematel
+## setup workstation
 this chef-repo is a ruby based project and needs ruby and gems(plugins) to work.
 to install ruby you need a ruby version manager like rbenv or rvm.
 you can find the needed ruby version in file ./.ruby-version
@@ -80,13 +80,9 @@ run `bundle exec knife node list` this will ask the chef-server for registered n
 it will ask you in which organization you are running knife. run `export ORGNAME=myorg` to use the organization that is already installed on the existing chef-server-12. you can change or add organization settings in ./.chef/organizations/index.yml
 `bundle exec knife node list` should return now with no error.  AWS credentials are also kept in organization's index.yml
 
-## setup workstation via chefdk
+## alternative setup workstation
 instead of installing an alternative ruby version and install component piece by piece, you can alternatively download the latest chefdk package from https://downloads.chef.io/chefdk (latest tested version is 2.3.4), install it and install/update knife-ec2 with 'gem install knife-ec2' command as root.
 This will install all the main components and you will not need to use 'bundle exec' before every command.
-
-## setup workstation via docker
-- `build workstation chef docker image` make build
-- `run image and exec container` make run_myorg
 
 ## creating and provisioning new nodes
 with knife you can provisioning
