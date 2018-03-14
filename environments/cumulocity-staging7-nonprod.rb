@@ -40,8 +40,8 @@ override_attributes(
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "17adb8fe8848af81a75d175bace5d013bf71ee4fa374aafb30313f3d245de270b5f953ab29861044ef6e169406fb469fc50407d31c81ba874e1a3b9b37a33bfc",
-    "version" => "9.0.3-1",
-    "ssa-version" => "9.0.3-1",
+    "version" => "9.1.0-1",
+    "ssa-version" => "9.0.1-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
@@ -67,7 +67,7 @@ override_attributes(
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '8.16.0'
+    "version" => '9.1.0'
   },
   "cumulocity-ssagents" => {
     "useTags" => true
@@ -139,6 +139,7 @@ override_attributes(
     "proxy_cache" => true,
     "certificate_domain" => "staging.c8y.io",
     "useLUAforLimits" => true,
+    "useLUAforSSLcerts": true,
     "useLUAforHealthCheck" => true,
     "nginx" => {
         "NGinxPort" => "openresty",
