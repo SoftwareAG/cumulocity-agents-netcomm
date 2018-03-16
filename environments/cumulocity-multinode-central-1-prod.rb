@@ -53,12 +53,13 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-multinode-central-1-prod"],
      "token" => "ta0d1q.byxyv9wyee5rr7we",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.19.14",
-     "images2install" => [ "cep" ]
+     "images-version" => "8.19.16",
+#     "images2install" => [ "cep" ]
+     "images2install" => [ "" ]
   },
   "cumulocity-karaf" => {
-    "version" => "8.18.10-1",
-    "ssa-version" => "8.18.5-1",
+    "version" => "8.19.16-1",
+    "ssa-version" => "8.19.5-1",
     "memory_left_for_system" => "2048",
     "management-access" => [ "172.31.10.100","172.31.10.104" ],
     "notification" => true,
@@ -97,7 +98,7 @@ override_attributes(
       #"system.two-factor-authentication.<customer>.password" => "xBg5Wa8M",                                                                                          
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",  <--for 8.19
 #      "migration.tomongo.default" => "MONGO_READ_WRITE", <--for 8.19
-      "default.tenant.microservices" => "device-simulator, smartrule",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep",
       "migration.tomongo.default" => "POSTGRES_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,  
       "system.support-user.enabled" => true, 
@@ -186,7 +187,7 @@ override_attributes(
   },
    "cumulocity-cep" => {
        "properties" => {
-         "version" => "8.15.4-1",
+         "version" => "8.19.16-1",
          " esperha.storage" => "/mnt/esperha-storage/"
      },
   }
