@@ -127,7 +127,7 @@ override_attributes(
 
   "cumulocity-external-lb" => {
     "landing_page" => "https://staging.c8y.io/apps/devicemanagement",
-    "paas_default_page" => "https://$http_host/apps/devicemanagement",
+    "paas_default_page" => "https://$http_host/apps/$defapp",
     "paas_public_default_page" => "https://staging.c8y.io/apps/dmpublic",
     "usePostgresForPaaS" => false,
     "paas_redirection" => true,
