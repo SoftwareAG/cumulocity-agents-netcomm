@@ -12,6 +12,7 @@ override_attributes(
 run_list(
                     # 'recipe[swap::swapfile]',
   'recipe[cumulocity]',
+  'recipe[cumulocity-rsyslog]',
   'recipe[ulimit]',
   'recipe[chef-client::delete_validation]',
   'recipe[runit]',
