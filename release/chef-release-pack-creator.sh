@@ -46,6 +46,7 @@ declare -A c8yCB
 c8yCB=(
               ["cumulocity"]=0.6.0
      ["cumulocity-ssagents"]=0.4.0
+      ["cumulocity-rsyslog"]=1.0.0
 ["cumulocity-backup-script"]=latest
 )
 
@@ -392,7 +393,7 @@ EOF
   echo
 
   f_color_pr cyn "Creating knife skel config..."
-  cat > "${relDir}/.chef/knife.rb" << EOF
+  cat > "${relDir}/.chef/knife.rb.template" << EOF
 current_dir = File.dirname(__FILE__)
 
 log_level                :info
@@ -423,6 +424,8 @@ EOF
     tar cz${VERBOSE+v}f "${prefixName}-v${karafver}.tgz" "cumulocity-chef"
   )
   echo
+  f_color_pr cyn "Eliminating temporary folder..."
+  rm -rf${VERBOSE+v} "${relDir}"
 fi
 
 
