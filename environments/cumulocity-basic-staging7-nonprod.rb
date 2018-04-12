@@ -32,12 +32,12 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-basic-staging7-nonprod"],
      "token" => "1e3145.2ff901941c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.19.7",
+     "images-version" => "9.0.7",
      "images2install" => [ "cep","test" ]
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "9cfda1bd57553c744d813970705747ef3c3c1f97ad669c0ff9a3c8bba40675705f458e46b46bd9710d7bc99594fe3030d7637457e94c6982ab9de77acce75806",
-    "version" => "9.0.5-1",
+    "version" => "9.0.7-1",
     "ssa-version" => "8.21.0-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
@@ -64,7 +64,7 @@ override_attributes(
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.0.5'
+    "version" => '9.0.7'
   },
   "cumulocity-ssagents" => {
     "useTags" => true
@@ -144,7 +144,7 @@ override_attributes(
     "useLUAforHealthCheck" => true,
     "nginx" => {
         "NGinxPort" => "openresty",
-        "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
+        "version" => "1.13.6.1-20.el7.centos.c8y.8.11.1"
     }
   },
 
