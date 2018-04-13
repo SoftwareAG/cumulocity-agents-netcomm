@@ -32,14 +32,14 @@
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "8.19.18",
+      "images-version": "8.19.19",
       "images2install": [
-        "cep"
+        "cep", "cep-small"
       ]
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "9e6ecb2f76ffcc9dd79b59a34dae875be4d5fc340fb60d06e212e3d26e8399842c1734d3e9474e9ace8e3cf2e8d0381fae9aa46698f566ff02418aeb73c14cbd",
-      "version": "8.19.18-1",
+      "version": "8.19.19-1",
       "ssa-version": "8.21.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
