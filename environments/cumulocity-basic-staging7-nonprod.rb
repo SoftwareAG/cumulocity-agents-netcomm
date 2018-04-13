@@ -138,6 +138,7 @@ override_attributes(
     "useMQTTsupport" => true,
     "useMasterForPushOperations" => false,
     "useKarafWebsocket" => true,
+    "useMQTTlogs" => true,
     "proxy_cache" => true,
     "certificate_domain" => "staging.c8y.io",
     "useLUAforLimits" => true,
