@@ -67,7 +67,7 @@ override_attributes(
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.3.0'
+    "version" => '9.4.0'
   },
   "cumulocity-ssagents" => {
     "useTags" => true
