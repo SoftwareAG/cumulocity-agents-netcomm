@@ -66,7 +66,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "8.19.16"
+      "version": "8.19.19"
     },
     "cumulocity-ssagents": {
       "useTags": true
@@ -89,6 +89,7 @@
         "migration.tomongo.default": "POSTGRES_READ_WRITE",
         "smsGateway.host": "http://localhost:8688/sms-gateway",
         "email.from": "no-reply@app.domain.com",
+        "cepServer.queue.limit": "250000",
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "default.tenant.applications": "administration,devicemanagement,cockpit",
         "management.admin.password": "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
@@ -112,7 +113,7 @@
       "useSSL": true,
       "useHSTS": false,
       "useMQTTsupport": true,
-      "useMasterForPushOperations": false,
+      "useMasterForPushOperations": true,
       "useKarafWebsocket": true,
       "proxy_cache": true,
       "certificate_domain": "staging.c8y.io",
