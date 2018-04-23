@@ -148,7 +148,7 @@ override_attributes(
         "initRunGroup" => "mongod",
         #'members-check' => false,
         #"installEnterprise" => true, # migration change
-        "wiredtiger-cache" => 8,
+        "wiredtiger-cache" => 6,
         "sharedkey-content" => "qhdToQA1bM4iDoaCQB7Qu3nsalC5vXH1906MBhcppDLWRly0zDHIIJkiHsnQVas7\nQjmCtHPcUKd0vxPLc4TBU7dHe39/NHCEws42k3Ew84bVLD84ojLmIeUBrzkGGiqg\nTeTt0JBGrUx3rLpgfQ7N6kJaBvga3EveKbj6erc/o7mWVuoCzLfc54r9phm9Emw0\nWO+YoHZMOeY55lbrld5nApIztO36Yh3Z9LjCMHyhs58iLcSEugMmdayx67thS1UH\nhgZ9VxD1pYTmbB7wOXOkBTu5etCrX+BsX2Sqdo4XVm1xwcW8NqCACh2dkblGtVQn\n3vOQ/d+j/jzVAi6u1mSwLUVo29XwsLnrGc43QFb0+7VIJf4Xwk9PodEMDgJMeswg\nJCfdIg6EGyfMhyAPqkH7+ynRmBz008tFENjCBB3VLDjy462NyLDQA5KdBeD7swdh\nPmUMNbYb/BoIIDskhVY/bOWUbY3uT7a+HgwQcIDyFGyUWQ3HbpIwy0lebDPhbXnW\nilqGUqW03ujnTryCbVfeooTZNNLzglDfnJZfUXg6Dj7LqaJU0TUCjC1N2ffytcJF\nlqETD1Q1G/EfYqALr0TGh7AqrTmlgYKDsc88elFdz4DdxkYPZCUlTYbWB+W8t7fN\nYY0G6n2venge6b1ItiLQnpHDwRI7g6k2wsYLSMnbdt8ETYRm0+eJ1rrzf5opUYq/\n/oo5y/1PzWwbx3pu8v2oNOLbX4zBntSbWSt2sVcm/8YaFcOw+SKY7E622nCmfeuD\n+cxc14pXRVEmKmimjaT73vfvlXd/KKRxFvXd79qLoGJRLWfYNvPrBEZcCBTkNuoM\nwZDqsYws/jkIxYy5HnO7mnZjSEUJI9kwP+EaXXWSk49R3CgDv4ZT/E0JgewAf/Fd\nJk1YzbPMRVh2ixnbBOPQQOkb4bucvZ9MC/wiRCryyp6pykhG52CeYxOZlFvlJZDI\nlx2h0fvsqJZeZSOTdHrfQsMGjgw3",
         "mongodb.initUser" => "init-root",
         "mongodb.initPassword" => "edf933ds^5f"
