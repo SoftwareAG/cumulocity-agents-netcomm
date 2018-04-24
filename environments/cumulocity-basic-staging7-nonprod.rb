@@ -86,6 +86,7 @@ override_attributes(
       "auth.checkBlockingFromOutside" => "true",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
+      "email.host" => "postfix.cumulocity-basic-staging7-nonprod.svc.cluster.local",
       "email.from" => "no-reply@app.domain.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "system.two-factor-authentication.enabled" => true,

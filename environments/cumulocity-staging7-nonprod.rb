@@ -40,7 +40,7 @@ override_attributes(
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "17adb8fe8848af81a75d175bace5d013bf71ee4fa374aafb30313f3d245de270b5f953ab29861044ef6e169406fb469fc50407d31c81ba874e1a3b9b37a33bfc",
-    "version" => "9.4.1-1",
+    "version" => "9.5.0-1",
     "ssa-version" => "9.3.1-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
@@ -67,7 +67,7 @@ override_attributes(
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.4.0'
+    "version" => '9.5.0'
   },
   "cumulocity-ssagents" => {
     "useTags" => true
@@ -89,6 +89,7 @@ override_attributes(
       "auth.checkBlockingFromOutside" => "false",
       "migration.tomongo.default" => "MONGO_READ_WRITE_POSTGRES_WRITE",
       "smsGateway.host" => "http://localhost:8688/sms-gateway",
+      "email.host" => "postfix.cumulocity-staging7-nonprod.svc.cluster.local",
       "email.from" => "no-reply@app.domain.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",

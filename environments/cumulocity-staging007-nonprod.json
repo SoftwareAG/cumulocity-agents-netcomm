@@ -91,6 +91,7 @@
         "smsGateway.host": "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
         "email.from": "no-reply@app.domain.com",
         "cepServer.queue.limit": "250000",
+        "email.host": "postfix.cumulocity-staging007-nonprod.svc.cluster.local",
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "system.two-factor-authentication.enabled": true,
         "system.two-factor-authentication.max.inactive": "10",
