@@ -32,19 +32,20 @@
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "8.19.20",
+      "images-version": "8.19.23",
       "images2install": [
         "cep", "cep-small"
       ]
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "9e6ecb2f76ffcc9dd79b59a34dae875be4d5fc340fb60d06e212e3d26e8399842c1734d3e9474e9ace8e3cf2e8d0381fae9aa46698f566ff02418aeb73c14cbd",
-      "version": "8.19.20-1",
+      "version": "8.19.23-1",
       "ssa-version": "8.21.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
       "CUMULOCITY_LICENCE_DIR": null,
+      "openrelayIP": "172.20.21.77",
       "management-access": [
         "0.0.0.0/0"
       ],
@@ -66,7 +67,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "8.19.20"
+      "version": "8.19.23"
     },
     "cumulocity-ssagents": {
       "useTags": true
@@ -87,10 +88,12 @@
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": "false",
         "migration.tomongo.default": "POSTGRES_READ_WRITE",
-        "smsGateway.host": "http://localhost:8688/sms-gateway",
+        "smsGateway.host": "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
         "email.from": "no-reply@app.domain.com",
         "cepServer.queue.limit": "250000",
         "errorMessageRepresentationBuilder.includeDebug": "false",
+        "system.two-factor-authentication.enabled": true,
+        "system.two-factor-authentication.max.inactive": "10",
         "default.tenant.applications": "administration,devicemanagement,cockpit",
         "management.admin.password": "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
         "admin.password": "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
