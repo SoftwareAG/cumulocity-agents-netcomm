@@ -1,0 +1,7 @@
+{
+  "id": "lconfraria",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA0Fks3ZgOaG3gYAP6jYc2eOK6vaqcp+NlsrZmIn6nsKzKqOoLsMP0p4aSR+yEfOKXyVjzSck0ctUtT7zxjYWGw3fQGGJB9tR72PbgJeyndr9zqNYg/jdK6TO7i7o7Vtf+4QmlIHzVoe5qoc0Rm7LTVyWvsV/EpnHH/s4VBZhddmnJcxC6YkiGyPUvMJu2xSVpZSO0Ss3ub/RazsXSd/0INOzhX/QFSBnQS5MHm2vN/Owki1McCGh/foo5wxaG3zkFWiqDBCbqw2kbAy1E9DK00TJBT2niaCNRX3LRxGETIcnce+R+ZgFx54zBcjR+qqK5CVDMQbBSFVjU41w0CZBngQ== lconfraria@gmail.com"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Luis Confraria"
+}

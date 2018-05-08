@@ -1,0 +1,7 @@
+{
+  "id": "darialukoianova",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDafuyHjpzA9uS9169XGSOFMZdzX9+DKaIwzZsjp3sH5Nuof3Bqq+YR6QsJ5qPmJYWM2BOQLTvii7ipwcedc3xzvi9IHHZvdV6k+CGpnQ6bXu4Dj2rpDLMgka1i5mqzQJFtg5ZuNmZZRGtn+GtBo6L6bHEGIXuZSm1+EqFuTeEbtp+tOdUbEpm9I9sbtV6wJQ5LSTWzHU3Oicwb5ZjHS2VYlmAgT+UT0OfWPZmCRNUh8mcV9APyM34KMOoUBLrJFVM06ksoJ1zqcSBsEa94rbPM3xiI7U/4cE/jvwCzurJigR6QA9GSpk5SiqPssGV8y9hv+RvqEvRu3R++1Lw2schn dluk@POZ-MBOG2"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Daria Lukoianova"
+}

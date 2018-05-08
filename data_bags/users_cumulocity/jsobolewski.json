@@ -1,0 +1,7 @@
+{
+  "id": "jsobolewski",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDr+Op4xG2iWy4JlWvXQmL26W3vLHxxtLHmk/5rT0BvmfWDmr9YcWX5JlUMK8KX3Pnk6QpBcA+Chv98pEIdVhC1vLy4idKCrX1S2PA/CWDbD9VArKdgUuY/XzpkvSntVP3Iiyl4CV+WruU37TQ0H3HVYpDWEMbpkQMLlrY0VS1A0xq809hn4uomcaa6X0Q9TH2Y7zCCJdImuyVtBeWKN/s3U0WM+jvPyMUG6TMY7j/a25z+hLCJaWz0JZlX1t2T0NHJqiQJXWqc9dbO2Gr7a3O/xv7HK8k552lNAuTAmLBqGONQfO53FQknxmvkPDFl4mVvUBDmBnPOhafQo0nTZNmn jsobolewski@jsobolewski-OptiPlex-790"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Jakub Sobolewski"
+}

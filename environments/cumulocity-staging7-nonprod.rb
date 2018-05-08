@@ -74,7 +74,7 @@ override_attributes(
   },
   "cumulocity-core" => {
     "properties" => {
-      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
+      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/",
       "default.tenant.microservices" => "device-simulator, smartrule, cep, tenant-sla-monitoring",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
