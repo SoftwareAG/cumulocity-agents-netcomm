@@ -3,7 +3,7 @@ description "The Basic Staging 7 environment for test releases"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-'cumulocity-kubernetes'=>'= 0.4.0',
+'cumulocity-kubernetes'=>'= 0.5.0',
 'cumulocity-ssagents'=>'= 0.4.0'
 })
 
@@ -32,12 +32,12 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-basic-staging7-nonprod"],
      "token" => "1e3145.2ff901941c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.0.9",
-     "images2install" => [ "cep","test" ]
+     "images-version" => "9.0.13",
+     "images2install" => [ "cep" ]
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "9cfda1bd57553c744d813970705747ef3c3c1f97ad669c0ff9a3c8bba40675705f458e46b46bd9710d7bc99594fe3030d7637457e94c6982ab9de77acce75806",
-    "version" => "9.0.9-1",
+    "version" => "9.0.12-1",
     "ssa-version" => "8.21.0-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
@@ -64,7 +64,7 @@ override_attributes(
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.0.8'
+    "version" => '9.0.11'
   },
   "cumulocity-ssagents" => {
     "useTags" => true
@@ -139,14 +139,14 @@ override_attributes(
     "useMQTTsupport" => true,
     "useMasterForPushOperations" => false,
     "useKarafWebsocket" => true,
-    "useMQTTlogs" => true,
+    "useMQTTlogs" => false,
     "proxy_cache" => true,
     "certificate_domain" => "staging.c8y.io",
     "useLUAforLimits" => true,
     "useLUAforHealthCheck" => true,
     "nginx" => {
         "NGinxPort" => "openresty",
-        "version" => "1.13.6.1-20.el7.centos.c8y.8.11.1"
+        "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
     }
   },
 
