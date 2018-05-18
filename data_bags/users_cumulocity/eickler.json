@@ -1,0 +1,7 @@
+{
+  "id": "eickler",
+  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAux0ugY2mz8kcNeMVDG/10nmk2PhDWUbShW4IAa/H0HtlPiVtiC41ZRjXMxbAzIp1Ap+uuAXgAZZG5KzKtAdgv5yjVK2+g0nMnsGGgu2Zr7KE11h/XR2jSdScyo0qauem5SyVj/D2MKPJDMAFCZWPqJfbmXw7MJJACAgsr9J/DLxJa86gklWx7b0qCYtluN0OeeMw/jRmBVuQfl8x+YaDbi4GZxeFL8nVXZarRN0Ih8Cr2xCnyxs9m2OMMfxUKYvyB5ex/kPHeDBQxkJ+OtjW3HxnmeeIn4+pZoDtyw+iZxmFJz3IJ/eJ8/MMABNr98mofnusw6Z3L7VigYXJI7f2Zw== eickler@andres-mac.fritz.box",
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Andre Eickler"
+}

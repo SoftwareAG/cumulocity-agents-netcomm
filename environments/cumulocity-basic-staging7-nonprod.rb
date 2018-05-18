@@ -34,6 +34,9 @@ override_attributes(
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
      "images-version" => "9.0.13",
      "images2install" => [ "cep" ]
+     "monitoring": {
+       "enabled": true
+     }
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "9cfda1bd57553c744d813970705747ef3c3c1f97ad669c0ff9a3c8bba40675705f458e46b46bd9710d7bc99594fe3030d7637457e94c6982ab9de77acce75806",
@@ -71,7 +74,7 @@ override_attributes(
   },
   "cumulocity-core" => {
     "properties" => {
-      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
+      "system.connectivity.microservice.url" => "http://localhost:8111/service/connectivity",
       "default.tenant.microservices" => "device-simulator, smartrule, cep",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
@@ -85,7 +88,7 @@ override_attributes(
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => "true",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
-      "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
+      "smsGateway.host" => "http://localhost:8111/service/messaging",
       "email.host" => "postfix.cumulocity-basic-staging7-nonprod.svc.cluster.local",
       "email.from" => "no-reply@app.domain.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
