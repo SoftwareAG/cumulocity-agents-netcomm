@@ -3,7 +3,7 @@
   "description": "The Staging nonprod environment",
   "cookbook_versions": {
     "cumulocity": "= 0.6.0",
-    "cumulocity-kubernetes": "= 0.4.0",
+    "cumulocity-kubernetes": "= 0.5.0",
     "cumulocity-ssagents": "= 0.4.0"
   },
   "override_attributes": {
@@ -35,7 +35,10 @@
       "images-version": "8.19.23",
       "images2install": [
         "cep", "cep-small"
-      ]
+      ],
+      "monitoring": {
+        "enabled": true
+      }
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "9e6ecb2f76ffcc9dd79b59a34dae875be4d5fc340fb60d06e212e3d26e8399842c1734d3e9474e9ace8e3cf2e8d0381fae9aa46698f566ff02418aeb73c14cbd",

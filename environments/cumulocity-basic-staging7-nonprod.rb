@@ -33,7 +33,7 @@ override_attributes(
      "token" => "1e3145.2ff901941c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
      "images-version" => "9.0.13",
-     "images2install" => [ "cep" ]
+     "images2install" => [ "cep" ],
      "monitoring": {
        "enabled": true
      }
