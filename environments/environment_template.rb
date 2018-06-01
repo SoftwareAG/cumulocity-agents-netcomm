@@ -52,11 +52,11 @@ override_attributes(
      "attachedEnvs" => ["<customer>-multinode-prod"],
      "token" => "<kubernetes_token>",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.18.0-SNAPSHOT",
+     "images-version" => "8.19.25",
      "images2install" => [ "cep" ]
   },
   "cumulocity-karaf" => {
-    "version" => "8.19.10-1",
+    "version" => "8.19.25-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "oort-enabled" => true,
@@ -93,7 +93,7 @@ override_attributes(
       "default.tenant.microservices" => "device-simulator, smartrule, cep",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,
-      "system.support-user.enabled" => false, 
+      "system.support-user.enabled" => true, 
       "tenantSuspend.mail.sendtosuspended" => false,
       #"tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
@@ -101,42 +101,41 @@ override_attributes(
       "email.from" => "no-reply@<domain_name>",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "passwordReset.email.subject" => "Password reset",
-      "passwordReset.token.email.template" => 'Dear <Customer> Testbed user,\n\n\
-            You or someone else entered this email address when trying to change the password of a <Customer> Testbed portal user.\n\n\
+      "passwordReset.token.email.template" => 'Dear <Customer> user,\n\n\
+            You or someone else entered this email address when trying to change the password of a <Customer> portal user.\n\n\
             Please use the following link to reset your password: \n\
             {host}?token={token}&showTenant\n\n\
             If you were not expecting this email, please ignore it. \n\n\
             Kind regards,\n\
-            <Customer> Testbed support team\n',
+            <Customer> support team\n',
       "passwordReset.user.not.found.email.template" => 'Hi there,\n\n\
-            you or someone else entered this email address when trying to change the password of a <Customer> Testbedportal user.\n\n\
+            you or someone else entered this email address when trying to change the password of a <Customer>portal user.\n\n\
             However, we could not find the email address in your account. Please contact the administrator of your \
             account to set your email address and password. If you are the administrator of the account,\
             please use the email address that you registered with.\n\n\
             If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of the <Customer> Tesbed portal. \n\n\
             Kind regards,\n\
-            The <Customer> Testbed support team\n',
-      "passwordReset.success.email.template" => 'Dear <Customer> Testbed user,\n\n\
+            The <Customer> support team\n',
+      "passwordReset.success.email.template" => 'Dear <Customer> user,\n\n\
             Your password on {host} has been recently changed. \n\
             If you or your administrator made this change, you do not need to do anything more. \n\
             If you did not make this change, please contact your administrator.\n\n\
             Kind regards,\n\
-            Your <Customer> Testbed support team\n',
+            Your <Customer> support team\n',
       "passwordReset.invite.template" => 'Hi there,\n\n\
             Please use the following link to reset your password: \n\
             {host}/apps/devicemanagement/index.html?token={token}\n\n\
             If you were not expecting this email, please ignore it. \n\n\
             Kind regards,\n\n\
-            Your <Customer> Testbed support team\n'
+            Your <Customer> support team\n'
     }
   },
     "cumulocity-mongo" => {
-        'members-check' => false,
+        #'members-check' => false,
         #"installEnterprise" => true, # migration change
         "wiredtiger-cache" => 2,
         "sharedkey-content" => "<shared_key>",
         "mongodb.initUser" => "init-root",
-        "mongodb.initPassword" => "<mongoinitroot_password>"
   },
     "cumulocity-external-lb" => {
         "landing_page" => "https://<domain_name>/apps/devicemanagement",

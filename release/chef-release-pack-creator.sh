@@ -48,6 +48,7 @@ c8yCB=(
      ["cumulocity-ssagents"]=0.4.0
       ["cumulocity-rsyslog"]=1.0.0
 ["cumulocity-backup-script"]=latest
+["cumulocity-monitoring-agent"]=latest
 )
 
 declare -A comCB
@@ -409,11 +410,20 @@ cookbook_path            ["#{current_dir}/../cookbooks"]
 EOF
   echo
 
-  f_color_pr cyn "Creating vault json template..."
+  f_color_pr cyn "Creating vault json templates..."
   cat > "${relDir}/.chef/secrets/environment_name.core.json" << EOF
 {
 #  "contextService.rdbmsPassword":"<postgres_password>",
+  "mongodb.initPassword":"<mongodb_initPassword>",
   "mongodb.password":"<mongodb_password>"
+}
+EOF
+  cat > "${relDir}/.chef/secrets/environment_name.docker.json" << EOF
+{
+    "extPort":"30002",
+    "useMongoDriver":false,
+    "dockercreds":"<dockercreds>",
+    "dockersecrt":"<dockersecret>"
 }
 EOF
   echo
