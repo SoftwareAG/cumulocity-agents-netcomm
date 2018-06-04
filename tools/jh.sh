@@ -458,6 +458,181 @@ jh(){
   fi
 }
 
+jhman(){
+  if command -v less &>/dev/null ; then
+    pager="less -R"
+  else
+    pager="more"
+  fi
+  local B='\e[1m'
+  local U='\e[4m'
+  local N='\e[m'
+  printf "────────────────────────────────────────────────────────────────────────────────
+
+  -- ${B}JH Utility Script${N} --
+
+────────────────────────────────────────────────────────────────────────────────
+
+${U}Brief description${N}: ${B}$( basename ${thisscript} )${N} is a utility suite created to easily mantain and connect via jumphosts to environment hosts.
+When invoked with its basename, it will trigger an installation/update procedure that will create the following utilities:
+
+  • ${B}jhssh${N}       : basic tool for direct ssh connections or via jumphost
+  • ${B}jhssho${N}      : same as the previous one, but it shows a set of predefined options before attempting connection
+  • ${B}jhsshprint${N}  : it only prints on screen the command that would have been used for ssh connection
+  • ${B}jhsftp${N}      : basic tool for direct sftp connections or via jumphost
+  • ${B}jhsftpprint${N} : only prints on screen the command that would have been used for sftp connection
+  • ${B}jhenvlist${N}   : it prints a list of hosts configured for the specified environment with relative address
+  • ${B}jhenvtable${N}  : same as before, but it the output is organized in a table
+  • ${B}jhman${N}       : it prints this manual
+
+The basic syntax is usually:
+  jhcommand environment host [optionals]
+
+Environment and host fields are actually ${B}regex${N} and they will used to scan and filter your configuration file.
+Alternatively, if bash_completion feature is available in the current shell, you can use ${B}[TAB]${N} to autocomplete the environment and hostname fields.
+If the regex matches only one result, this one will be selected automatically, otherwise a selection menu will be shown.
+You can find a better description for each command below.
+
+────────────────────────────────────────────────────────────────────────────────
+
+${U}Installation procedure and dependencies${N}: to install this utility suite, simply run the base script without any argument.
+The only real requirement is ${U}bash version 4.4${N} or greater, but the following components are greatly advised:
+
+  • ${B}whiptail${N}    : it provides a better selection of environment/host and it's mandatory to use ${U}jhssho${N} tool
+  • ${B}sshpass${N}     : this tool enables the feature to automatically insert a password, if configured
+  • ${B}oathtool${N}    : in combination with ${U}sshpass${N}, oathtool can generate a TFA code to autologin
+
+────────────────────────────────────────────────────────────────────────────────
+
+${U}Configuration file${N}: ${B}$( basename ${thisscript} )${N} will load the configuration files in two paths:
+
+  • a file named '${B}jh.sh${N}' in the installation folder, e.g.: ${configfile1}
+  • an hidden file named '${B}.jh.sh${N}' in your home directory, e.g.: ${configfile2}
+
+A configuration file can contain default options, better defined on the beginning of it:
+
+  ${U}Standard hosts${N}:
+  • ${B}defaultuser${N}      : username to use for ssh connections. If not defined, ssh/sftp client will use current user (${B}${USER}${N})
+  • ${B}defaultkey${N}       : ssh private key for ssh connections. If not defined, default ssh/sftp client key paths will be used
+  • ${B}defaultport${N}      : tcp port used to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
+
+  ${U}Jumphosts${N}:
+  • ${B}defaultjhuser${N}    : username to use for ssh connections. If not defined, ssh/sftp client will use current user (${B}${USER}${N})
+  • ${B}defaultjhkey${N}     : ssh private key for ssh connections. If not defined, default ssh/sftp client key paths will be used
+  • ${B}defaultjhport${N}    : tcp port used to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
+  • ${B}defaultjhtfa${N}     : boolean option to enable/disable usage of TFA for jumphosts. Defaults to '${B}true${N}'
+  • ${B}defaultjhotp${N}     : google authentication key for TFA code generation. Only used if TFA is enabled.
+  • ${B}defaultjhoptions${N} : custom options for jumphosts. e.g.: '${B}-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no${N}'
+
+After the default options, you can map your hosts and group them in an associative array named after the respective environment.
+The script will take care of setting the array type to associative by itself, you don't need to 'declare -A environment'.
+Inside an environment array, there are keywords that are used to define options that will override default ones, plus custom options.
+Also notice that if you write a hostname with ${U}all capitol letters${N}, this will force a ${U}direct connection${N} and any specified jumphost will be ignored.
+${B}TIP${N}: you cannot define a hostname that matches this regex: '${B}.*(${keywords}).*${N}'
+
+the following options  can be specified inside an array:
+
+  ${U}Standard hosts${N}:
+  • ${B}USER${N}     : overrides '${B}defaultuser${N}'
+  • ${B}KEY${N}      : overrides '${B}defaultkey${N}'
+  • ${B}PASSWD${N}   : defines a password for autologin as an alternative to ssh key
+  • ${B}PORT${N}     : overrides '${B}defaultport${N}'
+  • ${B}OPT_X${N}    : defines custom option '${B}X${N}' that can be mapped to an individual host
+               To map a custom option to an host write the relative letter after a pipe symbol '|' in the hostname definition (check in the example below)
+               ${B}NOTE${N}: OPT_X parameters are ignored for sftp connections and will be appended to the command for ssh connection only
+
+  ${U}Jumphosts${N}:
+  • ${B}JHUSER${N}   : overrides '${B}defaultjhuser${N}'
+  • ${B}JHKEY${N}    : overrides '${B}defaultjhkey${N}'
+  • ${B}JHPASSWD${N} : defines a password for autologin as an alternative to ssh key. ( ${B}Ignored unless JHTFA=false${N} )
+  • ${B}JHPORT${N}   : overrides '${B}defaultjhport${N}'
+  • ${B}JHTFA${N}    : overrides '${B}defaultjhtfa${N}'
+  • ${B}JHOTP${N}    : overrides '${B}defaultjhotp${N}'
+  • ${B}JHOPTS${N}   : overrides '${B}defaultjhoptions${N}'
+
+${B}Example${N}:
+
+	customer_prod=(
+	   [\"OPT_A\"]=\"-l alternativeusername\"     # this is mapped on chef
+	   [\"OPT_B\"]=\"-i /path/to/another/sshkey\" # this is mapped on chef
+	   [\"OPT_C\"]=\"-L 8111:localhost:8111\"     # this is mapped on lb
+	      [\"JH\"]=\"jumphost.domain.com\"
+	 [\"chef|AB\"]=\"10.0.0.12\"
+	    [\"lb|C\"]=\"10.0.1.5\"
+	   [\"core1\"]=\"10.0.1.21\"
+	   [\"core2\"]=\"10.0.1.22\"
+	     [\"cep\"]=\"10.0.1.25\"
+	  [\"mongo1\"]=\"10.0.1.31\"
+	  [\"mongo2\"]=\"10.0.1.32\"
+	  [\"mongo3\"]=\"10.0.1.33\"
+	[\"postgres\"]=\"10.0.1.40\"
+	)
+
+${B}Best practice${N}:
+  • define a variable that specifies a folder containing all your ssh keys to reuse in KEY and JHKEY parameters
+  • map common hosts, e.g. jumphosts or chef servers, in separated arrays
+  • define variables pointing to common jumphosts to reuse in JH parameters
+
+${B}Advanced tricks${N}:
+you can specify a function to push and run on a remote host after an ssh connection has been established.
+${B}TIP${N}: for better organization you may want to define the function as a string in a varible.
+In the following example you will push and run the function '${B}f_myFunc${N}' on the host '${B}target${N}':
+
+	var_myFunc='f_myFunc(){ echo \"I like automation!\"; }'
+
+	test_env=(
+	   [\"OPT_Z\"]=\"-t '\${var_myFunc}; f_myFunc; /bin/bash'\"
+	[\"target|Z\"]=\"target.domain.com\"
+	)
+
+${B}NOTE${N}: the ${B}-t${N} option at the beginning is used is used to force an interactive shell after the execution of 'f_myFunc'
+
+────────────────────────────────────────────────────────────────────────────────
+
+${B}JHSSH${N}, ${B}JHSSHO${N} and ${B}JHSSHPRINT${N} commands:
+
+The base command, '${B}jhssh${N}', is used to establish an ssh connection to an host.
+The connection can be direct or via a jumphost and the exact command will be printed on screen before being executed.o
+
+The variant '${B}jhssho${N}', instead, shows a box with predefined options to switch on/off. These options are:
+
+$( sed -r -n '/sshopts1=/,/other/{s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\1\2 => \3/gp}' "${thisscript}" )
+
+Alternatively, you can specify extra options via '${B}OPT_X${N}' mapping or appending them to the full command.
+e.g.: ${B}jhssh customer loadbalancer -L8111:localhost:8111${N}
+${B}NOTE${N}: this only works if you specify both environment and hostname before the extra options.
+
+For last, '${B}jhsshprint${N}' variant works in the same way as '${B}jhssh${N}' base command, but it only prints the command that would be executed.
+Useful to redistribute a connection string to people that doesn't have this utility.
+
+────────────────────────────────────────────────────────────────────────────────
+
+${B}JHSFTP${N} and ${B}JHSFTPPRINT${N} commands:
+
+Very similar to 'jhssh' commands, '${B}jhsftp${N}' is used to establish an sftp connection to an host.
+${B}NOTE${N}: no extra options can be defined with sftp connections.
+
+The variant '${B}jhsftpprint${N}', in the same way is it is for 'jhsshprint', only prints the command that would be executed.
+
+────────────────────────────────────────────────────────────────────────────────
+
+${B}JHENVLIST${N} and ${B}JHENVTABLE${N} commands:
+
+These two commands are used to quick print a list of machine belonging to a single environment. Mainly useful to redistribute informations.
+While '${B}jhenvlist${N}' will produce a simple list, '${B}jhenvtable${N}' will provide the same informations organized in a table.
+${B}NOTE${N}: Giving their nature, only ${U}environment${N} argument can be provided.
+Both commands have a color code:
+
+  • ${B}DEFAULT${N} : used for normal host accessed via jumphost
+  • ${B}BLUE${N}    : if present, jumphost will be printed at the bottom of the list with this color
+  • ${B}GREEN${N}   : assigned to hosts configured with direct access and no jumphost involved
+
+Additionally and only for '${B}jhenvtable${N}', if you you have extra '${B}OPT_X${N}' options enabled for a certain host, a '${B}+${N}' symbol will appear on its left.
+
+────────────────────────────────────────────────────────────────────────────────
+" | ${pager}
+}
+
 jhssh(){
   jh ssh "$@"
 }
@@ -577,6 +752,10 @@ f_install(){
 if [[ $( type -t $( basename $0 ) ) == "function" ]] ; then
   eval $( basename $0 ) "$@"
 else
-  f_install
+  if [[ ${1} == "--help" ]] ; then
+    jhman
+  else
+    f_install
+  fi
 fi
 
