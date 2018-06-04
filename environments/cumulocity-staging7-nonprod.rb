@@ -97,6 +97,8 @@ override_attributes(
       "smsGateway.host" => "http://localhost:8688/sms-gateway",
       "email.host" => "postfix.cumulocity-staging7-nonprod.svc.cluster.local",
       "email.from" => "no-reply@app.domain.com",
+      "system.two-factor-authentication.enabled" => true,
+      "system.two-factor-authentication.max.inactive" => "10",
       "system.two-factor-authentication.enforced" => "ashutosh",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
