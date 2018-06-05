@@ -1,10 +1,20 @@
 #!/usr/bin/env bash
 
+f_pre_run(){
+# MacOS compatibility fix:
+  if [[ $( uname -s ) == "Darwin" ]] ; then
+    sed="gsed"
+  else
+    sed="sed"
+  fi
+}
+
+f_pre_run
+
 keywords="JH|KEY|USER|PORT|TFA|OPT_[A-Z]|PASSWD"
 
 _jh_complete(){
   local cur prev jhcmd
-  local keywords="JH|KEY|USER|PORT|TFA|OPT_[A-Z]|PASSWD"
   local sshenv
   local thisscript configfile1 configfile2
   local envlist hostlist cleanhostlist
@@ -14,51 +24,44 @@ _jh_complete(){
   jhcmd=${COMP_WORDS[COMP_CWORD-2]}
 
   if [[ ${COMP_CWORD} == 1 ]] ; then
-    thisscript=$(readlink -f $( which ${prev} ))
-    configfile1="$( dirname ${thisscript} )/$( basename ${thisscript} sh)conf"
-    configfile2="${HOME}/.jh.conf"
-    for configfile in "${configfile1}" "${configfile2}" ; do
-      if [[ -f "$configfile" ]] ; then
-        for e in $( sed -n -r 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
-          envlist+="$e "
-          _jh_f_reg "$e"
-        done
-        . "${configfile}"
-      fi
-    done
-    COMPREPLY=( $(compgen -W "${envlist}" -- ${cur}) )
+    thisscript=$( readlink -f $( which ${prev} ) )
+  elif [[ ${COMP_CWORD} == 2 ]] && ! [[ ${jhcmd} =~ ^jhenv.*$ ]] ; then
+    thisscript=$( readlink -f $( which ${jhcmd} ) )
+  fi
+  configfile1="$( dirname ${thisscript} )/$( basename ${thisscript} sh)conf"
+  configfile2="${HOME}/.jh.conf"
+  for configfile in "${configfile1}" "${configfile2}" ; do
+    if [[ -f "$configfile" ]] ; then
+      for e in $( ${sed} -n -r 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
+        envlist+="$e "
+        _jh_f_reg "$e"
+      done
+      . "${configfile}"
+    fi
+  done
+
+  if [[ ${COMP_CWORD} == 1 ]] ; then
+    COMPREPLY=( $( compgen -W "${envlist}" -- ${cur} ) )
   elif [[ ${COMP_CWORD} == 2 ]] && ! [[ ${jhcmd} =~ ^jhenv.*$ ]] ; then
     sshenv="$prev"
-    hostlist="$( eval echo '${!'${sshenv}'[@]}' | sed -r -e "s/(${keywords})[ ]?//g" -e 's/ /\n/g' | sort )"
+    hostlist="$( eval echo '${!'${sshenv}'[@]}' | ${sed} -r -e "s/(${keywords})[ ]?//g" -e 's/ /\n/g' | sort )"
     for h in ${hostlist} ; do
       h="${h%%|*}"
       cleanhostlist+="${h,,} "
     done
-    COMPREPLY=( $(compgen -W "${cleanhostlist}" -- ${cur}) )
+    COMPREPLY=( $( compgen -W "${cleanhostlist}" -- ${cur} ) )
     return 0
   fi
 }
 
 f_color_pr(){
-  case $1 in
-    wht) COLOR='\e[1m' ;;
-    grn) COLOR='\e[1;32m' ;;
-    ylw) COLOR='\e[1;33m' ;;
-    red) COLOR='\e[1;31m' ;;
-    cyn) COLOR='\e[1;36m' ;;
-  esac
+  eval COLOR="\$$1"
   shift
   printf "$COLOR""$@"'\e[m\n'
 }
 
 f_color_ask(){
-  case $1 in
-    wht) COLOR='\e[1m' ;;
-    grn) COLOR='\e[1;32m' ;;
-    ylw) COLOR='\e[1;33m' ;;
-    red) COLOR='\e[1;31m' ;;
-    cyn) COLOR='\e[1;36m' ;;
-  esac
+  eval COLOR="\$$1"
   shift
   local reply="$1"
   shift
@@ -78,7 +81,25 @@ switchOptions=${switchOptions:=false}
 declare -a unsortedEnvlist
 declare -a envlist
 
-if command -v whiptail &>/dev/null ; then
+f_reg(){
+  unset $1
+  declare -g -A $1
+  unsortedEnvlist+=( "$1" )
+}
+
+thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
+configfile1="$( dirname ${thisscript} )/$( basename ${thisscript} sh)conf"
+configfile2="${HOME}/.jh.conf"
+for configfile in "${configfile1}" "${configfile2}" ; do
+  if [[ -f "$configfile" ]] ; then
+    for e in $( ${sed} -n -r 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
+      f_reg "$e"
+    done
+    . "${configfile}"
+  fi
+done
+
+if command -v whiptail &>/dev/null && ! ${disableWhiptail:-false} ; then
   useWhiptail=true
   curLines="$( tput lines )"
   minLines=9
@@ -101,28 +122,27 @@ else
   useWhiptail=false
 fi
 
-if command -v sshpass &>/dev/null ; then
+if command -v sshpass &>/dev/null && ! ${disableSshpass:-false} ; then
   sshpassInstalled=true
-  command -v oathtool &>/dev/null && oathtoolInstalled=true
+  command -v oathtool &>/dev/null && ! ${disableOathtool:-false} && oathtoolInstalled=true
 fi
 
-f_reg(){
-  unset $1
-  declare -g -A $1
-  unsortedEnvlist+=( "$1" )
-}
-
-thisscript=$(readlink -f ${BASH_SOURCE[0]})
-configfile1="$( dirname ${thisscript} )/$( basename ${thisscript} sh)conf"
-configfile2="${HOME}/.jh.conf"
-for configfile in "${configfile1}" "${configfile2}" ; do
-  if [[ -f "$configfile" ]] ; then
-    for e in $( sed -n -r 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
-      f_reg "$e"
-    done
-    . "${configfile}"
-  fi
-done
+# color map
+if ${whiteBG:-false} ; then
+  wht='\e[1m'
+  grn='\e[2;32m'
+  ylw='\e[2;33m'
+  blu='\e[2;34m'
+  red='\e[2;31m'
+  cyn='\e[2;36m'
+else
+  wht='\e[1m'
+  grn='\e[1;32m'
+  ylw='\e[1;33m'
+  blu='\e[1;34m'
+  red='\e[1;31m'
+  cyn='\e[1;36m'
+fi
 
 envlist=( $( for e in ${unsortedEnvlist[@]} ; do echo $e ; done | sort ) )
 
@@ -151,7 +171,7 @@ f_ssh_env_set(){
       for e in ${filteredEnvList} ; do
         arr[i]="$e"
         ${useWhiptail} && wtarg+="$((i++)) $e "
-        ${useWhiptail} || printf '\e[1;32m%2d\e[m) \e[1;36m%s\e[m\n' "$((i++))" "$e"
+        ${useWhiptail} || printf "${grn}%2d\e[m) ${cyn}%s\e[m\n" "$((i++))" "$e"
       done
     else
       f_color_pr red "ERROR: NO ENVLIST!"
@@ -179,7 +199,7 @@ ID: "
 }
 
 f_ssh_host_set(){
-  hostlist="$( eval echo '${!'${sshenv}'[@]}' | sed -r -e "s/(${keywords})[ ]?//g" -e 's/ /\n/g' | sort )"
+  hostlist="$( eval echo '${!'${sshenv}'[@]}' | ${sed} -r -e "s/(${keywords})[ ]?//g" -e 's/ /\n/g' | sort )"
   declare -g sshhost
 
   filteredHostList="$( for E in ${hostlist} ; do echo $E ; done | egrep -i ".*${sshhostProp}.*" )"
@@ -199,7 +219,7 @@ f_ssh_host_set(){
         arr[i]="$e"
         e="${e%%|*}"
         ${useWhiptail} && wtarg+="$((i++)) ${e,,} "
-        ${useWhiptail} || printf '\e[1;32m%2d\e[m) \e[1;36m%s\e[m\n' "$((i++))" "${e,,}"
+        ${useWhiptail} || printf "${grn}%2d\e[m) ${cyn}%s\e[m\n" "$((i++))" "${e,,}"
       done
     else
       f_color_pr red "ERROR: NO HOST!"
@@ -239,15 +259,15 @@ f_env_print(){
   local colorReset='\e[m'
   local BbFw='\e[40;97m'
   local Bdflt='\e[40;92m'
-  local B_JH='\e[1;40;34m'
+  local B_JH='\e[1;40;36m'
   local F_JH='\e[1;34m'
   local F_NH='\e[92m'
 
   local firstLine=true
 
   declare -A printArray
-  eval $( typeset -A -p ${sshenv} | sed "s/ ${sshenv}=/ printArray=/" )
-  hostlist="$( echo "${!printArray[@]}" | sed -r -e "s/(${keywords})[ ]?//g" -e 's/ /\n/g' | sort )"
+  eval $( typeset -A -p ${sshenv} | ${sed} "s/ ${sshenv}=/ printArray=/" )
+  hostlist="$( echo "${!printArray[@]}" | ${sed} -r -e "s/(${keywords})[ ]?//g" -e 's/ /\n/g' | sort )"
   local tmphLength hLength=10
   local tmpiLength iLength=15
   for h in ${hostlist} ; do
@@ -307,7 +327,7 @@ f_env_print(){
 f_ssh_opt_set(){
   if ${useWhiptail} ; then
     if ${switchOptions} ; then
-      sshopts1=( $(whiptail --title "Extra settings" --checklist "Switch other settings for host ${sshhosttoprint^^} in environment ${sshenv^^}" $wtWinSize -- \
+      sshopts1=( $( whiptail --title "Extra settings" --checklist "Switch other settings for host ${sshhosttoprint^^} in environment ${sshenv^^}" $wtWinSize -- \
         "-L8111:localhost:8111"   "| Local Map port Karaf support"       OFF \
         "-L8443:localhost:443"    "| Local Map port HTTPS"               OFF \
         "-L8080:localhost:80"     "| Local Map port HTTP"                OFF \
@@ -327,7 +347,7 @@ f_ssh_opt_set(){
       fi
     fi
     if [[ ${sshhost##*|} != ${sshhost} ]] ; then
-      read -a opts < <(sed -r 's/(.)/\1 /g' <<< "${sshhost##*|}" )
+      read -a opts < <(${sed} -r 's/(.)/\1 /g' <<< "${sshhost##*|}" )
       for o in ${opts[@]} ; do
         local tmpopt="$sshenv["OPT_${o}"]"
         sshopts3+=" ${!tmpopt}"
@@ -337,7 +357,7 @@ f_ssh_opt_set(){
 }
 
 f_debug_pr(){
-  ${debug:-false} && printf '\e[1;31m'"$@"'\e[m'
+  ${debug:-false} && printf "${red}$@\e[m"
 }
 
 jh(){
@@ -373,7 +393,7 @@ jh(){
   declare     pw=$sshenv["PASSWD"]
   declare   port=$sshenv["PORT"]
   [[ -z ${!user}   && ! -z ${defaultuser}      ]] &&   user="defaultuser"
-  [[ -z ${!key}    && ! -z ${defaultkey}       ]] &&   user="defaultkey"
+  [[ -z ${!key}    && ! -z ${defaultkey}       ]] &&    key="defaultkey"
   [[ -z ${!port}   && ! -z ${defaultport}      ]] &&   port="defaultport"
 
   if [[ ! -z ${!jhotp} ]] && ${oathtoolInstalled:-false} && ${!jhtfa:-true} ; then
@@ -422,7 +442,7 @@ jh(){
   elif [[ -z ${!host} ]] ; then
     f_color_pr red "ERROR: NO EXISTING HOST SPECIFIED!"
   else
-    declare -g sshhosttoprint="$( sed -r 's/[|].*//g' <<< "${sshhost,,}" )"
+    declare -g sshhosttoprint="$( ${sed} -r 's/[|].*//g' <<< "${sshhost,,}" )"
     f_color_pr cyn "${cmd:-ssh} connection via '${!jh}' to '${!host}' (${sshenv}/${sshhosttoprint}) ${!user:+"as '${!user}' "}${!key:+"with '${!key}' "}"
     proxycmd="
       ${prejhcmd}ssh -A -W %h:%p
@@ -451,7 +471,7 @@ jh(){
   if [[ ! -z ${fullcmd} ]] ; then
     [[ ${cmd} == "ssh" ]] && f_ssh_opt_set
     #echo "${sshopts1[@]}" "${sshopts2[@]}"
-    printf '\e[1;34m==> \e[1;32m'
+    printf "${blu}==> ${grn}"
     echo ${fullcmd} ${sshopts1[@]} ${sshopts2[@]} ${sshopts3[@]} "$@"
     printf '\e[m'
     ${justecho:-false} || eval ${fullcmd} ${sshopts1[@]} ${sshopts2[@]} ${sshopts3[@]} "$@"
@@ -459,7 +479,7 @@ jh(){
 }
 
 jhman(){
-  if command -v less &>/dev/null ; then
+  if command -v less &>/dev/null && ! ${disableLess:-false} ; then
     pager="less -R"
   else
     pager="more"
@@ -478,9 +498,9 @@ When invoked with its basename, it will trigger an installation/update procedure
 
   • ${B}jhssh${N}       : basic tool for direct ssh connections or via jumphost
   • ${B}jhssho${N}      : same as the previous one, but it shows a set of predefined options before attempting connection
-  • ${B}jhsshprint${N}  : it only prints on screen the command that would have been used for ssh connection
+  • ${B}jhsshprint${N}  : it only prints on screen the command that would have been u${sed} for ssh connection
   • ${B}jhsftp${N}      : basic tool for direct sftp connections or via jumphost
-  • ${B}jhsftpprint${N} : only prints on screen the command that would have been used for sftp connection
+  • ${B}jhsftpprint${N} : only prints on screen the command that would have been u${sed} for sftp connection
   • ${B}jhenvlist${N}   : it prints a list of hosts configured for the specified environment with relative address
   • ${B}jhenvtable${N}  : same as before, but it the output is organized in a table
   • ${B}jhman${N}       : it prints this manual
@@ -488,7 +508,7 @@ When invoked with its basename, it will trigger an installation/update procedure
 The basic syntax is usually:
   jhcommand environment host [optionals]
 
-Environment and host fields are actually ${B}regex${N} and they will used to scan and filter your configuration file.
+Environment and host fields are actually ${B}regex${N} and they will u${sed} to scan and filter your configuration file.
 Alternatively, if bash_completion feature is available in the current shell, you can use ${B}[TAB]${N} to autocomplete the environment and hostname fields.
 If the regex matches only one result, this one will be selected automatically, otherwise a selection menu will be shown.
 You can find a better description for each command below.
@@ -502,6 +522,15 @@ The only real requirement is ${U}bash version 4.4${N} or greater, but the follow
   • ${B}sshpass${N}     : this tool enables the feature to automatically insert a password, if configured
   • ${B}oathtool${N}    : in combination with ${U}sshpass${N}, oathtool can generate a TFA code to autologin
 
+For ${B}MacOS${N} users, use '${B}brew${N}' tool to install the following components:
+
+  • brew install bash
+  • brew install coreutils
+  • brew install gnu-sed
+  • brew install nwet
+  • brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
+  • brew install oath-toolkit
+
 ────────────────────────────────────────────────────────────────────────────────
 
 ${U}Configuration file${N}: ${B}$( basename ${thisscript} )${N} will load the configuration files in two paths:
@@ -514,19 +543,19 @@ A configuration file can contain default options, better defined on the beginnin
   ${U}Standard hosts${N}:
   • ${B}defaultuser${N}      : username to use for ssh connections. If not defined, ssh/sftp client will use current user (${B}${USER}${N})
   • ${B}defaultkey${N}       : ssh private key for ssh connections. If not defined, default ssh/sftp client key paths will be used
-  • ${B}defaultport${N}      : tcp port used to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
+  • ${B}defaultport${N}      : tcp port u${sed} to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
 
   ${U}Jumphosts${N}:
   • ${B}defaultjhuser${N}    : username to use for ssh connections. If not defined, ssh/sftp client will use current user (${B}${USER}${N})
   • ${B}defaultjhkey${N}     : ssh private key for ssh connections. If not defined, default ssh/sftp client key paths will be used
-  • ${B}defaultjhport${N}    : tcp port used to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
+  • ${B}defaultjhport${N}    : tcp port u${sed} to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
   • ${B}defaultjhtfa${N}     : boolean option to enable/disable usage of TFA for jumphosts. Defaults to '${B}true${N}'
-  • ${B}defaultjhotp${N}     : google authentication key for TFA code generation. Only used if TFA is enabled.
+  • ${B}defaultjhotp${N}     : google authentication key for TFA code generation. Only u${sed} if TFA is enabled.
   • ${B}defaultjhoptions${N} : custom options for jumphosts. e.g.: '${B}-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no${N}'
 
 After the default options, you can map your hosts and group them in an associative array named after the respective environment.
 The script will take care of setting the array type to associative by itself, you don't need to 'declare -A environment'.
-Inside an environment array, there are keywords that are used to define options that will override default ones, plus custom options.
+Inside an environment array, there are keywords that are u${sed} to define options that will override default ones, plus custom options.
 Also notice that if you write a hostname with ${U}all capitol letters${N}, this will force a ${U}direct connection${N} and any specified jumphost will be ignored.
 ${B}TIP${N}: you cannot define a hostname that matches this regex: '${B}.*(${keywords}).*${N}'
 
@@ -585,18 +614,18 @@ In the following example you will push and run the function '${B}f_myFunc${N}' o
 	[\"target|Z\"]=\"target.domain.com\"
 	)
 
-${B}NOTE${N}: the ${B}-t${N} option at the beginning is used is used to force an interactive shell after the execution of 'f_myFunc'
+${B}NOTE${N}: the ${B}-t${N} option at the beginning is u${sed} is u${sed} to force an interactive shell after the execution of 'f_myFunc'
 
 ────────────────────────────────────────────────────────────────────────────────
 
 ${B}JHSSH${N}, ${B}JHSSHO${N} and ${B}JHSSHPRINT${N} commands:
 
-The base command, '${B}jhssh${N}', is used to establish an ssh connection to an host.
+The base command, '${B}jhssh${N}', is u${sed} to establish an ssh connection to an host.
 The connection can be direct or via a jumphost and the exact command will be printed on screen before being executed.o
 
 The variant '${B}jhssho${N}', instead, shows a box with predefined options to switch on/off. These options are:
 
-$( sed -r -n '/sshopts1=/,/other/{s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\1\2 => \3/gp}' "${thisscript}" )
+$( ${sed} -r -n '/sshopts1=/,/other/{s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\1\2 => \3/gp}' "${thisscript}" )
 
 Alternatively, you can specify extra options via '${B}OPT_X${N}' mapping or appending them to the full command.
 e.g.: ${B}jhssh customer loadbalancer -L8111:localhost:8111${N}
@@ -609,7 +638,7 @@ Useful to redistribute a connection string to people that doesn't have this util
 
 ${B}JHSFTP${N} and ${B}JHSFTPPRINT${N} commands:
 
-Very similar to 'jhssh' commands, '${B}jhsftp${N}' is used to establish an sftp connection to an host.
+Very similar to 'jhssh' commands, '${B}jhsftp${N}' is u${sed} to establish an sftp connection to an host.
 ${B}NOTE${N}: no extra options can be defined with sftp connections.
 
 The variant '${B}jhsftpprint${N}', in the same way is it is for 'jhsshprint', only prints the command that would be executed.
@@ -618,12 +647,12 @@ The variant '${B}jhsftpprint${N}', in the same way is it is for 'jhsshprint', on
 
 ${B}JHENVLIST${N} and ${B}JHENVTABLE${N} commands:
 
-These two commands are used to quick print a list of machine belonging to a single environment. Mainly useful to redistribute informations.
+These two commands are u${sed} to quick print a list of machine belonging to a single environment. Mainly useful to redistribute informations.
 While '${B}jhenvlist${N}' will produce a simple list, '${B}jhenvtable${N}' will provide the same informations organized in a table.
 ${B}NOTE${N}: Giving their nature, only ${U}environment${N} argument can be provided.
 Both commands have a color code:
 
-  • ${B}DEFAULT${N} : used for normal host accessed via jumphost
+  • ${B}DEFAULT${N} : u${sed} for normal host acces${sed} via jumphost
   • ${B}BLUE${N}    : if present, jumphost will be printed at the bottom of the list with this color
   • ${B}GREEN${N}   : assigned to hosts configured with direct access and no jumphost involved
 
@@ -650,6 +679,11 @@ jhsshprint(){
 jhsshoprint(){
   switchOptions=true
   justecho=true
+  jh ssh "$@"
+}
+
+jhsshj(){
+  gotojh=true
   jh ssh "$@"
 }
 
@@ -694,7 +728,13 @@ f_map_cmd(){
 
     completion)
       jhshcompl="
-$( typeset -f f_reg | sed '1s/f_reg/_jh_&/g' )
+$( typeset -f f_pre_run | ${sed} '1s/f_pre_run/_jh_&/g' )
+
+_jh_f_pre_run
+
+keywords='${keywords}'
+
+$( typeset -f f_reg | ${sed} '1s/f_reg/_jh_&/g' )
 
 $( typeset -f _jh_complete )
 
@@ -712,7 +752,7 @@ f_install(){
   f_color_ask cyn installDir "Type install dir [/usr/local/bin]: "
   [[ -z ${installDir} ]] && installDir="/usr/local/bin" && f_color_pr wht "  Default: ${installDir}"
   [[ ! -d ${installDir} ]] && f_color_pr red "ERROR: folder '${installDir}' is not available!" && exit
-  for c in "jh.sh" $( typeset -f | sed -r -n 's/^(jh[a-z]+) \(\)/\1/gp' ) "jhsh.bash" ; do
+  for c in "jh.sh" $( typeset -f | ${sed} -r -n 's/^(jh[a-z]+) \(\)/\1/gp' ) "jhsh.bash" ; do
     case $c in
           "jh.sh") installFunc="main"       cDir=${installDir} ;;
       "jhsh.bash") installFunc="completion" cDir="/etc/bash_completion.d" ;;
