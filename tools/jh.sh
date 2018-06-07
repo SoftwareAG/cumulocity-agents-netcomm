@@ -18,31 +18,34 @@ _jh_complete(){
   local sshenv
   local thisscript configfile1 configfile2
   local envlist hostlist cleanhostlist
+  local limit0arg='^jhman$'
+  local limit1arg='^jh(env.+|sshj)$'
+  local limit2arg='^jhsftp$'
+
   COMPREPLY=()
   cur=${COMP_WORDS[COMP_CWORD]}
   prev=${COMP_WORDS[COMP_CWORD-1]}
-  jhcmd=${COMP_WORDS[COMP_CWORD-2]}
+  jhcmd=${COMP_WORDS[0]}
+  thisscript=$( readlink -f $( which ${jhcmd} ) )
 
-  if [[ ${COMP_CWORD} == 1 ]] ; then
-    thisscript=$( readlink -f $( which ${prev} ) )
-  elif [[ ${COMP_CWORD} == 2 ]] && ! [[ ${jhcmd} =~ ^jhenv.*$ ]] ; then
-    thisscript=$( readlink -f $( which ${jhcmd} ) )
+  if [[ ${COMP_CWORD} -lt 4 ]] ; then
+    configfile1="$( dirname ${thisscript} )/$( basename ${thisscript} sh)conf"
+    configfile2="${HOME}/.jh.conf"
+    for configfile in "${configfile1}" "${configfile2}" ; do
+      if [[ -f "$configfile" ]] ; then
+        for e in $( ${sed} -n -r 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
+          envlist+="$e "
+          _jh_f_reg "$e"
+        done
+        . "${configfile}"
+      fi
+    done
   fi
-  configfile1="$( dirname ${thisscript} )/$( basename ${thisscript} sh)conf"
-  configfile2="${HOME}/.jh.conf"
-  for configfile in "${configfile1}" "${configfile2}" ; do
-    if [[ -f "$configfile" ]] ; then
-      for e in $( ${sed} -n -r 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
-        envlist+="$e "
-        _jh_f_reg "$e"
-      done
-      . "${configfile}"
-    fi
-  done
 
-  if [[ ${COMP_CWORD} == 1 ]] ; then
+  if [[ ${COMP_CWORD} == 1 ]] && ! [[ ${jhcmd} =~ ${limit0arg} ]] ; then
     COMPREPLY=( $( compgen -W "${envlist}" -- ${cur} ) )
-  elif [[ ${COMP_CWORD} == 2 ]] && ! [[ ${jhcmd} =~ ^jhenv.*$ ]] ; then
+    return 0
+  elif [[ ${COMP_CWORD} == 2 ]] && ! [[ ${jhcmd} =~ ${limit1arg} ]] ; then
     sshenv="$prev"
     hostlist="$( eval echo '${!'${sshenv}'[@]}' | ${sed} -r -e "s/(${keywords})[ ]?//g" -e 's/ /\n/g' | sort )"
     for h in ${hostlist} ; do
@@ -50,6 +53,9 @@ _jh_complete(){
       cleanhostlist+="${h,,} "
     done
     COMPREPLY=( $( compgen -W "${cleanhostlist}" -- ${cur} ) )
+    return 0
+  elif [[ ${COMP_CWORD} -ge 3 ]] && ! [[ ${jhcmd} =~ ${limit2arg} ]] ; then
+    COMPREPLY=( $( compgen -W "$( ${sed} -r -n '/sshopts[1]=/,/other/{/other/d;s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\1/gp}' ${thisscript} )" -- ${cur} ) )
     return 0
   fi
 }
@@ -406,6 +412,7 @@ jh(){
 
   declare host=$sshenv["$sshhost"]
   if [[ -z ${sshhost} ]] && ${gotojh:-false} ; then
+    [[ -z ${!jh} ]] && f_color_pr red "ERROR: No jumphost defined for environment ${sshenv}!" && exit
     f_color_pr cyn "${prejhcmd}${cmd:-ssh} connection to jumphost '${!jh}' (${sshenv})"
     case ${cmd:=ssh} in
        ssh) fullcmd="${prejhcmd}${cmd} -A \
@@ -625,7 +632,7 @@ The connection can be direct or via a jumphost and the exact command will be pri
 
 The variant '${B}jhssho${N}', instead, shows a box with predefined options to switch on/off. These options are:
 
-$( ${sed} -r -n '/sshopts1=/,/other/{s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\1\2 => \3/gp}' "${thisscript}" )
+$( ${sed} -r -n '/sshopts[1]=/,/other/{s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\1\2 => \3/gp}' "${thisscript}" )
 
 Alternatively, you can specify extra options via '${B}OPT_X${N}' mapping or appending them to the full command.
 e.g.: ${B}jhssh customer loadbalancer -L8111:localhost:8111${N}
@@ -727,7 +734,8 @@ f_map_cmd(){
     esac ;;
 
     completion)
-      jhshcompl="
+      jhshcompl="# bash completion script generated for jh utils
+
 $( typeset -f f_pre_run | ${sed} '1s/f_pre_run/_jh_&/g' )
 
 _jh_f_pre_run
@@ -738,7 +746,7 @@ $( typeset -f f_reg | ${sed} '1s/f_reg/_jh_&/g' )
 
 $( typeset -f _jh_complete )
 
-complete -F _jh_complete jh{{ssh,sftp}{,o,print},env{list,table}}
+complete -F _jh_complete ${jhutils}
 "
       case $2 in
               message) f_color_pr cyn "Creating bash completion source code ..." ;;
@@ -752,7 +760,8 @@ f_install(){
   f_color_ask cyn installDir "Type install dir [/usr/local/bin]: "
   [[ -z ${installDir} ]] && installDir="/usr/local/bin" && f_color_pr wht "  Default: ${installDir}"
   [[ ! -d ${installDir} ]] && f_color_pr red "ERROR: folder '${installDir}' is not available!" && exit
-  for c in "jh.sh" $( typeset -f | ${sed} -r -n 's/^(jh[a-z]+) \(\)/\1/gp' ) "jhsh.bash" ; do
+  jhutils="$( typeset -f | ${sed} -r -n 's/^(jh[a-z]+) \(\)/\1/gp' | tr -d '\n' )"
+  for c in "jh.sh" ${jhutils} "jhsh.bash" ; do
     case $c in
           "jh.sh") installFunc="main"       cDir=${installDir} ;;
       "jhsh.bash") installFunc="completion" cDir="/etc/bash_completion.d" ;;
