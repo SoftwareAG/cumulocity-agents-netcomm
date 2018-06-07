@@ -74,11 +74,3 @@ cumulocity-production:
     aws_access_key_id: AKIAIVNXBZD76HNCLQJA 
     aws_secret_access_key: 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
 
-cumulocity-stagings:
-  node_name: admin12
-  client_key: admin12.pem
-  pub: https://chef12.cumulocity.com/organizations/cumulocity-stagings
-  knife:
-    ssh_key_name: chef_cumulocity
-    aws_access_key_id: AKIAIVNXBZD76HNCLQJA
-    aws_secret_access_key: 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
