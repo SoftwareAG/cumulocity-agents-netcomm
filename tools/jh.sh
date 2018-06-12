@@ -18,9 +18,6 @@ _jh_complete(){
   local sshenv
   local thisscript configfile1 configfile2
   local envlist hostlist cleanhostlist
-  local limit0arg='^jhman$'
-  local limit1arg='^jh(env.+|sshj)$'
-  local limit2arg='^jhsftp$'
 
   COMPREPLY=()
   cur=${COMP_WORDS[COMP_CWORD]}
@@ -353,7 +350,7 @@ f_ssh_opt_set(){
       fi
     fi
     if [[ ${sshhost##*|} != ${sshhost} ]] ; then
-      read -a opts < <(${sed} -r 's/(.)/\1 /g' <<< "${sshhost##*|}" )
+      read -a opts < <( ${sed} -r 's/(.)/\1 /g' <<< "${sshhost##*|}" )
       for o in ${opts[@]} ; do
         local tmpopt="$sshenv["OPT_${o}"]"
         sshopts3+=" ${!tmpopt}"
@@ -486,6 +483,8 @@ jh(){
 }
 
 jhman(){
+# description: it prints this manual
+# arguments: 0
   if command -v less &>/dev/null && ! ${disableLess:-false} ; then
     pager="less -R"
   else
@@ -503,19 +502,18 @@ jhman(){
 ${U}Brief description${N}: ${B}$( basename ${thisscript} )${N} is a utility suite created to easily mantain and connect via jumphosts to environment hosts.
 When invoked with its basename, it will trigger an installation/update procedure that will create the following utilities:
 
-  • ${B}jhssh${N}       : basic tool for direct ssh connections or via jumphost
-  • ${B}jhssho${N}      : same as the previous one, but it shows a set of predefined options before attempting connection
-  • ${B}jhsshprint${N}  : it only prints on screen the command that would have been u${sed} for ssh connection
-  • ${B}jhsftp${N}      : basic tool for direct sftp connections or via jumphost
-  • ${B}jhsftpprint${N} : only prints on screen the command that would have been u${sed} for sftp connection
-  • ${B}jhenvlist${N}   : it prints a list of hosts configured for the specified environment with relative address
-  • ${B}jhenvtable${N}  : same as before, but it the output is organized in a table
-  • ${B}jhman${N}       : it prints this manual
+$( while read line ; do
+  eval str=( $line )
+  printf "  • ${B}%-12s${N} : %s\n" "${str[0]}" "${str[1]}"
+done < <(
+  ${sed} -r '/jh.+[(][)][{]/,/[}]/!d;{/^(jh[a-z]+|# description:)/!d};{s/(^jh.+)[(][)][{]/"\1"/g;N;s/\n/ /g;s/# description: (.+)/"\1"/g}' "${thisscript}"
+  )
+)
 
 The basic syntax is usually:
   jhcommand environment host [optionals]
 
-Environment and host fields are actually ${B}regex${N} and they will u${sed} to scan and filter your configuration file.
+Environment and host fields are actually ${B}regex${N} and they will used to scan and filter your configuration file.
 Alternatively, if bash_completion feature is available in the current shell, you can use ${B}[TAB]${N} to autocomplete the environment and hostname fields.
 If the regex matches only one result, this one will be selected automatically, otherwise a selection menu will be shown.
 You can find a better description for each command below.
@@ -550,19 +548,19 @@ A configuration file can contain default options, better defined on the beginnin
   ${U}Standard hosts${N}:
   • ${B}defaultuser${N}      : username to use for ssh connections. If not defined, ssh/sftp client will use current user (${B}${USER}${N})
   • ${B}defaultkey${N}       : ssh private key for ssh connections. If not defined, default ssh/sftp client key paths will be used
-  • ${B}defaultport${N}      : tcp port u${sed} to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
+  • ${B}defaultport${N}      : tcp port used to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
 
   ${U}Jumphosts${N}:
   • ${B}defaultjhuser${N}    : username to use for ssh connections. If not defined, ssh/sftp client will use current user (${B}${USER}${N})
   • ${B}defaultjhkey${N}     : ssh private key for ssh connections. If not defined, default ssh/sftp client key paths will be used
-  • ${B}defaultjhport${N}    : tcp port u${sed} to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
+  • ${B}defaultjhport${N}    : tcp port used to reach the host. If not defined, ssh/sftp client will use standard ${B}TCP port 22${N}
   • ${B}defaultjhtfa${N}     : boolean option to enable/disable usage of TFA for jumphosts. Defaults to '${B}true${N}'
-  • ${B}defaultjhotp${N}     : google authentication key for TFA code generation. Only u${sed} if TFA is enabled.
+  • ${B}defaultjhotp${N}     : google authentication key for TFA code generation. Only used if TFA is enabled.
   • ${B}defaultjhoptions${N} : custom options for jumphosts. e.g.: '${B}-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no${N}'
 
 After the default options, you can map your hosts and group them in an associative array named after the respective environment.
 The script will take care of setting the array type to associative by itself, you don't need to 'declare -A environment'.
-Inside an environment array, there are keywords that are u${sed} to define options that will override default ones, plus custom options.
+Inside an environment array, there are keywords that are used to define options that will override default ones, plus custom options.
 Also notice that if you write a hostname with ${U}all capitol letters${N}, this will force a ${U}direct connection${N} and any specified jumphost will be ignored.
 ${B}TIP${N}: you cannot define a hostname that matches this regex: '${B}.*(${keywords}).*${N}'
 
@@ -621,14 +619,16 @@ In the following example you will push and run the function '${B}f_myFunc${N}' o
 	[\"target|Z\"]=\"target.domain.com\"
 	)
 
-${B}NOTE${N}: the ${B}-t${N} option at the beginning is u${sed} is u${sed} to force an interactive shell after the execution of 'f_myFunc'
+${B}NOTE${N}: the ${B}-t${N} option at the beginning is used is used to force an interactive shell after the execution of 'f_myFunc'
 
 ────────────────────────────────────────────────────────────────────────────────
 
-${B}JHSSH${N}, ${B}JHSSHO${N} and ${B}JHSSHPRINT${N} commands:
+${B}JHSSH${N}, ${B}JHSSHJ${N}, ${B}JHSSHO${N}, ${B}JHSSHPRINT${N} and ${B}JHSSHOPRINT${N} commands:
 
-The base command, '${B}jhssh${N}', is u${sed} to establish an ssh connection to an host.
-The connection can be direct or via a jumphost and the exact command will be printed on screen before being executed.o
+The base command, '${B}jhssh${N}', is used to establish an ssh connection to an host.
+The connection can be direct or via a jumphost and the exact command will be printed on screen before being executed.
+
+'${B}jhsshj${N}' is a shortcut which will autoselect the jumphost of the chosen environment for a direct connection.
 
 The variant '${B}jhssho${N}', instead, shows a box with predefined options to switch on/off. These options are:
 
@@ -638,14 +638,17 @@ Alternatively, you can specify extra options via '${B}OPT_X${N}' mapping or appe
 e.g.: ${B}jhssh customer loadbalancer -L8111:localhost:8111${N}
 ${B}NOTE${N}: this only works if you specify both environment and hostname before the extra options.
 
-For last, '${B}jhsshprint${N}' variant works in the same way as '${B}jhssh${N}' base command, but it only prints the command that would be executed.
-Useful to redistribute a connection string to people that doesn't have this utility.
+For last, '${B}jhsshprint${N}' and '${B}jhsshoprint${N}' variants work in the same way as '${B}jhssh${N}' and '${B}jhssho${N}' commands,
+but they only print the command that would be executed.  Useful to redistribute a connection string to people that doesn't have this utility.
 
 ────────────────────────────────────────────────────────────────────────────────
 
-${B}JHSFTP${N} and ${B}JHSFTPPRINT${N} commands:
+${B}JHSFTP${N}, ${B}JHSFTPJ${N} and ${B}JHSFTPPRINT${N} commands:
 
-Very similar to 'jhssh' commands, '${B}jhsftp${N}' is u${sed} to establish an sftp connection to an host.
+Very similar to 'jhssh' commands, '${B}jhsftp${N}' is used to establish an sftp connection to an host.
+
+'${B}jhsftpj${N}' is a shortcut which will autoselect the jumphost of the chosen environment for an sftp connection.
+
 ${B}NOTE${N}: no extra options can be defined with sftp connections.
 
 The variant '${B}jhsftpprint${N}', in the same way is it is for 'jhsshprint', only prints the command that would be executed.
@@ -654,12 +657,12 @@ The variant '${B}jhsftpprint${N}', in the same way is it is for 'jhsshprint', on
 
 ${B}JHENVLIST${N} and ${B}JHENVTABLE${N} commands:
 
-These two commands are u${sed} to quick print a list of machine belonging to a single environment. Mainly useful to redistribute informations.
+These two commands are used to quick print a list of machine belonging to a single environment. Mainly useful to redistribute informations.
 While '${B}jhenvlist${N}' will produce a simple list, '${B}jhenvtable${N}' will provide the same informations organized in a table.
 ${B}NOTE${N}: Giving their nature, only ${U}environment${N} argument can be provided.
 Both commands have a color code:
 
-  • ${B}DEFAULT${N} : u${sed} for normal host acces${sed} via jumphost
+  • ${B}DEFAULT${N} : used for normal host accessed via jumphost
   • ${B}BLUE${N}    : if present, jumphost will be printed at the bottom of the list with this color
   • ${B}GREEN${N}   : assigned to hosts configured with direct access and no jumphost involved
 
@@ -670,46 +673,71 @@ Additionally and only for '${B}jhenvtable${N}', if you you have extra '${B}OPT_X
 }
 
 jhssh(){
+# description: basic tool for direct ssh connections or via jumphost
+# arguments: 3
   jh ssh "$@"
 }
 
 jhssho(){
+# description: same as the previous one, but it shows a set of predefined options before attempting connection
+# arguments: 3
   switchOptions=true
   jh ssh "$@"
 }
 
 jhsshprint(){
+# description: it only prints on screen the command that would have been used for ssh connection
+# arguments: 3
   justecho=true
   jh ssh "$@"
 }
 
 jhsshoprint(){
+# description: same as the previous one, but for 'jhssho' command
+# arguments: 3
   switchOptions=true
   justecho=true
   jh ssh "$@"
 }
 
 jhsshj(){
+# description: shortcut to autoselect jumphost using 'jhssh' command
+# arguments: 1
   gotojh=true
   jh ssh "$@"
 }
 
 jhsftp(){
+# description: basic tool for direct sftp connections or via jumphost
+# arguments: 2
   jh sftp "$@"
 }
 
 jhsftpprint(){
+# description: only prints on screen the command that would have been used for sftp connection
+# arguments: 2
   justecho=true
   jh sftp "$@"
 }
 
+jhsftpj(){
+# description: shortcut to autoselect jumphost using 'jhsftp' command
+# arguments: 1
+  gotojh=true
+  jh sftp "$@"
+}
+
 jhenvlist(){
+# description: it prints a list of hosts configured for the specified environment with relative address
+# arguments: 1
   envPrint=true
   tablePrint=false
   jh envprint "$@"
 }
 
 jhenvtable(){
+# description: same as before, but the output is organized in a table
+# arguments: 1
   envPrint=true
   tablePrint=true
   jh envprint "$@"
@@ -734,20 +762,37 @@ f_map_cmd(){
     esac ;;
 
     completion)
-      jhshcompl="# bash completion script generated for jh utils
+
+      if ${noFunctionSet:-true} ; then
+        while read line ; do
+          eval str=( $line )
+          eval tmpLimit${str[1]}arg[i${str[1]}++]="${str[0]} "
+        done < <(
+          ${sed} -r '/jh.+[(][)][{]/,/[}]/!d;{/^(jh[a-z]+|# arguments:)/!d;s/([(){]|# arguments: )//g;s/.+/"&"/g}' "${thisscript}" | ${sed} 'N;s/\n/ /g'
+        )
+        limitVariables=$(
+          for (( i=0; i<4; i++ )) ; do
+            eval echo "'    '"local limit${i}arg='\"^\($( ${sed} -r "s/ /|/g" <<< "${tmpLimit'${i}'arg[*]}" )\)\$\"\;'
+          done
+        )
+        jhshcompl="# bash completion script generated for jh utils
 
 $( typeset -f f_pre_run | ${sed} '1s/f_pre_run/_jh_&/g' )
 
 _jh_f_pre_run
 
-keywords='${keywords}'
-
 $( typeset -f f_reg | ${sed} '1s/f_reg/_jh_&/g' )
 
-$( typeset -f _jh_complete )
+_jh_complete ()
+{
+    local keywords='${keywords}';
+${limitVariables}
+$( typeset -f _jh_complete | ${sed} '1,2d' )
 
 complete -F _jh_complete ${jhutils}
 "
+        noFunctionSet=false
+      fi
       case $2 in
               message) f_color_pr cyn "Creating bash completion source code ..." ;;
         checkExistent) ! diff /etc/bash_completion.d/jhsh.bash - <<< "${jhshcompl}" &>/dev/null ;;
@@ -777,17 +822,20 @@ f_install(){
             f_color_ask cyn overwrite "   Do you want to overwrite it? [Yn]: "
             if [[ ${overwrite,,} =~ ^y(es)?$ || -z ${overwrite} ]] ; then
               [[ -z ${overwrite} ]] && f_color_pr wht "  Default: Yes" && overwrite=Y
-              ( f_map_cmd ${installFunc} forceInstall && f_color_pr grn "   DONE: ${cDir}/${c}" ) || f_color_pr red "   ERROR!"
+#              ( f_map_cmd ${installFunc} forceInstall && f_color_pr grn "   DONE: ${cDir}/${c}" ) || f_color_pr red "   ERROR!"
+              ( f_map_cmd ${installFunc} forceInstall && printf "${wht}%-35s ${grn}[ %s ]\e[m\n" "${cDir}/${c}" "UPDATED" ) || f_color_pr red "   ERROR!"
             elif [[ ${overwrite,,} =~ ^no?$ || -z ${overwrite} ]] ; then
               f_color_pr wht "   skipped..."
             fi
           done
           unset overwrite
         else
-          f_color_pr grn "   ALREADY UPDATED: ${cDir}/${c}"
+#          f_color_pr grn "   ALREADY UPDATED: ${cDir}/${c}"
+          printf "${wht}%-35s ${grn}[ %s ]\e[m\n" "${cDir}/${c}" "SKIPPED"
         fi
       else
-        ( f_map_cmd ${installFunc} normalInstall && f_color_pr grn "   DONE: ${cDir}/${c}" ) || f_color_pr red "   ERROR!"
+#        ( f_map_cmd ${installFunc} normalInstall && f_color_pr grn "   DONE: ${cDir}/${c}" ) || f_color_pr red "   ERROR!"
+        ( f_map_cmd ${installFunc} normalInstall && printf "${wht}%-35s ${grn}[%s]\e[m\n" "${cDir}/${c}" "INSTALLED" ) || f_color_pr red "   ERROR!"
       fi
     else
       f_color_pr red "ERROR: ${cDir} doesn't exist!"
