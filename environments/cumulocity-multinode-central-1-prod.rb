@@ -4,15 +4,16 @@ description "The production multinode environment in Frankfurt"
 
 cookbook_versions({
 'cumulocity'=>'= 8.18.0',
-'cumulocity-kubernetes'=>'= 8.18.0',
-'cumulocity-ssagents'=>'= 8.18.0'
+#'cumulocity-kubernetes'=>'= 8.18.0',
+'cumulocity-kubernetes'=>'= 9.0.11',
+'cumulocity-ssagents'=>'= 8.18.1'
 })
 
 default_attributes(
  "fixhostname" => false,
  "fixhostsfile" => false,
-# "fixhostname" => false,
-# "fixhostsfile" => false,
+# "fixhostname" => true,
+# "fixhostsfile" => true,
  "elb" => {
       "name" => "production"
     }
@@ -58,15 +59,16 @@ override_attributes(
      "images2install" => [ "" ]
   },
   "cumulocity-karaf" => {
-    "version" => "8.19.19-1",
-    "ssa-version" => "8.19.5-1",
+    "version" => "9.7.1-1",
+    "ssa-version" => "9.7.0-1",
     "memory_left_for_system" => "2048",
-    "management-access" => [ "172.31.10.100","172.31.10.104" ],
+    "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24" ],
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,
     "revDNSname" => "cepfra.cumulocity.com",
-    "openrelayIP" => "cepfra.cumulocity.com",
+#    "openrelayIP" => "cepfra.cumulocity.com",
+    "openrelayIP" => "52.58.146.111",
     "CUMULOCITY_LICENCE_KEY" => "654176766f1252e56d6eeaa877986f0737164b0e1c6110c048237e0d406f280c27d650ededb20ed6d9f0979696d2da05270a25dc76527ce89c722952e2ab7eb6"
   },
   "cumulocity-core" => {
@@ -98,18 +100,21 @@ override_attributes(
       #"system.two-factor-authentication.<customer>.password" => "xBg5Wa8M",                                                                                          
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",  <--for 8.19
 #      "migration.tomongo.default" => "MONGO_READ_WRITE", <--for 8.19
-      "default.tenant.microservices" => "device-simulator, smartrule, cep",
+#      "default.tenant.microservices" => "device-simulator, smartrule, cep",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep, jwireless, sms-gateway",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,  
       "system.support-user.enabled" => true, 
       "tenantSuspend.mail.sendtosuspended" => false,
       #"tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
       "microservice.websocket.port" => 8303,
-      "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
-      "smartrule.microservice.url" => "http://127.0.0.1:8334",
+#      "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
+#      "smartrule.microservice.url" => "http://127.0.0.1:8334",
       "speechAgent.baseURL" => "${SPEECH-AGENT-SERVER}:8030",
       "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
       "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
+#      "smsGateway.host" => "http://localhost:8111/service/messaging",
+#      "system.connectivity.microservice.url" => "http://localhost:8111/service/connectivity",
       "email.from" => "no-reply@cumulocity.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "passwordReset.email.subject" => "Password reset",
@@ -176,7 +181,16 @@ override_attributes(
         }
   },
      "cumulocity-ssagents" => {
-        "useTags" => true
+        "useTags" => true,
+        'lwm2m-agent' => {
+          'subscriptions_fetch_delay' => 60000,
+          'device-tenant_mapping_reload_delay' => 60000,
+          #'C8Y.lwm2m.fwupdate.address' => "lwm2m.cumulocity.com",
+          'C8Y_lwm2mEventLoggingEnabled' => true,
+          'leshan_cluster_tenant' => "management",
+          'leshan_cluster_tenant_username' => "lwm2m-user",
+          'leshan_cluster_tenant_password' => "c+ULIQOPu79"
+        }
   },
     'cumulocity-application' => {
       'vendme' => "application-vendme"
@@ -187,7 +201,7 @@ override_attributes(
   },
    "cumulocity-cep" => {
        "properties" => {
-         "version" => "8.19.19-1",
+         "version" => "9.0.11-1",
          " esperha.storage" => "/mnt/esperha-storage/"
      },
   }
