@@ -185,7 +185,7 @@ override_attributes(
         'lwm2m-agent' => {
           'subscriptions_fetch_delay' => 60000,
           'device-tenant_mapping_reload_delay' => 60000,
-          #'C8Y.lwm2m.fwupdate.address' => "lwm2m.cumulocity.com",
+          'host_fwUpdate' => "lwm2m-server.cumulocity.com",
           'C8Y_lwm2mEventLoggingEnabled' => true,
           'leshan_cluster_tenant' => "management",
           'leshan_cluster_tenant_username' => "lwm2m-user",
