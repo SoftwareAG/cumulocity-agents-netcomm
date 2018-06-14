@@ -747,7 +747,7 @@ f_map_cmd(){
   case $1 in
     main)
       case $2 in
-              message) "Installing main script ..." ;;
+              message) f_color_pr cyn "Installing main script ..." ;;
         checkExistent) [[ "$( stat -Lc%i "${cDir}/${c}" 2>/dev/null )" != "$( stat -Lc%i "${thisscript}" )" ]] && ! diff "${cDir}/${c}" "${thisscript}" &>/dev/null ;;
          forceInstall) cp -vf "${thisscript}" "${cDir}/${c}" && chmod a+x "${cDir}/${c}" ;;
         normalInstall) cp -v  "${thisscript}" "${cDir}/${c}" && chmod a+x "${cDir}/${c}" ;;
@@ -802,6 +802,9 @@ complete -F _jh_complete ${jhutils}
 }
 
 f_install(){
+  f_color_pr cyn "-- $( basename ${0} ) installation procedure --"
+  f_color_pr wht "  Up to date files will be SKIPPED"
+  f_color_pr wht "  Press ENTER for [default] answers"
   f_color_ask cyn installDir "Type install dir [/usr/local/bin]: "
   [[ -z ${installDir} ]] && installDir="/usr/local/bin" && f_color_pr wht "  Default: ${installDir}"
   [[ ! -d ${installDir} ]] && f_color_pr red "ERROR: folder '${installDir}' is not available!" && exit
@@ -813,6 +816,7 @@ f_install(){
                 *) installFunc="link"       cDir=${installDir} ;;
     esac
     if [[ -d ${cDir} ]] ; then
+      f_map_cmd ${installFunc} message
       if [[ -d "${cDir}/${c}" ]] ; then
         f_color_pr red "ERROR: ${cDir}/${c} it's a directory! Please, remove it manually!"
       elif [[ -L "${cDir}/${c}" || -e "${cDir}/${c}" ]] ; then
@@ -823,7 +827,7 @@ f_install(){
             if [[ ${overwrite,,} =~ ^y(es)?$ || -z ${overwrite} ]] ; then
               [[ -z ${overwrite} ]] && f_color_pr wht "  Default: Yes" && overwrite=Y
 #              ( f_map_cmd ${installFunc} forceInstall && f_color_pr grn "   DONE: ${cDir}/${c}" ) || f_color_pr red "   ERROR!"
-              ( f_map_cmd ${installFunc} forceInstall && printf "${wht}%-35s ${grn}[ %s ]\e[m\n" "${cDir}/${c}" "UPDATED" ) || f_color_pr red "   ERROR!"
+              ( f_map_cmd ${installFunc} forceInstall && printf "   ${wht}%-35s ${grn}[ %s ]\e[m\n" "${cDir}/${c}" "UPDATED" ) || f_color_pr red "   ERROR!"
             elif [[ ${overwrite,,} =~ ^no?$ || -z ${overwrite} ]] ; then
               f_color_pr wht "   skipped..."
             fi
@@ -831,11 +835,11 @@ f_install(){
           unset overwrite
         else
 #          f_color_pr grn "   ALREADY UPDATED: ${cDir}/${c}"
-          printf "${wht}%-35s ${grn}[ %s ]\e[m\n" "${cDir}/${c}" "SKIPPED"
+          printf "   ${wht}%-35s ${grn}[ %s ]\e[m\n" "${cDir}/${c}" "SKIPPED"
         fi
       else
 #        ( f_map_cmd ${installFunc} normalInstall && f_color_pr grn "   DONE: ${cDir}/${c}" ) || f_color_pr red "   ERROR!"
-        ( f_map_cmd ${installFunc} normalInstall && printf "${wht}%-35s ${grn}[%s]\e[m\n" "${cDir}/${c}" "INSTALLED" ) || f_color_pr red "   ERROR!"
+        ( f_map_cmd ${installFunc} normalInstall && printf "   ${wht}%-35s ${grn}[%s]\e[m\n" "${cDir}/${c}" "INSTALLED" ) || f_color_pr red "   ERROR!"
       fi
     else
       f_color_pr red "ERROR: ${cDir} doesn't exist!"
