@@ -324,7 +324,53 @@ f_env_print(){
   if ${tablePrint:-false} ; then
     printf "${BbFw}${bl}${deviderLineA}${bm}${deviderLineB}${br}${colorReset}\n"
   fi
-  exit
+}
+
+f_env_conf(){
+  local KeyLength=${defaultHostnameLength:-4}
+  local tmpKeyLength
+
+  declare -A workArray
+  eval $(typeset -A -p ${sshenv}|sed 's/ '${sshenv}'=/ workArray=/')
+
+  local keysString="$( echo ${!workArray[@]} ) "
+
+  for k in ${keysString} ; do
+    tmpKeyLength="$(( $( wc -c <<< "$k" ) + 2 ))"
+    [[ ${tmpKeyLength} -gt ${KeyLength} ]] && KeyLength="${tmpKeyLength}"
+  done
+  KeyLength="$(( ${KeyLength} + 3 ))"
+
+  echo "${sshenv}=("
+
+  for k in $( egrep -o 'JH[^ ]*' <<< "${keysString}" ) ; do
+    ${firstLine:-true} && echo "  # -- Jumphost settings:" && firstLine=false
+    printf '%'${KeyLength}'s="%s"\n' "[$k]" "$( eval echo \${$sshenv["$k"]} )"
+    keysString="${keysString//$k }"
+  done
+  unset firstLine
+
+  for k in $( egrep -o 'USER|KEY|PORT|PASSWD' <<< "${keysString}" ) ; do
+    ${firstLine:-true} && echo "  # -- Standard hosts settings:" && firstLine=false
+    printf '%'${KeyLength}'s="%s"\n' "[$k]" "$( eval echo \${$sshenv["$k"]} )"
+    keysString="${keysString//$k }"
+  done
+  unset firstLine
+
+  for k in $( egrep -o 'OPT_[A-Z]' <<< "${keysString}" ) ; do
+    ${firstLine:-true} && echo "  # -- Extra options:" && firstLine=false
+    printf '%'${KeyLength}'s="%s"\n' "[$k]" "$( eval echo \${$sshenv["$k"]} )"
+    keysString="${keysString//$k }"
+  done
+  unset firstLine
+
+  echo "  # -- Hosts:"
+  for k in ${keysString} ; do
+    printf '%'${KeyLength}'s="%s"\n' '["'$k'"]' "$( eval echo \${$sshenv["$k"]} )"
+  done | sort
+
+  echo ")"
+  echo
 }
 
 f_ssh_opt_set(){
@@ -370,7 +416,9 @@ jh(){
 #  f_ssh_env_set && [[ -z ${sshhost} ]] && f_ssh_host_set
   f_ssh_env_set && \
   if ${envPrint:-false} ; then
-    f_env_print
+    f_env_print && return
+  elif ${envConf:-false} ; then
+    f_env_conf && return
   else
     [[ -z ${sshhost} ]] && f_ssh_host_set
   fi
@@ -743,6 +791,13 @@ jhenvtable(){
   jh envprint "$@"
 }
 
+jhenvconf(){
+# description: it prints the connection settings of the specified environment
+# arguments: 1
+  envConf=true
+  jh envconf "$@"
+}
+
 f_map_cmd(){
   case $1 in
     main)
@@ -806,7 +861,7 @@ f_install(){
   f_color_pr wht "  Up to date files will be SKIPPED"
   f_color_pr wht "  Press ENTER for [default] answers"
   f_color_ask cyn installDir "Type install dir [/usr/local/bin]: "
-  [[ -z ${installDir} ]] && installDir="/usr/local/bin" && f_color_pr wht "  Default: ${installDir}"
+  [[ -z ${installDir} ]] && installDir="/usr/local/bin" && f_color_pr ylw "  Default: ${installDir}"
   [[ ! -d ${installDir} ]] && f_color_pr red "ERROR: folder '${installDir}' is not available!" && exit
   jhutils="$( typeset -f | ${sed} -r -n 's/^(jh[a-z]+) \(\)/\1/gp' | tr -d '\n' )"
   for c in "jh.sh" ${jhutils} "jhsh.bash" ; do
@@ -825,7 +880,7 @@ f_install(){
           while ! [[ ${overwrite,,} =~ ^(y(es)?)|(no?)$ ]] ; do
             f_color_ask cyn overwrite "   Do you want to overwrite it? [Yn]: "
             if [[ ${overwrite,,} =~ ^y(es)?$ || -z ${overwrite} ]] ; then
-              [[ -z ${overwrite} ]] && f_color_pr wht "  Default: Yes" && overwrite=Y
+              [[ -z ${overwrite} ]] && f_color_pr ylw "  Default: Yes" && overwrite=Y
 #              ( f_map_cmd ${installFunc} forceInstall && f_color_pr grn "   DONE: ${cDir}/${c}" ) || f_color_pr red "   ERROR!"
               ( f_map_cmd ${installFunc} forceInstall && printf "   ${wht}%-35s ${grn}[ %s ]\e[m\n" "${cDir}/${c}" "UPDATED" ) || f_color_pr red "   ERROR!"
             elif [[ ${overwrite,,} =~ ^no?$ || -z ${overwrite} ]] ; then
