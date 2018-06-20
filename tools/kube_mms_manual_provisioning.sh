@@ -105,10 +105,16 @@ case $step in
   done
 ;;
 4)
+  f_color_pr cyn "# remove etcd-init tag to masters"
+  for n in ${kubemasters[@]} ; do
+    f_exec "knife tag delete $n etcd-init"
+  done
   f_color_pr cyn "# apply k8s-master-init tag to first master"
   f_exec "knife tag create ${kubemasters[0]} k8s-master-init"
 ;;
 5)
+  f_color_pr cyn "# remove k8s-master-init tag to first master"
+  f_exec "knife tag delete ${kubemasters[0]} k8s-master-init"
   f_color_pr cyn "# apply cert_upload recipe to first master"
   f_exec "knife node run_list add ${kubemasters[0]} 'recipe[cumulocity-kubernetes::certs_upload]'"
 

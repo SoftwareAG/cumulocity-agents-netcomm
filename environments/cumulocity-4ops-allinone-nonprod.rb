@@ -1,19 +1,20 @@
-name "cumulocity-staging7-nonprod"
-description "The production environment"
+name "cumulocity-4ops-allinone-nonprod"
+description "The complete cumulocity plus multi master kubernetes env"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-'cumulocity-kubernetes'=>'= 0.5.0',
-'cumulocity-ssagents'=>'= 0.4.0'
+'cumulocity-kubernetes'=>'= 0.6.0',
+'cumulocity-ssagents'=>'= 0.4.0',
+'docker'=>'= 2.17.0'
 })
 
 override_attributes(
-  "domainname" => "staging7.c8y.io",
+  "domainname" => "dladominiki.c8y.io",
 
   "environment" => {
-      "address" => "management.staging7.c8y.io"
+      "address" => "management.dladominiki.c8y.io"
   },
-  "swapfilesize" => 768,
+  "swapfilesize": 512,
   'yum' => {
     'repositories' => {
       'cumulocity-testing' => {
@@ -28,26 +29,27 @@ override_attributes(
      "jdk_version" => "8"
   },
   "cumulocity-kubernetes" => {
-     "deployK8S4env" => "cumulocity-staging7-nonprod",
-     "attachedEnvs" => ["cumulocity-staging7-nonprod","cumulocity-small7-nonprod"],
+     "deployK8S4env" => "cumulocity-4ops-allinone-nonprod",
+     "attachedEnvs" => ["cumulocity-4ops-allinone-nonprod"],
      "token" => "1e3145.2ff901841c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.7.0",
-     "images2install" => [ "cep" ],
+     "images-version" => "9.7.2",
+     "images2install" => [ "cep","cep-small" ],
      "monitoring" => {
-       "enabled" => true
+        "enabled" => true
      }
   },
   "cumulocity-karaf" => {
-    "CUMULOCITY_LICENCE_KEY" => "17adb8fe8848af81a75d175bace5d013bf71ee4fa374aafb30313f3d245de270b5f953ab29861044ef6e169406fb469fc50407d31c81ba874e1a3b9b37a33bfc",
-    "version" => "9.8.0-1",
-    "ssa-version" => "9.8.2-1",
+#    "CUMULOCITY_LICENCE_KEY" => "745a895892570c0b5fa8dca34262f633d438ac65afc9fba05eb0e4a8d277fe97ec9f9b2794812fd92eeae698e3b90c7dbd7fc3b32165e196f16f0e54a51a9a76",
+     "CUMULOCITY_LICENCE_KEY" => "aa72dd7eefa9f5456291a8b2757c6a9a371c90596c80f6de924688027f4a07874c612f1fdcaedfd9433ef4513787409c32a9fb9ddfaa8c81d498418f34cd878b",
+    "version" => "9.7.2-1",
+    "ssa-version" => "9.7.2-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
     "CUMULOCITY_LICENCE_DIR" => nil,
     "management-access" => [ "0.0.0.0/0" ],
-    "openrelayIP" => "172.31.35.90",
+    "openrelayIP" => "172.31.7.250",
       "karaf" => {
         "memory" => {
             "xms" => "1024M"
@@ -67,23 +69,18 @@ override_attributes(
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.8.0'
+    "version" => '9.7.0'
   },
   "cumulocity-ssagents" => {
-    "useTags" => true,
-    "lwm2m-agent" => {
-        "host_fwUpdate" => "34.251.8.163",
-        "leshan_cluster_tenant" => "management",
-        "leshan_cluster_tenant_username" => "lwm2m_user",
-        "leshan_cluster_tenant_password" => "passw0rd_a"
-    },
+    "useTags" => true
   },
   "cumulocity-core" => {
     "properties" => {
-      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/",
-      "default.tenant.microservices" => "device-simulator, smartrule, cep, tenant-sla-monitoring",
+      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
+      "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
+      "default.tenant.microservices" => "device-simulator,smartrule,cep,tenant-sla-monitoring",
       "sendDashboardAgent.url" => "http://localhost:19191/report",
       "mongodb.user" => "c8y-root",
       "mongodb.admindb" => "admin",
@@ -93,13 +90,7 @@ override_attributes(
       "contextService.tenantManagementDB" => "management",
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => "false",
-      "migration.tomongo.default" => "MONGO_READ_WRITE_POSTGRES_WRITE",
-      "smsGateway.host" => "http://localhost:8688/sms-gateway",
-      "email.host" => "postfix.cumulocity-staging7-nonprod.svc.cluster.local",
       "email.from" => "no-reply@app.domain.com",
-      "system.two-factor-authentication.enabled" => true,
-      "system.two-factor-authentication.max.inactive" => "10",
-      "system.two-factor-authentication.enforced" => "ashutosh",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "passwordReset.email.subject" => "Password reset",
@@ -122,7 +113,8 @@ override_attributes(
             Your password on {host} has been recently changed. \n\
             If you or your administrator made this change, you do not need to do anything more. \n\
             If you did not make this change, please contact your administrator.\n\n\
-            Kind regards,\n\
+            Kind regard
+            s,\n\
             app.domain.com support team\n',
             "passwordReset.invite.template" => 'Hi there,\n\n\
             Please use the following link to reset your password: \n\
@@ -134,9 +126,9 @@ override_attributes(
   },
 
   "cumulocity-external-lb" => {
-    "landing_page" => "https://staging7.c8y.io/apps/devicemanagement",
-    "paas_default_page" => "https://$http_host/apps/$defapp",
-    "paas_public_default_page" => "https://staging7.c8y.io/apps/dmpublic",
+    "landing_page" => "https://dev7.c8y.io/apps/devicemanagement",
+    "paas_default_page" => "https://$http_host/apps/devicemanagement",
+    "paas_public_default_page" => "https://dev7.c8y.io/apps/dmpublic",
     "usePostgresForPaaS" => false,
     "paas_redirection" => true,
     "temp_chunkin" => false,
@@ -148,9 +140,6 @@ override_attributes(
     "useKarafWebsocket" => true,
     "proxy_cache" => true,
     "certificate_domain" => "staging.c8y.io",
-    "useLUAforLimits" => true,
-    "useLUAforSSLcerts": true,
-    "useLUAforHealthCheck" => true,
     "nginx" => {
         "NGinxPort" => "openresty",
         "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"

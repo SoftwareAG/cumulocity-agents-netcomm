@@ -4,16 +4,6 @@ numPw=10
 
 f_kubesecretgen(){
 
-  local i pw
-  for (( i=0 ; i<22 ; i++ )) ; do
-    pw+=$(strings /dev/urandom | egrep -o -- "[a-z0-9]" | head -c1)
-  done
-  sed -r 's/^(.{6})/\1./g' <<< "${pw,,}"
-
-}
-
-f_kubesecretgen(){
-
   local i
   for (( i=0 ; i<22 ; i++ )) ; do
     strings /dev/urandom | egrep -o -- "[a-z0-9]" | head -c1
