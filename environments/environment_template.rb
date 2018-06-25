@@ -86,10 +86,10 @@ override_attributes(
       #"system.two-factor-authentication.logout-on-browser-termination" => true,
       #"system.two-factor-authentication.max.inactive" => "14",
       #"system.two-factor-authentication.provider" => "<customer>",
-      #"system.two-factor-authentication.<customer>.baseUrl" => "https://m1free.rcs.msg.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",             
-      #"system.two-factor-authentication.<customer>.baseUrl" => "https://free.rcs.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",             
-      #"system.two-factor-authentication.<customer>.username" => "cumulocity",                                                                                        
-      #"system.two-factor-authentication.<customer>.password" => "xBg5Wa8M",                                                                                          
+      #"system.two-factor-authentication.<customer>.baseUrl" => "https://m1free.rcs.msg.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
+      #"system.two-factor-authentication.<customer>.baseUrl" => "https://free.rcs.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
+      #"system.two-factor-authentication.<customer>.username" => "cumulocity",
+      #"system.two-factor-authentication.<customer>.password" => "<smspassword>",
       "default.tenant.microservices" => "device-simulator, smartrule, cep",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,
@@ -109,7 +109,7 @@ override_attributes(
             Kind regards,\n\
             <Customer> support team\n',
       "passwordReset.user.not.found.email.template" => 'Hi there,\n\n\
-            you or someone else entered this email address when trying to change the password of a <Customer>portal user.\n\n\
+            you or someone else entered this email address when trying to change the password of a <Customer> portal user.\n\n\
             However, we could not find the email address in your account. Please contact the administrator of your \
             account to set your email address and password. If you are the administrator of the account,\
             please use the email address that you registered with.\n\n\
