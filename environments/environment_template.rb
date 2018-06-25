@@ -52,11 +52,11 @@ override_attributes(
      "attachedEnvs" => ["<customer>-multinode-prod"],
      "token" => "<kubernetes_token>",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.19.25",
-     "images2install" => [ "cep" ]
+     "images-version" => "9.0.16",
+     "images2install" => [ "cep","cep-small" ]
   },
   "cumulocity-karaf" => {
-    "version" => "8.19.25-1",
+    "version" => "9.0.16-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "oort-enabled" => true,
@@ -74,7 +74,7 @@ override_attributes(
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => false,
 #            "errorMessageRepresentationBuilder.includeDebug" => "false",
-      "default.tenant.applications" => "administration,devicemanagement,cockpit",
+      "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "management.admin.password" => "", # insert password
       "tenant.admin.password" => "", # insert password
       "admin.password" => "", # insert password
