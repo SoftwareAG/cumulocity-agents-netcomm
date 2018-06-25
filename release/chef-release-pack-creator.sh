@@ -85,6 +85,14 @@ mnOnlyC8yCB=(
 declare -A mnOnlyComCB
 mnOnlyComCB=(
                   ["docker"]=latest
+# addition for kubernetes multi master setup
+                 ["haproxy"]=5.0.4
+                     ["cpu"]=2.0.0
+         ["build-essential"]=8.1.1
+                   ["poise"]=2.8.1
+           ["poise-service"]=1.5.2
+               ["seven_zip"]=2.0.2
+                   ["mingw"]=2.0.2
 )
 
 declare -a mnRoles
