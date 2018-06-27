@@ -42,7 +42,7 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "9e6ecb2f76ffcc9dd79b59a34dae875be4d5fc340fb60d06e212e3d26e8399842c1734d3e9474e9ace8e3cf2e8d0381fae9aa46698f566ff02418aeb73c14cbd",
-      "version": "8.19.27-1",
+      "version": "8.19.28-1",
       "ssa-version": "8.21.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
@@ -70,7 +70,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "8.19.27"
+      "version": "8.19.28"
     },
     "cumulocity-ssagents": {
       "useTags": true
@@ -106,7 +106,7 @@
         "passwordReset.token.email.template": "Dear app.domain.com user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
         "passwordReset.user.not.found.email.template": "Hi there,\\n\\n\\\n            you or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            However, we could not find the email address in your account. Please contact the administrator of your \\\n            account to set your email address and password. If you are the administrator of the account,\\\n            please use the email address that you registered with.\\n\\n\\\n            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of app.domain.com portal. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
         "passwordReset.success.email.template": "Dear app.domain.com user,\\n\\n\\\n            Your password on {host} has been recently changed. \\n\\\n            If you or your administrator made this change, you do not need to do anything more. \\n\\\n            If you did not make this change, please contact your administrator.\\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
-        "passwordReset.invite.template": "Hi there,\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}/apps/devicemanagement/index.html?token={token}\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\n\\\n            app.domain.com support team\\n"
+        "passwordReset.invite.template": "Hi there, \\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}/apps/devicemanagement/index.html?token={token}\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\n\\\n            app.domain.com support team\\n"
       }
     },
     "cumulocity-external-lb": {

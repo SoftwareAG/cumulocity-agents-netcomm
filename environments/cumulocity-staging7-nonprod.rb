@@ -94,7 +94,7 @@ override_attributes(
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => "false",
       "migration.tomongo.default" => "MONGO_READ_WRITE_POSTGRES_WRITE",
-      "smsGateway.host" => "http://localhost:8688/sms-gateway",
+      "smsGateway.host" => "http://localhost:8181/service/messaging",
       "email.host" => "postfix.cumulocity-staging7-nonprod.svc.cluster.local",
       "email.from" => "no-reply@app.domain.com",
       "system.two-factor-authentication.enabled" => true,
