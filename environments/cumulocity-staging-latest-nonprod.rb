@@ -1,5 +1,5 @@
-name "cumulocity-basic-staging7-nonprod"
-description "The Basic Staging 7 environment for test releases"
+name "cumulocity-staging-latest-nonprod"
+description "The Staging 7 environment for the latest released version"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
@@ -8,12 +8,12 @@ cookbook_versions({
 })
 
 override_attributes(
-  "domainname" => "staging.c8y.io",
+  "domainname" => "staging-latest.c8y.io",
 
   "environment" => {
-      "address" => "management.staging.c8y.io"
+      "address" => "management.staging-latest.c8y.io"
   },
-  "swapfilesize" => 768,
+  "swapfilesize" => 512,
   'yum' => {
     'repositories' => {
       'cumulocity-testing' => {
@@ -28,26 +28,26 @@ override_attributes(
      "jdk_version" => "8"
   },
   "cumulocity-kubernetes" => {
-     "deployK8S4env" => "cumulocity-basic-staging7-nonprod",
-     "attachedEnvs" => ["cumulocity-basic-staging7-nonprod"],
-     "token" => "1e3145.2ff901941c48af2e",
+     "deployK8S4env" => "cumulocity-staging-latest-nonprod",
+     "attachedEnvs" => ["cumulocity-staging-latest-nonprod"],
+     "token" => "1e3145.2ff901841c78af1d",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.0.13",
-     "images2install" => [ "cep" ],
-     "monitoring": {
-       "enabled": false
+     "images-version" => "9.9.0",
+     "images2install" => [ "cep","cep-small","device-simulator","smartrule" ],
+     "monitoring" => {
+       "enabled" => true
      }
   },
   "cumulocity-karaf" => {
-    "CUMULOCITY_LICENCE_KEY" => "9cfda1bd57553c744d813970705747ef3c3c1f97ad669c0ff9a3c8bba40675705f458e46b46bd9710d7bc99594fe3030d7637457e94c6982ab9de77acce75806",
-    "version" => "9.0.16-1",
-    "ssa-version" => "8.21.0-1",
+    "CUMULOCITY_LICENCE_KEY" => "35fd2a651c866163f172274ba43a1a15632c68b49f9bcd5c96ba0b2213be257b8265ab3255d20a516a7c68dff6190a698e49f613a8e61b2e3740901d8ce44f1f",
+    "version" => "9.9.0-1",
+    "ssa-version" => "9.9.0-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
     "CUMULOCITY_LICENCE_DIR" => nil,
-    "openrelayIP" => "172.20.21.199",
     "management-access" => [ "0.0.0.0/0" ],
+    "openrelayIP" => "172.31.10.245",
       "karaf" => {
         "memory" => {
             "xms" => "1024M"
@@ -60,22 +60,27 @@ override_attributes(
     }
   },
   "cumulocity-mongo" => {
-    "sharedkey-content" => "U1nZc+UvINPiri3RRriSERbpUcJpgtvITqiwHAIN+dYcdOEGAEv2P2nKCRhRaUvB\nXy1eI/gwcFjKGFcqB/iRQ4EPL/KRJ9LKajOmbmOuMTFeYQ276d9QnnXE5Wkj10sC\nBjjSkVAeF/erOKvFdJed15Q+QXsUslwswPOxFgkUYDw7emIvkJsd6BYRS0yD8Sj3\n4ykeHs/+UK/bnPstnQfLMBq+yyLNkbY/UbKOT1gBY9A6B1MBWLlaPU9gMYO+YKMd\nauARB5WolUVjbA5Hgt0WY14tao/KYEJPig3LCrlcBsoe+W4BRHXgcIqrYNO3c2Yy\nggpNSDP2cyU8LF6uaKzr6GQqa4Gw8CwgSUbR6ylp8i/EeCrzgklHdMqclF4E7b4R\n0nAk/hZu7am2TVRIU3Lzly30jInXh9Zcd34CId8Q14VWDPh+SN3gHeCfG5yPWEsS\nm6fDTzCFK84BV/6lPG1dBxSD8qYygK+GSHzkGc2SJEmbXUz+q1xMe5dzz8g7ukTa\n0HbjAseVS1/2dtSxNgJxzerC/zOhslN6Zu2dGl3pjUuuH+GcapBfn7kmSxtOTfw8\nsfi5OejOMHEtKSiKnBNwW7vpjgq+0F9H/pbJIhiYgNlENBFkZraU1EXxNLr/jdd6\nJS3eL3/T76MYHaBe48tUfbFhaGMLG8p9EbMEqg/x5EGhs+px/np9ci6qTDaeRbFP\nP764aXLoWyL6UcDyQDl6+Oge9TJaoq5STn9TngdJendQDuZTNUcsSAlK9Tz6mb0i\nGbzFMZqpqQHBmw+3WYannksDwA++1K1zS8z0JFhNIfAG0up2cIEUHSFOwe9F4isM\n3IA/razLXXZXIFdFxFcMg9vMY3DcBvgwXwgWAs56z+tzlY5SwswVpEbMAeUBpMIB\nIvMWtkHom9Bb4vDcHBw+HxRaevHyTS40eyKBqZMFROa6B78YOwRUssMulaCBb+cA\nFOWpBFHpH884t51c7jrBLPCmjL/8",
-    "mongodb.initUser" => "init-root",
-    "mongodb.initPassword" => "StagBasic777^^^"
+    "sharedkey-content" => "oxUyBP8EojiqPKeF/pTSwkQGQb5/Nj9K0OcbBDfJA5eAqAiADLR1AMapq8PTYWx7\npd3z5/aLcjptklZS39Ea7sqsZakrcdeOsJ6BN3F1xct9LGbsDjWtSwkphBImjvJR\nBg+ZVJdbiwEe8q85F/e47M3hE+yxZiN9gShb37Q5oOVBrl6GYMZIlWAz7u7gZp5C\nYWY5y+hp1DaR3Ime2i4mqy19aMAqVgTVgeU9Aewmb4Q3TtOrehNjXRglWJdQUdgN\n4yo5LvlW1s7eyeqrwSWVg/WjEEUFK5ZxDkUPNIRIg1sgJR2a0FsD6rwTiJoiE2cS\nq8QRPAhMFqSwpusKcZU53/FoRrqovciLAxxYqsl5w7gtr3FyCqAJpFyUqDBGNtvC\njGztVC1eg5T7SGPFbUG2CJWuaBDJ4zo2faCVuHvgLjR3KMhF7og+k5WpqrJ+TSN0\nWha9/pH3N/zS9WtVJnFmBFW0yWXRfHWqmMB0N9+rmlEtlhT29pZlXeaPiBLr94dj\nYRTxuhS/NMIuiN674ODSA/dzWRY3F+0w+z6+GeGSK0fg5hsxvm4KR6yW1OLErWXL\n9CKjIV42nZGB5SDFoth9bZSCcR/2qJaBKfcy9o2Ua8BBBK+AT3nOjjUYn+jT9WsT\nadxlTXyvKcbYv1mAJgPQkZs8vK94brgJG3a0BtFA56yVxzujnYVadyIoHHoJ2hQ4\nL36lW50ltSCtpADEtua/LmCW60FNjRu3V7+rNSJ6YO8EdTGcb1HLO3lMIqopmadk\nAXa1q1HblDfTgsxZ1QKYSVvxdSdRh8Id/wkHLaKzgG4s305+pJe7LZsFpKGkfvvf\n97hIjngs6Ck07VzWB1O3QxMDJRZuPxKoRkRbc1uqeJAwJ4MmJSc1C6epQ9uXY0rQ\noeWkPdj/ce0486piVdrI1fpCmiOIaIjkSAZ6yzFD2cgvjzdc0y5xzuzAMs0Z8QP1\nSWrl8KNltY4U8CdIwrtvdNoEcC5Q",
+    "mongodb.initUser" => "init-root"
   },
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.0.16'
+    "version" => '9.7.0'
   },
   "cumulocity-ssagents" => {
-    "useTags" => true
+    "useTags" => true,
+    "lwm2m-agent" => {
+        "host_fwUpdate" => "34.251.8.163",
+        "leshan_cluster_tenant" => "management",
+        "leshan_cluster_tenant_username" => "lwm2m_user",
+        "leshan_cluster_tenant_password" => "passw0rd_a"
+    },
   },
   "cumulocity-core" => {
     "properties" => {
-      "system.connectivity.microservice.url" => "http://localhost:8111/service/connectivity",
-      "default.tenant.microservices" => "device-simulator, smartrule, cep",
+      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep, tenant-sla-monitoring",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
       "sendDashboardAgent.url" => "http://localhost:19191/report",
@@ -86,18 +91,13 @@ override_attributes(
       "contextService.rdbmsUser" => "postgres",
       "contextService.tenantManagementDB" => "management",
       "cumulocity.environment" => "PRODUCTION",
-      "auth.checkBlockingFromOutside" => "true",
-      "migration.tomongo.default" => "MONGO_READ_WRITE",
-      "smsGateway.host" => "http://localhost:8111/service/messaging",
-      "email.host" => "postfix.cumulocity-basic-staging7-nonprod.svc.cluster.local",
+      "auth.checkBlockingFromOutside" => "false",
+      "migration.tomongo.default" => "MONGO_READ_WRITE_POSTGRES_WRITE",
+      "smsGateway.host" => "http://localhost:8688/sms-gateway",
+      "email.host" => "postfix.cumulocity-staging-nonprod.svc.cluster.local",
       "email.from" => "no-reply@app.domain.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
-      "system.two-factor-authentication.enabled" => true,
-      "system.two-factor-authentication.max.inactive" => "10",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
-      "management.admin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
-      "admin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
-      "sysadmin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
       "passwordReset.email.subject" => "Password reset",
       "passwordReset.token.email.template" => 'Dear app.domain.com user,\n\n\
             You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\n\n\
@@ -130,9 +130,9 @@ override_attributes(
   },
 
   "cumulocity-external-lb" => {
-    "landing_page" => "https://staging.c8y.io/apps/devicemanagement",
+    "landing_page" => "https://staging-latest.c8y.io/apps/devicemanagement",
     "paas_default_page" => "https://$http_host/apps/$defapp",
-    "paas_public_default_page" => "https://staging.c8y.io/apps/dmpublic",
+    "paas_public_default_page" => "https://staging-latest.c8y.io/apps/dmpublic",
     "usePostgresForPaaS" => false,
     "paas_redirection" => true,
     "temp_chunkin" => false,
@@ -142,10 +142,10 @@ override_attributes(
     "useMQTTsupport" => true,
     "useMasterForPushOperations" => false,
     "useKarafWebsocket" => true,
-    "useMQTTlogs" => false,
     "proxy_cache" => true,
     "certificate_domain" => "staging.c8y.io",
     "useLUAforLimits" => true,
+    "useLUAforSSLcerts": true,
     "useLUAforHealthCheck" => true,
     "nginx" => {
         "NGinxPort" => "openresty",
