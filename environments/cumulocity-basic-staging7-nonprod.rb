@@ -3,7 +3,7 @@ description "The Basic Staging 7 environment for test releases"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-'cumulocity-kubernetes'=>'= 0.5.0',
+'cumulocity-kubernetes'=>'= 0.6.0',
 'cumulocity-ssagents'=>'= 0.4.0'
 })
 
@@ -35,7 +35,7 @@ override_attributes(
      "images-version" => "9.0.13",
      "images2install" => [ "cep" ],
      "monitoring": {
-       "enabled": true
+       "enabled": false
      }
   },
   "cumulocity-karaf" => {
