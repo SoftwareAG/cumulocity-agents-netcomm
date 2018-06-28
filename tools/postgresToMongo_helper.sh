@@ -1,6 +1,5 @@
 #!/bin/bash
 
-envname='$ENVIRONMENT'
 host="127.0.0.1"
 port="8111"
 user="admin"
@@ -30,7 +29,7 @@ f_list_tenants(){
   cmd=$( cat << EOF
 curl -s -X GET http://${host}${port:+:$port}/tenant/tenants?pageSize=2000 -u "management/${user}:${pass}" -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' | jq '.tenants[].id' 2>/dev/null | tr -d \"
 EOF
-  ) ; f_exec
+  ) ; eval "$cmd"
 }
 
 while getopts "f:s:d" OPT ; do
@@ -53,7 +52,6 @@ if [[ -z ${stepChoice} ]] ; then
   echo
   f_color_pr wht "Create a config file with this syntax:"
   cat << EOF
-envname='ENVIRONMENT'
 host="127.0.0.1"
 port="8111"
 user="admin"
@@ -88,7 +86,7 @@ curl -s -X GET http://${host}${port:+:$port}/tenant/options/migration.tomongo/id
 EOF
   ) ; f_exec
   f_color_pr cyn "# check other tenants"
-  for t in $( f_list_tenants | fgrep -v management ) ; do
+  for t in $( f_list_tenants | egrep -v '^management$' ) ; do
   echo " -- $t"
   cmd=$( cat << EOF
 curl -s -X GET http://${host}${port:+:$port}/tenant/options/migration.tomongo/id_mapping.state -u '${t}/${user}\$:${pass}' -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' | python -m json.tool
@@ -120,7 +118,7 @@ EOF
 ;;
 3)
   f_color_pr cyn "# set other tenants to mongo_read_write_postgres_write"
-  for t in $( dryrun=false f_list_tenants | fgrep -v management ) ; do
+  for t in $( f_list_tenants | egrep -v '^management$' ) ; do
   echo " -- $t"
   cmd=$( cat << EOF
 curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u '${t}/${user}\$:${pass}' -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write_postgres_write", "category": "migration.tomongo", "key": "*.state"}'
@@ -144,7 +142,7 @@ EOF
 ;;
 5)
   f_color_pr cyn "# set other tenants to mongo_read_write"
-  for t in $( dryrun=false f_list_tenants | fgrep -v management ) ; do
+  for t in $( f_list_tenants | egrep -v '^management$' ) ; do
   echo " -- $t"
   cmd=$( cat << EOF
 curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u '${t}/${user}\$:${pass}' -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write", "category": "migration.tomongo", "key": "*.state"}'
@@ -166,10 +164,6 @@ curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u "manage
 EOF
   ) ; f_exec
 ;;
-
-
-
-
 *)
   f_color_pr red "ERROR: only steps 1 to 6 are supported"
 ;;
