@@ -9,7 +9,7 @@ ids=("1001" "1002" "1003" "1004" "1005" "1006")
 length=${#users[@]}
 
 # Create groups and users
-for ((i=0;i<=$length;i++)); do
+for ((i=0;i<$length;i++)); do
 
         echo "Creating group:    " "${users[$i]}" "with group id" "${ids[$i]}"
 	groupadd -g "${ids[$i]}" "${users[$i]}"
@@ -50,7 +50,7 @@ find . -type d -name .ssh -exec chmod 0700 {} \;
 
 
 # Sudoers
-mod 0660 /etc/sudoers
+chmod 0660 /etc/sudoers
 sed -i '/"# %wheel/c\%wheel        ALL=(ALL)       NOPASSWD: ALL' /etc/sudoers
-
+chmod 0440
 
