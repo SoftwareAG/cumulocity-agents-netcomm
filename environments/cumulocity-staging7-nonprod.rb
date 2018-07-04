@@ -144,6 +144,7 @@ override_attributes(
     "useSSL" => true,
     "useHSTS" => false,
     "useMQTTsupport" => true,
+    "useMQTTlogs" => true,
     "useMasterForPushOperations" => false,
     "useKarafWebsocket" => true,
     "proxy_cache" => true,
@@ -153,7 +154,7 @@ override_attributes(
     "useLUAforHealthCheck" => true,
     "nginx" => {
         "NGinxPort" => "openresty",
-        "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
+        "version" => "1.13.6.1-20.el7.centos.c8y.8.11.1"
     }
   },
 
