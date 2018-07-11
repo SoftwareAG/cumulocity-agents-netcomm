@@ -31,9 +31,9 @@ _jh_complete(){
     for configfile in "${configfile1}" "${configfile2}" ; do
       if [[ -f "$configfile" ]] ; then
         for e in $( ${sed} -n -r 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
-          envlist+="$e "
           _jh_f_reg "$e"
         done
+        envlist="${unsortedEnvlist[@]//DEF_*}"
         . "${configfile}"
       fi
     done
@@ -83,6 +83,7 @@ switchOptions=${switchOptions:=false}
 
 declare -a unsortedEnvlist
 declare -a envlist
+declare -a deflist
 
 f_reg(){
   unset $1
@@ -147,7 +148,8 @@ else
   cyn='\e[1;36m'
 fi
 
-envlist=( $( for e in ${unsortedEnvlist[@]} ; do echo $e ; done | sort ) )
+envlist=( $( for e in ${unsortedEnvlist[@]//DEF_*} ; do echo $e ; done | sort ) )
+deflist=( $( for e in ${unsortedEnvlist[@]} ; do echo $e ; done | egrep -o '^DEF_.*' | sort ) )
 
 f_noWtAsk(){
   printf '\e[1m'
@@ -213,6 +215,9 @@ f_ssh_host_set(){
     [[ -z ${sshhostProp} ]] || hCheck="$( wc -l <<< "${filteredHostList}" )"
   fi
   [[ ${hCheck:-"-1"} -eq 1 ]] && sshhost="${filteredHostList}"
+
+  ${getHostListOnly:-false} && multicmdHosts=( ${filteredHostList} )
+  ${multicmd:-false} && return
 
   while [[ -z ${sshhost} && -z ${gotojh} ]] ; do
     local -a arr
@@ -331,7 +336,7 @@ f_env_conf(){
   local tmpKeyLength
 
   declare -A workArray
-  eval $(typeset -A -p ${sshenv}|sed 's/ '${sshenv}'=/ workArray=/')
+  eval $(typeset -A -p ${sshenv} | ${sed} 's/ '${sshenv}'=/ workArray=/')
 
   local keysString="$( echo ${!workArray[@]} ) "
 
@@ -343,34 +348,27 @@ f_env_conf(){
 
   echo "${sshenv}=("
 
-  for k in $( egrep -o 'JH[^ ]*' <<< "${keysString}" ) ; do
-    ${firstLine:-true} && echo "  # -- Jumphost settings:" && firstLine=false
-    printf '%'${KeyLength}'s="%s"\n' "[$k]" "$( eval echo \${$sshenv["$k"]} )"
-    keysString="${keysString//$k }"
+  for section in \
+          'Jumphost settings:JH[^ ]*'              \
+    'Standard hosts settings:USER|KEY|PORT|PASSWD' \
+              'Extra options:OPT_[A-Z]'            \
+                      'Hosts:.+'                   \
+  ; do
+    conf_title="$( cut -d: -f 1 <<< "${section}" )"
+    conf_regex="$( cut -d: -f 2 <<< "${section}" )"
+    for k in $( egrep -o "${conf_regex}" <<< "${keysString}" ) ; do
+      conf_section+="$( printf '%'${KeyLength}'s="%s"' '["'$k'"]' "$( eval echo \${$sshenv["$k"]} )" )
+" # newline
+      keysString="${keysString//$k }"
+    done
+    if [[ ! -z ${conf_section} ]] ; then
+      conf_section_sorted="$( sort <<< "${conf_section}" )"
+      printf "  # -- ${conf_title}:${conf_section_sorted}\n"
+    fi
+    unset conf_section
   done
-  unset firstLine
 
-  for k in $( egrep -o 'USER|KEY|PORT|PASSWD' <<< "${keysString}" ) ; do
-    ${firstLine:-true} && echo "  # -- Standard hosts settings:" && firstLine=false
-    printf '%'${KeyLength}'s="%s"\n' "[$k]" "$( eval echo \${$sshenv["$k"]} )"
-    keysString="${keysString//$k }"
-  done
-  unset firstLine
-
-  for k in $( egrep -o 'OPT_[A-Z]' <<< "${keysString}" ) ; do
-    ${firstLine:-true} && echo "  # -- Extra options:" && firstLine=false
-    printf '%'${KeyLength}'s="%s"\n' "[$k]" "$( eval echo \${$sshenv["$k"]} )"
-    keysString="${keysString//$k }"
-  done
-  unset firstLine
-
-  echo "  # -- Hosts:"
-  for k in ${keysString} ; do
-    printf '%'${KeyLength}'s="%s"\n' '["'$k'"]' "$( eval echo \${$sshenv["$k"]} )"
-  done | sort
-
-  echo ")"
-  echo
+  printf ")\n\n"
 }
 
 f_ssh_opt_set(){
@@ -422,6 +420,8 @@ jh(){
   else
     [[ -z ${sshhost} ]] && f_ssh_host_set
   fi
+
+  ${getHostListOnly:-false} && getHostListOnly=false && return
 
   # jumphost parameters
   declare     jh=$sshenv["JH"]
@@ -524,9 +524,9 @@ jh(){
     [[ ${cmd} == "ssh" ]] && f_ssh_opt_set
     #echo "${sshopts1[@]}" "${sshopts2[@]}"
     printf "${blu}==> ${grn}"
-    echo ${fullcmd} ${sshopts1[@]} ${sshopts2[@]} ${sshopts3[@]} "$@"
+    echo ${fullcmd} ${sshopts1[@]} ${sshopts2[@]} ${sshopts3[@]} $( for v in "$@" ; do echo \'$v\' ; done )
     printf '\e[m'
-    ${justecho:-false} || eval ${fullcmd} ${sshopts1[@]} ${sshopts2[@]} ${sshopts3[@]} "$@"
+    ${justecho:-false} || eval ${fullcmd} ${sshopts1[@]} ${sshopts2[@]} ${sshopts3[@]} \"\$@\"
   fi
 }
 
@@ -541,11 +541,12 @@ jhman(){
   local B='\e[1m'
   local U='\e[4m'
   local N='\e[m'
-  printf "────────────────────────────────────────────────────────────────────────────────
+  sepLine="$( printf "%0$( tput cols )s\n" | ${sed} 's/ /─/g' )"
+  printf "$sepLine
 
   -- ${B}JH Utility Script${N} --
 
-────────────────────────────────────────────────────────────────────────────────
+$sepLine
 
 ${U}Brief description${N}: ${B}$( basename ${thisscript} )${N} is a utility suite created to easily mantain and connect via jumphosts to environment hosts.
 When invoked with its basename, it will trigger an installation/update procedure that will create the following utilities:
@@ -566,7 +567,7 @@ Alternatively, if bash_completion feature is available in the current shell, you
 If the regex matches only one result, this one will be selected automatically, otherwise a selection menu will be shown.
 You can find a better description for each command below.
 
-────────────────────────────────────────────────────────────────────────────────
+$sepLine
 
 ${U}Installation procedure and dependencies${N}: to install this utility suite, simply run the base script without any argument.
 The only real requirement is ${U}bash version 4.4${N} or greater, but the following components are greatly advised:
@@ -584,12 +585,14 @@ For ${B}MacOS${N} users, use '${B}brew${N}' tool to install the following compon
   • brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
   • brew install oath-toolkit
 
-────────────────────────────────────────────────────────────────────────────────
+$sepLine
 
 ${U}Configuration file${N}: ${B}$( basename ${thisscript} )${N} will load the configuration files in two paths:
 
   • a file named '${B}jh.sh${N}' in the installation folder, e.g.: ${configfile1}
   • an hidden file named '${B}.jh.sh${N}' in your home directory, e.g.: ${configfile2}
+  • you might want to have an extra private hidden file named '${B}.jh.sh.priv${N}' for '${B}defaultjhotp${N}' configuration in your home directory;
+    this one can be called sourcing from one of the other configuration files, e.g.: 'source \${HOME}/.jh.sh.priv'
 
 A configuration file can contain default options, better defined on the beginning of it:
 
@@ -605,6 +608,9 @@ A configuration file can contain default options, better defined on the beginnin
   • ${B}defaultjhtfa${N}     : boolean option to enable/disable usage of TFA for jumphosts. Defaults to '${B}true${N}'
   • ${B}defaultjhotp${N}     : google authentication key for TFA code generation. Only used if TFA is enabled.
   • ${B}defaultjhoptions${N} : custom options for jumphosts. e.g.: '${B}-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no${N}'
+
+  ${U}Miscellaneous${N}:
+  • ${B}outputBaseDir${N}    : folder used to store output from '${B}jhmulticmd${N}' command. If not defined, current folder will be used.
 
 After the default options, you can map your hosts and group them in an associative array named after the respective environment.
 The script will take care of setting the array type to associative by itself, you don't need to 'declare -A environment'.
@@ -669,16 +675,21 @@ In the following example you will push and run the function '${B}f_myFunc${N}' o
 
 ${B}NOTE${N}: the ${B}-t${N} option at the beginning is used is used to force an interactive shell after the execution of 'f_myFunc'
 
-────────────────────────────────────────────────────────────────────────────────
+$sepLine
 
-${B}JHSSH${N}, ${B}JHSSHJ${N}, ${B}JHSSHO${N}, ${B}JHSSHPRINT${N} and ${B}JHSSHOPRINT${N} commands:
+  ${B}REMOTE MANAGEMENT UTILITIES:${N}
 
-The base command, '${B}jhssh${N}', is used to establish an ssh connection to an host.
+$sepLine
+
+${U}Description${N}: this category of commands is probably the most used and useful one. The base tool used here is is the
+standard '${B}ssh${N}' client with some special options for jumping via a jumphost, whenever needed.
+
+${B}JHSSH${N}: The base command, '${B}jhssh${N}', is used to establish an ssh connection to an host.
 The connection can be direct or via a jumphost and the exact command will be printed on screen before being executed.
 
-'${B}jhsshj${N}' is a shortcut which will autoselect the jumphost of the chosen environment for a direct connection.
+${B}JHSSHJ${N}: '${B}jhsshj${N}' is a shortcut which will autoselect the jumphost of the chosen environment for a direct connection.
 
-The variant '${B}jhssho${N}', instead, shows a box with predefined options to switch on/off. These options are:
+${B}JHSSHO${N}: The variant '${B}jhssho${N}', instead, shows a box with predefined options to switch on/off. These options are:
 
 $( ${sed} -r -n '/sshopts[1]=/,/other/{s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\1\2 => \3/gp}' "${thisscript}" )
 
@@ -686,28 +697,47 @@ Alternatively, you can specify extra options via '${B}OPT_X${N}' mapping or appe
 e.g.: ${B}jhssh customer loadbalancer -L8111:localhost:8111${N}
 ${B}NOTE${N}: this only works if you specify both environment and hostname before the extra options.
 
-For last, '${B}jhsshprint${N}' and '${B}jhsshoprint${N}' variants work in the same way as '${B}jhssh${N}' and '${B}jhssho${N}' commands,
-but they only print the command that would be executed.  Useful to redistribute a connection string to people that doesn't have this utility.
+${B}JHMULTICMD${N}: using '${B}jhssh${N}' as its base, '${B}jhmulticmd${N}' sends the command defined in the command line to all the
+regex matching hosts. By its nature, this command doesn't allow interactive options and it only accepts a full syntax where
+environment, hosts and command are defined. The connections to the hosts are parallelized and output of each ssh session will
+be placed according to what is defined in '${B}outputBaseDir${N}'.
 
-────────────────────────────────────────────────────────────────────────────────
+${B}JHSSHPRINT${N}: '${B}jhsshprint${N}' variant works in the same way as '${B}jhssh${N}' command, but it only prints
+the command that would be executed.  Useful to redistribute a connection string to people that doesn't have this utility.
 
-${B}JHSFTP${N}, ${B}JHSFTPJ${N} and ${B}JHSFTPPRINT${N} commands:
+${B}JHSSHOPRINT${N}: for last, '${B}jhsshoprint${N}' works in the same way as the previous command, but for '${B}jhssho${N}'
 
-Very similar to 'jhssh' commands, '${B}jhsftp${N}' is used to establish an sftp connection to an host.
+$sepLine
 
-'${B}jhsftpj${N}' is a shortcut which will autoselect the jumphost of the chosen environment for an sftp connection.
+  ${B}FILE TRANSFER UTILITIES:${N}
 
-${B}NOTE${N}: no extra options can be defined with sftp connections.
+$sepLine
 
-The variant '${B}jhsftpprint${N}', in the same way is it is for 'jhsshprint', only prints the command that would be executed.
+${U}Description${N}: like the 'remote management' category, also this one uses '${B}ssh${N}' as a base to seamlessly jump to the destination,
+but '${B}sftp${N}' client will be used to connect on designated host.
 
-────────────────────────────────────────────────────────────────────────────────
+${B}JHSFTP${N}: very similar to 'jhssh' command, '${B}jhsftp${N}' is used to establish an sftp connection to an host.
 
-${B}JHENVLIST${N} and ${B}JHENVTABLE${N} commands:
+${B}JHSFTPJ${N}: '${B}jhsftpj${N}' is a shortcut which will autoselect the jumphost of the chosen environment for an sftp connection.
 
-These two commands are used to quick print a list of machine belonging to a single environment. Mainly useful to redistribute informations.
-While '${B}jhenvlist${N}' will produce a simple list, '${B}jhenvtable${N}' will provide the same informations organized in a table.
-${B}NOTE${N}: Giving their nature, only ${U}environment${N} argument can be provided.
+${B}JHSFTPPRINT${N}: The variant '${B}jhsftpprint${N}', in the same way is it is for 'jhsshprint', only prints the command that would be executed.
+
+
+${B}NOTE${N}: no extra ${B}OPT_X${N} options can be defined with sftp connections.
+
+$sepLine
+
+  ${B}ENVIRONMENT INFO PRINTING UTILITIES:${N}
+
+$sepLine
+
+${U}Description${N}: the commands in this category are used to print information regarding environments in an already organized way.
+These informations are taken from the configuration files of ${B}$( basename ${thisscript} )${N}.
+
+${B}JHENVLIST${N}: this command is used to quickly print a list of hosts belonging to a single environment. Mainly useful to redistribute informations.
+
+${B}JHENVTABLE${N}: while '${B}jhenvlist${N}' will produce a simple list, '${B}jhenvtable${N}' will provide the same informations organized in a table.
+
 Both commands have a color code:
 
   • ${B}DEFAULT${N} : used for normal host accessed via jumphost
@@ -716,7 +746,27 @@ Both commands have a color code:
 
 Additionally and only for '${B}jhenvtable${N}', if you you have extra '${B}OPT_X${N}' options enabled for a certain host, a '${B}+${N}' symbol will appear on its left.
 
-────────────────────────────────────────────────────────────────────────────────
+
+${B}NOTE${N}: Giving their nature, only ${U}environment${N} argument can be provided.
+
+$sepLine
+
+  ${B}CONFIGURATION INFO PRINTING UTILITIES:${N}
+
+$sepLine
+
+${U}Description${N}: as another information fetching set of tools, the commands print nicely organized informations which can easily
+copied and pasted into any ${B}$( basename ${thisscript} )${N} configuration file.
+
+${B}JHSHOWSET${N}: this command prints the base settings with currently configured value. Wherever the line is commented with an '#',
+a default configuration value will be printed close to the variable name.
+
+${B}JHENVCONF${N}: it prints the configuration array of the selected environment organized in sections.
+
+${B}JHGLOBALCONF${N}: and for last, this command prints base settings, special definitions, which are arrays starting with '${B}DEF_${N}' meant
+to redistribute special commands and functions in various environments, and a full list of environment arrays.
+
+$sepLine
 " | ${pager}
 }
 
@@ -755,6 +805,72 @@ jhsshj(){
   jh ssh "$@"
 }
 
+jhmulticmd(){
+# description: used to send same command to multiple hosts in parallel via 'jhssh'
+# arguments: 3
+  multicmd=true
+  getHostListOnly=true
+  multicmdEnv="$1"  ; shift
+  multicmdHost="$1" ; shift
+  cmdExec="$@"
+  if [[ -z ${cmdExec} ]] ; then
+    f_color_pr red "ERROR: you need to specify a regex to select hosts and a command to execute"
+    f_color_pr wht "NOTE1: this command only works if non interactive access is available (auto-password or auto-tfa)"
+    f_color_pr wht "NOTE2: you can use '.' (dot) to match all the hosts in an environment"
+    exit
+  fi
+  jh multicmd "${multicmdEnv}" "${multicmdHost}"
+  dateTag="$( date +%Y%m%d-%H%M%S )"
+  multicmdOutputEnvDir="${outputBaseDir:+${outputBaseDir}/}${sshenv}_output"
+  multicmdOutputSubDir="${multicmdOutputEnvDir}/${dateTag}"
+  if [[ -e ${multicmdOutputEnvDir} && ! -d ${multicmdOutputEnvDir} ]] ; then
+    f_color_pr red "ERROR: ${multicmdOutputEnvDir} exists!"
+    f_color_pr red "       not possible to create folder ${multicmdOutputEnvDir}"
+    exit
+  fi
+  if [[ -e ${multicmdOutputSubDir} && ! -d ${multicmdOutputSubDir} ]] ; then
+    f_color_pr red "ERROR: ${multicmdOutputSubDir} exists!"
+    f_color_pr red "       not possible to create folder ${multicmdOutputSubDir}"
+    exit
+  fi
+  f_color_pr cyn "The defined command will be executed in the matching group of hosts in environment '${sshenv}'"
+  printf "${grn}Command   ${blu}==> ${grn}${cmdExec}\e[m\n"
+  printf "${grn}OutputDir ${blu}==> ${grn}${multicmdOutputEnvDir}\e[m\n"
+  printf "${grn}DateTag   ${blu}==> ${grn}${dateTag}\e[m\n"
+  [[ ! -d ${multicmdOutputSubDir} ]] && mkdir -p "${multicmdOutputSubDir}"
+  printf "${blu}%-30s --- %10s   %s\e[m  \n" "HOST" "PID" "STATUS"
+  for n in ${multicmdHosts[@]} ; do
+    jhssh ${sshenv} ${n} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${n,,}.log" &
+    sleep 0.1
+    bgProc+=( "$!" )
+    bgHost+=( "$n" )
+    printf "${wht}%-30s --- %10s [ ${ylw}%s\e[m ]\n" "${n,,}" "$!" "RUNNING"
+    diffLine+=( $(( ${#multicmdHosts[@]} - ${i:=0} )) )
+    (( i++ ))
+    unset sshhost
+  done
+  echo -en "\e[6n"
+  read -sdR CurrentPosition
+  CurrentPosition=${CurrentPosition#*[}
+  endLine="$( cut -d\; -f1 <<< "$CurrentPosition" )"
+  while [[ ! -z ${bgProc[@]} ]] ; do
+    for p in ${!bgProc[@]} ; do
+      if ! kill -0 ${bgProc[p]} &>/dev/null ; then
+        tput cup $(( ${endLine} - ${diffLine[p]} - 1 )) 48
+        if wait ${bgProc[p]} ; then
+          f_color_pr grn " DONE! "
+        else
+          f_color_pr red "FAILED!"
+        fi
+        unset bgProc[p]
+      fi
+      tput cup ${endLine} 0
+    done
+    sleep 0.2
+  done
+  wait
+}
+
 jhsftp(){
 # description: basic tool for direct sftp connections or via jumphost
 # arguments: 2
@@ -791,11 +907,65 @@ jhenvtable(){
   jh envprint "$@"
 }
 
+jhshowset(){
+# description: shows the basic settings with configured values
+# arguments: 0
+  cat << EOF
+# PRIVATE CONFIG FILE:
+[[ -f ${privConf:=~/.jh.conf.priv} ]] && . ${privConf}
+
+# FEAUTURE SWITCHES:
+$( for v in whiteBG disableWhiptail disableSshpass disableOathtool disableLess ; do
+  [[ -z ${!v} ]] && printf '# '
+  echo "${v}=${!v:-false}"
+done )
+
+# DIRECTORY MAPPING:
+keyfolder="${keyfolder}"
+
+# OPTIONAL:
+$( for o in 'defaultuser="$USER"' 'defaultjhuser=$defaultuser' 'defaultjhkey="/.ssh/keys/id_rsa"' 'defaultjhoptions=""' 'outputBaseDir=""' ; do
+  v="$( cut -d= -f1 <<< "${o}" )"
+  k="$( cut -d= -f2 <<< "${o}" )"
+  [[ -z ${!v} ]] && printf '# '
+  echo "${v}=${!v:-$k}"
+done )
+# defaultjhotp="" # better define in the private conf file ${privConf}
+
+EOF
+}
+
 jhenvconf(){
 # description: it prints the connection settings of the specified environment
 # arguments: 1
   envConf=true
   jh envconf "$@"
+}
+
+jhglobalconf(){
+# description: it prints all the basic settings, special definitions and environment mappings
+# arguments: 0
+  printf '#!/bin/bash\n\n'
+  jhshowset
+  envConf=true
+
+  if [[ ! -z ${deflist[@]} ]] ; then
+    printf "# SPECIAL DEFINITIONS:\n\n"
+    local def
+    for D in "${deflist[@]}" ; do
+      def="$( eval echo '${!'$D'[@]}' )"
+      echo "${D}=("
+      for k in "${def[@]}" ; do
+        echo "  [$k]='$( eval echo '${'${D}'['$k']}' )'"
+      done
+      printf ")\n\n"
+    done
+  fi
+
+  printf "# ENVIRONMENT MAPPINGS:\n\n"
+  for E in "${envlist[@]}" ; do
+    jh envconf "${E}"
+  done
 }
 
 f_map_cmd(){
@@ -906,7 +1076,7 @@ f_install(){
 }
 
 if [[ $( type -t $( basename $0 ) ) == "function" ]] ; then
-  eval $( basename $0 ) "$@"
+  eval $( basename $0 ) \"\$@\"
 else
   if [[ ${1} == "--help" ]] ; then
     jhman
