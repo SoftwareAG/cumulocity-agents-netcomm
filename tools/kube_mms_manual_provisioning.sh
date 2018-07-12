@@ -96,7 +96,7 @@ case $step in
   done
 
   f_color_pr cyn "# apply k8s-master-main tag to first master"
-  f_exec "knife tag create ${kubemasters[0]} k8s-master-main"
+  [[ -z ${kubemasters[0]} ]] || f_exec "knife tag create ${kubemasters[0]} k8s-master-main"
 ;;
 3)
   f_color_pr cyn "# apply etcd-init tag to masters"
@@ -105,18 +105,18 @@ case $step in
   done
 ;;
 4)
-  f_color_pr cyn "# remove etcd-init tag to masters"
+  f_color_pr cyn "# remove etcd-init tag from masters"
   for n in ${kubemasters[@]} ; do
     f_exec "knife tag delete $n etcd-init"
   done
   f_color_pr cyn "# apply k8s-master-init tag to first master"
-  f_exec "knife tag create ${kubemasters[0]} k8s-master-init"
+  [[ -z ${kubemasters[0]} ]] || f_exec "knife tag create ${kubemasters[0]} k8s-master-init"
 ;;
 5)
-  f_color_pr cyn "# remove k8s-master-init tag to first master"
-  f_exec "knife tag delete ${kubemasters[0]} k8s-master-init"
+  f_color_pr cyn "# remove k8s-master-init tag from first master"
+  [[ -z ${kubemasters[0]} ]] || f_exec "knife tag delete ${kubemasters[0]} k8s-master-init"
   f_color_pr cyn "# apply cert_upload recipe to first master"
-  f_exec "knife node run_list add ${kubemasters[0]} 'recipe[cumulocity-kubernetes::certs_upload]'"
+  [[ -z ${kubemasters[0]} ]] || f_exec "knife node run_list add ${kubemasters[0]} 'recipe[cumulocity-kubernetes::certs_upload]'"
 
   f_color_pr cyn "# apply k8s-worker to workers"
   for n in ${kubeworkers[@]} ; do
