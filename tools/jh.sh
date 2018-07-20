@@ -7,6 +7,12 @@ f_pre_run(){
   else
     sed="sed"
   fi
+# more or less choice:
+  if command -v less &>/dev/null && ! ${disableLess:-false} ; then
+    pager="less -R"
+  else
+    pager="more"
+  fi
 }
 
 f_pre_run
@@ -60,7 +66,7 @@ _jh_complete(){
 f_color_pr(){
   eval COLOR="\$$1"
   shift
-  printf "$COLOR""$@"'\e[m\n'
+  printf "${COLOR}%s${neu}\n" "$@"
 }
 
 f_color_ask(){
@@ -68,9 +74,9 @@ f_color_ask(){
   shift
   local reply="$1"
   shift
-  printf "$COLOR""$@"'\e[m\e[1m'
+  printf "${COLOR}%s${neu}${wht}" "$@"
   read $reply
-  printf '\e[m'
+  printf "${neu}"
 }
 
 f_abort(){
@@ -132,19 +138,32 @@ if command -v sshpass &>/dev/null && ! ${disableSshpass:-false} ; then
 fi
 
 # color map
-if ${whiteBG:-false} ; then
-  wht='\e[1m'
+if ${noColors:-false} ; then
+  neu=''
+  wht=''
+  red=''
+  grn=''
+  ylw=''
+  blu=''
+  prp=''
+  cyn=''
+elif ${whiteBG:-false} ; then
+  neu='\e[m'
+  wht='\e[m'
+  red='\e[2;31m'
   grn='\e[2;32m'
   ylw='\e[2;33m'
   blu='\e[2;34m'
-  red='\e[2;31m'
+  prp='\e[2;35m'
   cyn='\e[2;36m'
 else
+  neu='\e[m'
   wht='\e[1m'
+  red='\e[1;31m'
   grn='\e[1;32m'
   ylw='\e[1;33m'
   blu='\e[1;34m'
-  red='\e[1;31m'
+  prp='\e[1;35m'
   cyn='\e[1;36m'
 fi
 
@@ -152,9 +171,9 @@ envlist=( $( for e in ${unsortedEnvlist[@]//DEF_*} ; do echo $e ; done | sort ) 
 deflist=( $( for e in ${unsortedEnvlist[@]} ; do echo $e ; done | egrep -o '^DEF_.*' | sort ) )
 
 f_noWtAsk(){
-  printf '\e[1m'
+  printf "${wht}"
   read -p "$@"
-  printf '\e[m'
+  printf "${neu}"
 }
 
 f_ssh_env_set(){
@@ -176,14 +195,14 @@ f_ssh_env_set(){
       for e in ${filteredEnvList} ; do
         arr[i]="$e"
         ${useWhiptail} && wtarg+="$((i++)) $e "
-        ${useWhiptail} || printf "${grn}%2d\e[m) ${cyn}%s\e[m\n" "$((i++))" "$e"
+        ${useWhiptail} || printf "${grn}%2d${neu}) ${cyn}%s${neu}\n" "$((i++))" "$e"
       done
     else
       f_color_pr red "ERROR: NO ENVLIST!"
     fi
     if [[ -z ${sshenv} ]] ; then
       ${useWhiptail} && REPLY=$(
-#sleep 2
+#       sleep 2 # disabled -> slow down for debug
         whiptail \
           --title 'Set Environment' \
           --menu '   Choose the environment you want to reach' \
@@ -194,7 +213,6 @@ f_ssh_env_set(){
       ${useWhiptail} || f_noWtAsk "type here your ssh environment id number:
 ID: "
       if [[ $REPLY == "cancel" ]] ; then
-#        return 100
         f_abort
       elif [[ $REPLY =~ ^[0-9]+$ && $REPLY -ge 1 && $REPLY -lt $i ]] ; then
         sshenv="${arr[REPLY]}"
@@ -227,14 +245,14 @@ f_ssh_host_set(){
         arr[i]="$e"
         e="${e%%|*}"
         ${useWhiptail} && wtarg+="$((i++)) ${e,,} "
-        ${useWhiptail} || printf "${grn}%2d\e[m) ${cyn}%s\e[m\n" "$((i++))" "${e,,}"
+        ${useWhiptail} || printf "${grn}%2d${neu}) ${cyn}%s${neu}\n" "$((i++))" "${e,,}"
       done
     else
       f_color_pr red "ERROR: NO HOST!"
     fi
     if [[ -z ${sshhost} ]] ; then
       ${useWhiptail} && eval test -z '${'${sshenv}'["JH"]}' || wtarg+="j JUMPHOST" && REPLY=$(
-#sleep 2
+#       sleep 2 # disabled -> slow down for debug
         whiptail \
           --title 'Set Host' \
           --menu "   Choose the host of ${sshenv^^} env that you want to reach" \
@@ -246,7 +264,6 @@ f_ssh_host_set(){
 Now type here your host id number or type \"j\" to access the jumphost:
 ID: "
       if [[ $REPLY == "cancel" ]] ; then
-#        return 100
         f_abort
       elif [[ $REPLY == "j" ]] ; then
         gotojh=true
@@ -264,7 +281,7 @@ f_env_print(){
   local bl='└' bm='┴' br='┘'
   local hl='─' vl='│'
 
-  local colorReset='\e[m'
+  local colorReset="${neu}"
   local BbFw='\e[40;97m'
   local Bdflt='\e[40;92m'
   local B_JH='\e[1;40;36m'
@@ -322,7 +339,6 @@ f_env_print(){
       printf "${BbFw}${ml}${deviderLineA}${mm}${deviderLineB}${mr}${colorReset}\n"
       printf "${BbFw}${vl} ${B_JH}%${hLength}s${BbFw} ${vl} ${B_JH}%${iLength}s${BbFw} ${vl}${colorReset}\n" "JUMPHOST" "${printArray[JH]}"
     else
-#      printf "${F_JH}%${hLength}s    %${iLength}s${colorReset}\n" "JUMPHOST" "${printArray[JH]}"
       printf "${F_JH}%${hLength}s    %s${colorReset}\n" "JUMPHOST" "${printArray[JH]}"
     fi
   fi
@@ -404,21 +420,20 @@ f_ssh_opt_set(){
 }
 
 f_debug_pr(){
-  ${debug:-false} && printf "${red}$@\e[m"
+  ${debug:-false} && printf "${red}$@${neu}"
 }
 
 jh(){
   local         cmd="$1" ; shift
   local  sshenvProp="$1" ; shift
   local sshhostProp="$1" ; shift
-#  f_ssh_env_set && [[ -z ${sshhost} ]] && f_ssh_host_set
   f_ssh_env_set && \
   if ${envPrint:-false} ; then
     f_env_print && return
   elif ${envConf:-false} ; then
     f_env_conf && return
   else
-    [[ -z ${sshhost} ]] && f_ssh_host_set
+    [[ -z ${sshhost} ]] && ! ${gotojh:-false} && f_ssh_host_set
   fi
 
   ${getHostListOnly:-false} && getHostListOnly=false && return
@@ -447,11 +462,10 @@ jh(){
   [[ -z ${!key}    && ! -z ${defaultkey}       ]] &&    key="defaultkey"
   [[ -z ${!port}   && ! -z ${defaultport}      ]] &&   port="defaultport"
 
-  if [[ ! -z ${!jhotp} ]] && ${oathtoolInstalled:-false} && ${!jhtfa:-true} ; then
-    prejhcmd="sshpass -P \"Verification code:\" -p $( oathtool --totp -b ${!jhotp} ) "
-  elif [[ ! -z ${!jhpw} ]] && ${sshpassInstalled:-false} ; then
+  if [[ ! -z ${!jhpw} ]] && ${sshpassInstalled:-false} ; then
     prejhcmd="sshpass -p ${!jhpw} "
-      precmd="sshpass -p ${!pw} "
+  elif [[ ! -z ${!jhotp} ]] && ${oathtoolInstalled:-false} && ${!jhtfa:-true} ; then
+    prejhcmd="sshpass -P \"Verification code:\" -p $( oathtool --totp -b ${!jhotp} ) "
   fi
   [[ ! -z ${!pw}   ]] && ${sshpassInstalled:-false} &&   precmd="sshpass -p ${!pw} "
 
@@ -522,10 +536,10 @@ jh(){
   fi
   if [[ ! -z ${fullcmd} ]] ; then
     [[ ${cmd} == "ssh" ]] && f_ssh_opt_set
-    #echo "${sshopts1[@]}" "${sshopts2[@]}"
+#    echo "${sshopts1[@]}" "${sshopts2[@]}" "${sshopts3[@]}" # disabled -> extra options output
     printf "${blu}==> ${grn}"
     echo ${fullcmd} ${sshopts1[@]} ${sshopts2[@]} ${sshopts3[@]} $( for v in "$@" ; do echo \'$v\' ; done )
-    printf '\e[m'
+    printf "${neu}\n"
     ${justecho:-false} || eval ${fullcmd} ${sshopts1[@]} ${sshopts2[@]} ${sshopts3[@]} \"\$@\"
   fi
 }
@@ -533,12 +547,9 @@ jh(){
 jhman(){
 # description: it prints this manual
 # arguments: 0
-  if command -v less &>/dev/null && ! ${disableLess:-false} ; then
-    pager="less -R"
-  else
-    pager="more"
-  fi
   local B='\e[1m'
+  local D='\e[2m'
+  local I='\e[3m'
   local U='\e[4m'
   local N='\e[m'
   sepLine="$( printf "%0$( tput cols )s\n" | ${sed} 's/ /─/g' )"
@@ -560,7 +571,7 @@ done < <(
 )
 
 The basic syntax is usually:
-  jhcommand environment host [optionals]
+  ${I}jhcommand environment host [optionals]${N}
 
 Environment and host fields are actually ${B}regex${N} and they will used to scan and filter your configuration file.
 Alternatively, if bash_completion feature is available in the current shell, you can use ${B}[TAB]${N} to autocomplete the environment and hostname fields.
@@ -578,12 +589,12 @@ The only real requirement is ${U}bash version 4.4${N} or greater, but the follow
 
 For ${B}MacOS${N} users, use '${B}brew${N}' tool to install the following components:
 
-  • brew install bash
-  • brew install coreutils
-  • brew install gnu-sed
-  • brew install nwet
-  • brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
-  • brew install oath-toolkit
+  • ${D}brew install bash${N}
+  • ${D}brew install coreutils${N}
+  • ${D}brew install gnu-sed${N}
+  • ${D}brew install nwet${N}
+  • ${D}brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb${N}
+  • ${D}brew install oath-toolkit${N}
 
 $sepLine
 
@@ -612,13 +623,21 @@ A configuration file can contain default options, better defined on the beginnin
   ${U}Miscellaneous${N}:
   • ${B}outputBaseDir${N}    : folder used to store output from '${B}jhmulticmd${N}' command. If not defined, current folder will be used.
 
+  ${U}Feature Switches${N}:
+  • ${B}noColors${N}         : disable colors completely. Default: '${B}false${N}'
+  • ${B}whiteBG${N}          : enable color palette for white background. Default: '${B}false${N}'
+  • ${B}disableWhiptail${N}  : enable '${B}read${N}' in place of '${B}whiptail${N}' for interactive choices. Default: '${B}false${N}'
+  • ${B}disableSshpass${N}   : disables '${B}sshpass${N}' for automatic password or tfa input. Default: '${B}false${N}'
+  • ${B}disableOathtool${N}  : disables '${B}oathtool${N}' for automatic tfa generation. Default: '${B}false${N}'
+  • ${B}disableLess${N}      : enable '${B}more${N}' in place of '${B}less${N}' for whenver the latter is not available. Default: '${B}false${N}'
+
 After the default options, you can map your hosts and group them in an associative array named after the respective environment.
 The script will take care of setting the array type to associative by itself, you don't need to 'declare -A environment'.
 Inside an environment array, there are keywords that are used to define options that will override default ones, plus custom options.
 Also notice that if you write a hostname with ${U}all capitol letters${N}, this will force a ${U}direct connection${N} and any specified jumphost will be ignored.
 ${B}TIP${N}: you cannot define a hostname that matches this regex: '${B}.*(${keywords}).*${N}'
 
-the following options  can be specified inside an array:
+the following options can be specified inside an array:
 
   ${U}Standard hosts${N}:
   • ${B}USER${N}     : overrides '${B}defaultuser${N}'
@@ -627,7 +646,7 @@ the following options  can be specified inside an array:
   • ${B}PORT${N}     : overrides '${B}defaultport${N}'
   • ${B}OPT_X${N}    : defines custom option '${B}X${N}' that can be mapped to an individual host
                To map a custom option to an host write the relative letter after a pipe symbol '|' in the hostname definition (check in the example below)
-               ${B}NOTE${N}: OPT_X parameters are ignored for sftp connections and will be appended to the command for ssh connection only
+               ${B}NOTE${N}: OPT_X parameters are ignored for sftp connections and will be appended to the command for ssh connection only.
 
   ${U}Jumphosts${N}:
   • ${B}JHUSER${N}   : overrides '${B}defaultjhuser${N}'
@@ -639,22 +658,45 @@ the following options  can be specified inside an array:
   • ${B}JHOPTS${N}   : overrides '${B}defaultjhoptions${N}'
 
 ${B}Example${N}:
+${B}NOTE${N}: this configuration shows an example of usage for each options, even though some them
+      are not supposed to be configured at the same time (e.g.: Password and OTP).
 
-	customer_prod=(
-	   [\"OPT_A\"]=\"-l alternativeusername\"     # this is mapped on chef
-	   [\"OPT_B\"]=\"-i /path/to/another/sshkey\" # this is mapped on chef
-	   [\"OPT_C\"]=\"-L 8111:localhost:8111\"     # this is mapped on lb
-	      [\"JH\"]=\"jumphost.domain.com\"
-	 [\"chef|AB\"]=\"10.0.0.12\"
-	    [\"lb|C\"]=\"10.0.1.5\"
-	   [\"core1\"]=\"10.0.1.21\"
-	   [\"core2\"]=\"10.0.1.22\"
-	     [\"cep\"]=\"10.0.1.25\"
-	  [\"mongo1\"]=\"10.0.1.31\"
-	  [\"mongo2\"]=\"10.0.1.32\"
-	  [\"mongo3\"]=\"10.0.1.33\"
-	[\"postgres\"]=\"10.0.1.40\"
-	)
+${D}	customer_prod=(${N}
+${D}	  # -- Jumphost settings:${N}
+${D}	           [\"JH\"]=\"jumphost.domain.com\"${N}
+${D}	       [\"JHUSER\"]=\"jhadmin\"${N}
+${D}	        [\"JHKEY\"]=\"\${keyfolder}/jh_customer.pem\"${N}
+${D}	     [\"JHPASSWD\"]=\"jh_P45501\"${N}
+${D}	       [\"JHPORT\"]=\"2022\"${N}
+${D}	        [\"JHTFA\"]=\"false\"${N}
+${D}	        [\"JHOTP\"]=\"XXXXXXXXXXXXXXXX\"${N}
+${D}	       [\"JHOPTS\"]=\"-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no\"${N}
+${D}	  # -- Standard hosts settings:${N}
+${D}	         [\"USER\"]=\"centos\"${N}
+${D}	          [\"KEY\"]=\"\${keyfolder}/customer.pem\"${N}
+${D}	       [\"PASSWD\"]=\"Passw0rd01\"${N}
+${D}	         [\"PORT\"]=\"10022\"${N}
+${D}	  # -- Extra options:${N}
+${D}	        [\"OPT_A\"]=\"-l alternativeusername\"     # this is mapped on chef${N}
+${D}	        [\"OPT_B\"]=\"-i /path/to/another/sshkey\" # this is mapped on chef${N}
+${D}	        [\"OPT_C\"]=\"-L 8111:localhost:8111\"     # this is mapped on lb${N}
+${D}	  # -- Hosts:${N}
+${D}	      [\"chef|AB\"]=\"10.0.0.12\"${N}
+${D}	         [\"lb|C\"]=\"10.0.1.5\"${N}
+${D}	        [\"core1\"]=\"10.0.1.21\"${N}
+${D}	        [\"core2\"]=\"10.0.1.22\"${N}
+${D}	          [\"cep\"]=\"10.0.1.25\"${N}
+${D}	       [\"mongo1\"]=\"10.0.1.31\"${N}
+${D}	       [\"mongo2\"]=\"10.0.1.32\"${N}
+${D}	       [\"mongo3\"]=\"10.0.1.33\"${N}
+${D}	  [\"kubemaster1\"]=\"10.0.1.51\"${N}
+${D}	  [\"kubemaster2\"]=\"10.0.1.52\"${N}
+${D}	  [\"kubemaster3\"]=\"10.0.1.53\"${N}
+${D}	  [\"kubeworker1\"]=\"10.0.1.61\"${N}
+${D}	  [\"kubeworker2\"]=\"10.0.1.62\"${N}
+${D}	  [\"kubeworker3\"]=\"10.0.1.63\"${N}
+${D}	     [\"postgres\"]=\"10.0.1.40\"${N}
+${D}	)${N}
 
 ${B}Best practice${N}:
   • define a variable that specifies a folder containing all your ssh keys to reuse in KEY and JHKEY parameters
@@ -666,14 +708,14 @@ you can specify a function to push and run on a remote host after an ssh connect
 ${B}TIP${N}: for better organization you may want to define the function as a string in a varible.
 In the following example you will push and run the function '${B}f_myFunc${N}' on the host '${B}target${N}':
 
-	var_myFunc='f_myFunc(){ echo \"I like automation!\"; }'
+${D}	var_myFunc='f_myFunc(){ echo \"I like automation!\"; }'${N}
 
-	test_env=(
-	   [\"OPT_Z\"]=\"-t '\${var_myFunc}; f_myFunc; /bin/bash'\"
-	[\"target|Z\"]=\"target.domain.com\"
-	)
+${D}	test_env=(${N}
+${D}	   [\"OPT_Z\"]=\"-t '\${var_myFunc}; f_myFunc; /bin/bash'\"${N}
+${D}	[\"target|Z\"]=\"target.domain.com\"${N}
+${D}	)${N}
 
-${B}NOTE${N}: the ${B}-t${N} option at the beginning is used is used to force an interactive shell after the execution of 'f_myFunc'
+${B}NOTE${N}: the ${B}-t${N} option at the beginning is used is used to force an interactive shell after the execution of '${B}f_myFunc${N}'.
 
 $sepLine
 
@@ -691,16 +733,38 @@ ${B}JHSSHJ${N}: '${B}jhsshj${N}' is a shortcut which will autoselect the jumphos
 
 ${B}JHSSHO${N}: The variant '${B}jhssho${N}', instead, shows a box with predefined options to switch on/off. These options are:
 
-$( ${sed} -r -n '/sshopts[1]=/,/other/{s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\1\2 => \3/gp}' "${thisscript}" )
+$( ${sed} -r -n '/sshopts[1]=/,/other/{s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\'${D}'\1\2 => \3\'${N}'/gp}' "${thisscript}" )
 
 Alternatively, you can specify extra options via '${B}OPT_X${N}' mapping or appending them to the full command.
-e.g.: ${B}jhssh customer loadbalancer -L8111:localhost:8111${N}
+e.g.: ${D}jhssh ${I}customer${N}${D} loadbalancer -L8111:localhost:8111${N}
 ${B}NOTE${N}: this only works if you specify both environment and hostname before the extra options.
 
 ${B}JHMULTICMD${N}: using '${B}jhssh${N}' as its base, '${B}jhmulticmd${N}' sends the command defined in the command line to all the
 regex matching hosts. By its nature, this command doesn't allow interactive options and it only accepts a full syntax where
-environment, hosts and command are defined. The connections to the hosts are parallelized and output of each ssh session will
-be placed according to what is defined in '${B}outputBaseDir${N}'.
+environment, hosts and command are defined or, in alternative, command can be passed via ${U}Standard Input${N}.
+The connections to the hosts are parallelized and output of each ssh session will be placed according to what is defined in '${B}outputBaseDir${N}'.
+If you want to submit complex scripts, you can use the '${B}Here Document${N}' or '${B}Here String${N}' features of bash.
+
+E.g. with 'Here Document':
+${B}NOTE${N}: variables are expanded locally, therefore you need to escape them in this stage.
+
+${D}jhmulticmd ${I}environment hostregex${N}${D} sudo -s bash << EOF${N}
+${D}  echo HOSTNAME: \\\$( hostname ) ; echo ---${N}
+${D}  echo UPTIME: \\\$( uptime ) ; echo ---${N}
+${D}  echo MOTD: ; cat /etc/motd ; echo ---${N}
+${D}  echo UNAME: \\\$( uname -a ) ; echo ---${N}
+${D}  echo TOP: ; top -bn1 | head -20 ; echo ---${N}
+${D}  echo MEMORY: ; free -m ; echo ---${N}
+${D}  echo SELINUX: ; sestatus ; echo ---${N}
+${D}  for ipdir in /usr/sbin /sbin ; do${N}
+${D}    if command -v \\\${ipdir}/ip ; then${N}
+${D}      ipcmd=\\\${ipdir}/ip${N}
+${D}      break${N}
+${D}    fi${N}
+${D}  done${N}
+${D}  echo NETWORK INTERFACES: ; \\\${ipcmd} address show ; echo ---${N}
+${D}  echo NETWORK ROUTES: ; \\\${ipcmd} route show ; echo ---${N}
+${D}EOF${N}
 
 ${B}JHSSHPRINT${N}: '${B}jhsshprint${N}' variant works in the same way as '${B}jhssh${N}' command, but it only prints
 the command that would be executed.  Useful to redistribute a connection string to people that doesn't have this utility.
@@ -802,7 +866,8 @@ jhsshj(){
 # description: shortcut to autoselect jumphost using 'jhssh' command
 # arguments: 1
   gotojh=true
-  jh ssh "$@"
+  local env=$1 ; shift
+  jh ssh "$env" dummy "$@"
 }
 
 jhmulticmd(){
@@ -813,10 +878,13 @@ jhmulticmd(){
   multicmdEnv="$1"  ; shift
   multicmdHost="$1" ; shift
   cmdExec="$@"
-  if [[ -z ${cmdExec} ]] ; then
+  stdinData=$( ${pager} <&0 2>/dev/null )
+
+  if [[ -z ${cmdExec} && -z ${stdinData} ]] ; then
     f_color_pr red "ERROR: you need to specify a regex to select hosts and a command to execute"
-    f_color_pr wht "NOTE1: this command only works if non interactive access is available (auto-password or auto-tfa)"
-    f_color_pr wht "NOTE2: you can use '.' (dot) to match all the hosts in an environment"
+    f_color_pr wht "NOTES: you can specify a command as a normal argument on the command line or via stdin;"
+    f_color_pr wht "       this command only works if non interactive access is available (auto-password or auto-tfa);"
+    f_color_pr wht "       you can use '.' (dot) to match all the hosts in an environment."
     exit
   fi
   jh multicmd "${multicmdEnv}" "${multicmdHost}"
@@ -834,33 +902,55 @@ jhmulticmd(){
     exit
   fi
   f_color_pr cyn "The defined command will be executed in the matching group of hosts in environment '${sshenv}'"
-  printf "${grn}Command   ${blu}==> ${grn}${cmdExec}\e[m\n"
-  printf "${grn}OutputDir ${blu}==> ${grn}${multicmdOutputEnvDir}\e[m\n"
-  printf "${grn}DateTag   ${blu}==> ${grn}${dateTag}\e[m\n"
+  if [[ -z ${stdinData} ]] ; then
+    printf "${grn}Command   ${blu}==> ${grn}%s${neu}\n" "${cmdExec}"
+  else
+    printf "${grn}Command taken from STDIN:${neu}\n${blu}----------${neu}\n${wht}%s${neu}\n${blu}----------${neu}\n" "${stdinData}"
+  fi
+  printf "${grn}OutputDir ${blu}==> ${grn}${multicmdOutputEnvDir}${neu}\n"
+  printf "${grn}DateTag   ${blu}==> ${grn}${dateTag}${neu}\n"
   [[ ! -d ${multicmdOutputSubDir} ]] && mkdir -p "${multicmdOutputSubDir}"
-  printf "${blu}%-30s --- %10s   %s\e[m  \n" "HOST" "PID" "STATUS"
+  ln -snf "${dateTag}" "${multicmdOutputEnvDir}/latest"
+  printf "${blu}%-30s --- %10s   %s${neu}  \n" "HOST" "PID" "STATUS"
   for n in ${multicmdHosts[@]} ; do
-    jhssh ${sshenv} ${n} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${n,,}.log" &
-    sleep 0.1
+    pureName="${n%%|*}"
+    if [[ -z ${stdinData} ]] ; then
+      jhssh "${sshenv}" "${pureName,,}" -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
+    else
+      echo "${stdinData}" | \
+      jhssh "${sshenv}" "${pureName,,}" -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
+    fi
+    procLog+=( "${multicmdOutputSubDir}/${pureName,,}.log" )
     bgProc+=( "$!" )
-    bgHost+=( "$n" )
-    printf "${wht}%-30s --- %10s [ ${ylw}%s\e[m ]\n" "${n,,}" "$!" "RUNNING"
+    bgHost+=( "$n" ) # unused -> for debug
+    printf "${wht}%-30s --- %10s [ ${ylw}%s${neu} ]\n" "${pureName,,}" "$!" "RUNNING"
     diffLine+=( $(( ${#multicmdHosts[@]} - ${i:=0} )) )
     (( i++ ))
     unset sshhost
+    sleep 0.1
   done
-  echo -en "\e[6n"
-  read -sdR CurrentPosition
-  CurrentPosition=${CurrentPosition#*[}
-  endLine="$( cut -d\; -f1 <<< "$CurrentPosition" )"
+
+  exec < /dev/tty
+  oldstty=$(stty -g)
+  stty raw -echo min 0
+  echo -en "\033[6n" > /dev/tty
+  IFS=';' read -r -d R -a pos
+  stty $oldstty
+  currentRow=${pos[0]:2}
+  currentCol=${pos[1]}
+
+  endLine=${currentRow}
+
   while [[ ! -z ${bgProc[@]} ]] ; do
     for p in ${!bgProc[@]} ; do
       if ! kill -0 ${bgProc[p]} &>/dev/null ; then
         tput cup $(( ${endLine} - ${diffLine[p]} - 1 )) 48
         if wait ${bgProc[p]} ; then
           f_color_pr grn " DONE! "
+          procLogSucceded[p]="${procLog[p]}"
         else
           f_color_pr red "FAILED!"
+          procLogFailed[p]="${procLog[p]}"
         fi
         unset bgProc[p]
       fi
@@ -869,6 +959,38 @@ jhmulticmd(){
     sleep 0.2
   done
   wait
+
+  while ! [[ ${confirmPrint[*],,} =~ ^(y(es)?)|(no?)|f(ailures)?|[0-9]+$ ]] ; do
+    printf "${wht}Do you want to print the output? [y/N/f]: "
+    read -a 'confirmPrint'
+    printf "${neu}\n"
+    local logs=( "${procLog[@]}" )
+    if [[ -z ${confirmPrint} ]] ; then
+      confirmPrint=no
+    elif [[ ${confirmPrint[0]} =~ ^[0-9]+$ ]] ; then
+      linesToTail=${confirmPrint[0]}
+      confirmPrint=yes
+    elif [[ ${confirmPrint[*],,} =~ ^y(es)?( )[0-9]+$ ]] ; then
+      linesToTail=${confirmPrint[1]}
+      confirmPrint=yes
+    elif [[ ${confirmPrint[*],,} =~ ^(f(ailures)?)( [0-9]+)?$ ]] ; then
+      linesToTail=${confirmPrint[1]}
+      confirmPrint=yes
+      logs=( "${procLogFailed[@]}" )
+    fi
+    if [[ ${confirmPrint} =~ ^y(es)?$ ]] ; then
+      colorChoice=( blu prp ylw cyn grn red wht )
+      for log in "${logs[@]}" ; do
+        currentColor=$(( cIndex++ % 7 ))
+        f_color_pr "${colorChoice[currentColor]}" "=== $( basename ${log} ) ==="
+        while read line ; do
+          f_color_pr "${colorChoice[currentColor]}" "${line}"
+        done < <( sed '1,3d' "${log}" | tail -n${linesToTail:-+1} )
+        f_color_pr "${colorChoice[currentColor]}" "===================="
+        echo
+      done
+    fi
+  done
 }
 
 jhsftp(){
@@ -915,7 +1037,7 @@ jhshowset(){
 [[ -f ${privConf:=~/.jh.conf.priv} ]] && . ${privConf}
 
 # FEAUTURE SWITCHES:
-$( for v in whiteBG disableWhiptail disableSshpass disableOathtool disableLess ; do
+$( for v in noColors whiteBG disableWhiptail disableSshpass disableOathtool disableLess ; do
   [[ -z ${!v} ]] && printf '# '
   echo "${v}=${!v:-false}"
 done )
@@ -1051,20 +1173,17 @@ f_install(){
             f_color_ask cyn overwrite "   Do you want to overwrite it? [Yn]: "
             if [[ ${overwrite,,} =~ ^y(es)?$ || -z ${overwrite} ]] ; then
               [[ -z ${overwrite} ]] && f_color_pr ylw "  Default: Yes" && overwrite=Y
-#              ( f_map_cmd ${installFunc} forceInstall && f_color_pr grn "   DONE: ${cDir}/${c}" ) || f_color_pr red "   ERROR!"
-              ( f_map_cmd ${installFunc} forceInstall && printf "   ${wht}%-35s ${grn}[ %s ]\e[m\n" "${cDir}/${c}" "UPDATED" ) || f_color_pr red "   ERROR!"
+              ( f_map_cmd ${installFunc} forceInstall && printf "   ${wht}%-35s ${grn}[ %s ]${neu}\n" "${cDir}/${c}" "UPDATED" ) || f_color_pr red "   ERROR!"
             elif [[ ${overwrite,,} =~ ^no?$ || -z ${overwrite} ]] ; then
               f_color_pr wht "   skipped..."
             fi
           done
           unset overwrite
         else
-#          f_color_pr grn "   ALREADY UPDATED: ${cDir}/${c}"
-          printf "   ${wht}%-35s ${grn}[ %s ]\e[m\n" "${cDir}/${c}" "SKIPPED"
+          printf "   ${wht}%-35s ${grn}[ %s ]${neu}\n" "${cDir}/${c}" "SKIPPED"
         fi
       else
-#        ( f_map_cmd ${installFunc} normalInstall && f_color_pr grn "   DONE: ${cDir}/${c}" ) || f_color_pr red "   ERROR!"
-        ( f_map_cmd ${installFunc} normalInstall && printf "   ${wht}%-35s ${grn}[%s]\e[m\n" "${cDir}/${c}" "INSTALLED" ) || f_color_pr red "   ERROR!"
+        ( f_map_cmd ${installFunc} normalInstall && printf "   ${wht}%-35s ${grn}[%s]${neu}\n" "${cDir}/${c}" "INSTALLED" ) || f_color_pr red "   ERROR!"
       fi
     else
       f_color_pr red "ERROR: ${cDir} doesn't exist!"
