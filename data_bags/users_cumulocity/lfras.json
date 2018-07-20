@@ -1,0 +1,7 @@
+{
+  "id": "lfras",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC33z/2IXrbUzUgUM6B06pyVY5aY4Q2Proc6RhK0xJWuXtuh9sUlTHePDcSyckd1KUk5dZUY0i/cjUHZde2GjhYbvc+MsgqXNX3rhJmyjN4a7RQNLFE42f4pJ4ZUMSpM3l5+NdDqLfb9ew8DyrfIkPFVkSUQHMuldYdmvMOqAAxkOwasF6FKwVAsp4nfsES0yuDar4wTqNGTgUETodPNesuIUbVIZYK3aBLkPJguybDHM/yygkE0oAQqsD8XDfP+N2jhyfSO2h0G4juyKHXE4xHWzg50IXBpTo0h24lI/8tlurtw1ckmyPLYodWg4jepjT4kpQN6d3WyolPik77Q0Ll lech@lech-Latitude-E5430-non-vPro"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Leszek Fras"
+}

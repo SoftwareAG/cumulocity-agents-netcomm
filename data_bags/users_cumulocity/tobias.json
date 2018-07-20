@@ -1,0 +1,7 @@
+{
+  "id": "tobias",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDc8n31LaPUDim0IGYxMo0M8YpiT//GzipHk38lmDqcW6zVYqYDGaEexSlYbyhuMDNzJ+9nLVRpceo//ThfBFsJjpSSol6h9WmrDSL2K3+tKud3LFDzOwsMCMQsKoZMNzsH/E7XfJhfZW9VVb/G01L7ZHssYZUWvnTosH3mXUHOAbega6sr49XGbM88isQpoMW5IqkQlq2ah1M0S2pgS/G/HaBQTAylkld2vuw47GYjfYXQtMyJFl9Y0gmYvu0TJsdR872tr7S6hz3PEHneFMkbLOlk8HKbBeYv2OpjdYIKT2on3Hd+yKkF7elpYdL1fqjjcwWz9DocXLcS+xO4jx9R tobias_cumulocity@tobias-ultrabook"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Tobias Sommer"
+}
