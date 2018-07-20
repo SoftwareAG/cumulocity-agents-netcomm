@@ -91,7 +91,7 @@ mnOnlyComCB=(
          ["build-essential"]=8.1.1
                    ["poise"]=2.8.1
            ["poise-service"]=1.5.2
-               ["seven_zip"]=2.0.2
+               ["seven_zip"]=3.0.0
                    ["mingw"]=2.0.2
 )
 
@@ -113,6 +113,15 @@ mnRoles=(
   cumulocity-ontop-lb
   cumulocity-sql-db
   cumulocity-ssagents
+)
+
+declare -a mnTools
+mnTools=(
+  kube_cleanup.sh
+  kube_mms_manual_provisioning.sh
+  kube_registrypwgen.sh
+  kube_tokengen.sh
+  postgresToMongo_helper.sh
 )
 
 f_findLastVersion(){
@@ -354,6 +363,7 @@ else
     data_bags/certs \
     roles \
     cookbooks \
+    tools \
     .chef/access_certs \
     .chef/trusted_certs \
     .chef/secrets \
@@ -377,6 +387,14 @@ else
     f_color_pr wht "-- $r"
     cp -a${VERBOSE+v} "${thisdir}/../roles/${r}.rb" "${relDir}/roles" || \
     f_color_pr red "ERROR: role $r not found!"
+  done
+  echo
+
+  f_color_pr cyn "Copying tool scripts..."
+  for s in "${mnTools[@]}" ; do
+    f_color_pr wht "-- $s"
+    cp -a${VERBOSE+v} "${thisdir}/../tools/${s}" "${relDir}/tools" || \
+    f_color_pr red "ERROR: script $s not found!"
   done
   echo
 
