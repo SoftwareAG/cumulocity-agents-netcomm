@@ -6,16 +6,16 @@ override_attributes(
   "ulimit": {
     "users": {
       "root": {
-        "filehandle_soft_limit": 60000,
-        "filehandle_hard_limit": 64000,
-        "process_soft_limit": 60000,
-        "process_hard_limit": 64000
+        "filehandle_soft_limit": 150000,
+        "filehandle_hard_limit": 160000,
+        "process_soft_limit": 150000,
+        "process_hard_limit": 160000
       },
       "mongod": {
-        "filehandle_soft_limit": 60000,
-        "filehandle_hard_limit": 64000,
-        "process_soft_limit": 60000,
-        "process_hard_limit": 64000
+        "filehandle_soft_limit": 150000,
+        "filehandle_hard_limit": 160000,
+        "process_soft_limit": 150000,
+        "process_hard_limit": 160000
       }
     }
   },
