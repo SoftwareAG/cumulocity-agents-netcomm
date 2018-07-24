@@ -34,6 +34,7 @@ override_attributes(
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
      "images-version" => "9.0.18",
      "images2install" => [ "cep" ],
+     "docker-registry-image" => "cumulocity/registry:2.6.1",
      "monitoring": {
        "enabled": false
      }
@@ -94,6 +95,7 @@ override_attributes(
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "system.two-factor-authentication.enabled" => true,
       "system.two-factor-authentication.max.inactive" => "10",
+      "system.two-factor-authentication.enforced.group" => "ashutoshTfaTest",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "management.admin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
       "admin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
