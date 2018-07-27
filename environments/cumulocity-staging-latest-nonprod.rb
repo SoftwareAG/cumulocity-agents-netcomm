@@ -3,7 +3,7 @@ description "The Staging 7 environment for the latest released version"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-'cumulocity-kubernetes'=>'= 0.6.0',
+'cumulocity-kubernetes'=>'= 0.6.1',
 'cumulocity-ssagents'=>'= 0.4.0'
 })
 
@@ -97,6 +97,7 @@ override_attributes(
       "email.host" => "postfix.cumulocity-staging-nonprod.svc.cluster.local",
       "email.from" => "no-reply@app.domain.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
+      "system.two-factor-authentication.enabled" => "true",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "passwordReset.email.subject" => "Password reset",
       "passwordReset.token.email.template" => 'Dear app.domain.com user,\n\n\
