@@ -3,9 +3,14 @@ description "The production environment"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-'cumulocity-kubernetes'=>'= 0.5.0',
+'cumulocity-kubernetes'=>'= 0.6.0',
 'cumulocity-ssagents'=>'= 0.4.0'
 })
+
+default_attributes(
+ "fixhostname" => false,
+ "fixhostsfile" => false,
+)
 
 override_attributes(
   "domainname" => "staging7.c8y.io",
@@ -13,7 +18,7 @@ override_attributes(
   "environment" => {
       "address" => "management.staging7.c8y.io"
   },
-  "swapfilesize" => 768,
+  "swapfilesize" => 512,
   'yum' => {
     'repositories' => {
       'cumulocity-testing' => {
@@ -29,11 +34,11 @@ override_attributes(
   },
   "cumulocity-kubernetes" => {
      "deployK8S4env" => "cumulocity-staging7-nonprod",
-     "attachedEnvs" => ["cumulocity-staging7-nonprod","cumulocity-small7-nonprod"],
+     "attachedEnvs" => ["cumulocity-staging7-nonprod"],
      "token" => "1e3145.2ff901841c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
      "images-version" => "9.8.7",
-     "images2install" => [ "cep","cep-small" ],
+     "images2install" => [ "cep","cep-small","device-simulator" ],
      "monitoring" => {
        "enabled" => true
      }
@@ -41,13 +46,13 @@ override_attributes(
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "17adb8fe8848af81a75d175bace5d013bf71ee4fa374aafb30313f3d245de270b5f953ab29861044ef6e169406fb469fc50407d31c81ba874e1a3b9b37a33bfc",
     "version" => "9.8.7-1",
-    "ssa-version" => "9.8.7-1",
+    "ssa-version" => "9.8.5-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
     "CUMULOCITY_LICENCE_DIR" => nil,
     "management-access" => [ "0.0.0.0/0" ],
-    "openrelayIP" => "172.31.35.90",
+    "openrelayIP" => "172.31.9.250",
       "karaf" => {
         "memory" => {
             "xms" => "1024M"
@@ -62,12 +67,11 @@ override_attributes(
   "cumulocity-mongo" => {
     "sharedkey-content" => "1y7LbnZkJvDgtUOHN+8L++DAABlWdLO6kA+GXR23vl5QlslmqlB6goKQmDzgeMdA\nGC38ZcPLejm2Mnvk3TF7QHlhW1OvQZFOk600/Z9qbkzIjfQLNU4RIOdWq7pTq70w\nsyIbBXAZ+ZS2AUQnObxRiToIeDxakzjuiTQbwfYz7Z2bA/hJMrKNdI//IeRl93gt\nMAV5f07l5WQQ8OcKjqYlga1J2izcVmcbd6Q0PCtp38MrmBe3iEn34FpiAgDVZp06\ncuNJDUwr2YF90KWLs53g85vfhybNchxISXMSJBFApId8cuVeZ2oRKf7HjcyrsRR6\nUxk/74MMKvsXdxG2e2pfgTywyZ5Ndk5pGKXj6TZ5QY4Qw2QHryVPyRT90xogdDtg\nA4A8iSWRBgnrtJP+qvlfBSCpdN0EqmHqGuWcqzkc4sjpO9ubQdqvBFni9X0A6mxE\nWwGH2tk6uWQU4+OPfoQkVgUCFgepFWuzWHj9TA71sn0hmDLnBZDUh3yKcEz++qKy\nchfOPrnhSPpvZI0762F5LdIp7cuAwMC4wEYSSloawzqBnCpvQ0BsFAyprhZhFDdV\nUP67nmp/q5oaXgdr3TJOTGkRgcPXRSuf4zV4nKdMdyy7HM9o24LGXiJ40b3CZGhm\nyG0tRoTRNTd6hgFQWYp8hT4EK++kf60boGhUSPxvlkbERZ/mx4kPGY1fYWkRN8Y8\nbZXDnwu+A3kqCwSTJ6tjzrtqlQ51z5rJWl14eIo2Ienfym1tquoPNMeksQroivRB\n1ZXlA3v68+nHy2HljMsLUjt8oxho3HhN1RcDXazf4b39n5nZS4wOxjvPvqSrX4bw\n/Hwh8wL2+IDfOLl1yAO6isrEXApJSTiXFt5fSbaPW6T7hCiCkNPzdS+FYLArozNE\nYrzvmkbcHfMqqTCdWDSOWV7pRqvUARRFi0CvjWh85zmt4LG7IY/GBKJvmSAfFX1O\n5OCavvQrRbnH/m1xW7NHXbeWH80K",
     "mongodb.initUser" => "init-root",
-    "mongodb.initPassword" => "felix"
+    "version" => "3.6"
   },
-
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.8.7'
+    "version" => '9.8.5'
   },
   "cumulocity-ssagents" => {
     "useTags" => true,
@@ -144,7 +148,7 @@ override_attributes(
     "useSSL" => true,
     "useHSTS" => false,
     "useMQTTsupport" => true,
-    "useMQTTlogs" => true,
+    "useMQTTlogs" => false,
     "useMasterForPushOperations" => false,
     "useKarafWebsocket" => true,
     "proxy_cache" => true,
@@ -154,7 +158,7 @@ override_attributes(
     "useLUAforHealthCheck" => true,
     "nginx" => {
         "NGinxPort" => "openresty",
-        "version" => "1.13.6.1-20.el7.centos.c8y.8.11.1"
+        "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
     }
   },
 
