@@ -71,9 +71,8 @@ f_color_pr(){
 
 f_color_ask(){
   eval COLOR="\$$1"
-  shift
-  local reply="$1"
-  shift
+  local reply="$2"
+  shift 2
   printf "${COLOR}%s${neu}${wht}" "$@"
   read $reply
   printf "${neu}"
@@ -875,8 +874,9 @@ jhmulticmd(){
 # arguments: 3
   multicmd=true
   getHostListOnly=true
-  multicmdEnv="$1"  ; shift
-  multicmdHost="$1" ; shift
+  multicmdEnv="$1"
+  multicmdHost="$2"
+  shift 2
   cmdExec="$@"
   stdinData=$( ${pager} <&0 2>/dev/null )
 
@@ -915,10 +915,10 @@ jhmulticmd(){
   for n in ${multicmdHosts[@]} ; do
     pureName="${n%%|*}"
     if [[ -z ${stdinData} ]] ; then
-      jhssh "${sshenv}" "${pureName,,}" -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
+      jhssh "${sshenv}" "${pureName,,}" -q -o ConnectTimeout=${sshConfigConnectTimeout:-10} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
     else
       echo "${stdinData}" | \
-      jhssh "${sshenv}" "${pureName,,}" -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
+      jhssh "${sshenv}" "${pureName,,}" -q -o ConnectTimeout=${sshConfigConnectTimeout:-10} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
     fi
     procLog+=( "${multicmdOutputSubDir}/${pureName,,}.log" )
     bgProc+=( "$!" )
@@ -944,53 +944,61 @@ jhmulticmd(){
   while [[ ! -z ${bgProc[@]} ]] ; do
     for p in ${!bgProc[@]} ; do
       if ! kill -0 ${bgProc[p]} &>/dev/null ; then
-        tput cup $(( ${endLine} - ${diffLine[p]} - 1 )) 48
+        [[ -t 1 ]] && tput cup $(( ${endLine} - ${diffLine[p]} - 1 )) 0
+        pureName="${bgHost[p]%%|*}"
         if wait ${bgProc[p]} ; then
-          f_color_pr grn " DONE! "
+          printf "${wht}%-30s --- %10s [ ${grn}%s${neu} ]\n" "${pureName,,}" "${bgProc[p]}" " DONE! "
           procLogSucceded[p]="${procLog[p]}"
         else
-          f_color_pr red "FAILED!"
+          printf "${wht}%-30s --- %10s [ ${red}%s${neu} ]\n" "${pureName,,}" "${bgProc[p]}" "FAILED!"
           procLogFailed[p]="${procLog[p]}"
         fi
         unset bgProc[p]
       fi
-      tput cup ${endLine} 0
+      [[ -t 1 ]] && tput cup ${endLine} 0
     done
     sleep 0.2
   done
   wait
 
-  while ! [[ ${confirmPrint[*],,} =~ ^(y(es)?)|(no?)|f(ailures)?|[0-9]+$ ]] ; do
-    printf "${wht}Do you want to print the output? [y/N/f]: "
-    read -a 'confirmPrint'
+  while [[ -z ${mcmdOutputPrint} ]] ; do
+    if ! [[ ${confirmPrint[*],,} =~ ^((((y(es)?)|(no?)|(f(ailures)?))( [0-9]+)?)|([0-9]+))$ ]] ; then
+      printf "${wht}Do you want to print the output? [y/N/f]: "
+      read -a 'confirmPrint'
+    fi
     printf "${neu}\n"
     local logs=( "${procLog[@]}" )
-    if [[ -z ${confirmPrint} ]] ; then
+    if [[ -z ${confirmPrint} ]] || [[ ${confirmPrint,,} =~ ^no?$ ]] ; then
       confirmPrint=no
+      mcmdOutputPrint=false
     elif [[ ${confirmPrint[0]} =~ ^[0-9]+$ ]] ; then
       linesToTail=${confirmPrint[0]}
-      confirmPrint=yes
-    elif [[ ${confirmPrint[*],,} =~ ^y(es)?( )[0-9]+$ ]] ; then
+      mcmdOutputPrint=true
+    elif [[ ${confirmPrint[*],,} =~ ^(y(es)?( [0-9]+)?)$ ]] ; then
       linesToTail=${confirmPrint[1]}
-      confirmPrint=yes
-    elif [[ ${confirmPrint[*],,} =~ ^(f(ailures)?)( [0-9]+)?$ ]] ; then
+      mcmdOutputPrint=true
+    elif [[ ${confirmPrint[*],,} =~ ^(f(ailures)?( [0-9]+)?)$ ]] ; then
       linesToTail=${confirmPrint[1]}
-      confirmPrint=yes
+      mcmdOutputPrint=true
       logs=( "${procLogFailed[@]}" )
     fi
-    if [[ ${confirmPrint} =~ ^y(es)?$ ]] ; then
-      colorChoice=( blu prp ylw cyn grn red wht )
-      for log in "${logs[@]}" ; do
-        currentColor=$(( cIndex++ % 7 ))
-        f_color_pr "${colorChoice[currentColor]}" "=== $( basename ${log} ) ==="
-        while read line ; do
+  done
+  if ${mcmdOutputPrint:-false} ; then
+    colorChoice=( blu prp ylw cyn grn red wht )
+    for log in "${logs[@]}" ; do
+      currentColor=$(( cIndex++ % 7 ))
+      f_color_pr "${colorChoice[currentColor]}" "=== $( basename ${log} ) ==="
+      if ${noColors:-false} ; then
+        sed '1,3d' "${log}" | tail -n${linesToTail:-+1}
+      else
+        while IFS= read line ; do
           f_color_pr "${colorChoice[currentColor]}" "${line}"
         done < <( sed '1,3d' "${log}" | tail -n${linesToTail:-+1} )
-        f_color_pr "${colorChoice[currentColor]}" "===================="
-        echo
-      done
-    fi
-  done
+      fi
+      f_color_pr "${colorChoice[currentColor]}" "===================="
+      echo
+    done
+  fi
 }
 
 jhsftp(){
