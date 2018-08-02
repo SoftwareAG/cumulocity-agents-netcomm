@@ -61,7 +61,8 @@ override_attributes(
   },
   "cumulocity-mongo" => {
     "sharedkey-content" => "oxUyBP8EojiqPKeF/pTSwkQGQb5/Nj9K0OcbBDfJA5eAqAiADLR1AMapq8PTYWx7\npd3z5/aLcjptklZS39Ea7sqsZakrcdeOsJ6BN3F1xct9LGbsDjWtSwkphBImjvJR\nBg+ZVJdbiwEe8q85F/e47M3hE+yxZiN9gShb37Q5oOVBrl6GYMZIlWAz7u7gZp5C\nYWY5y+hp1DaR3Ime2i4mqy19aMAqVgTVgeU9Aewmb4Q3TtOrehNjXRglWJdQUdgN\n4yo5LvlW1s7eyeqrwSWVg/WjEEUFK5ZxDkUPNIRIg1sgJR2a0FsD6rwTiJoiE2cS\nq8QRPAhMFqSwpusKcZU53/FoRrqovciLAxxYqsl5w7gtr3FyCqAJpFyUqDBGNtvC\njGztVC1eg5T7SGPFbUG2CJWuaBDJ4zo2faCVuHvgLjR3KMhF7og+k5WpqrJ+TSN0\nWha9/pH3N/zS9WtVJnFmBFW0yWXRfHWqmMB0N9+rmlEtlhT29pZlXeaPiBLr94dj\nYRTxuhS/NMIuiN674ODSA/dzWRY3F+0w+z6+GeGSK0fg5hsxvm4KR6yW1OLErWXL\n9CKjIV42nZGB5SDFoth9bZSCcR/2qJaBKfcy9o2Ua8BBBK+AT3nOjjUYn+jT9WsT\nadxlTXyvKcbYv1mAJgPQkZs8vK94brgJG3a0BtFA56yVxzujnYVadyIoHHoJ2hQ4\nL36lW50ltSCtpADEtua/LmCW60FNjRu3V7+rNSJ6YO8EdTGcb1HLO3lMIqopmadk\nAXa1q1HblDfTgsxZ1QKYSVvxdSdRh8Id/wkHLaKzgG4s305+pJe7LZsFpKGkfvvf\n97hIjngs6Ck07VzWB1O3QxMDJRZuPxKoRkRbc1uqeJAwJ4MmJSc1C6epQ9uXY0rQ\noeWkPdj/ce0486piVdrI1fpCmiOIaIjkSAZ6yzFD2cgvjzdc0y5xzuzAMs0Z8QP1\nSWrl8KNltY4U8CdIwrtvdNoEcC5Q",
-    "mongodb.initUser" => "init-root"
+    "mongodb.initUser" => "init-root",
+    "version" => "3.6"
   },
 
   "cumulocity-GUI" => {
