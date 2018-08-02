@@ -3,7 +3,7 @@ description "The production environment"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-'cumulocity-kubernetes'=>'= 0.6.0',
+'cumulocity-kubernetes'=>'= 0.6.1',
 'cumulocity-ssagents'=>'= 0.4.0'
 })
 
