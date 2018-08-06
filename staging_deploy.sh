@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#Set username if local and server user differs
+if [ -z "$RUN_USER" ]; then
+  RUN_USER=`whoami`
+fi
+
 staging_env=$1
 target_version=$2
 search_key=""
@@ -44,7 +49,7 @@ function compare_version()
 {
   count=1
   for i in ${ip_list[@]}; do
-    installed_version=$(ssh -o "StrictHostKeyChecking no" `whoami`@$i 'rpm -qa | grep karaf' | grep -Po '(?<=cumulocity-core-karaf-)[^-]+')
+    installed_version=$(ssh -o "StrictHostKeyChecking no" $RUN_USER@$i 'rpm -qa | grep karaf' | grep -Po '(?<=cumulocity-core-karaf-)[^-]+')
     function convert_to_integer {
     echo "$@" | awk -F "." '{ printf("%03d%03d%03d\n", $1,$2,$3); }';
     }
@@ -66,15 +71,15 @@ function upgrade()
   for i in $node_list; do
     knife node run_list remove $i 'role[cumulocity-mn-active-core]' && echo "INFO: Removing role cumulocity-mn-active-core" || \
     { echo "ERROR: Removal of role cumulocity-mn-active-core Failed"; exit 1; }
-    ssh -o "StrictHostKeyChecking no" `whoami`@${ip_list[$count]} 'sudo /usr/sbin/service cumulocity-core-karaf stop && echo "INFO: Stopping Karaf" && sleep 40'
-    retval=$(ssh -o "StrictHostKeyChecking no" `whoami`@${ip_list[$count]} "ps -ef | grep -i karaf | grep -v grep | awk '{print \$2}'")
+    ssh -o "StrictHostKeyChecking no" $RUN_USER@${ip_list[$count]} 'sudo /usr/sbin/service cumulocity-core-karaf stop && echo "INFO: Stopping Karaf" && sleep 40'
+    retval=$(ssh -o "StrictHostKeyChecking no" $RUN_USER@${ip_list[$count]} "ps -ef | grep -i karaf | grep -v grep | awk '{print \$2}'")
     if [ -z "$retval" ]; then
       echo "INFO: Karaf stopped"
     else
       echo "WARNING: Karaf still running. Applying force kill ..."
-      ssh -o "StrictHostKeyChecking no" `whoami`@${ip_list[$count]} "ps -ef | grep -i karaf | grep -v grep | awk '{print \$2}' | sudo xargs kill -9"
+      ssh -o "StrictHostKeyChecking no" $RUN_USER@${ip_list[$count]} "ps -ef | grep -i karaf | grep -v grep | awk '{print \$2}' | sudo xargs kill -9"
     fi
-    ssh -o "StrictHostKeyChecking no" `whoami`@${ip_list[$count]} 'sudo chef-client; sudo /usr/sbin/service cumulocity-core-karaf start'
+    ssh -o "StrictHostKeyChecking no" $RUN_USER@${ip_list[$count]} 'sudo chef-client; sudo /usr/sbin/service cumulocity-core-karaf start'
     count=$((count + 1))
     knife node run_list add $i 'role[cumulocity-mn-active-core]' && echo "INFO: Adding back role cumulocity-mn-active-core" || \
     { echo "ERROR: Adding back role cumulocity-mn-active-core Failed"; exit 1; }
@@ -86,7 +91,7 @@ function validate()
 {
   count=1
   for i in ${ip_list[@]}; do
-    installed_version=$(ssh -o "StrictHostKeyChecking no" `whoami`@$i 'rpm -qa | grep karaf' | grep -Po '(?<=cumulocity-core-karaf-)[^-]+')
+    installed_version=$(ssh -o "StrictHostKeyChecking no" $RUN_USER@$i 'rpm -qa | grep karaf' | grep -Po '(?<=cumulocity-core-karaf-)[^-]+')
     if [ "$installed_version" == "$target_version" ]; then
       echo "INFO: Backend upgrade of core successful for $staging_env Core_Node$count"
     else
@@ -103,7 +108,7 @@ function check_platform()
 	max_attempts=5
 
 	for ip in ${ip_list[@]}; do
-		status=$(ssh -o "StrictHostKeyChecking no" `whoami`@$ip 'curl -s -o /dev/null -w '%{http_code}' http://localhost/tenant/health')
+		status=$(ssh -o "StrictHostKeyChecking no" $RUN_USER@$ip 'curl -s -o /dev/null -w '%{http_code}' http://localhost/tenant/health')
 			if [[ "${status}" -eq 200 ]]; then
         item=($ip)
 				echo "INFO: Platform health looks good on $ip" && ip_list=( "${ip_list[@]/$item}" ) && continue
