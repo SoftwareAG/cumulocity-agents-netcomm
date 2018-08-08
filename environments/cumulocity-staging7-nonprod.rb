@@ -40,7 +40,7 @@ override_attributes(
      "images-version" => "9.8.7",
      "images2install" => [ "cep","cep-small","device-simulator" ],
      "monitoring" => {
-       "enabled" => true
+       "enabled" => false
      }
   },
   "cumulocity-karaf" => {
