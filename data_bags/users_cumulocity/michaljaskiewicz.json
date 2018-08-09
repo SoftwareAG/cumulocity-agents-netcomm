@@ -1,0 +1,7 @@
+{
+  "id": "michaljaskiewicz",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4eCnb+5ruJhY7/gA69Hpz84A64IESnhLpLij8M3689I2g99tvazFr6NTA2Um+gSeXFM3i5XcQ6pXbK0BRliRTtGcXoLNpndk3LXP+Q0IU5AnwraPsz3zhWMMOUdAUQCnIbBtpQAFU5q3uWCjTM74xEzlkcyzCrveSqhynUx4BU/ViGlQZmWkuen7MsH6jxP9ZsOKGRU9FlAU314dwbFBUmQJcMGQH5hj9yCp1Dv4qND3wahXfePQEyvcEHGhYqcbCtvt9D3zbrnYWIp0OLtl4l3WFwjkvRVoguvQfripxtZWX49V02HBhW3DNSCDLd9BNyG+FvlI2E37M8xzdkrfJ mj@dell"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Michal Jaskiewicz"
+}
