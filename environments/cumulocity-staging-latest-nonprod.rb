@@ -3,7 +3,7 @@ description "The Staging 7 environment for the latest released version"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-'cumulocity-kubernetes'=>'= 0.6.1',
+'cumulocity-kubernetes'=>'= 0.6.0',
 'cumulocity-ssagents'=>'= 0.4.0'
 })
 
