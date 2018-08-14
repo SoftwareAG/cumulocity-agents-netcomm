@@ -2,7 +2,7 @@
 
 #Set username if local and server user differs
 if [ -z "$RUN_USER" ]; then
-  RUN_USER=`whoami`
+  RUN_USER=$(whoami)
 fi
 
 staging_env=$1
@@ -37,8 +37,17 @@ function get_node_info()
 function update_env_file()
 {
   git pull && echo "INFO: Pulling latest changes from remote ..." || { echo "ERROR: Failed to pull latest changes from remote. Exiting ... "; exit 1; }
-  echo "INFO: Update corresponding env file"; sleep 3
-  vi ${env_file} && echo "INFO: Environment file updated" || { echo "ERROR: Failed to update environment file. Exiting ... "; exit 1; }
+  echo "INFO: Updating corresponding env file ..."
+  tmp=$(mktemp)
+  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-karaf"]["version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && \
+  echo "INFO: Karaf version updated in env file" && \
+  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-kubernetes"]["images-version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && \
+  echo "INFO: Kubernetes images version updated in env file" && \
+  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-karaf"]["ssa-version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && \
+  echo "INFO: SSAgents version updated in env file" && \
+  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-GUI"]["version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && \
+  echo "INFO: GUI version updated in env file" && echo "INFO: All fields of Environment file updated successfully" || \
+  { echo "ERROR: Failed to update environment file. Exiting ... "; exit 1; }
   knife environment from file ${env_file} && echo "INFO: Pushed changes to Chef server" || { echo "ERROR: Unable to push changes to Chef server. Exiting ... "; exit 1; }
   git add ${env_file} && git commit -m "Upgrading $staging_env to version $target_version" && git push && echo "INFO: Committed and pushed to remote" || \
   { echo "ERROR: Unable to commit and push to remote git repository. Exiting ... "; exit 1; }
@@ -137,11 +146,11 @@ function check_platform()
 #Exporting env and needed stuff
 if [ $staging_env == "staging" ]; then
   export ORGNAME=cumulocity-stagings
-  export env_file=./environments/cumulocity-basic-staging7-nonprod.rb
+  export env_file=./environments/cumulocity-basic-staging7-nonprod.json
   search_key="Staging_Core"
 elif [ $staging_env == "staging7" ]; then
   export ORGNAME=cumulocity-devel
-  export env_file=./environments/cumulocity-staging7-nonprod.rb
+  export env_file=./environments/cumulocity-staging7-nonprod.json
   search_key="Staging7Core"
 elif [ $staging_env == "staging007" ]; then
   export ORGNAME=cumulocity-stagings
@@ -149,16 +158,17 @@ elif [ $staging_env == "staging007" ]; then
   search_key="Staging007Core"
 elif [ $staging_env == "staging-latest" ]; then
   export ORGNAME=cumulocity-stagings
-  export env_file=./environments/cumulocity-staging-latest-nonprod.rb
+  export env_file=./environments/cumulocity-staging-latest-nonprod.json
   search_key="cumulocity-staging-latest-nonprod_core"
 else
   echo "ERROR: There is no such environment as $staging_env. Available environments: staging, staging7, staging007, staging-latest. Try again !"; exit 1;
 fi
 
 # Main()
-update_env_file
+
 get_node_info
 compare_version
+update_env_file
 upgrade
 validate
 check_platform
