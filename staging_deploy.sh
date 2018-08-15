@@ -36,18 +36,14 @@ function get_node_info()
 #Updating chef env file and pushing to chef server
 function update_env_file()
 {
-  git pull && echo "INFO: Pulling latest changes from remote ..." || { echo "ERROR: Failed to pull latest changes from remote. Exiting ... "; exit 1; }
+  git pull && echo "INFO: Pulled latest changes from remote ..." || { echo "ERROR: Failed to pull latest changes from remote. Exiting ... "; exit 1; }
   echo "INFO: Updating corresponding env file ..."
   tmp=$(mktemp)
-  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-karaf"]["version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && \
-  echo "INFO: Karaf version updated in env file" && \
-  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-kubernetes"]["images-version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && \
-  echo "INFO: Kubernetes images version updated in env file" && \
-  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-karaf"]["ssa-version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && \
-  echo "INFO: SSAgents version updated in env file" && \
-  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-GUI"]["version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && \
-  echo "INFO: GUI version updated in env file" && echo "INFO: All fields of Environment file updated successfully" || \
-  { echo "ERROR: Failed to update environment file. Exiting ... "; exit 1; }
+  { jq --arg inp1 "$target_version-1" '.override_attributes["cumulocity-karaf"]["version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && echo "INFO: Karaf version updated in env file" && \
+  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-kubernetes"]["images-version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && echo "INFO: Kubernetes images version updated in env file" && \
+  jq --arg inp1 "$target_version-1" '.override_attributes["cumulocity-karaf"]["ssa-version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && echo "INFO: SSAgents version updated in env file" && \
+  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-GUI"]["version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && echo "INFO: GUI version updated in env file" && \
+  echo "INFO: All fields of Environment file updated successfully" } || \ { echo "ERROR: Failed to update environment file. Exiting ... "; exit 1; }
   knife environment from file ${env_file} && echo "INFO: Pushed changes to Chef server" || { echo "ERROR: Unable to push changes to Chef server. Exiting ... "; exit 1; }
   git add ${env_file} && git commit -m "Upgrading $staging_env to version $target_version" && git push && echo "INFO: Committed and pushed to remote" || \
   { echo "ERROR: Unable to commit and push to remote git repository. Exiting ... "; exit 1; }
