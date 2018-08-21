@@ -104,6 +104,7 @@ override_attributes(
       "system.two-factor-authentication.enabled" => true,
       "system.two-factor-authentication.max.inactive" => "10",
       "system.two-factor-authentication.enforced" => "ashutosh",
+      "system.two-factor-authentication.enforced.group" => "ashutoshTfaTest",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "passwordReset.email.subject" => "Password reset",

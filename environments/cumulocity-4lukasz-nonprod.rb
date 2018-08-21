@@ -1,9 +1,9 @@
-name "cumulocity-4lukasz-allinone-nonprod"
+name "cumulocity-4lukasz-nonprod"
 description "The complete cumulocity plus multi master kubernetes env"
 
 cookbook_versions({
 'cumulocity'=>'= 0.6.0',
-'cumulocity-kubernetes'=>'= 0.6.0',
+'cumulocity-kubernetes'=>'= 0.6.1',
 'cumulocity-ssagents'=>'= 0.4.0',
 'docker'=>'= 2.17.0'
 })
@@ -29,24 +29,27 @@ override_attributes(
      "jdk_version" => "8"
   },
   "cumulocity-kubernetes" => {
-     "deployK8S4env" => "cumulocity-4lukasz-allinone-nonprod",
-     "attachedEnvs" => ["cumulocity-4lukasz-allinone-nonprod"],
+    "docker": {
+      "version": "1.13.1-63.git94f4240.el7.centos"
+    },
+     "deployK8S4env" => "cumulocity-4lukasz-nonprod",
+     "attachedEnvs" => ["cumulocity-4lukasz-nonprod"],
      "token" => "1e3145.2ff901841c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.19.16",
-     "images2install" => [ "cep" ],
+     "images-version" => "9.12.2",
+     "images2install" => [ "cep", "device-simulator", "smartrule", 'sms-gateway' ],
      "monitoring" => {
        "enabled" => true
      }
   },
   "cumulocity-karaf" => {
-    "CUMULOCITY_LICENCE_KEY" => "745a895892570c0b5fa8dca34262f633d438ac65afc9fba05eb0e4a8d277fe97ec9f9b2794812fd92eeae698e3b90c7dbd7fc3b32165e196f16f0e54a51a9a76",
-    "version" => "8.19.16-1",
-    "ssa-version" => "9.0.1-1",
+    "CUMULOCITY_LICENCE_KEY" => "df4712118ff6757781dfff074ec1f40a86635b253e12226467341d97e5f8f01b6685e1668d1bc13e180f6cb11342670cfcf8699b013ffcbc8af6f9f844273a9a",
+    "version" => "9.12.2-1",
+    "ssa-version" => "9.12.2-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
-    "CUMULOCITY_LICENCE_DIR" => nil,
+    "CUMULOCITY_LICENCE_DIR" => "/etc/cumulocity/",
     "management-access" => [ "0.0.0.0/0" ],
       "karaf" => {
         "memory" => {
@@ -55,6 +58,8 @@ override_attributes(
         }
   },
   "cumulocity-cep" => {
+    "version": "9.12.2-1",
+    "package_name": "cep",
     "properties" => {
         "esperha.storage" => "/mnt/esperha-storage"
     }
@@ -67,7 +72,7 @@ override_attributes(
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '8.19.16'
+    "version" => '9.12.2'
   },
   "cumulocity-ssagents" => {
     "useTags" => true
@@ -75,13 +80,14 @@ override_attributes(
   "cumulocity-core" => {
     "properties" => {
       "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
-      "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
-      "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
-      "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
-      "default.tenant.microservices" => "device-simulator, smartrule, cep",
+      "device-simulator.microservice.url" => "http://localhost:8111/service/device-simulator",
+      "smartrule.microservice.url" => "http://localhost:8111/service/smartrule",
+      "smsGateway.host" => "http://localhost:8111/service/sms-gateway",
+      "default.tenant.microservices" => "device-simulator, smartrule, sms-gateway, cep",
       "sendDashboardAgent.url" => "http://localhost:19191/report",
       "mongodb.user" => "c8y-root",
       "mongodb.admindb" => "admin",
+      "migration.tomongo.default" => "MONGO_READ_WRITE",
       "contextService.rdbmsURL" => "jdbc:postgresql://localhost",
       "contextService.rdbmsDriver" => "org.postgresql.Driver",
       "contextService.rdbmsUser" => "postgres",
@@ -123,9 +129,9 @@ override_attributes(
   },
 
   "cumulocity-external-lb" => {
-    "landing_page" => "https://dev7.c8y.io/apps/devicemanagement",
+    "landing_page" => "https://4lukasz.c8y.io/apps/devicemanagement",
     "paas_default_page" => "https://$http_host/apps/devicemanagement",
-    "paas_public_default_page" => "https://dev7.c8y.io/apps/dmpublic",
+    "paas_public_default_page" => "https://4lukasz.c8y.io/apps/dmpublic",
     "usePostgresForPaaS" => false,
     "paas_redirection" => true,
     "temp_chunkin" => false,
