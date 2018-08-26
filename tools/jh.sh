@@ -748,21 +748,21 @@ E.g. with 'Here Document':
 ${B}NOTE${N}: variables are expanded locally, therefore you need to escape them in this stage.
 
 ${D}jhmulticmd ${I}environment hostregex${N}${D} sudo -s bash << EOF${N}
-${D}  echo HOSTNAME: \\\$( hostname ) ; echo ---${N}
-${D}  echo UPTIME: \\\$( uptime ) ; echo ---${N}
+${D}  echo HOSTNAME: \$( hostname ) ; echo ---${N}
+${D}  echo UPTIME: \$( uptime ) ; echo ---${N}
 ${D}  echo MOTD: ; cat /etc/motd ; echo ---${N}
-${D}  echo UNAME: \\\$( uname -a ) ; echo ---${N}
+${D}  echo UNAME: \$( uname -a ) ; echo ---${N}
 ${D}  echo TOP: ; top -bn1 | head -20 ; echo ---${N}
 ${D}  echo MEMORY: ; free -m ; echo ---${N}
 ${D}  echo SELINUX: ; sestatus ; echo ---${N}
 ${D}  for ipdir in /usr/sbin /sbin ; do${N}
-${D}    if command -v \\\${ipdir}/ip ; then${N}
-${D}      ipcmd=\\\${ipdir}/ip${N}
+${D}    if command -v \${ipdir}/ip ; then${N}
+${D}      ipcmd=\${ipdir}/ip${N}
 ${D}      break${N}
 ${D}    fi${N}
 ${D}  done${N}
-${D}  echo NETWORK INTERFACES: ; \\\${ipcmd} address show ; echo ---${N}
-${D}  echo NETWORK ROUTES: ; \\\${ipcmd} route show ; echo ---${N}
+${D}  echo NETWORK INTERFACES: ; \${ipcmd} address show ; echo ---${N}
+${D}  echo NETWORK ROUTES: ; \${ipcmd} route show ; echo ---${N}
 ${D}EOF${N}
 
 ${B}JHSSHPRINT${N}: '${B}jhsshprint${N}' variant works in the same way as '${B}jhssh${N}' command, but it only prints
@@ -905,7 +905,17 @@ jhmulticmd(){
   if [[ -z ${stdinData} ]] ; then
     printf "${grn}Command   ${blu}==> ${grn}%s${neu}\n" "${cmdExec}"
   else
-    printf "${grn}Command taken from STDIN:${neu}\n${blu}----------${neu}\n${wht}%s${neu}\n${blu}----------${neu}\n" "${stdinData}"
+    if [[ ! -z ${cmdExec} ]] ; then
+      printf "${grn}Command   ${blu}==> ${grn}%s${neu}\n" "${cmdExec}"
+      printf "${grn}STDIN data provided to the command"
+    else
+      printf "${grn}Command taken from STDIN"
+    fi
+    if ${noPrintStdin:-false} ; then
+      printf "${neu}\n"
+    else
+      printf ":${neu}\n${blu}----------${neu}\n${wht}%s${neu}\n${blu}----------${neu}\n" "${stdinData}"
+    fi
   fi
   printf "${grn}OutputDir ${blu}==> ${grn}${multicmdOutputEnvDir}${neu}\n"
   printf "${grn}DateTag   ${blu}==> ${grn}${dateTag}${neu}\n"
@@ -915,10 +925,10 @@ jhmulticmd(){
   for n in ${multicmdHosts[@]} ; do
     pureName="${n%%|*}"
     if [[ -z ${stdinData} ]] ; then
-      jhssh "${sshenv}" "${pureName,,}" -q -o ConnectTimeout=${sshConfigConnectTimeout:-10} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
+      jhssh "${sshenv}" "${pureName,,}" -q -o ConnectTimeout=${sshConfigConnectTimeout:-${sshCCT:-10}} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
     else
       echo "${stdinData}" | \
-      jhssh "${sshenv}" "${pureName,,}" -q -o ConnectTimeout=${sshConfigConnectTimeout:-10} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
+      jhssh "${sshenv}" "${pureName,,}" -q -o ConnectTimeout=${sshConfigConnectTimeout:-${sshCCT:-10}} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
     fi
     procLog+=( "${multicmdOutputSubDir}/${pureName,,}.log" )
     bgProc+=( "$!" )
