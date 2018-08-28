@@ -59,8 +59,8 @@ override_attributes(
      "images2install" => [ "" ]
   },
   "cumulocity-karaf" => {
-    "version" => "9.10.1-1",
-    "ssa-version" => "9.7.0-1",
+    "version" => "9.12.5-1",
+    "ssa-version" => "9.12.5-1",
     "memory_left_for_system" => "2048",
     "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24" ],
     "notification" => true,
