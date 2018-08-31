@@ -53,6 +53,7 @@ override_attributes(
      "deployK8S4env" => "cumulocity-multinode-central-1-prod",
      "attachedEnvs" => ["cumulocity-multinode-central-1-prod"],
      "token" => "ta0d1q.byxyv9wyee5rr7we",
+     "docker-registry-image" => "cumulocity/registry:2.6.1",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
      "images-version" => "8.19.19",
 #     "images2install" => [ "cep" ]
