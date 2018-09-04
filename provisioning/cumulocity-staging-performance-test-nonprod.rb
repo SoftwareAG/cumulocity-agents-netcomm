@@ -30,16 +30,19 @@ add_machine_options(
 
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
-c8ycore_count = 2
+c8ycore_count = 10
 flavour_for_c8ycore       = "c4.2xlarge"
+volume_size_for_c8ycore   = 20
 private_ips_for_c8ycore   = ["172.31.7.211","172.31.7.212","172.31.7.213","172.31.7.214","172.31.7.215","172.31.7.216","172.31.7.217","172.31.7.218","172.31.7.219","172.31.7.220"]
 
 ontoplb_count = 1
 flavour_for_ontoplb       = "c4.2xlarge"
+volume_size_for_ontoplb   = 10
 private_ips_for_ontoplb   = ["172.31.7.247","172.31.7.248","172.31.7.249"]
 
 ssagent_count = 1
 flavour_for_ssagent       = "c4.xlarge"
+volume_size_for_ssagent   = 20
 private_ips_for_ssagent   = ["172.31.7.250"]
 ssagent_tags  = [
         ["sms-gateway"],
@@ -47,6 +50,7 @@ ssagent_tags  = [
 
 mongodb_count = 3
 flavour_for_mongodb       = "c4.2xlarge"
+volume_size_for_mongodb   = 20
 private_ips_for_mongodb   = ["172.31.7.111","172.31.7.112","172.31.7.113"]
 mongodb_cluster = [
         ["configreplset:config9:S","replicaset:rs01:P"],
@@ -56,10 +60,12 @@ mongodb_cluster = [
 
 kubernetes_master_count   = 3
 flavour_for_masters       = "c4.xlarge"
+volume_size_for_masters   = 12
 private_ips_for_masters   = ["172.31.7.55","172.31.7.56","172.31.7.57"]
 
 kubernetes_worker_count   = 2
 flavour_for_workers       = "c4.2xlarge"
+volume_size_for_workers   = 30
 private_ips_for_workers   = ["172.31.7.61","172.31.7.62","172.31.7.63","172.31.7.64","172.31.7.65"]
 
 
@@ -97,7 +103,14 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_mongodb[i-1]}",
-                instance_type: "#{flavour_for_mongodb}"
+                instance_type: "{flavour_for_mongodb}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_mongodb}",
+                      'delete_on_termination': true }
+                }]
+
             }
         )
         if step > 1
@@ -116,7 +129,13 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_c8ycore[i-1]}",
-                instance_type: "#{flavour_for_c8ycore}"
+                instance_type: "#{flavour_for_c8ycore}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_c8ycore}",
+                      'delete_on_termination': true }
+                }]
             }
         )
         if step > 1
@@ -136,7 +155,14 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_ontoplb[i-1]}",
-                instance_type: "#{flavour_for_ontoplb}"
+                instance_type: "#{flavour_for_ontoplb}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_ontoplb}",
+                      'delete_on_termination': true }
+                }]
+
             }
         )
             if step > 1
@@ -151,7 +177,14 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_ssagent[i-1]}",
-                instance_type: "#{flavour_for_ssagent}"
+                instance_type: "#{flavour_for_ssagent}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_ssagent}",
+                      'delete_on_termination': true }
+                }]
+
             }
         )
             if step > 1
@@ -173,7 +206,14 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_masters[i-1]}",
-                instance_type: "#{flavour_for_masters}"
+                instance_type: "#{flavour_for_masters}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_masters}",
+                      'delete_on_termination': true }
+                }]
+
             }
         )
         role 'cumulocity-base'
@@ -197,7 +237,14 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_workers[i-1]}",
-                instance_type: "#{flavour_for_workers}"
+                instance_type: "#{flavour_for_workers}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_workers}",
+                      'delete_on_termination': true }
+                }]
+
             }
         )
         role 'cumulocity-base'
