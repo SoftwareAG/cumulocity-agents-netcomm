@@ -1,7 +1,7 @@
 require 'chef/provisioning/aws_driver'
 with_driver 'aws:cumulocity-devel:eu-west-1'
 
-environment  = 'cumulocity-staging-performance-test-nonprod'
+environment  = 'cumulocity-staging-ha-test-nonprod'
 
 with_chef_environment environment
 with_chef_server(
@@ -31,23 +31,23 @@ add_machine_options(
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
 c8ycore_count = 2
-flavour_for_c8ycore       = "c4.2xlarge"
-private_ips_for_c8ycore   = ["172.31.7.211","172.31.7.212","172.31.7.213","172.31.7.214","172.31.7.215","172.31.7.216","172.31.7.217","172.31.7.218","172.31.7.219","172.31.7.220"]
+flavour_for_c8ycore       = "c4.xlarge"
+private_ips_for_c8ycore   = ["172.31.12.211","172.31.12.212","172.31.12.213","172.31.12.214","172.31.12.215","172.31.12.216","172.31.12.217","172.31.12.218","172.31.12.219","172.31.12.220"]
 
 ontoplb_count = 1
-flavour_for_ontoplb       = "c4.2xlarge"
-private_ips_for_ontoplb   = ["172.31.7.247","172.31.7.248","172.31.7.249"]
+flavour_for_ontoplb       = "c4.large"
+private_ips_for_ontoplb   = ["172.31.12.247","172.31.12.248","172.31.12.249"]
 
 ssagent_count = 1
 flavour_for_ssagent       = "c4.xlarge"
-private_ips_for_ssagent   = ["172.31.7.250"]
+private_ips_for_ssagent   = ["172.31.12.250"]
 ssagent_tags  = [
-        ["sms-gateway"],
+        ["actility-agent-server","ssl-management-agent-server"],
 ]
 
 mongodb_count = 3
-flavour_for_mongodb       = "c4.2xlarge"
-private_ips_for_mongodb   = ["172.31.7.111","172.31.7.112","172.31.7.113"]
+flavour_for_mongodb       = "c4.xlarge"
+private_ips_for_mongodb   = ["172.31.12.111","172.31.12.112","172.31.12.113"]
 mongodb_cluster = [
         ["configreplset:config9:S","replicaset:rs01:P"],
         ["configreplset:config9:S","replicaset:rs01:S"],
@@ -56,11 +56,11 @@ mongodb_cluster = [
 
 kubernetes_master_count   = 3
 flavour_for_masters       = "c4.xlarge"
-private_ips_for_masters   = ["172.31.7.55","172.31.7.56","172.31.7.57"]
+private_ips_for_masters   = ["172.31.12.55","172.31.12.56","172.31.12.57"]
 
-kubernetes_worker_count   = 2
+kubernetes_worker_count   = 3
 flavour_for_workers       = "c4.2xlarge"
-private_ips_for_workers   = ["172.31.7.61","172.31.7.62","172.31.7.63","172.31.7.64","172.31.7.65"]
+private_ips_for_workers   = ["172.31.12.61","172.31.12.62","172.31.12.63","172.31.12.64","172.31.12.65"]
 
 
 ### END OF CLUSTER CONFIGURATION ###
