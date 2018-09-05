@@ -173,7 +173,7 @@ override_attributes(
         "certificate_domain" => "cumulocity.com",
         "temp_chunkin" => false,
         "useKarafWebsocket" => true,
-	"useLUAforSSLcerts" => nil,
+	"useLUAforSSLcerts" => true,
 	"useLUAforLimits" => true,
 	"useLUAforHealthCheck" => nil,
         "nginx" => {
