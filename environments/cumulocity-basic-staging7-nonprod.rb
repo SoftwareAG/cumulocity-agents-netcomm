@@ -32,8 +32,8 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-basic-staging7-nonprod"],
      "token" => "1e3145.2ff901941c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.0.21",
-     "images2install" => [ "cep" ],
+     "images-version" => "9.12.5",
+     "images2install" => [ "cep","sms-gateway","smartrule" ],
      "docker-registry-image" => "cumulocity/registry:2.6.1",
      "monitoring": {
        "enabled": false
@@ -41,8 +41,8 @@ override_attributes(
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "9cfda1bd57553c744d813970705747ef3c3c1f97ad669c0ff9a3c8bba40675705f458e46b46bd9710d7bc99594fe3030d7637457e94c6982ab9de77acce75806",
-    "version" => "9.0.21-1",
-    "ssa-version" => "9.0.21-1",
+    "version" => "9.12.5",
+    "ssa-version" => "9.12.1-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
@@ -68,7 +68,7 @@ override_attributes(
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.0.21'
+    "version" => '9.12.1'
   },
   "cumulocity-ssagents" => {
     "useTags" => true
@@ -95,7 +95,8 @@ override_attributes(
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "system.two-factor-authentication.enabled" => true,
       "system.two-factor-authentication.max.inactive" => "10",
-      "system.two-factor-authentication.enforced.group" => "ashutoshTfaTest",
+      "system.two-factor-authentication.enforced.group" => "ashutoshTfaTest,TFASupport",
+      "system.two-factor-authentication.enforced" => "",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "management.admin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
       "admin.password" => "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",

@@ -86,8 +86,8 @@ override_attributes(
     "properties" => {
       "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/",
       "default.tenant.microservices" => "device-simulator, smartrule, cep, tenant-sla-monitoring",
-      "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
-      "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
+      "device-simulator.microservice.url" => "http://localhost:8181/service/device-simulator",
+      "smartrule.microservice.url" => "http://localhost:8181/service/smartrule",
       "sendDashboardAgent.url" => "http://localhost:19191/report",
       "mongodb.user" => "c8y-root",
       "mongodb.admindb" => "admin",
@@ -104,6 +104,7 @@ override_attributes(
       "system.two-factor-authentication.enabled" => true,
       "system.two-factor-authentication.max.inactive" => "10",
       "system.two-factor-authentication.enforced" => "ashutosh",
+      "system.two-factor-authentication.enforced.group" => "ashutoshTfaTest",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "passwordReset.email.subject" => "Password reset",
