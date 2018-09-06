@@ -3,7 +3,8 @@ name "cumulocity-multinode-central-1-prod"
 description "The production multinode environment in Frankfurt"
 
 cookbook_versions({
-'cumulocity'=>'= 8.18.0',
+#'cumulocity'=>'= 8.18.0',
+'cumulocity'=>'= 9.0.11',
 #'cumulocity-kubernetes'=>'= 8.18.0',
 'cumulocity-kubernetes'=>'= 9.0.11',
 'cumulocity-ssagents'=>'= 8.18.1'
@@ -173,7 +174,7 @@ override_attributes(
         "certificate_domain" => "cumulocity.com",
         "temp_chunkin" => false,
         "useKarafWebsocket" => true,
-	"useLUAforSSLcerts" => nil,
+	"useLUAforSSLcerts" => true,
 	"useLUAforLimits" => true,
 	"useLUAforHealthCheck" => nil,
         "nginx" => {
