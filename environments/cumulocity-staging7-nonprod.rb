@@ -32,6 +32,22 @@ override_attributes(
   "java" => {
      "jdk_version" => "8"
   },
+  "cumulocity-chaos-monkey" => {
+        "server_terminations" => {
+                "groups" => {
+                "your-group-name" => {
+                    "enabled" => true,
+                    "search_query" => "role:cumulocity-mn-active-core",
+                    "min_instances_running" => 1,
+                    "mean_time_between_kills" => 1
+                }
+            }
+        },
+        "working_hours" => {
+            "start" => 7,
+            "end" => 22
+        }
+  },
   "cumulocity-kubernetes" => {
      "deployK8S4env" => "cumulocity-staging7-nonprod",
      "attachedEnvs" => ["cumulocity-staging7-nonprod"],
