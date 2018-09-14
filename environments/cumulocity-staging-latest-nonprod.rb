@@ -32,7 +32,7 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-staging-latest-nonprod"],
      "token" => "1e3145.2ff901841c78af1d",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.14.0",
+     "images-version" => "9.15.0",
      "images2install" => [ "cep","cep-small","device-simulator","smartrule", "apama-small", "sms-gateway-server" ],
      "monitoring" => {
        "enabled" => false
@@ -50,8 +50,8 @@ override_attributes(
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "35fd2a651c866163f172274ba43a1a15632c68b49f9bcd5c96ba0b2213be257b8265ab3255d20a516a7c68dff6190a698e49f613a8e61b2e3740901d8ce44f1f",
-    "version" => "9.14.0-1",
-    "ssa-version" => "9.14.0-1",
+    "version" => "9.15.0-1",
+    "ssa-version" => "9.15.0-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
@@ -77,7 +77,7 @@ override_attributes(
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.14.0'
+    "version" => '9.15.0'
   },
   "cumulocity-ssagents" => {
     "useTags" => true,
@@ -90,7 +90,8 @@ override_attributes(
   },
   "cumulocity-core" => {
     "properties" => {
-      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/",
+      "system.connectivity.microservice.url" => ".chef/secrets/cumulocity-staging-pe-1-nonprod.core.jsonhttp://${JWIRELESS-AGENT-SERVER}:8092/",
+      "c8y.internal.users" => "service_cep,service_apama",
       "default.tenant.microservices" => "device-simulator, smartrule, cep, tenant-sla-monitoring, sms-gateway-server  ",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
