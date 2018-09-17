@@ -35,7 +35,8 @@ override_attributes(
      "images-version" => "9.15.0",
      "images2install" => [ "cep","cep-small","device-simulator","smartrule", "apama-small", "sms-gateway-server" ],
      "monitoring" => {
-       "enabled" => false
+       "enabled" => true,
+       "dashboard-only" => true
      }
   },
   "cumulocity-chaos-monkey" => {
@@ -161,6 +162,7 @@ override_attributes(
     "useLUAforLimits" => true,
     "useLUAforSSLcerts": true,
     "useLUAforHealthCheck" => true,
+    "useK8SDashboard" => true,
     "nginx" => {
         "NGinxPort" => "openresty",
         "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
