@@ -44,9 +44,11 @@ override_attributes(
      }
   },
   "cumulocity-chaos-monkey": {
-    "server_terminations": {
-      "last_calculation_date" => "2018-09-11"
-    }
+    "working_hours": {
+      "start": 7,
+      "end": 15
+    },
+    "mean_time_between_kills": 1
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "4b4f4c5637e73841134a318d27549c3222e6c950468ea8b10ec1386e492e77bc1816068e0b0a0a9f008f3ad92d88369e268f5a79748013e246ad94851b75d1a3",

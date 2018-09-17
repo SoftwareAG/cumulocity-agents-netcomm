@@ -90,9 +90,9 @@ override_attributes(
   },
   "cumulocity-core" => {
     "properties" => {
-      "system.connectivity.microservice.url" => ".chef/secrets/cumulocity-staging-pe-1-nonprod.core.jsonhttp://${JWIRELESS-AGENT-SERVER}:8092/",
+      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/",
       "c8y.internal.users" => "service_cep,service_apama",
-      "default.tenant.microservices" => "device-simulator, smartrule, cep, tenant-sla-monitoring, sms-gateway-server  ",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep, tenant-sla-monitoring, sms-gateway-server",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
       "sendDashboardAgent.url" => "http://localhost:19191/report",
