@@ -40,7 +40,8 @@ override_attributes(
      "images-version" => "9.0.22",
      "images2install" => [ "cep","cep-small","device-simulator", "sms-gateway-server", "smartrule" ],
      "monitoring" => {
-       "enabled" => false
+       "enabled" => true,
+       "dashboard-only" => true
      }
   },
   "cumulocity-karaf" => {
@@ -157,6 +158,7 @@ override_attributes(
     "useLUAforLimits" => true,
     "useLUAforSSLcerts": true,
     "useLUAforHealthCheck" => true,
+    "useK8SDashboard" => true,
     "nginx" => {
         "NGinxPort" => "openresty",
         "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
