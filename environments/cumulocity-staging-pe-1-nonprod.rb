@@ -37,7 +37,7 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-staging-pe-1-nonprod"],
      "token" => "1e3145.2ff901841c48af2e",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.8.8",
+     "images-version" => "9.8.10",
      "images2install" => [ "cep","cep-small","device-simulator", "sms-gateway-server", "smartrule" ],
      "monitoring" => {
        "enabled" => true,
@@ -53,8 +53,8 @@ override_attributes(
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "4b4f4c5637e73841134a318d27549c3222e6c950468ea8b10ec1386e492e77bc1816068e0b0a0a9f008f3ad92d88369e268f5a79748013e246ad94851b75d1a3",
-    "version" => "9.8.9-1",
-    "ssa-version" => "9.8.8-1",
+    "version" => "9.8.10-1",
+    "ssa-version" => "9.8.10-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
@@ -79,7 +79,7 @@ override_attributes(
   },
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.8.9'
+    "version" => '9.8.10'
   },
   "cumulocity-ssagents" => {
     "useTags" => true,
