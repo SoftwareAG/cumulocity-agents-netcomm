@@ -6,7 +6,7 @@ if ENV['ORGNAME']
   organization_name  = ENV['ORGNAME']
   organization       = organizations[organization_name]
   if organization
-    puts "knife is running with organization: #{organization_name}"
+    # puts "knife is running with organization: #{organization_name}"
   else
     puts "Organization is '#{organization_name}' but it is not found in ./chef/organizations/index.yml"
     exit!
@@ -38,3 +38,6 @@ knife[:ssh_user]              = 'centos'
 # ami-0d063c6b default centos7
 # ami-ac524fca custom centos7 without SELinux
 knife[:image]                 = 'ami-ac524fca'
+
+# knife[:aws_credential_file] = File.join(ENV['HOME'], '/.aws/credentials')
+# knife[:aws_config_file] = File.join(ENV['HOME'], '/.aws/config')

@@ -37,7 +37,7 @@ nodes
 # ##ruby
 # *.gem
 # Gemfile
-# Gemfile.lock
+Gemfile.lock
 .rake_test_cache
 
 # ## Rails Heroku and other bits to ignore
