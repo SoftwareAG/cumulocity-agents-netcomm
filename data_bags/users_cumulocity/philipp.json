@@ -1,0 +1,7 @@
+{
+  "id": "philipp",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAuHP7c1LDTIRIOyDzv+EDgmeAdNlbxOOlK62QmE9ywicwL1GQF8iJ11w+XXP1GiLl57CNBX3NmSePsqH4ASEbRA7VCXuiZQ4PIyOJtYiBZTHxnrEvm8gFu8royC7WLSGs13Ib2eBa6kVYk5In2wfoiX7sQ7g10Jvjjdd9n7y1bGT5TayyR61R7ySdhXU02+PZw1xTdsxw3eUXT+JdjPFLYr4W/UHK9/T9XKZlhmKR+odlL5ISzyUZJldvDiDyPELac9xdHFhhaC69K1Cvj0cGspiu+tMSOWT5jEsuAPaoeob7bXpGTUxaOtETj+GmlsgwLLp1qHvjPr+0mmzCu3dO6w== rsa-key-20150205"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Philipp"
+}

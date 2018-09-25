@@ -3,7 +3,8 @@ name "cumulocity-multinode-central-1-prod"
 description "The production multinode environment in Frankfurt"
 
 cookbook_versions({
-'cumulocity'=>'= 8.18.0',
+#'cumulocity'=>'= 8.18.0',
+'cumulocity'=>'= 9.0.11',
 #'cumulocity-kubernetes'=>'= 8.18.0',
 'cumulocity-kubernetes'=>'= 9.0.11',
 'cumulocity-ssagents'=>'= 8.18.1'
@@ -53,14 +54,15 @@ override_attributes(
      "deployK8S4env" => "cumulocity-multinode-central-1-prod",
      "attachedEnvs" => ["cumulocity-multinode-central-1-prod"],
      "token" => "ta0d1q.byxyv9wyee5rr7we",
+     "docker-registry-image" => "cumulocity/registry:2.6.1",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
      "images-version" => "8.19.19",
 #     "images2install" => [ "cep" ]
      "images2install" => [ "" ]
   },
   "cumulocity-karaf" => {
-    "version" => "9.8.4-1",
-    "ssa-version" => "9.7.0-1",
+    "version" => "9.12.5-1",
+    "ssa-version" => "9.12.5-1",
     "memory_left_for_system" => "2048",
     "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24" ],
     "notification" => true,
@@ -82,7 +84,7 @@ override_attributes(
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => true,
 #            "errorMessageRepresentationBuilder.includeDebug" => "false",
-      "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
+      "default.tenant.applications" => "administration,devicemanagement,cockpit",
       "management.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "tenant.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
@@ -101,7 +103,7 @@ override_attributes(
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",  <--for 8.19
 #      "migration.tomongo.default" => "MONGO_READ_WRITE", <--for 8.19
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",
-      "default.tenant.microservices" => "device-simulator, smartrule, cep, jwireless, sms-gateway",
+      "default.tenant.microservices" => "device-simulator, jwireless, sms-gateway",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,  
       "system.support-user.enabled" => true, 
@@ -172,12 +174,13 @@ override_attributes(
         "certificate_domain" => "cumulocity.com",
         "temp_chunkin" => false,
         "useKarafWebsocket" => true,
-	"useLUAforSSLcerts" => nil,
+	"useLUAforSSLcerts" => true,
 	"useLUAforLimits" => true,
 	"useLUAforHealthCheck" => nil,
         "nginx" => {
+            "real_ip_balancing" => true,
             "NGinxPort" => "openresty",
-             "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
+            "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
         }
   },
      "cumulocity-ssagents" => {

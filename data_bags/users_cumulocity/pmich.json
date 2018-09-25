@@ -1,0 +1,7 @@
+{
+  "id": "pmich",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjYOQQQ4Gk1PL4gkUeVFWbhkLJu1LIeAJtR3VbcdM0MaFwfGJI5DiEKIx95MxcE+vhiupQOmABjxl1PjEE/OlSFqNGQvjYob6p3OFSBMUCPt6Cn/5fyXRyGfMoD8rr8aMyeTBBouuP3paAUZ+JYgrmqz0rkHliuU+ckbHkWvnP4+nbiPSVQk+CCAWIFmd6ROb7IczHbphOParG03fJWFxeNIoFIoWOVrDl6zP2HhJHgRHBM9cVw4y7zYM8kN7L077gi2yJHLn5P5CuscAdNTyShegbE5gRFTrUN2ZkxMPk15mqE9rQyt+YyKwF6i5aO4MFLcG/BtjyR6pluK90ehXMQ== rsa-key-20170919"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Pawel Michalowski"
+}

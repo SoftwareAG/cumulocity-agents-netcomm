@@ -1,0 +1,7 @@
+{
+  "id": "krishna",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLMaD3HRH2kDAJq8BKO9rlzkDwm5TMdHEnvQiQry3cQhi3Jo7QJwz/a748ZX4mYEynsEFY0xSdzLizGj9DxSzjxZcsAAA5U4CImKKVR2J984C5unHuJlE6+nPfcCnQEFO/zJcBdInXSk7FG3IKPvSU2fkkF74MAIUGfHepMIz9AU7QqxIbl2TnEjm6FRhuKWgT7RDSUbTHr8Vd75O7lx0D8G1BsZZehF1w4agU6y6obPwp+9ouRANUR6TmBoveOzLEBe0zuSJd+mqBityPQ2J7pW8jp6tlX0nZWUUN9GwTaXt0A7nFWmBKWr6c7BvBOBWNRjwv/xK2JGH/PZTKfXqd krishna@192.268.56.121"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Krishna Gopal Binyala"
+}
