@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#Set username if local and server user differs
+if [ -z "$RUN_USER" ]; then
+  RUN_USER=$(whoami)
+fi
+
 staging_env=$1
 target_version=$2
 search_key=""
@@ -31,9 +36,14 @@ function get_node_info()
 #Updating chef env file and pushing to chef server
 function update_env_file()
 {
-  git pull && echo "INFO: Pulling latest changes from remote ..." || { echo "ERROR: Failed to pull latest changes from remote. Exiting ... "; exit 1; }
-  echo "INFO: Update corresponding env file"; sleep 3
-  vi ${env_file} && echo "INFO: Environment file updated" || { echo "ERROR: Failed to update environment file. Exiting ... "; exit 1; }
+  git pull && echo "INFO: Pulled latest changes from remote ..." || { echo "ERROR: Failed to pull latest changes from remote. Exiting ... "; exit 1; }
+  echo "INFO: Updating corresponding env file ..."
+  tmp=$(mktemp)
+  { jq --arg inp1 "$target_version-1" '.override_attributes["cumulocity-karaf"]["version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && echo "INFO: Karaf version updated in env file" && \
+  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-kubernetes"]["images-version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && echo "INFO: Kubernetes images version updated in env file" && \
+  jq --arg inp1 "$target_version-1" '.override_attributes["cumulocity-karaf"]["ssa-version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && echo "INFO: SSAgents version updated in env file" && \
+  jq --arg inp1 "$target_version" '.override_attributes["cumulocity-GUI"]["version"] = $inp1' ${env_file} > "$tmp" && mv "$tmp" ${env_file} && echo "INFO: GUI version updated in env file" && \
+  echo "INFO: All fields of Environment file updated successfully" } || \ { echo "ERROR: Failed to update environment file. Exiting ... "; exit 1; }
   knife environment from file ${env_file} && echo "INFO: Pushed changes to Chef server" || { echo "ERROR: Unable to push changes to Chef server. Exiting ... "; exit 1; }
   git add ${env_file} && git commit -m "Upgrading $staging_env to version $target_version" && git push && echo "INFO: Committed and pushed to remote" || \
   { echo "ERROR: Unable to commit and push to remote git repository. Exiting ... "; exit 1; }
@@ -44,7 +54,7 @@ function compare_version()
 {
   count=1
   for i in ${ip_list[@]}; do
-    installed_version=$(ssh -o "StrictHostKeyChecking no" jagat@$i 'rpm -qa | grep karaf' | grep -Po '(?<=cumulocity-core-karaf-)[^-]+')
+    installed_version=$(ssh -o "StrictHostKeyChecking no" $RUN_USER@$i 'rpm -qa | grep karaf' | grep -Po '(?<=cumulocity-core-karaf-)[^-]+')
     function convert_to_integer {
     echo "$@" | awk -F "." '{ printf("%03d%03d%03d\n", $1,$2,$3); }';
     }
@@ -66,8 +76,15 @@ function upgrade()
   for i in $node_list; do
     knife node run_list remove $i 'role[cumulocity-mn-active-core]' && echo "INFO: Removing role cumulocity-mn-active-core" || \
     { echo "ERROR: Removal of role cumulocity-mn-active-core Failed"; exit 1; }
-    ssh -o "StrictHostKeyChecking no" jagat@${ip_list[$count]} "ps -ef | grep -i karaf | grep -v grep | awk '{print \$2}' | sudo xargs kill -9"
-    ssh -o "StrictHostKeyChecking no" jagat@${ip_list[$count]} 'sudo chef-client; sudo /usr/sbin/service cumulocity-core-karaf start'
+    ssh -o "StrictHostKeyChecking no" $RUN_USER@${ip_list[$count]} 'sudo /usr/sbin/service cumulocity-core-karaf stop && echo "INFO: Stopping Karaf" && sleep 40'
+    retval=$(ssh -o "StrictHostKeyChecking no" $RUN_USER@${ip_list[$count]} "ps -ef | grep -i karaf | grep -v grep | awk '{print \$2}'")
+    if [ -z "$retval" ]; then
+      echo "INFO: Karaf stopped"
+    else
+      echo "WARNING: Karaf still running. Applying force kill ..."
+      ssh -o "StrictHostKeyChecking no" $RUN_USER@${ip_list[$count]} "ps -ef | grep -i karaf | grep -v grep | awk '{print \$2}' | sudo xargs kill -9"
+    fi
+    ssh -o "StrictHostKeyChecking no" $RUN_USER@${ip_list[$count]} 'sudo chef-client; sudo /usr/sbin/service cumulocity-core-karaf start'
     count=$((count + 1))
     knife node run_list add $i 'role[cumulocity-mn-active-core]' && echo "INFO: Adding back role cumulocity-mn-active-core" || \
     { echo "ERROR: Adding back role cumulocity-mn-active-core Failed"; exit 1; }
@@ -79,7 +96,7 @@ function validate()
 {
   count=1
   for i in ${ip_list[@]}; do
-    installed_version=$(ssh -o "StrictHostKeyChecking no" jagat@$i 'rpm -qa | grep karaf' | grep -Po '(?<=cumulocity-core-karaf-)[^-]+')
+    installed_version=$(ssh -o "StrictHostKeyChecking no" $RUN_USER@$i 'rpm -qa | grep karaf' | grep -Po '(?<=cumulocity-core-karaf-)[^-]+')
     if [ "$installed_version" == "$target_version" ]; then
       echo "INFO: Backend upgrade of core successful for $staging_env Core_Node$count"
     else
@@ -96,7 +113,7 @@ function check_platform()
 	max_attempts=5
 
 	for ip in ${ip_list[@]}; do
-		status=$(ssh -o "StrictHostKeyChecking no" jagat@$ip 'curl -s -o /dev/null -w '%{http_code}' http://localhost/tenant/health')
+		status=$(ssh -o "StrictHostKeyChecking no" $RUN_USER@$ip 'curl -s -o /dev/null -w '%{http_code}' http://localhost/tenant/health')
 			if [[ "${status}" -eq 200 ]]; then
         item=($ip)
 				echo "INFO: Platform health looks good on $ip" && ip_list=( "${ip_list[@]/$item}" ) && continue
@@ -111,12 +128,11 @@ function check_platform()
             echo "Attempt # $attempt_counter"
             echo "Platform still having issues on " $ip
             attempt_counter=$(($attempt_counter+1))
-            sleep 12
           fi
         done
 			fi
 			if [ ${#ip_list[@]} -eq 0 ]; then
-				echo "INFO: Platform UP on all nodes." && break
+				echo "INFO: Platform UP on all nodes" && break
 			else
 				echo "INFO: Some nodes are still unhealthy"
 			fi
@@ -126,11 +142,11 @@ function check_platform()
 #Exporting env and needed stuff
 if [ $staging_env == "staging" ]; then
   export ORGNAME=cumulocity-stagings
-  export env_file=./environments/cumulocity-basic-staging7-nonprod.rb
+  export env_file=./environments/cumulocity-basic-staging7-nonprod.json
   search_key="Staging_Core"
 elif [ $staging_env == "staging7" ]; then
   export ORGNAME=cumulocity-devel
-  export env_file=./environments/cumulocity-staging7-nonprod.rb
+  export env_file=./environments/cumulocity-staging7-nonprod.json
   search_key="Staging7Core"
 elif [ $staging_env == "staging007" ]; then
   export ORGNAME=cumulocity-stagings
@@ -138,16 +154,17 @@ elif [ $staging_env == "staging007" ]; then
   search_key="Staging007Core"
 elif [ $staging_env == "staging-latest" ]; then
   export ORGNAME=cumulocity-stagings
-  export env_file=./environments/cumulocity-staging-latest-nonprod.rb
+  export env_file=./environments/cumulocity-staging-latest-nonprod.json
   search_key="cumulocity-staging-latest-nonprod_core"
 else
   echo "ERROR: There is no such environment as $staging_env. Available environments: staging, staging7, staging007, staging-latest. Try again !"; exit 1;
 fi
 
 # Main()
-update_env_file
+
 get_node_info
 compare_version
+update_env_file
 upgrade
 validate
 check_platform
