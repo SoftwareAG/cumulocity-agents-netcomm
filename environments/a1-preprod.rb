@@ -11,7 +11,7 @@ override_attributes(
    "chef_client" => {
         "server_url" => "https://ng-iotextensionchef12"
   },
-  "domainname" => "stacum.exoat1",
+  "domainname" => "iotstg.a1.digital",
   'yum' => {
     'repositories' => {
       'cumulocity-testing' => {
@@ -27,7 +27,7 @@ override_attributes(
     }
   },
   "environment" => {
-    "address" => "manage.stacum.exoat1"
+    "address" => "manage.iotstg.a1.digital"
   },
   "java" => {
      "jdk_version" => "8"
@@ -36,24 +36,25 @@ override_attributes(
   "cumulocity-kubernetes" => {
      "deployK8S4env" => "a1-preprod",
      "attachedEnvs" => ["a1-preprod"],
-     "token" => "k79xm2.ad277zsafl9q38o9", 
+     "token" => "k79xm2.ad277zsafl9q38o9",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
      "images-version" => "9.8.8", # check
      "images2install" => [ "" ]
   },
 
   "cumulocity-karaf" => {
-    "version" => "9.8.8-1",
-#    "ssa-version" => "8.15.5-1",
+##    "version" => "9.8.8-1",
+    "version" => "9.8.10-1",
+    "ssa-version" => "9.8.8-1",
     "management-access" => [ "127.0.0.1" ],
     "memory_left_for_system" => "1836",
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => false,
-	# stacum.exoat1
-     "CUMULOCITY_LICENCE_KEY" => "756eee2107cf4c5f0d728918d553e8b4895dfc2310e80c2d509fa5c31b26e85778fecbae0cd2e1a6949ba2237f4d34d88452e7a613dfcc8a40c0f115a408fd80",
-     "openrelayIP" => "email-smtp.eu-west-1.amazonaws.com", # check
-     "openrelayPORT" => "587", # check
+	# iotstg.a1.digital
+     "CUMULOCITY_LICENCE_KEY" => "52e243aa993773ea1b291e89e7fe98a94a4afd101b9d75da752abd9b46c0b8e52d5ad8c26f682765ac06cc0f24a5d5d996965847d88d1b1ce5852e1ff0cb6e34",
+#     "openrelayIP" => "email-smtp.eu-west-1.amazonaws.com", # check
+#     "openrelayPORT" => "587", # check
       "karaf" => {
         "memory" => {
             "xms" => "1024M"
@@ -139,11 +140,12 @@ override_attributes(
         "useSSL" => true,
         "useMQTTsupport" => true,
         "force_proto_for_link_processor" => "https",
-#       "certificate_domain" => "acme.com",
-        "certificate_domain" => "stacum.exoat1",
+#       "certificate_domain" => "cumulocity.com",
+        "certificate_domain" => "iotstg.a1.digital",
         "temp_chunkin" => false,
         "useKarafWebsocket" => true,
-        "useLUAforSSLcerts" => nil,
+        ##"useLUAforSSLcerts" => nil,
+        "useLUAforSSLcerts" => true,
         "useLUAforLimits" => true,
         "useLUAforHealthCheck" => true,
 	"nginx" => {
@@ -170,6 +172,21 @@ override_attributes(
 #	"useTags" => true,
 #    "ssAgentsIP" => "10.10.2.4"
 #  }
+
+    'cumulocity-ssagents' => {
+     "useTags" => true,
+        "sslmanagement" => {
+          "salt" => "81643379eb0ca927",
+          "password" => "3bb50705293bcba3",
+        },
+ 	"lwm2m-agent" => {
+ 	  "host_fwUpdate" => "85.150.8.239",
+ 	  ##"leshan_cluster_tenant" => "management",
+ 	  "leshan_cluster_tenant" => "lwm2mbase",
+ 	  "leshan_cluster_tenant_username" => "lwm2m_user",
+ 	  "leshan_cluster_tenant_password" => "passw0rd_a"
+        },
+    },
 
   'monit' => {
     'mongo' => {
