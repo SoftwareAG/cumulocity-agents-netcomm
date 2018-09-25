@@ -178,8 +178,9 @@ override_attributes(
 	"useLUAforLimits" => true,
 	"useLUAforHealthCheck" => nil,
         "nginx" => {
+            "real_ip_balancing" => true,
             "NGinxPort" => "openresty",
-             "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
+            "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
         }
   },
      "cumulocity-ssagents" => {
