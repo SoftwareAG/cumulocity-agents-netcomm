@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export CUMULOCITY_KUBERNETES_IMAGE="9.8.9"
-export CUMULOCITY_KARAF_IMAGE="9.8.9-1"
-export CUMULOCITY_KARAF_SSA="9.8.9-1"
-export CUMULOCITY_GUI="9.8.9"
+export CUMULOCITY_KUBERNETES_IMAGE="9.8.10"
+export CUMULOCITY_KARAF_IMAGE="9.8.10-1"
+export CUMULOCITY_KARAF_SSA="9.8.10-1"
+export CUMULOCITY_GUI="9.8.10"
 
 cd ./environments/ && ./set_versions.sh jenkins.json
 
