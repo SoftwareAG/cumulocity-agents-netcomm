@@ -30,7 +30,6 @@ cookbook_path            ["#{current_dir}/../cookbooks"]
 
 knife[:ssh_key_name]          = organization['knife']['ssh_key_name']
 if ENV['AWS_ACCESS_KEY_ID'] && ENV['AWS_SECRET_ACCESS_KEY']
-  puts "AWS keys found in ENV"
   knife[:aws_access_key_id] = ENV['AWS_ACCESS_KEY_ID']
   knife[:aws_secret_access_key] = ENV['AWS_SECRET_ACCESS_KEY']
 else
