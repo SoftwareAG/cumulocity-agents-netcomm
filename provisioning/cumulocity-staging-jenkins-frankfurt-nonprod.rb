@@ -42,7 +42,7 @@ ssagent_count = 1
 flavour_for_ssagent       = "m4.large"
 private_ips_for_ssagent   = ["172.31.18.250"]
 ssagent_tags  = [
-        ["sms-gateway-server","ssl-management-agent-server","lwm2m-agent-server","impact-agent-server"],
+        ["ssl-management-agent-server","lwm2m-agent-server","impact-agent-server"],
 ]
 
 mongodb_count = 3

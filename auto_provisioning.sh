@@ -1,9 +1,10 @@
 #!/bin/bash
 
-export CUMULOCITY_KUBERNETES_IMAGE="9.8.10"
-export CUMULOCITY_KARAF_IMAGE="9.8.10-1"
-export CUMULOCITY_KARAF_SSA="9.8.10-1"
-export CUMULOCITY_GUI="9.8.10"
+export CUMULOCITY_KUBERNETES_IMAGE="9.12.8"
+export CUMULOCITY_KARAF_IMAGE="9.12.8-1"
+export CUMULOCITY_KARAF_SSA="9.12.8-1"
+export CUMULOCITY_GUI="9.12.8"
+export MODULES_LIST=cep,cep-small,device-simulator,smartrule,jwireless,apama-small,sms-gateway,billwerk-agent-server,connectivity-agent-server,branding,cellid-agent-server,remote-access,speech-agent-server
 
 cd ./environments/ && ./set_versions.sh jenkins.json
 
