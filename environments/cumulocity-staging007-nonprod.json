@@ -6,6 +6,11 @@
     "cumulocity-kubernetes": "= 0.6.1",
     "cumulocity-ssagents": "= 0.4.0"
   },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+
+  },
   "override_attributes": {
     "domainname": "staging007.c8y.io",
     "environment": {
@@ -35,9 +40,13 @@
       "images-version": "8.19.31",
       "docker-registry-image": "cumulocity/registry:2.6.1",
       "images2install": [
-        "cep", "cep-small"
+        "cep",
+        "cep-small"
       ],
       "monitoring": {
+        "enabled": false
+      },
+      "remote-logging": {
         "enabled": true
       }
     },
@@ -140,8 +149,11 @@
       "install-tracker": null
     },
     "cumulocity-rsyslog": {
-      "cross-env-log-server": "cumulocity-multinode-prod",
-      "log-server-ext-address": "monitoring.cumulocity.com"
+      "log-server-ext-address": "34.254.171.158",
+      "forward-to-graylog": true,
+      "graylog-server-port": 5516,
+      "graylog-server-proto": "tcp",
+      "graylog-server-ssl": true
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "cumulocity-staging7-nonprod",
+  "name": "cumulocity-staging-pe-1-nonprod",
   "description": "The production environment",
   "cookbook_versions": {
     "cumulocity": "= 0.6.0",
@@ -13,9 +13,9 @@
     "fixhostsfile": false
   },
   "override_attributes": {
-    "domainname": "staging7.c8y.io",
+    "domainname": "staging-1.c8y.io",
     "environment": {
-      "address": "management.staging7.c8y.io"
+      "address": "management.staging-1.c8y.io"
     },
     "swapfilesize": 512,
     "yum": {
@@ -32,26 +32,36 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-staging7-nonprod",
+      "deployK8S4env": "cumulocity-staging-pe-1-nonprod",
       "attachedEnvs": [
-        "cumulocity-staging7-nonprod"
+        "cumulocity-staging-pe-1-nonprod"
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.8.9",
+      "images-version": "9.8.10",
       "images2install": [
         "cep",
         "cep-small",
-        "device-simulator"
+        "device-simulator",
+        "sms-gateway-server",
+        "smartrule"
       ],
       "monitoring": {
-        "enabled": false
+        "enabled": true,
+        "dashboard-only": true
       }
     },
+    "cumulocity-chaos-monkey": {
+      "working_hours": {
+        "start": 7,
+        "end": 15
+      },
+      "mean_time_between_kills": 1
+    },
     "cumulocity-karaf": {
-      "CUMULOCITY_LICENCE_KEY": "17adb8fe8848af81a75d175bace5d013bf71ee4fa374aafb30313f3d245de270b5f953ab29861044ef6e169406fb469fc50407d31c81ba874e1a3b9b37a33bfc",
-      "version": "9.8.9-1",
-      "ssa-version": "9.8.9-1",
+      "CUMULOCITY_LICENCE_KEY": "4b4f4c5637e73841134a318d27549c3222e6c950468ea8b10ec1386e492e77bc1816068e0b0a0a9f008f3ad92d88369e268f5a79748013e246ad94851b75d1a3",
+      "version": "9.8.10-1",
+      "ssa-version": "9.8.10-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -59,7 +69,7 @@
       "management-access": [
         "0.0.0.0/0"
       ],
-      "openrelayIP": "172.31.9.250",
+      "openrelayIP": "172.31.16.250",
       "karaf": {
         "memory": {
           "xms": "1024M"
@@ -78,7 +88,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "9.8.9"
+      "version": "9.8.10"
     },
     "cumulocity-ssagents": {
       "useTags": true,
@@ -104,10 +114,10 @@
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": "false",
-        "migration.tomongo.default": "MONGO_READ_WRITE_POSTGRES_WRITE",
+        "migration.tomongo.default": "MONGO_READ_WRITE",
         "smsGateway.host": "http://localhost:8181/service/messaging",
-        "email.host": "postfix.cumulocity-staging7-nonprod.svc.cluster.local",
-        "email.from": "no-reply@app.domain.com",
+        "email.host": "postfix.cumulocity-staging-pe-1-nonprod.svc.cluster.local",
+        "email.from": "no-reply@staging-1.c8y.io",
         "system.two-factor-authentication.enabled": true,
         "system.two-factor-authentication.max.inactive": "10",
         "system.two-factor-authentication.enforced": "ashutosh",
@@ -115,16 +125,16 @@
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
         "passwordReset.email.subject": "Password reset",
-        "passwordReset.token.email.template": "Dear app.domain.com user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
-        "passwordReset.user.not.found.email.template": "Hi there,\\n\\n\\\n            you or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            However, we could not find the email address in your account. Please contact the administrator of your \\\n            account to set your email address and password. If you are the administrator of the account,\\\n            please use the email address that you registered with.\\n\\n\\\n            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of app.domain.com portal. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
-        "passwordReset.success.email.template": "Dear app.domain.com user,\\n\\n\\\n            Your password on {host} has been recently changed. \\n\\\n            If you or your administrator made this change, you do not need to do anything more. \\n\\\n            If you did not make this change, please contact your administrator.\\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
-        "passwordReset.invite.template": "Hi there,\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}/apps/devicemanagement/index.html?token={token}\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\n\\\n            app.domain.com support team\\n"
+        "passwordReset.token.email.template": "Dear staging-1.c8y.io user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a staging-1.c8y.io portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            staging-1.c8y.io support team\\n",
+        "passwordReset.user.not.found.email.template": "Hi there,\\n\\n\\\n            you or someone else entered this email address when trying to change the password of a staging-1.c8y.io portal user.\\n\\n\\\n            However, we could not find the email address in your account. Please contact the administrator of your \\\n            account to set your email address and password. If you are the administrator of the account,\\\n            please use the email address that you registered with.\\n\\n\\\n            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of staging-1.c8y.io portal. \\n\\n\\\n            Kind regards,\\n\\\n            staging-1.c8y.io support team\\n",
+        "passwordReset.success.email.template": "Dear staging-1.c8y.io user,\\n\\n\\\n            Your password on {host} has been recently changed. \\n\\\n            If you or your administrator made this change, you do not need to do anything more. \\n\\\n            If you did not make this change, please contact your administrator.\\n\\n\\\n            Kind regards,\\n\\\n            staging-1.c8y.io support team\\n",
+        "passwordReset.invite.template": "Hi there,\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}/apps/devicemanagement/index.html?token={token}\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\n\\\n            staging-1.c8y.io support team\\n"
       }
     },
     "cumulocity-external-lb": {
       "landing_page": "https://staging-1.c8y.io/apps/devicemanagement",
       "paas_default_page": "https://$http_host/apps/$defapp",
-      "paas_public_default_page": "https://staging.c8y.io/apps/dmpublic",
+      "paas_public_default_page": "https://staging-1.c8y.io/apps/dmpublic",
       "usePostgresForPaaS": false,
       "paas_redirection": true,
       "temp_chunkin": false,
@@ -140,6 +150,7 @@
       "useLUAforLimits": true,
       "useLUAforSSLcerts": true,
       "useLUAforHealthCheck": true,
+      "useK8SDashboard": true,
       "nginx": {
         "NGinxPort": "openresty",
         "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"

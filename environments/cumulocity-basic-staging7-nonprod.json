@@ -6,6 +6,11 @@
     "cumulocity-kubernetes": "= 0.6.0",
     "cumulocity-ssagents": "= 0.4.0"
   },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+
+  },
   "override_attributes": {
     "domainname": "staging.c8y.io",
     "environment": {
@@ -32,9 +37,21 @@
       ],
       "token": "1e3145.2ff901941c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.0.21",
+      "images-version": "9.12.8",
       "images2install": [
-        "cep"
+        "cep",
+        "cep-small",
+        "device-simulator",
+        "smartrule",
+        "jwireless",
+        "apama-small",
+        "sms-gateway",
+        "billwerk-agent-server",
+        "connectivity-agent-server",
+        "branding",
+        "cellid-agent-server",
+        "remote-access",
+        "speech-agent-server"
       ],
       "docker-registry-image": "cumulocity/registry:2.6.1",
       "monitoring": {
@@ -43,8 +60,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "9cfda1bd57553c744d813970705747ef3c3c1f97ad669c0ff9a3c8bba40675705f458e46b46bd9710d7bc99594fe3030d7637457e94c6982ab9de77acce75806",
-      "version": "9.0.21-1",
-      "ssa-version": "9.0.21-1",
+      "version": "9.12.8-1",
+      "ssa-version": "9.12.8-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -71,15 +88,21 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "9.0.21"
+      "version": "9.12.8"
     },
     "cumulocity-ssagents": {
-      "useTags": true
+      "useTags": true,
+      "lwm2m-agent": {
+        "host_fwUpdate": "34.251.8.163",
+        "leshan_cluster_tenant": "lwm2m_user",
+        "leshan_cluster_tenant_username": "lwm2m_user",
+        "leshan_cluster_tenant_password": "passw0rd_ab"
+      }
     },
     "cumulocity-core": {
       "properties": {
         "system.connectivity.microservice.url": "http://localhost:8111/service/connectivity",
-        "default.tenant.microservices": "device-simulator, smartrule, cep",
+        "default.tenant.microservices": "device-simulator, smartrule, cep, sms-gateway",
         "device-simulator.microservice.url": "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
         "smartrule.microservice.url": "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
         "sendDashboardAgent.url": "http://localhost:19191/report",
@@ -98,7 +121,8 @@
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "system.two-factor-authentication.enabled": true,
         "system.two-factor-authentication.max.inactive": "10",
-        "system.two-factor-authentication.enforced.group": "ashutoshTfaTest",
+        "system.two-factor-authentication.enforced.group": "ashutoshTfaTest,TFASupport",
+        "system.two-factor-authentication.enforced": "",
         "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
         "management.admin.password": "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
         "admin.password": "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",

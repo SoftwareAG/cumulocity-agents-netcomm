@@ -6,6 +6,11 @@
     "cumulocity-kubernetes": "= 0.6.0",
     "cumulocity-ssagents": "= 0.4.0"
   },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+
+  },
   "override_attributes": {
     "domainname": "staging-latest.c8y.io",
     "environment": {
@@ -32,21 +37,38 @@
       ],
       "token": "1e3145.2ff901841c78af1d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.12.2",
+      "images-version": "9.16.0",
       "images2install": [
         "cep",
         "cep-small",
         "device-simulator",
-        "smartrule"
+        "smartrule",
+        "jwireless",
+        "apama-small",
+        "sms-gateway",
+        "billwerk-agent-server",
+        "connectivity-agent-server",
+        "branding",
+        "cellid-agent-server",
+        "remote-access",
+        "speech-agent-server"
       ],
       "monitoring": {
-        "enabled": true
+        "enabled": true,
+        "dashboard-only": true
+      }
+    },
+    "cumulocity-chaos-monkey": {
+      "group": {
+        "my-custom-service": {
+          "search_query": "role:my-custom-service AND role:mn-active-core"
+        }
       }
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "35fd2a651c866163f172274ba43a1a15632c68b49f9bcd5c96ba0b2213be257b8265ab3255d20a516a7c68dff6190a698e49f613a8e61b2e3740901d8ce44f1f",
-      "version": "9.12.2-1",
-      "ssa-version": "9.12.2-1",
+      "version": "9.16.0-1",
+      "ssa-version": "9.16.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -73,7 +95,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "9.12.2"
+      "version": "9.16.0"
     },
     "cumulocity-ssagents": {
       "useTags": true,
@@ -87,7 +109,8 @@
     "cumulocity-core": {
       "properties": {
         "system.connectivity.microservice.url": "http://${JWIRELESS-AGENT-SERVER}:8092/",
-        "default.tenant.microservices": "device-simulator, smartrule, cep, tenant-sla-monitoring",
+        "c8y.internal.users": "service_cep,service_apama",
+        "default.tenant.microservices": "device-simulator, smartrule, cep, tenant-sla-monitoring, sms-gateway",
         "device-simulator.microservice.url": "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
         "smartrule.microservice.url": "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
         "sendDashboardAgent.url": "http://localhost:19191/report",
@@ -100,7 +123,7 @@
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": "false",
         "migration.tomongo.default": "MONGO_READ_WRITE_POSTGRES_WRITE",
-        "smsGateway.host": "http://localhost:8181/service/messaging",
+        "smsGateway.host": "http://localhost:80/service/messaging",
         "email.host": "postfix.cumulocity-staging-nonprod.svc.cluster.local",
         "email.from": "no-reply@app.domain.com",
         "errorMessageRepresentationBuilder.includeDebug": "false",
@@ -132,6 +155,7 @@
       "useLUAforLimits": true,
       "useLUAforSSLcerts": true,
       "useLUAforHealthCheck": true,
+      "useK8SDashboard": true,
       "nginx": {
         "NGinxPort": "openresty",
         "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
