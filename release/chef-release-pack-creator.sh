@@ -14,15 +14,8 @@ f_color_pr(){
   printf "$COLOR""$@\n"'\e[m'
 }
 
-while getopts "Svik:c:a:A:C:" opt ; do
+while getopts "Svik:c:a:" opt ; do
   case $opt in
-    A) 
-      cumulocity_version="${OPTARG}"
-      karafver="${cumulocity_version}-1"
-      cepver="${cumulocity_version}-1"
-      ssaver="${cumulocity_version}-1"
-      ;;
-    C) c8y_cookbooks_version="${OPTARG}" ;;
     S) SOLO=true ;;
     v) VERBOSE=true ;;
     i) interactive=true ;;
@@ -31,12 +24,6 @@ while getopts "Svik:c:a:A:C:" opt ; do
     a) ssaver="${OPTARG}" ;;
   esac
 done
-
-if [[ -z $c8y_cookbooks_version ]] ; then
-  c8y_cookbooks_version="latest"
-fi
-
-f_color_pr ylw "Using cookbooks version: ${c8y_cookbooks_version}"
 
 if [[ -z $karafver || -z $cepver ]] ; then
   f_color_pr red "ERROR: specify release version for both karaf and cep!" && exit 1
@@ -57,11 +44,11 @@ template_archive="${thisdir}/chef-solo-12-template.tgz"
 
 declare -A c8yCB
 c8yCB=(
-              ["cumulocity"]=${c8y_cookbooks_version}
-     ["cumulocity-ssagents"]=${c8y_cookbooks_version}
-      ["cumulocity-rsyslog"]=${c8y_cookbooks_version}
-["cumulocity-backup-script"]=${c8y_cookbooks_version}
-["cumulocity-monitoring-agent"]=${c8y_cookbooks_version}
+              ["cumulocity"]=0.6.0
+     ["cumulocity-ssagents"]=0.4.0
+      ["cumulocity-rsyslog"]=1.0.0
+["cumulocity-backup-script"]=latest
+["cumulocity-monitoring-agent"]=latest
 )
 
 declare -A comCB
@@ -92,7 +79,7 @@ comCB=(
 
 declare -A mnOnlyC8yCB
 mnOnlyC8yCB=(
-   ["cumulocity-kubernetes"]=${c8y_cookbooks_version}
+   ["cumulocity-kubernetes"]=latest
 )
 
 declare -A mnOnlyComCB
