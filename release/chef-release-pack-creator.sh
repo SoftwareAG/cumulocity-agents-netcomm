@@ -34,7 +34,7 @@ if [[ -z $ssaver ]] ; then
 fi
 
 thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
-   thisdir="$( dirname ${thisscript} )"
+   thisdir="$( dirname "${thisscript}" )"
   c8yCBdir="$( readlink -e "${thisdir}/../../cumulocity-cookbooks" )"
   comCBdir="$HOME/.berkshelf/cookbooks"
   solCBdir="${thisdir}/chef-solo/cookbooks"
