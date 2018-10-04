@@ -57,7 +57,7 @@ override_attributes(
   },
   "cumulocity-karaf" => {
     "version" => "9.0.16-1",
-    "memory_left_for_system" => "2048",
+    "memory_left_for_system" => "4096",
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,

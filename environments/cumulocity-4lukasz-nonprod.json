@@ -1,9 +1,9 @@
 {
-  "name": "cumulocity-staging007-nonprod",
-  "description": "The Staging nonprod environment",
+  "name": "cumulocity-4lukasz-nonprod",
+  "description": "The complete cumulocity plus multi master kubernetes env",
   "cookbook_versions": {
     "cumulocity": "= 0.6.0",
-    "cumulocity-kubernetes": "= 0.6.1",
+    "cumulocity-kubernetes": "= 0.6.0",
     "cumulocity-ssagents": "= 0.4.0"
   },
   "json_class": "Chef::Environment",
@@ -12,11 +12,11 @@
 
   },
   "override_attributes": {
-    "domainname": "staging007.c8y.io",
+    "domainname": "4lukasz.c8y.io",
     "environment": {
-      "address": "management.staging007.c8y.io"
+      "address": "management.4lukasz.c8y.io"
     },
-    "swapfilesize": 768,
+    "swapfilesize": 512,
     "yum": {
       "repositories": {
         "cumulocity-testing": {
@@ -31,34 +31,33 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-staging007-nonprod",
+      "deployK8S4env": "cumulocity-4lukasz-nonprod",
       "attachedEnvs": [
-        "cumulocity-staging007-nonprod"
+        "cumulocity-4lukasz-nonprod"
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "8.19.31",
-      "docker-registry-image": "cumulocity/registry:2.6.1",
+      "images-version": "9.15.0",
       "images2install": [
         "cep",
-        "cep-small"
+        "cep-small",
+        "device-simulator",
+        "smartrule",
+        "apama-small",
+        "sms-gateway-server"
       ],
       "monitoring": {
         "enabled": false
-      },
-      "remote-logging": {
-        "enabled": true
       }
     },
     "cumulocity-karaf": {
-      "CUMULOCITY_LICENCE_KEY": "9e6ecb2f76ffcc9dd79b59a34dae875be4d5fc340fb60d06e212e3d26e8399842c1734d3e9474e9ace8e3cf2e8d0381fae9aa46698f566ff02418aeb73c14cbd",
-      "version": "8.19.31-1",
-      "ssa-version": "8.19.31-1",
+      "CUMULOCITY_LICENCE_KEY": "df4712118ff6757781dfff074ec1f40a86635b253e12226467341d97e5f8f01b6685e1668d1bc13e180f6cb11342670cfcf8699b013ffcbc8af6f9f844273a9a",
+      "version": "9.15.0-1",
+      "ssa-version": "9.15.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
-      "CUMULOCITY_LICENCE_DIR": null,
-      "openrelayIP": "172.20.21.77",
+      "CUMULOCITY_LICENCE_DIR": "/etc/cumulocity/",
       "management-access": [
         "0.0.0.0/0"
       ],
@@ -69,6 +68,8 @@
       }
     },
     "cumulocity-cep": {
+      "version": "9.12.2-1",
+      "package_name": "cep",
       "properties": {
         "esperha.storage": "/mnt/esperha-storage"
       }
@@ -76,11 +77,18 @@
     "cumulocity-mongo": {
       "sharedkey-content": "1y7LbnZkJvDgtUOHN+8L++DAABlWdLO6kA+GXR23vl5QlslmqlB6goKQmDzgeMdA\nGC38ZcPLejm2Mnvk3TF7QHlhW1OvQZFOk600/Z9qbkzIjfQLNU4RIOdWq7pTq70w\nsyIbBXAZ+ZS2AUQnObxRiToIeDxakzjuiTQbwfYz7Z2bA/hJMrKNdI//IeRl93gt\nMAV5f07l5WQQ8OcKjqYlga1J2izcVmcbd6Q0PCtp38MrmBe3iEn34FpiAgDVZp06\ncuNJDUwr2YF90KWLs53g85vfhybNchxISXMSJBFApId8cuVeZ2oRKf7HjcyrsRR6\nUxk/74MMKvsXdxG2e2pfgTywyZ5Ndk5pGKXj6TZ5QY4Qw2QHryVPyRT90xogdDtg\nA4A8iSWRBgnrtJP+qvlfBSCpdN0EqmHqGuWcqzkc4sjpO9ubQdqvBFni9X0A6mxE\nWwGH2tk6uWQU4+OPfoQkVgUCFgepFWuzWHj9TA71sn0hmDLnBZDUh3yKcEz++qKy\nchfOPrnhSPpvZI0762F5LdIp7cuAwMC4wEYSSloawzqBnCpvQ0BsFAyprhZhFDdV\nUP67nmp/q5oaXgdr3TJOTGkRgcPXRSuf4zV4nKdMdyy7HM9o24LGXiJ40b3CZGhm\nyG0tRoTRNTd6hgFQWYp8hT4EK++kf60boGhUSPxvlkbERZ/mx4kPGY1fYWkRN8Y8\nbZXDnwu+A3kqCwSTJ6tjzrtqlQ51z5rJWl14eIo2Ienfym1tquoPNMeksQroivRB\n1ZXlA3v68+nHy2HljMsLUjt8oxho3HhN1RcDXazf4b39n5nZS4wOxjvPvqSrX4bw\n/Hwh8wL2+IDfOLl1yAO6isrEXApJSTiXFt5fSbaPW6T7hCiCkNPzdS+FYLArozNE\nYrzvmkbcHfMqqTCdWDSOWV7pRqvUARRFi0CvjWh85zmt4LG7IY/GBKJvmSAfFX1O\n5OCavvQrRbnH/m1xW7NHXbeWH80K",
       "mongodb.initUser": "init-root",
-      "mongodb.initPassword": "Stagggg777^^^"
+      "mongodb.initPassword": "felix",
+      "version": "3.6"
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "8.19.31"
+      "version": "3.6",
+      "lwm2m-agent": {
+        "host_fwUpdate": "34.251.8.163",
+        "leshan_cluster_tenant": "management",
+        "leshan_cluster_tenant_username": "lwm2m_user",
+        "leshan_cluster_tenant_password": "passw0rd_a"
+      }
     },
     "cumulocity-ssagents": {
       "useTags": true
@@ -88,41 +96,35 @@
     "cumulocity-core": {
       "properties": {
         "system.connectivity.microservice.url": "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
-        "default.tenant.microservices": "device-simulator, smartrule, cep",
-        "device-simulator.microservice.url": "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
-        "smartrule.microservice.url": "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
+        "c8y.internal.users": "service_cep,service_apama",
+        "device-simulator.microservice.url": "http://localhost:8111/service/device-simulator",
+        "smartrule.microservice.url": "http://localhost:8111/service/smartrule",
+        "smsGateway.host": "http://localhost:8111/service/sms-gateway",
+        "default.tenant.microservices": "device-simulator, smartrule, sms-gateway, cep",
         "sendDashboardAgent.url": "http://localhost:19191/report",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
+        "migration.tomongo.default": "MONGO_READ_WRITE",
         "contextService.rdbmsURL": "jdbc:postgresql://localhost",
         "contextService.rdbmsDriver": "org.postgresql.Driver",
         "contextService.rdbmsUser": "postgres",
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": "false",
-        "migration.tomongo.default": "POSTGRES_READ_WRITE",
-        "smsGateway.host": "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
         "email.from": "no-reply@app.domain.com",
-        "cepServer.queue.limit": "250000",
-        "email.host": "postfix.cumulocity-staging007-nonprod.svc.cluster.local",
         "errorMessageRepresentationBuilder.includeDebug": "false",
-        "system.two-factor-authentication.enabled": true,
-        "system.two-factor-authentication.max.inactive": "10",
-        "default.tenant.applications": "administration,devicemanagement,cockpit",
-        "management.admin.password": "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
-        "admin.password": "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
-        "sysadmin.password": "6fc21e5288d514735fee36df931c4cdab6d709ce7995aa1b53b49853c4a2893b",
+        "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
         "passwordReset.email.subject": "Password reset",
         "passwordReset.token.email.template": "Dear app.domain.com user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
         "passwordReset.user.not.found.email.template": "Hi there,\\n\\n\\\n            you or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            However, we could not find the email address in your account. Please contact the administrator of your \\\n            account to set your email address and password. If you are the administrator of the account,\\\n            please use the email address that you registered with.\\n\\n\\\n            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of app.domain.com portal. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
         "passwordReset.success.email.template": "Dear app.domain.com user,\\n\\n\\\n            Your password on {host} has been recently changed. \\n\\\n            If you or your administrator made this change, you do not need to do anything more. \\n\\\n            If you did not make this change, please contact your administrator.\\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
-        "passwordReset.invite.template": "Hi there, \\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}/apps/devicemanagement/index.html?token={token}\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\n\\\n            app.domain.com support team\\n"
+        "passwordReset.invite.template": "Hi there,\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}/apps/devicemanagement/index.html?token={token}\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\n\\\n            app.domain.com support team\\n"
       }
     },
     "cumulocity-external-lb": {
-      "landing_page": "https://staging007.c8y.io/apps/devicemanagement",
-      "paas_default_page": "https://$http_host/apps/$defapp",
-      "paas_public_default_page": "https://staging007.c8y.io/apps/dmpublic",
+      "landing_page": "https://4lukasz.c8y.io/apps/devicemanagement",
+      "paas_default_page": "https://$http_host/apps/devicemanagement",
+      "paas_public_default_page": "https://4lukasz.c8y.io/apps/dmpublic",
       "usePostgresForPaaS": false,
       "paas_redirection": true,
       "temp_chunkin": false,
@@ -130,13 +132,10 @@
       "useSSL": true,
       "useHSTS": false,
       "useMQTTsupport": true,
-      "useMasterForPushOperations": true,
+      "useMasterForPushOperations": false,
       "useKarafWebsocket": true,
       "proxy_cache": true,
       "certificate_domain": "staging.c8y.io",
-      "useLUAforLimits": true,
-      "useLUAforSSLcerts": true,
-      "useLUAforHealthCheck": true,
       "nginx": {
         "NGinxPort": "openresty",
         "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
@@ -149,11 +148,8 @@
       "install-tracker": null
     },
     "cumulocity-rsyslog": {
-      "log-server-ext-address": "34.254.171.158",
-      "forward-to-graylog": true,
-      "graylog-server-port": 5516,
-      "graylog-server-proto": "tcp",
-      "graylog-server-ssl": true
+      "cross-env-log-server": "cumulocity-multinode-prod",
+      "log-server-ext-address": "monitoring.cumulocity.com"
     }
   }
 }
