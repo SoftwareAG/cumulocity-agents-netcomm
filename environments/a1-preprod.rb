@@ -50,7 +50,7 @@ override_attributes(
     "memory_left_for_system" => "1836",
     "notification" => true,
     "oort-enabled" => true,
-    "cep-server-enabled" => false,
+    "cep-server-enabled" => true,
 	# iotstg.a1.digital
      "CUMULOCITY_LICENCE_KEY" => "52e243aa993773ea1b291e89e7fe98a94a4afd101b9d75da752abd9b46c0b8e52d5ad8c26f682765ac06cc0f24a5d5d996965847d88d1b1ce5852e1ff0cb6e34",
 #     "openrelayIP" => "email-smtp.eu-west-1.amazonaws.com", # check
@@ -92,6 +92,7 @@ override_attributes(
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       "device-simulator.microservice.url" => "http://127.0.0.1:6666",
       "smartrule.microservice.url" => "http://172.21.2.160:8334",
+      "microservice.websocket.port" => 8303,
       "passwordReset.email.subject" => "Password reset",
       "system.plugin.eventprocessing.enabled" => false,
       "system.plugin.eventprocessing.forwarding.enabled" => false,
@@ -180,7 +181,7 @@ override_attributes(
           "password" => "3bb50705293bcba3",
         },
  	"lwm2m-agent" => {
- 	  "host_fwUpdate" => "85.150.8.239",
+ 	  "host_fwUpdate" => "185.150.8.239",
  	  ##"leshan_cluster_tenant" => "management",
  	  "leshan_cluster_tenant" => "lwm2mbase",
  	  "leshan_cluster_tenant_username" => "lwm2m_user",
