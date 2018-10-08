@@ -152,7 +152,7 @@
       "useMasterForPushOperations": false,
       "useKarafWebsocket": true,
       "proxy_cache": true,
-      "certificate_domain": "staging.c8y.io",
+      "certificate_domain": "staging-latest.c8y.io",
       "useLUAforLimits": true,
       "useLUAforSSLcerts": true,
       "useLUAforHealthCheck": true,
