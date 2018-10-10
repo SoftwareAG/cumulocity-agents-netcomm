@@ -54,11 +54,11 @@ mongodb_cluster = [
         ["configreplset:config9:S","replicaset:rs01:S","replicaset:rs02:A","replicaset:rs03:P"]
 ]
 
-kubernetes_master_count   = 3
+kubernetes_master_count   = 0
 flavour_for_masters       = "m4.large"
 private_ips_for_masters   = ["172.31.18.55","172.31.18.56","172.31.18.57"]
 
-kubernetes_worker_count   = 3
+kubernetes_worker_count   = 0
 flavour_for_workers       = "c4.xlarge"
 private_ips_for_workers   = ["172.31.18.61","172.31.18.62","172.31.18.63"]
 
