@@ -166,7 +166,7 @@ f_cb_copy(){
 if ${SOLO} ; then
   if [[ -e ${template_archive} ]] ; then
     f_color_pr cyn "Unpacking chef-solo template..."
-    tar xz${VERBOSE+v}f ${template_archive} -C "${thisdir}"
+    tar xz${VERBOSE+v}f "${template_archive}" -C "${thisdir}"
   else
     f_color_pr red "ERROR: no template archive ${template_archive} found!" && exit 10
   fi
