@@ -103,7 +103,7 @@ fi
 
 echo "INFO: upgrading karaf"
 
-nodes=$(knife search "chef_environment:$CHEF_ENV AND role:cumulocity-common-cores" -F json)
+nodes=$(NO_PROMPT_ORGANIZATION=true knife search "chef_environment:$CHEF_ENV AND role:cumulocity-common-cores" -F json)
 node_names=$(echo $nodes | jq '.rows |= sort_by(.name) | .rows[] | .name' | tr -d \")
 
 ip_for_node() {
@@ -186,7 +186,7 @@ done
 
 echo "INFO: upgrading agents node"
 
-nodes=$(knife search "chef_environment:$CHEF_ENV AND role:cumulocity-ssagents" -F json)
+nodes=$(NO_PROMPT_ORGANIZATION=true knife search "chef_environment:$CHEF_ENV AND role:cumulocity-ssagents" -F json)
 node_names=$(echo $nodes | jq '.rows |= sort_by(.name) | .rows[] | .name' | tr -d \")
 
 for node in ${node_names[@]}; do
@@ -207,7 +207,7 @@ echo "INFO: verifying microservices zip processing"
 while [ ${attempt_counter} -lt ${max_attempts} ]; do
     count=$(run_ssh_command $first_karaf_ip "sudo ls -lah /webapps/2Images/ | grep zip$ | wc -l")
 
-    if [ ${count} -eq 0 ]; then
+    if [[ ${count} -eq 0 ]]; then
         echo "INFO: All microservices has been processed by karaf"
         attempt_counter=${max_attempts}
         break
