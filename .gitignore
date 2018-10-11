@@ -123,3 +123,6 @@ nodes
 
 # ## Office Temp Files
 # ~$*
+
+.bundle
+vendor/
