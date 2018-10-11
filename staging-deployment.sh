@@ -1,4 +1,7 @@
-#!/usr/bin/env bash -x
+#!/usr/bin/env bash
+
+set -o verbose
+
 
 if [ -z "$RUN_USER" ]; then
     RUN_USER=`whoami`
