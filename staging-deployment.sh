@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -x
 
 if [ -z "$RUN_USER" ]; then
     RUN_USER=`whoami`
