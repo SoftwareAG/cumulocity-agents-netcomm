@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -x
-
+set -o pipefail
 
 if [ -z "$RUN_USER" ]; then
     RUN_USER=`whoami`
