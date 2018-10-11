@@ -91,7 +91,7 @@ tmp=$(mktemp)
         mv "$tmp" ${environment_file} && echo "INFO: GUI version updated in env file" && \
     echo "INFO: All fields of Environment file updated successfully"  || { echo "ERROR: Failed to update environment file. Exiting ... "; exit 1; }
 
-knife environment from file $environment_file
+bundle exec knife environment from file $environment_file
 
 if ! git diff-index --quiet HEAD --; then
     git add ${environment_file}
@@ -106,7 +106,7 @@ fi
 
 echo "INFO: upgrading karaf"
 
-nodes=$(NO_PROMPT_ORGANIZATION=true knife search "chef_environment:$CHEF_ENV AND role:cumulocity-common-cores" -F json)
+nodes=$(NO_PROMPT_ORGANIZATION=true bundle exec knife search "chef_environment:$CHEF_ENV AND role:cumulocity-common-cores" -F json)
 node_names=$(echo $nodes | jq '.rows |= sort_by(.name) | .rows[] | .name' | tr -d \")
 
 ip_for_node() {
@@ -130,7 +130,7 @@ for node in $node_names; do
     ip=$(ip_for_node $node)
 
     echo "INFO: upgrading on node ${node}"
-    knife node run_list remove $node 'role[cumulocity-mn-active-core]' && \
+    bundle exec knife node run_list remove $node 'role[cumulocity-mn-active-core]' && \
         echo "INFO: Removed cumulocity-mn-active-core role from node" ||  echo "ERROR: Failed to remove role cumulocity-mn-active-core";
 
     run_ssh_command $ip 'sudo /usr/sbin/service cumulocity-core-karaf stop && echo "INFO: Stopping Karaf" && sleep 40;'
@@ -146,7 +146,7 @@ for node in $node_names; do
 
     run_ssh_command $ip 'sudo chef-client;'
 
-    knife node run_list add $node 'role[cumulocity-mn-active-core]' && \
+    bundle exec knife node run_list add $node 'role[cumulocity-mn-active-core]' && \
         echo "INFO: Added cumulocity-mn-active-core role to node" ||  echo "ERROR: Failed to add role cumulocity-mn-active-core";
 
     run_ssh_command $ip 'sudo chef-client;'
@@ -189,7 +189,7 @@ done
 
 echo "INFO: upgrading agents node"
 
-nodes=$(NO_PROMPT_ORGANIZATION=true knife search "chef_environment:$CHEF_ENV AND role:cumulocity-ssagents" -F json)
+nodes=$(NO_PROMPT_ORGANIZATION=true bundle exec knife search "chef_environment:$CHEF_ENV AND role:cumulocity-ssagents" -F json)
 node_names=$(echo $nodes | jq '.rows |= sort_by(.name) | .rows[] | .name' | tr -d \")
 
 for node in ${node_names[@]}; do
