@@ -6,7 +6,9 @@ if ENV['ORGNAME']
   organization_name  = ENV['ORGNAME']
   organization       = organizations[organization_name]
   if organization
-    puts "knife is running with organization: #{organization_name}"
+    unless ENV['NO_PROMPT_ORGANIZATION']
+      puts "knife is running with organization: #{organization_name}"
+    end
   else
     puts "Organization is '#{organization_name}' but it is not found in ./chef/organizations/index.yml"
     exit!

@@ -10,6 +10,7 @@ else
     environment=$C8Y_ENVIRONMENT
 fi
 
+export NO_PROMPT_ORGANIZATION=true
 export ORGNAME=cumulocity-stagings
 
 case $environment in
