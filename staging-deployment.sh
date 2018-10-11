@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o verbose
+set -x
 
 
 if [ -z "$RUN_USER" ]; then
