@@ -6,7 +6,7 @@ if ENV['ORGNAME']
   organization_name  = ENV['ORGNAME']
   organization       = organizations[organization_name]
   if organization
-    unless ENV['NO_PROMPT_ORGANIZATION']
+    if ENV['NO_PROMPT_ORGANIZATION'] != "true"
       puts "knife is running with organization: #{organization_name}"
     end
   else
