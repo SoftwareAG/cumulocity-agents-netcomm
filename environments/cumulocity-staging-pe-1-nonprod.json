@@ -52,8 +52,7 @@
         "branding",
         "cellid-agent-server",
         "remote-access",
-        "speech-agent-server",
-        "impact"
+        "speech-agent-server"
       ],
       "monitoring": {
         "enabled": true,
