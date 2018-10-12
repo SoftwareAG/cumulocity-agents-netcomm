@@ -1,0 +1,9 @@
+{
+  "id": "jenkins",
+  "comment": "Jenkins",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDc9Xm1XAuOLUP6nK9+Qiw1jsLE2DwKr8Iw1itqiIGWAoPu4ZB/nN45NedeOnVjfEWsB0kQ4qimL14S4gNNawpwr1kNdSLj/5UDc0eZ29CbiRGJqhazdMUKKLvuiw9/BiRnGaDP4ym8wBEQ+wdiC30fWhY6etPQFqenWEEGiSsfYcj/WhW0wxGKF/i9I/KckZ5ed9Pv0Cz/lAg20YyPPLyFvzPPlDfCp6Nk1QgoSrlJp44US1DbZqCOM9B5toA5N3Y9DvUtn9zie3fMMTw0o6qrNe5RzCrJAkEtih1rs6db/MR46mGLJXZIeLIK4KZeKcaaMp1HYDHJZ7qe2nImfCkH"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}
