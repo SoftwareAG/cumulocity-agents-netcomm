@@ -43,8 +43,10 @@
         "cep",
         "cep-small",
         "device-simulator",
-        "sms-gateway-server",
-        "smartrule"
+        "smartrule",
+        "apama-small",
+        "sms-gateway",
+        "branding"
       ],
       "monitoring": {
         "enabled": true,

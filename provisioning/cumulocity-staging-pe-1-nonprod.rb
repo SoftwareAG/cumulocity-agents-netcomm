@@ -177,9 +177,9 @@ for step in initStep..7
         )
             if step > 1
                 role 'cumulocity-base'
-                role 'cumulocity-ontop-lb' if step == 6
+                role 'cumulocity-ontop-lb' if step >= 6
                 tag 'cumulocity-chaos-monkey-operator' if i == 1
-                recipe 'cumulocity-chaos-monkey::server_terminations' if i == 6 
+                recipe 'cumulocity-chaos-monkey::server_terminations' if i >= 6 
             end
         end
     end

@@ -43,8 +43,17 @@
         "cep",
         "cep-small",
         "device-simulator",
-        "sms-gateway-server",
-        "smartrule"
+        "smartrule",
+        "jwireless",
+        "apama-small",
+        "sms-gateway",
+        "billwerk-agent-server",
+        "connectivity-agent-server",
+        "branding",
+        "cellid-agent-server",
+        "remote-access",
+        "speech-agent-server",
+        "impact"
       ],
       "monitoring": {
         "enabled": true,
