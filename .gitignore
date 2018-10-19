@@ -123,3 +123,6 @@ Gemfile.lock
 
 # ## Office Temp Files
 # ~$*
+
+.bundle
+vendor/
