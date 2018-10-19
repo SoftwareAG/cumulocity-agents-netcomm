@@ -1,4 +1,4 @@
-netcomm_1
+netcomm_100
 
 10,300,GET,/identity/externalIds/c8y_Serial/%%,,application/vnd.com.nsn.cumulocity.externalId+json,%%,STRING,
 
@@ -43,7 +43,7 @@ netcomm_1
 
 10,320,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED STRING STRING STRING,"{""c8y_Hardware"":{""model"":""%%"",""serialNumber"":""%%"",""revision"":""%%""}}"
 
-10,321,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED UNSIGNED UNSIGNED,"{""c8y_ModbusConfiguration"":{""pollingRate"":%%,""transmitRate"":%%,""protocol"":""TCP""}}"
+10,321,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED UNSIGNED UNSIGNED UNSIGNED,"{""c8y_ModbusConfiguration"":{""pollingRate"":%%,""transmitRate"":%%,""protocol"":""TCP"",""maxFieldbusVersion"":%%}}"
 
 10,322,POST,/measurement/measurements,application/json,,%%,DATE UNSIGNED STRING NUMBER,"{""time"":""%%"",""source"":{""id"":""%%""},""type"":""c8y_AnalogInput"",""c8y_AnalogInput"":{""%%"":{""value"":%%,""unit"":""V""}}}"
 
@@ -116,6 +116,7 @@ netcomm_1
 11,840,,$.c8y_Registers,$.id
 
 11,825,$.c8y_Registers,,$.number,$.startBit,$.noBits,$.multiplier,$.divisor,$.decimalPlaces,$.input,$.signed
+11,879,$.c8y_Registers,,$.number,$.startBit,$.littleEndian,$.input
 11,826,$.c8y_Registers,$.alarmMapping,$.number,$.startBit,$.alarmMapping.raiseAlarmTemplate,$.input
 11,827,$.c8y_Registers,$.measurementMapping,$.number,$.startBit,$.measurementMapping.sendMeasurementTemplate,$.input
 11,828,$.c8y_Registers,$.eventMapping,$.number,$.startBit,$.eventMapping.eventTemplate,$.input
@@ -192,3 +193,4 @@ netcomm_1
 11,877,$.operations,$.c8y_UploadRDB,$.id,$.deviceId
 
 11,878,$.operations,$.c8y_SerialConfiguration,$.id,$.c8y_SerialConfiguration.baudRate,$.c8y_SerialConfiguration.dataBits,$.c8y_SerialConfiguration.parity,$.c8y_SerialConfiguration.stopBits,$.deviceId
+# 879 out of order

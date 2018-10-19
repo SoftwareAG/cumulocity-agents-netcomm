@@ -17,7 +17,7 @@ local no, alno, meno, evno, stno = 1, 2, 3, 4, 5
 
 -- startBits, noBits, factor, sign (index for HR and IR)
 local rsbno, rnbno, rftno, rsino = 6, 7, 8, 9
-
+local rleno = 10
 -- MBTYPES index
 local tstno = 1                 -- server time
 local tmdno = 2                 -- modbus data model
@@ -78,7 +78,7 @@ function saveConfigure(r)
       pollingRate, transmitRate = a, b
       rdbSet(keyPollingRate, pollingRate)
       rdbSet(keyTransmitRate, transmitRate)
-      c8y:send(table.concat({'321', c8y.ID, r:value(3), r:value(4)}, ','))
+      c8y:send(table.concat({'321', c8y.ID, r:value(3), r:value(4), 5}, ','))
       c8y:send('303,' .. r:value(2) .. ',SUCCESSFUL', 1)
    else
       c8y:send('304,' .. r:value(2) .. ',Invalid_Number', 1)
@@ -180,10 +180,13 @@ function addRegister(r)
    local mytbl = r:value(8) == 'false' and HR or IR
    local factor = r:value(5) * (10 ^ -r:value(7)) / r:value(6)
    local tbl = {[no] = a, [rsbno] = sb, [rnbno] = nb,
-      [rftno] = factor, [rsino] = sign}
+      [rftno] = factor, [rsino] = sign, [rleno] = 0}
    rinsert(mytbl[DTYPE], tbl, cmp2)
    local addrtype = r:value(8) == 'false' and 2 or 3
-   MBTYPES[DTYPE][tmdno]:addAddress(addrtype, a - 1)
+   local size = math.floor((sb + nb - 1) / 16) + 1
+   for i = 0, size - 1 do
+      MBTYPES[DTYPE][tmdno]:addAddress(addrtype, a + i - 1)
+   end
 end
 
 
@@ -225,18 +228,6 @@ function setmbtype(r)
 end
 
 
-local function bat2(num, i, j)
-   return math.floor((num % (2 ^ j)) / (2 ^ i))
-end
-
-
--- return actual value of a 2' complement represented signed number
-local function decomplement(x, n)
-   return x >= 2 ^ (n - 1) and x - 2 ^ n or x
-end
-
-
--- Return 2' complement of number x with n bits
 local function complement(x, n)
    return x < 0 and 2 ^ n + x or x
 end
@@ -262,15 +253,19 @@ local function pollData(device, num, msgtbl, flags)
 
    local datatbl, dtype = {CO, DI, HR, IR}, MBDEVICES[device][dtypeno]
    local old, new = MBDEVICES[device][num], {}
-   local index, addr = -1, 0
    for k, v in pairs(datatbl[num][dtype]) do
-      if addr ~= v[no] then addr, index = v[no], index + 1 end
+      local addr = v[no] - 1
       if num < 3 then
-         new[k] = obj:data(num - 1, index)
+         new[k] = obj:getCoilValue(num - 1, addr)
       else
          local sb, nb = v[rsbno], v[rnbno]
-         local a = bat2(obj:data(num - 1, index), sb, sb + nb)
-         new[k] = (v[rsino] and decomplement(a, nb) or a) * v[rftno]
+         local signed = v[rsino] and 1 or 0
+         local littleEndian = v[rleno] or 0
+         new[k] = obj:getRegValue(num - 3, addr, sb, nb, signed, littleEndian)
+         new[k] = tonumber(new[k]) * v[rftno]
+         local _, rem = math.modf(new[k])
+         local fmt = rem == 0 and '%d' or '%f'
+         new[k] = string.format(fmt, new[k])
       end
 
       for _, myno in pairs({alno, meno, evno, stno}) do
@@ -437,7 +432,9 @@ function setRegister(r)
    value = regtbl[rsino] and complement(value, nb) or value
 
    local obj = mbd[dobjno]
-   if obj:updateHRBits(mbd[dslaveno], reg - 1, value, sb, nb) == -1 then
+   local littleEndian = regtbl[rleno] or 0
+   local rc = obj:updateHRBits(mbd[dslaveno], reg - 1, value, sb, nb, littleEndian)
+   if rc == -1 then
       c8y:send('304,' .. r:value(2) .. ',"' .. obj:errMsg() .. '"', 1)
    else
       pollDevice(device)
@@ -514,6 +511,7 @@ function init()
    c8y:addMsgHandler(848, 'addDevice')
    c8y:addMsgHandler(849, 'saveSerialConfiguration')
    c8y:addMsgHandler(851, 'clearAvailabilityAlarm')
+   c8y:addMsgHandler(879, 'addRegisterEndian')
    c8y:addMsgHandler(862, 'addDevice')
    c8y:addMsgHandler(876, 'addDevice')
    c8y:addMsgHandler(863, 'saveConfigure')
@@ -523,7 +521,7 @@ function init()
 
    timer0 = c8y:addTimer(1000, 'poll')
    timer1 = c8y:addTimer(5000, 'transmit')
-   c8y:send(table.concat({'321', c8y.ID, pollingRate, transmitRate}, ','))
+   c8y:send(table.concat({'321', c8y.ID, pollingRate, transmitRate, 5}, ','))
    if rdbGetStr('uboot.hw_id') ~= 'NTC-140W-02' then
       c8y:send(table.concat({'335', c8y.ID, serBaud, serData,
                              serPar, serStop}, ','))
@@ -532,4 +530,13 @@ function init()
    timer0:start()
    timer1:start()
    return 0
+end
+
+
+function addRegisterEndian(r)
+   local mytbl = r:value(5) == 'false' and HR or IR
+   local No, startBit = tonumber(r:value(2)), tonumber(r:value(3))
+   local hint = {[no] = No, [rsbno] = startBit}
+   local littleEndian = r:value(4) == 'true' and 1 or 0
+   update(mytbl[DTYPE], hint, rleno, littleEndian, cmp2)
 end

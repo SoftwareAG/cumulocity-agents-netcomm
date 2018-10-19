@@ -1,6 +1,7 @@
 #ifndef MBBASE_H
 #define MBBASE_H
 
+#include <map>
 #include <deque>
 #include <string>
 #include <modbus/modbus.h>
@@ -9,6 +10,7 @@
 class ModbusModel
 {
 public:
+
     ModbusModel()
     {
     }
@@ -18,6 +20,7 @@ public:
     }
 
     void addAddress(uint8_t type, uint16_t address);
+
     using Model = std::deque<std::pair<uint16_t, uint16_t>>;
     Model comodel;
     Model dimodel;
@@ -48,7 +51,9 @@ public:
     int writeCO(int addr, int status);
     int writeHR(int addr, int status);
     int updateCO(int slave, int addr, int status);
-    int updateHRBits(int slave, int addr, int v, int sb, int nb);
+    int updateHRBits(int slave, int addr, uint64_t v, int sb, int nb,
+                     int littleEndian);
+
     void setTimeout(long usec)
     {
         tv.tv_sec = usec / 1000000;
@@ -65,22 +70,9 @@ public:
         return errmsg + modbus_strerror(errno);
     }
 
-    int data(int type, int index) const
-    {
-        switch (type)
-        {
-        case 0:
-            return coData[index];
-        case 1:
-            return diData[index];
-        case 2:
-            return hrData[index];
-        case 3:
-            return irData[index];
-        default:
-            return 0;
-        }
-    }
+    int getCoilValue(int type, int index) const;
+    std::string getRegValue(int type, int index, int startBit, int noBits,
+                            int isSigned, int littleEndian) const;
 
     int size(int type) const
     {
@@ -130,20 +122,18 @@ protected:
 
 private:
 
-    struct timeval tv;
-    std::deque<uint8_t> coData;
-    std::deque<uint8_t> diData;
-    std::deque<uint16_t> hrData;
-    std::deque<uint16_t> irData;
-    std::string errmsg;
+        struct timeval tv;
+        std::map<int, uint8_t> coData;
+        std::map<int, uint8_t> diData;
+        std::map<int, uint16_t> hrData;
+        std::map<int, uint16_t> irData;
+        std::string errmsg;
 };
 
 class ModbusRTU: public ModbusBase
 {
 public:
-
-    ModbusRTU(const char *device, int baud, char par, int data, int stop) :
-            ModbusBase()
+    ModbusRTU(const char *device, int baud, char par, int data, int stop) : ModbusBase()
     {
         srInfo(
                 std::string("Modbus: new RTU ") + device + " "
@@ -161,7 +151,6 @@ public:
                         + std::to_string(baud) + " " + par
                         + std::to_string(data) + ":" + std::to_string(stop));
         ctx = modbus_new_rtu(dev, baud, par, data, stop);
-
         init();
     }
 };
@@ -169,10 +158,11 @@ public:
 class ModbusTCP: public ModbusBase
 {
 public:
-
     ModbusTCP(const char *ip, int port) : ModbusBase()
     {
-        srInfo(std::string("Modbus: new TCP ") + ip + ":" + std::to_string(port));
+        srInfo(
+                std::string("Modbus: new TCP ") + ip + ":"
+                        + std::to_string(port));
         ctx = modbus_new_tcp(ip, port);
         init();
     }
