@@ -7,3 +7,5 @@ cookbook 'cumulocity-backup-script', path: '../cumulocity-cookbooks/cumulocity-b
 cookbook 'cumulocity-kubernetes', path: '../cumulocity-cookbooks/cumulocity-kubernetes'
 cookbook 'cumulocity-ssagents', path: '../cumulocity-cookbooks/cumulocity-ssagents'
 cookbook 'cumulocity-rsyslog', path: '../cumulocity-cookbooks/cumulocity-rsyslog'
+cookbook 'cumulocity-opsmanager', path: '../cumulocity-cookbooks/cumulocity-opsmanager'
+cookbook 'cumulocity-chaos-monkey', path: '../cumulocity-cookbooks/cumulocity-chaos-monkey'
