@@ -44,9 +44,9 @@
         "cep-small",
         "device-simulator",
         "smartrule",
+        "jwireless",
         "apama-small",
-        "sms-gateway",
-        "branding"
+        "sms-gateway"
       ],
       "monitoring": {
         "enabled": true,
@@ -97,7 +97,7 @@
     "cumulocity-core": {
       "properties": {
         "system.connectivity.microservice.url": "http://${JWIRELESS-AGENT-SERVER}:8092/",
-        "default.tenant.microservices": "device-simulator, smartrule, cep, tenant-sla-monitoring",
+        "default.tenant.microservices": "device-simulator, smartrule, cep, tenant-sla-monitoring, sms-gateway",
         "device-simulator.microservice.url": "http://localhost:8181/service/device-simulator",
         "smartrule.microservice.url": "http://localhost:8181/service/smartrule",
         "sendDashboardAgent.url": "http://localhost:19191/report",
