@@ -17,7 +17,7 @@ f_pre_run(){
 
 f_pre_run
 
-keywords="JH|KEY|USER|PORT|TFA|OPT_[A-Z]|PASSWD"
+keywords="JH|KEY|USER|PORT|TFA|OPTS|OPT_[A-Z]|PASSWD"
 
 _jh_complete(){
   local cur prev jhcmd
