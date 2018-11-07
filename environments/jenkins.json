@@ -38,16 +38,30 @@
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.8.7",
-      "images2install": [],
+      "images-version": "9.16.2",
+      "images2install": [
+        "cep",
+        "cep-small",
+        "device-simulator",
+        "smartrule", 
+        "jwireless", 
+        "apama-small", 
+        "sms-gateway", 
+        "billwerk-agent-server", 
+        "connectivity-agent-server", 
+        "branding", 
+        "cellid-agent-server", 
+        "remote-access", 
+        "speech-agent-server" 
+      ],
       "monitoring": {
         "enabled": false
       }
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "1456d5050bb58ae50ea99079c193573bfeb769322fdec1f8e2cb599aa5026478428bd927410ba042885167daade61567a6444baeec7ce4fee6b4cec0fd0fe84d",
-      "version": "9.8.7-1",
-      "ssa-version": "9.8.5-1",
+      "version": "9.16.2-1",
+      "ssa-version": "9.16.2-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -74,7 +88,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "9.8.5"
+      "version": "9.16.2"
     },
     "cumulocity-ssagents": {
       "useTags": true,
