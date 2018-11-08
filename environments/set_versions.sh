@@ -7,7 +7,13 @@ cp ${INPUT_FILE} ${OUTPUT_FILE}
 
 if [ ! -z ${CUMULOCITY_NODE_NAME} ]; then
     cat ${OUTPUT_FILE} | \
-    jq '.override_attributes["name"] = env.CUMULOCITY_NODE_NAME' > ${OUTPUT_FILE}'.tmp';
+    jq '."name" = env.CUMULOCITY_NODE_NAME' > ${OUTPUT_FILE}'.tmp';
+    mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
+    cat ${OUTPUT_FILE} | \
+    jq '.override_attributes["cumulocity-kubernetes"]["deployK8S4env"] = env.CUMULOCITY_NODE_NAME' > ${OUTPUT_FILE}'.tmp';
+    mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
+    cat ${OUTPUT_FILE} | \
+    jq '.override_attributes["cumulocity-kubernetes"]["attachedEnvs"] = [env.CUMULOCITY_NODE_NAME]' > ${OUTPUT_FILE}'.tmp';
     mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
     echo "Node name updated to ${CUMULOCITY_NODE_NAME}"
 fi
