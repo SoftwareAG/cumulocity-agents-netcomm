@@ -9,3 +9,14 @@ cookbook 'cumulocity-ssagents', path: '../cumulocity-cookbooks/cumulocity-ssagen
 cookbook 'cumulocity-rsyslog', path: '../cumulocity-cookbooks/cumulocity-rsyslog'
 cookbook 'cumulocity-opsmanager', path: '../cumulocity-cookbooks/cumulocity-opsmanager'
 cookbook 'cumulocity-chaos-monkey', path: '../cumulocity-cookbooks/cumulocity-chaos-monkey'
+
+cookbook 'graylog2', '~> 2.4.5'
+cookbook 'sc-mongodb', '~> 1.2.0'
+cookbook 'elasticsearch-cluster', '~> 0.5.6'
+cookbook 'build-essential', '~> 8.2.1'
+cookbook 'seven-zip', '~> 3.0.0'
+cookbook 'mingw', '~> 2.1.0'
+cookbook 'chef-sugar', '~> 4.1.0'
+cookbook 'ark', '~> 4.0.0'
+cookbook 'authbind', '~> 0.1.10'
+
