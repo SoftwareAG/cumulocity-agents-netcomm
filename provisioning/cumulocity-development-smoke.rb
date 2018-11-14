@@ -40,5 +40,6 @@ machine "#{environment}_#{dev_id}" do
             instance_type: "#{flavour_for_dev}"
         }
     )
+    tags ["standalone:mongod7:"]
     role 'cumulocity-dev-singlenode'
 end
