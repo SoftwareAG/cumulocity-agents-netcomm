@@ -13,6 +13,7 @@ DEPENDENCIES
     path: ../cumulocity-cookbooks/cumulocity-rsyslog
   cumulocity-ssagents
     path: ../cumulocity-cookbooks/cumulocity-ssagents
+  ddclient
 
 GRAPH
   apt (6.1.0)
@@ -42,17 +43,18 @@ GRAPH
     ulimit (= 0.4.0)
     users (= 5.2.2)
     yum (= 5.0.1)
-  cumulocity-backup-script (1.0.0)
+  cumulocity-backup-script (9.16.3)
     yum-epel (>= 0.0.0)
-  cumulocity-kubernetes (0.6.0)
+  cumulocity-kubernetes (9.16.3)
     docker (~> 2.0)
     haproxy (~> 5.0.3)
     hostsfile (>= 0.0.0)
     yum (= 5.0.1)
-  cumulocity-monit (1.0.0)
-  cumulocity-monitoring-agent (1.0.1)
-  cumulocity-rsyslog (1.0.0)
-  cumulocity-ssagents (0.4.0)
+  cumulocity-monit (9.16.3)
+  cumulocity-monitoring-agent (9.16.3)
+  cumulocity-rsyslog (9.16.3)
+  cumulocity-ssagents (9.16.3)
+  ddclient (1.1.0)
   docker (2.17.0)
   haproxy (5.0.4)
     build-essential (>= 8.0.1)

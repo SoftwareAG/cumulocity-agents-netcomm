@@ -34,13 +34,5 @@ dev_id = "smoke"
 
 ### END OF CLUSTER CONFIGURATION ###
 machine "#{environment}_#{dev_id}" do
-    add_machine_options(
-        bootstrap_options: {
-            private_ip_address: "#{private_ips}",
-            instance_type: "#{flavour_for_dev}"
-        }
-    )
-    tags ["standalone:mongod7:"]
-    role 'cumulocity-dev-singlenode'
-    recipe 'ddclient'
+  action :destroy
 end
