@@ -41,6 +41,10 @@ machine "#{environment}_#{dev_id}" do
         }
     )
     tags ["standalone:mongod7:"]
-    role 'cumulocity-dev-singlenode'
-    recipe 'ddclient'
+    attributes(
+      ddclient: {
+        domain: "#{dev_id}.cumulocity.com"
+      }
+    )
+    role 'cumulocity-dev-singlenode'    
 end
