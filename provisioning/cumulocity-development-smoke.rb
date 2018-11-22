@@ -46,5 +46,6 @@ machine "#{environment}_#{dev_id}" do
         domain: "#{dev_id}.cumulocity.com"
       }
     )
-    role 'cumulocity-dev-singlenode'    
+    recipe 'cumulocity-ddclient'
+    role 'cumulocity-dev-singlenode' 
 end
