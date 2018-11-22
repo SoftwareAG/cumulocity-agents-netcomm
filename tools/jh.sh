@@ -677,7 +677,7 @@ the following options can be specified inside an array:
   • ${B}JHOPTS${N}   : overrides '${B}defaultjhoptions${N}'
 
 ${B}Example${N}:
-${B}NOTE${N}: this configuration shows an example of usage for each options, even though some them
+${B}NOTE${N}: this configuration shows an example of usage for each options, even though some of them
       are not supposed to be configured at the same time (e.g.: Password and OTP).
 
 ${D}	customer_prod=(${N}
@@ -803,6 +803,7 @@ ${U}Description${N}: like the 'remote management' category, also this one uses '
 but '${B}sftp${N}' client will be used to connect on designated host.
 
 ${B}JHSFTP${N}: very similar to 'jhssh' command, '${B}jhsftp${N}' is used to establish an sftp connection to an host.
+You can specify a file to download direcly by adding '${B}:/path/to/file${N}' as you would do with a normal sftp command.
 
 ${B}JHSFTPJ${N}: '${B}jhsftpj${N}' is a shortcut which will autoselect the jumphost of the chosen environment for an sftp connection.
 
@@ -946,7 +947,7 @@ jhmulticmd(){
   ln -snf "${dateTag}" "${multicmdOutputEnvDir}/latest"
   printf "${blu}%-30s --- %10s   %s${neu}  \n" "HOST" "PID" "STATUS"
   for n in ${multicmdHosts[@]} ; do
-    pureName="${n%%|*}"
+    pureName="${n%%|*}" ; pureName="${pureName%%:*}"
     if [[ -z ${stdinData} ]] ; then
       jhssh "${sshenv}" "${pureName,,}" -q -o ConnectTimeout=${sshConfigConnectTimeout:-${sshCCT:-10}} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
     else
@@ -978,7 +979,7 @@ jhmulticmd(){
     for p in ${!bgProc[@]} ; do
       if ! kill -0 ${bgProc[p]} &>/dev/null ; then
         [[ -t 1 ]] && tput cup $(( ${endLine} - ${diffLine[p]} - 1 )) 0
-        pureName="${bgHost[p]%%|*}"
+        pureName="${bgHost[p]%%|*}" ; pureName="${pureName%%:*}"
         if wait ${bgProc[p]} ; then
           printf "${wht}%-30s --- %10s [ ${grn}%s${neu} ]\n" "${pureName,,}" "${bgProc[p]}" " DONE! "
           procLogSucceded[p]="${procLog[p]}"
