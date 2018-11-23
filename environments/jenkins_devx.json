@@ -31,33 +31,6 @@
     "java": {
       "jdk_version": "8"
     },
-    "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-development-smoke",
-      "attachedEnvs": [
-        "cumulocity-development-smoke"
-      ],
-      "token": "1e3145.2ff901841c48af2e",
-      "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.12.8",
-      "images2install": [
-        "cep",
-        "cep-small",
-        "device-simulator",
-        "smartrule",
-        "jwireless",
-        "apama-small",
-        "sms-gateway",
-        "billwerk-agent-server",
-        "connectivity-agent-server",
-        "branding",
-        "cellid-agent-server",
-        "remote-access",
-        "speech-agent-server"
-      ],
-      "monitoring": {
-        "enabled": false
-      }
-    },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "1456d5050bb58ae50ea99079c193573bfeb769322fdec1f8e2cb599aa5026478428bd927410ba042885167daade61567a6444baeec7ce4fee6b4cec0fd0fe84d",
       "version": "9.12.8-1",
