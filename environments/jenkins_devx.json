@@ -46,6 +46,7 @@
     },
     "cumulocity-cep": {
       "package_name":"cep",
+      "version": "9.12.8-1",
       "properties": {
         "esperha.storage": "/mnt/esperha-storage"
       }

@@ -29,6 +29,9 @@ if [ ! -z ${CUMULOCITY_KARAF_IMAGE} ]; then
     cat ${OUTPUT_FILE} | \
     jq '.override_attributes["cumulocity-karaf"]["version"] = env.CUMULOCITY_KARAF_IMAGE' > ${OUTPUT_FILE}'.tmp';
     mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
+    cat ${OUTPUT_FILE} | \
+    jq '.override_attributes["cumulocity-cep"]["version"] = env.CUMULOCITY_KARAF_IMAGE' > ${OUTPUT_FILE}'.tmp';
+    mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
 fi
 
 if [ ! -z ${CUMULOCITY_KARAF_SSA} ]; then
