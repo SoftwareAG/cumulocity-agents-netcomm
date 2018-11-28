@@ -35,7 +35,7 @@
       ],
       "token": "1e3145.2ff901841c78af1d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.19.2",
+      "images-version": "9.20.0",
       "images2install": [
         "cep",
         "cep-small",
@@ -69,8 +69,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "35fd2a651c866163f172274ba43a1a15632c68b49f9bcd5c96ba0b2213be257b8265ab3255d20a516a7c68dff6190a698e49f613a8e61b2e3740901d8ce44f1f",
-      "version": "9.19.2-1",
-      "ssa-version": "9.19.2-1",
+      "version": "9.20.0-1",
+      "ssa-version": "9.20.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -97,7 +97,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "9.19.2"
+      "version": "9.20.0"
     },
     "cumulocity-ssagents": {
       "useTags": true,
