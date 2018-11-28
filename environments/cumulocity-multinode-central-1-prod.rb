@@ -4,9 +4,11 @@ description "The production multinode environment in Frankfurt"
 
 cookbook_versions({
 #'cumulocity'=>'= 8.18.0',
-'cumulocity'=>'= 9.0.11',
+#'cumulocity'=>'= 9.0.11',
+'cumulocity'=>'= 9.16.3',
 #'cumulocity-kubernetes'=>'= 8.18.0',
-'cumulocity-kubernetes'=>'= 9.0.11',
+#'cumulocity-kubernetes'=>'= 9.0.11',
+'cumulocity-kubernetes'=>'= 9.16.3',
 'cumulocity-ssagents'=>'= 8.18.1'
 })
 
