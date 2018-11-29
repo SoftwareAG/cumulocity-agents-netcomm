@@ -52,11 +52,11 @@ override_attributes(
      "attachedEnvs" => ["<customer>-multinode-prod"],
      "token" => "<kubernetes_token>",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.0.16",
+     "images-version" => "9.20.0",
      "images2install" => [ "cep","cep-small" ]
   },
   "cumulocity-karaf" => {
-    "version" => "9.0.16-1",
+    "version" => "9.20.0-1",
     "memory_left_for_system" => "4096",
     "notification" => true,
     "oort-enabled" => true,
