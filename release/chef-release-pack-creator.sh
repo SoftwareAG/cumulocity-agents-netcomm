@@ -74,10 +74,11 @@ comCB=(
                  ["windows"]=3.1.0
                 ["iptables"]=4.2.0
                      ["apt"]=6.1.0
-                ["homebrew"]=4.2.0
+                ["homebrew"]=4.3.0
          ["compat_resource"]=12.19.0
                     ["ohai"]=5.1.0
               ["filesystem"]=1.0.0
+                     ["lvm"]=4.5.1
 )
 
 declare -A mnOnlyC8yCB
