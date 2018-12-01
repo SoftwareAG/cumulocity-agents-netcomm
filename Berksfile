@@ -19,4 +19,3 @@ cookbook 'mingw', '~> 2.1.0'
 cookbook 'chef-sugar', '~> 4.1.0'
 cookbook 'ark', '~> 4.0.0'
 cookbook 'authbind', '~> 0.1.10'
-
