@@ -79,6 +79,8 @@ comCB=(
                     ["ohai"]=5.1.0
               ["filesystem"]=1.0.0
                      ["lvm"]=4.5.1
+            ["elastic_repo"]=1.1.1
+  ["yum-plugin-versionlock"]=0.2.1
 )
 
 declare -A mnOnlyC8yCB
