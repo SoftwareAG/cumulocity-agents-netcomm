@@ -32,6 +32,7 @@ add_machine_options(
 
 c8ycore_count = 2
 flavour_for_c8ycore       = "m4.large"
+volume_size_for_c8ycore   = 26
 private_ips_for_c8ycore   = ["100.64.252.5","100.64.252.69","100.64.252.133"]
 
 ontoplb_count = 1
@@ -42,16 +43,22 @@ ssagent_count = 1
 flavour_for_ssagent       = "m4.large"
 private_ips_for_ssagent   = ["100.64.251.25"]
 ssagent_tags  = [
-        ["sms-gateway-server"],
+        ["ssl-management-agent-server"],
 ]
 
-mongodb_count = 3
-flavour_for_mongodb       = "m4.xlarge"
-private_ips_for_mongodb   = ["100.64.253.5","100.64.253.69","100.64.253.133"]
+mongodb_count = 9
+flavour_for_mongodb       = "m4.2xlarge"
+private_ips_for_mongodb   = ["100.64.253.5","100.64.253.69","100.64.253.133","100.64.253.134","100.64.253.135","100.64.253.136","100.64.253.137","100.64.253.138","100.64.253.139"]
 mongodb_cluster = [
         ["configreplset:config9:P","replicaset:rs01:P","replicaset:rs02:A","replicaset:rs03:S"],
         ["configreplset:config9:S","replicaset:rs01:S","replicaset:rs02:P","replicaset:rs03:A"],
-        ["configreplset:config9:S","replicaset:rs01:A","replicaset:rs02:S","replicaset:rs03:P"]
+        ["configreplset:config9:S","replicaset:rs01:A","replicaset:rs02:S","replicaset:rs03:P"],
+        ["replicaset:rs01:S"],
+        ["replicaset:rs02:S"],
+        ["replicaset:rs03:S"],
+        ["replicaset:rs01:S"],
+        ["replicaset:rs02:S"],
+        ["replicaset:rs03:S"]
 ]
 
 kubernetes_master_count   = 1
@@ -59,6 +66,7 @@ flavour_for_masters       = "m4.large"
 private_ips_for_masters   = ["100.64.252.10","100.64.252.20","100.64.252.30"]
 
 kubernetes_worker_count   = 3
+volume_size_for_workers   = 30
 flavour_for_workers       = "m4.xlarge"
 private_ips_for_workers   = ["100.64.252.11","100.64.252.12","100.64.252.13"]
 
@@ -103,7 +111,7 @@ for step in initStep..7
         if step > 1
             role 'cumulocity-base'
             role 'cumulocity-mongo'
-            role 'cumulocity-mongo-configsvr'
+            role 'cumulocity-mongo-configsvr' if mongodb_cluster[i-1].grep(/configreplset:.+:[PS]$/).length > 0
             mongodb_cluster[i-1].each do |m_tag|
                 tag m_tag
             end
@@ -116,7 +124,13 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_c8ycore[i-1]}",
-                instance_type: "#{flavour_for_c8ycore}"
+                instance_type: "#{flavour_for_c8ycore}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_c8ycore}",
+                      'delete_on_termination': true }
+                }]
             }
         )
         if step > 1
@@ -124,7 +138,7 @@ for step in initStep..7
             if step >= 4
                 role 'cumulocity-common-cores'
                 role 'cumulocity-mn-active-core' if step == 6 and i == 1
-                role 'cumulocity-mn-active-core' if step == 7
+                # role 'cumulocity-mn-active-core' if step == 7
                 role 'cumulocity-kubernetes' if step == 5
             end
         end
@@ -196,7 +210,13 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_workers[i-1]}",
-                instance_type: "#{flavour_for_workers}"
+                instance_type: "#{flavour_for_workers}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_workers}",
+                      'delete_on_termination': true }
+                }]
             }
         )
         role 'cumulocity-base'
