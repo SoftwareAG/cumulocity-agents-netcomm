@@ -194,3 +194,6 @@ netcomm_100
 
 11,878,$.operations,$.c8y_SerialConfiguration,$.id,$.c8y_SerialConfiguration.baudRate,$.c8y_SerialConfiguration.dataBits,$.c8y_SerialConfiguration.parity,$.c8y_SerialConfiguration.stopBits,$.deviceId
 # 879 out of order
+
+# VNC operation
+11,886,,$.c8y_RemoteAccessConnect,$.id,$.c8y_RemoteAccessConnect.hostname,$.c8y_RemoteAccessConnect.port,$.c8y_RemoteAccessConnect.connectionKey,$.deviceId
