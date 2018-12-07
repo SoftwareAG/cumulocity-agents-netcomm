@@ -13,11 +13,16 @@
 #include <curl/curl.h>
 #include "vnc.h"
 
+#ifdef DEBUG
+#define syslog(LEVEL, ...) printf(__VA_ARGS__)
+#endif
+
 #define VNC_NSIZE 16
 #define BUF_NSIZE 2048
 #define TRYAGAIN(x) (x == EWOULDBLOCK || x == EAGAIN)
 #define _max(x, y) ((x >= y) ? x : y)
 #define _min(x, y) ((x <= y) ? x : y)
+
 static const char ws_mask[] = "\x00\x00\x00\x00";
 static const char ws_pong[] = "\x8a\x80\x0a\x0f\xa0\xf0";
 static const char ws_close[] = "\x88\x82\x00\x00\x00\x00\x03\xe8";
@@ -55,7 +60,7 @@ struct cp_t
 
 static struct vnc_t *vnc_init()
 {
-    struct vnc_t *vnc = (struct vnc_t*) malloc(sizeof(struct vnc_t));
+    struct vnc_t* const vnc = (struct vnc_t*) malloc(sizeof(struct vnc_t));
     if (!vnc)
     {
         syslog(LOG_ERR, "vnc_init: %s\n", strerror(errno));
@@ -90,7 +95,7 @@ static struct vnc_t *vnc_init()
 
 static int ws_connect(CURL *curl, char *host, char *end, char *rest)
 {
-    syslog(LOG_NOTICE, "ws_conn: %s%s\n", host, end);
+    syslog(LOG_INFO, "ws_conn: %s%s\n", host, end);
     const char *p = strchr(host, ':');
     if (!p)
     {
@@ -99,12 +104,11 @@ static int ws_connect(CURL *curl, char *host, char *end, char *rest)
         return -1;
     }
 
-    curl_easy_setopt(curl, CURLOPT_URL, host);
-    curl_easy_setopt(curl, CURLOPT_CONNECT_ONLY, 1);
-
 #ifdef SR_SSL_CACERT
     curl_easy_setopt(curl, CURLOPT_CAINFO, SR_SSL_CACERT);
 #endif
+    curl_easy_setopt(curl, CURLOPT_URL, host);
+    curl_easy_setopt(curl, CURLOPT_CONNECT_ONLY, 1);
 #ifdef DEBUG
     curl_easy_setopt(curl, CURLOPT_VERBOSE, 1);
 #endif
@@ -115,13 +119,13 @@ static int ws_connect(CURL *curl, char *host, char *end, char *rest)
         syslog(LOG_ERR, "ws_conn: %s\n", curl_easy_strerror(rc));
         return -1;
     }
-
     curl_socket_t sock;
 #ifdef CURLINFO_SOCKET
     rc = curl_easy_getinfo(curl, CURLINFO_ACTIVESOCKET, &sock);
 #else
     rc = curl_easy_getinfo(curl, CURLINFO_LASTSOCKET, &sock);
 #endif
+
     if (rc != CURLE_OK)
     {
         syslog(LOG_ERR, "ws_conn: %s\n", curl_easy_strerror(rc));
@@ -132,6 +136,7 @@ static int ws_connect(CURL *curl, char *host, char *end, char *rest)
     size_t len = 0;
     len = snprintf(buf, sizeof(buf), fmt, end, p + 3, rest ? rest : "");
     size_t n = 0;
+
     while (n < len)
     {
         size_t i = 0;
@@ -152,6 +157,7 @@ static int ws_connect(CURL *curl, char *host, char *end, char *rest)
     struct timeval val =
     { 30, 0 };
     errno = 0;
+
     if (select(sock + 1, &rdset, NULL, NULL, &val) <= 0)
     {
         errno = errno ? errno : ETIME;
@@ -165,17 +171,19 @@ static int ws_connect(CURL *curl, char *host, char *end, char *rest)
         syslog(LOG_ERR, "ws_conn: %s\n", curl_easy_strerror(rc));
         return -1;
     }
-    syslog(LOG_NOTICE, "ws_conn: OK!\n");
+
+    syslog(LOG_INFO, "ws_conn: OK!\n");
 
     return sock;
 }
 
 static int ts_connect(const char *ip, int port)
 {
-    syslog(LOG_NOTICE, "ts_conn: %s:%d\n", ip, port);
+    syslog(LOG_INFO, "ts_conn: %s:%d\n", ip, port);
     struct sockaddr_in addr;
     struct sockaddr *addrp = (struct sockaddr*) &addr;
-    int sock = socket(AF_INET, SOCK_STREAM, 0);
+
+    const int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1)
     {
         syslog(LOG_ERR, "ts_conn: %s\n", strerror(errno));
@@ -186,6 +194,7 @@ static int ts_connect(const char *ip, int port)
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = inet_addr(ip);
     addr.sin_port = htons(port);
+
     if (connect(sock, addrp, sizeof(addr)) == -1)
     {
         syslog(LOG_ERR, "ts_conn: %s\n", strerror(errno));
@@ -193,7 +202,7 @@ static int ts_connect(const char *ip, int port)
         return -1;
     }
 
-    syslog(LOG_NOTICE, "ts_conn: OK!\n");
+    syslog(LOG_INFO, "ts_conn: OK!\n");
     fcntl(sock, F_SETFL, O_NONBLOCK);
 
     return sock;
@@ -243,6 +252,7 @@ static int vnc_connection_new(struct vnc_t *vnc, struct cp_t *cp)
         curl_easy_cleanup(curl);
         return -1;
     }
+
     char *buf = (char*) malloc(2 * BUF_NSIZE);
     if (!buf)
     {
@@ -260,7 +270,7 @@ static int vnc_connection_new(struct vnc_t *vnc, struct cp_t *cp)
     vnc->fdmax = _max(vnc->fdmax, _max(sock, fd));
     FD_SET(fd, &vnc->rdfds);
     FD_SET(sock, &vnc->rdfds);
-    syslog(LOG_NOTICE, "vnc_new %d: %s:%d <=> %s\n", i, cp->ip, cp->port, cp->host);
+    syslog(LOG_NOTICE, "vnc_new %d: %s:%d <=> %s%s\n", i, cp->ip, cp->port, cp->host, cp->end);
 
     return i;
 }
@@ -296,8 +306,8 @@ static int vnc_handle(struct vnc_t *vnc)
     struct sockaddr *clip = (struct sockaddr*) &client;
     char buf[2048];
     socklen_t len = sizeof(struct sockaddr_un);
-    const int rc = recvfrom(vnc->lisock, buf, sizeof(buf), 0, clip, &len);
 
+    const int rc = recvfrom(vnc->lisock, buf, sizeof(buf), 0, clip, &len);
     if (rc == -1)
     {
         syslog(LOG_ERR, "vnc_handle: %s\n", strerror(errno));
@@ -318,9 +328,9 @@ static int vnc_handle(struct vnc_t *vnc)
     p = strchr(p, ' ');
     *p++ = 0;
     cp.rest = p;
-
     char pch[2048];
     size_t n = 0;
+
     if (vnc_connection_new(vnc, &cp) == -1)
     {
         n = snprintf(pch, sizeof(pch), "%d %s", errno, strerror(errno));
@@ -368,6 +378,7 @@ static int ts_recv(int fd, char *buf, size_t count)
             ptr[i] = pch[i] ^ ws_mask[j++];
             j = j >= 4 ? 0 : j;
         }
+
         return ptr - buf + c;
     } else
     {
@@ -379,7 +390,7 @@ static int ts_recv(int fd, char *buf, size_t count)
 static int ts_send(int fd, char *buf, size_t count)
 {
     errno = 0;
-    const int c = send(fd, buf, count, MSG_NOSIGNAL);
+    int c = send(fd, buf, count, MSG_NOSIGNAL);
     if (c >= 0)
     {
         return c;
@@ -388,101 +399,75 @@ static int ts_send(int fd, char *buf, size_t count)
         syslog(LOG_ERR, "ts_send: %s\n", strerror(errno));
         return -1;
     }
-
     return 0;
 }
 
+
 static int ws_recv(CURL *curl, char *buf, size_t count, uint64_t *wsnum)
 {
-    if (count < 125)
-    {
-        return 0;
-    }
-
-    size_t n = 0;
-    int type = 0;
-    CURLcode rc;
-
-    if (*wsnum == 0)
-    { /* new websocket frame */
-        char pch[10];
-        rc = curl_easy_recv(curl, pch, 2, &n);
-
-        if (n != 2)
-        {
-            if (rc == CURLE_OK)
-            {
-                return -1;
-            }
-            else if (rc == CURLE_AGAIN)
-            {
+        if (count < 125)
                 return 0;
-            }
 
-            syslog(LOG_ERR, "ws_rh[%zu]: %s\n", n, curl_easy_strerror(rc));
+        size_t n = 0;
+        int type = 0;
+        CURLcode rc;
 
-            return -1;
+        if (*wsnum == 0) { /* new websocket frame */
+                char pch[10];
+                rc = curl_easy_recv(curl, pch, 2, &n);
+                if (n != 2) {
+                        if (rc == CURLE_OK)
+                                return -1;
+                        else if (rc == CURLE_AGAIN)
+                                return 0;
+                        const char *msg = curl_easy_strerror(rc);
+                        syslog(LOG_ERR, "ws_rh[%zu]: %s\n", n, msg);
+                        return -1;
+                }
+                type = pch[0] & 0x0f;
+                if (pch[1] < 126) {
+                        *wsnum = pch[1];
+                } else if (pch[1] == 126) {
+                        rc = curl_easy_recv(curl, pch + 2, 2, &n);
+                        if (n != 2) {
+                                const char *msg = curl_easy_strerror(rc);
+                                syslog(LOG_ERR, "ws_r126: %s\n", msg);
+                                return -1;
+                        }
+                        *wsnum = pch[2];
+                        *wsnum = (*wsnum << 8) | (0xff & pch[3]);
+                } else if (pch[1] == 127) {
+                        errno = 0;
+                        rc = curl_easy_recv(curl, pch + 2, 8, &n);
+                        if (n != 8) {
+                                const char *msg = curl_easy_strerror(rc);
+                                syslog(LOG_ERR, "ws_r127: %s\n", msg);
+                                return -1;
+                        }
+                        for (int i = 2; i < 10; ++i)
+                                *wsnum = (*wsnum << 8) | (0xff & pch[i]);
+                }
         }
 
-        type = pch[0] & 0x0f;
-        if (pch[1] < 126)
-        {
-            *wsnum = pch[1];
-        } else if (pch[1] == 126)
-        {
-            rc = curl_easy_recv(curl, pch + 2, 2, &n);
-            if (n != 2)
-            {
-                syslog(LOG_ERR, "ws_r126: %s\n", curl_easy_strerror(rc));
-                return -1;
-            }
+        if (type > 3) return -type;
+        if (*wsnum == 0) return 0;
 
-            *wsnum = pch[2];
-            *wsnum = (*wsnum << 8) | pch[3];
-        } else if (pch[1] == 127)
-        {
-            errno = 0;
-            rc = curl_easy_recv(curl, pch + 2, 8, &n);
-            if (n != 8)
-            {
-                syslog(LOG_ERR, "ws_r127: %s\n", curl_easy_strerror(rc));
+        n = 0;
+        rc = curl_easy_recv(curl, buf, _min(count, *wsnum), &n);
+        if (rc == CURLE_OK || rc == CURLE_AGAIN) {
+                *wsnum -= n;
+                return n;
+        } else {
+                syslog(LOG_ERR, "ws_recv: %s\n", curl_easy_strerror(rc));
                 return -1;
-            }
-
-            for (int i = 2; i < 10; ++i)
-            {
-                *wsnum = (*wsnum << 8) | pch[i];
-            }
         }
-    }
-
-    if (type > 3)
-    {
-        return -type;
-    }
-
-    if (*wsnum == 0)
-    {
-        return 0;
-    }
-
-    n = 0;
-    rc = curl_easy_recv(curl, buf, _min(count, *wsnum), &n);
-    if (rc == CURLE_OK || rc == CURLE_AGAIN)
-    {
-        *wsnum -= n;
-        return n;
-    } else
-    {
-        syslog(LOG_ERR, "ws_recv: %s\n", curl_easy_strerror(rc));
-        return -1;
-    }
 }
+
 
 static int ws_send(CURL *curl, char *buf, size_t count)
 {
     size_t n = 0;
-    const CURLcode rc = curl_easy_send(curl, buf, count, &n);
+    CURLcode rc = curl_easy_send(curl, buf, count, &n);
 
     if (rc == CURLE_OK || rc == CURLE_AGAIN)
     {
@@ -497,7 +482,8 @@ static int ws_send(CURL *curl, char *buf, size_t count)
 static void poll(struct vnc_t *vnc)
 {
     fd_set rdfds = vnc->rdfds, wrfds = vnc->wrfds;
-    const int rc = select(vnc->fdmax + 1, &rdfds, &wrfds, NULL, NULL);
+    int rc = select(vnc->fdmax + 1, &rdfds, &wrfds, NULL, NULL);
+
     if (rc < 1)
     {
         syslog(LOG_ERR, "poll: %s\n", strerror(errno));
@@ -523,10 +509,16 @@ static void poll(struct vnc_t *vnc)
         {
             const short num = vnc->lonum[i];
             a = ts_recv(sock, lobuf + num, BUF_NSIZE - num);
+
             if (a > 0)
+            {
                 vnc->lonum[i] += a;
+            }
+
             if (vnc->lonum[i])
+            {
                 FD_SET(fd, &wrfds);
+            }
         }
 
         if (FD_ISSET(fd, &wrfds))
@@ -539,13 +531,12 @@ static void poll(struct vnc_t *vnc)
                 vnc->lonum[i] -= c;
             }
         }
-
         if (FD_ISSET(fd, &rdfds))
         {
             const short num = vnc->cunum[i];
             short *lon = &vnc->lonum[i];
-            b = ws_recv(vnc->curl[i], cubuf + num, BUF_NSIZE - num,
-                    &vnc->wsnum[i]);
+            b = ws_recv(vnc->curl[i], cubuf + num, BUF_NSIZE - num, &vnc->wsnum[i]);
+
             if (b > 0)
             {
                 vnc->cunum[i] += b;
@@ -569,6 +560,7 @@ static void poll(struct vnc_t *vnc)
         {
             const short num = vnc->cunum[i];
             d = ts_send(sock, cubuf, num);
+
             if (d > 0)
             {
                 memmove(cubuf, cubuf + d, num - d);
@@ -604,14 +596,11 @@ static void poll(struct vnc_t *vnc)
 
 int main()
 {
-    struct vnc_t* const vnc = vnc_init();
-
+    struct vnc_t *vnc = vnc_init();
     if (!vnc)
     {
         return 0;
     }
-
-    syslog(LOG_NOTICE, "VNC proxy started.");
 
     while (1)
     {
