@@ -6,6 +6,7 @@ local receives = {}
 local pkg_fmt = '{""name"":""%s"",""version"":""%s"",""url"":"" ""}'
 local pkg_path = '/opt/cdcs/upload/'
 local fpath = '/opt/ntcagent/software.txt'
+local charmsg = '"package %s has special characters, only [a-z0-9.+-] allowed"'
 local errmsgs = {[-1] = '"Unknown reason"',
    [-2] = '"Download failed"',
    [-3] = '"Install/update failed"',
@@ -95,6 +96,14 @@ end
 
 function perform(r)
    c8y:send('303,' .. r:value(2) .. ',EXECUTING')
+   -- check for invalid special characters in the package name
+   for k, _ in pairs(receives) do
+      if not string.match(k, '^[a-z0-9.+-]+$') then
+         local errmsg = string.format(charmsg, k)
+         c8y:send('304,' .. r:value(2) .. ',' .. errmsg, 1)
+         return
+      end
+   end
    local locallist = pkg_list()
    local installs = {}
    for k, v in pairs(receives) do
