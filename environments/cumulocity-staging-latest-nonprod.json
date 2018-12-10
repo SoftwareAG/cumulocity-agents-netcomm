@@ -48,7 +48,7 @@
         "connectivity-agent-server",
         "branding",
         "cellid-agent-server",
-        "remote-access",
+        "cloud-remote-access",
         "speech-agent-server",
         "impact"
       ],
@@ -71,7 +71,6 @@
       "CUMULOCITY_LICENCE_KEY": "35fd2a651c866163f172274ba43a1a15632c68b49f9bcd5c96ba0b2213be257b8265ab3255d20a516a7c68dff6190a698e49f613a8e61b2e3740901d8ce44f1f",
       "version": "9.21.0-1",
       "ssa-version": "9.21.0-1",
-      "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
       "CUMULOCITY_LICENCE_DIR": null,
