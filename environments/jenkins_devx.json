@@ -122,6 +122,7 @@
       "useLUAforSSLcerts": true,
       "useLUAforHealthCheck": true,
       "nginx": {
+        "conf_template": "nginx4.conf",
         "NGinxPort": "openresty",
         "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
       }
