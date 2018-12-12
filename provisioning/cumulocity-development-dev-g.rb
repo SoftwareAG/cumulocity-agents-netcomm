@@ -36,7 +36,7 @@ dev_id = "1"
 machine "#{environment}_#{dev_id}" do
     add_machine_options(
         bootstrap_options: {
-            private_ip_address: "#{private_ips}",
+            # private_ip_address: "#{private_ips}",
             instance_type: "#{flavour_for_dev}"
         }
     )
