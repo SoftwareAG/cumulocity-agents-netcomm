@@ -25,7 +25,7 @@ fi
 #     mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
 #     echo "Image version updated to ${CUMULOCITY_KUBERNETES_IMAGE}"
 # fi
-if [ ! -z ${ITS_SNAPSHOT} ]; then
+if [ ${ITS_SNAPSHOT} == 'snapshot' ]; then
     cat ${OUTPUT_FILE} | \
     jq '.override_attributes["yum"]["repositories"]["cumulocity-testing"]["enabled"] = "1"' > ${OUTPUT_FILE}'.tmp';
     mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
