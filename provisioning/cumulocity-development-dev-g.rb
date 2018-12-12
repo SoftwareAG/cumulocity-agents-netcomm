@@ -30,7 +30,7 @@ add_machine_options(
 
 private_ips = "172.31.18.178"
 flavour_for_dev = "m3.large"
-dev_id = "1"
+dev_id = "dev-g"
 
 ### END OF CLUSTER CONFIGURATION ###
 machine "#{environment}_#{dev_id}" do
