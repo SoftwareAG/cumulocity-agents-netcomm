@@ -4,7 +4,7 @@
   "cookbook_versions": {
     "cumulocity": "= 9.19.2",
     "cumulocity-kubernetes": "= 9.19.2",
-    "cumulocity-ssagents": "= 0.4.0"
+    "cumulocity-ssagents": "= 9.19.2"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",

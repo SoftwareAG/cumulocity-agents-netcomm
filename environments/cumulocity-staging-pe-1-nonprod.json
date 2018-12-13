@@ -51,7 +51,7 @@
         "connectivity-agent-server",
         "branding",
         "cellid-agent-server",
-        "remote-access",
+        "cloud-remote-access",
         "speech-agent-server"
       ],
       "monitoring": {
