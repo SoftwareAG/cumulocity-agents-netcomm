@@ -29,6 +29,10 @@ if [ ${ITS_SNAPSHOT} == 'snapshot' ]; then
     cat ${OUTPUT_FILE} | \
     jq '.override_attributes["yum"]["repositories"]["cumulocity"]["url"] = "https://cumulocity:ACceP=m+2m@yum.cumulocity.com/centos/7/cumulocity-testing/x86_64/"' > ${OUTPUT_FILE}'.tmp';
     mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
+elif [ ${ITS_SNAPSHOT} == 'release' ]; then
+    cat ${OUTPUT_FILE} | \
+    jq '.override_attributes["yum"]["repositories"]["cumulocity"]["url"] = "https://cumulocity:ACceP=m+2m@yum.cumulocity.com/centos/7/cumulocity/x86_64/"' > ${OUTPUT_FILE}'.tmp';
+    mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE}; 
 else
     if [ ! -z ${CUMULOCITY_KARAF_IMAGE} ]; then
         cat ${OUTPUT_FILE} | \
