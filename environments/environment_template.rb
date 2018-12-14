@@ -78,6 +78,7 @@ override_attributes(
       "management.admin.password" => "", # insert password
       "tenant.admin.password" => "", # insert password
       "admin.password" => "", # insert password
+      "sysadmin.password" => "", # leave this param empty to prevent the platform from creating sysadmin user for new tenants
       #"system.two-factor-authentication.enabled" => false,
       #"system.two-factor-authentication.enforced.group" => "admins",
       #"system.two-factor-authentication.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
