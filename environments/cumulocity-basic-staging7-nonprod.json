@@ -104,7 +104,6 @@
     },
     "cumulocity-core": {
       "properties": {
-        "microservice.docker.registry.chunk.size": "200000000",
         "system.connectivity.microservice.url": "http://localhost:8111/service/connectivity",
         "default.tenant.microservices": "device-simulator, smartrule, cep, sms-gateway",
         "device-simulator.microservice.url": "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
@@ -125,7 +124,7 @@
         "email.from": "no-reply@app.domain.com",
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "system.two-factor-authentication.enabled": true,
-        "system.two-factor-authentication.max.inactive": "10",
+        "system.two-factor-authentication.max.inactive": "5",
         "system.two-factor-authentication.enforced.group": "ashutoshTfaTest,TFASupport",
         "system.two-factor-authentication.enforced": "",
         "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
