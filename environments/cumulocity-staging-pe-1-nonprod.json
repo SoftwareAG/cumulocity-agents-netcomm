@@ -121,7 +121,7 @@
         "contextService.rdbmsUser": "postgres",
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
-        "auth.checkBlockingFromOutside": "false",
+        "auth.checkBlockingFromOutside": "true",
         "migration.tomongo.default": "MONGO_READ_WRITE",
         "smsGateway.host": "http://localhost:8181/service/messaging",
         "email.host": "postfix.cumulocity-staging-pe-1-nonprod.svc.cluster.local",

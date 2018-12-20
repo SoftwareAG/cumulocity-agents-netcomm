@@ -99,7 +99,7 @@
         "contextService.rdbmsUser": "postgres",
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
-        "auth.checkBlockingFromOutside": "false",
+        "auth.checkBlockingFromOutside": "true",
         "migration.tomongo.default": "POSTGRES_READ_WRITE",
         "smsGateway.host": "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
         "email.from": "no-reply@app.domain.com",
