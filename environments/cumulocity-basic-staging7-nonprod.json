@@ -2,9 +2,9 @@
   "name": "cumulocity-basic-staging7-nonprod",
   "description": "The Basic Staging 7 environment for test releases",
   "cookbook_versions": {
-    "cumulocity": "= 9.19.2",
-    "cumulocity-kubernetes": "= 9.19.2",
-    "cumulocity-ssagents": "= 9.19.2"
+    "cumulocity": "~> 9.20",
+    "cumulocity-kubernetes": "~> 9.20",
+    "cumulocity-ssagents": "~> 9.20"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
