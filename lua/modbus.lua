@@ -433,7 +433,8 @@ function setRegister(r)
 
    local obj = mbd[dobjno]
    local littleEndian = regtbl[rleno] or 0
-   local rc = obj:updateHRBits(mbd[dslaveno], reg - 1, value, sb, nb, littleEndian)
+   local rc = obj:updateHRBits(mbd[dslaveno], reg - 1, tostring(value),
+                               sb, nb, littleEndian)
    if rc == -1 then
       c8y:send('304,' .. r:value(2) .. ',"' .. obj:errMsg() .. '"', 1)
    else

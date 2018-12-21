@@ -291,12 +291,13 @@ static uint64_t getValue(uint16_t *buf, int size, int littleEndian)
 }
 
 
-int ModbusBase::updateHRBits(int slave, int addr, uint64_t v, int sb, int nb,
-                             int littleEndian)
+int ModbusBase::updateHRBits(int slave, int addr, const char *val, int sb,
+                             int nb, int littleEndian)
 {
         int n = (sb + nb - 1) / 16 + 1;
         uint16_t resp[4] = {0};
-
+        uint64_t v = 0;
+        sscanf(val, "%" SCNu64, &v);
         if (setSlave(slave) == -1) return -1;
         if (connect() == -1) return -1;
         if (readHR(addr, n, resp) == -1) return -1;

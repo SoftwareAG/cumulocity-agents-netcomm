@@ -51,7 +51,7 @@ public:
     int writeCO(int addr, int status);
     int writeHR(int addr, int status);
     int updateCO(int slave, int addr, int status);
-    int updateHRBits(int slave, int addr, uint64_t v, int sb, int nb,
+    int updateHRBits(int slave, int addr, const char *v, int sb, int nb,
                      int littleEndian);
 
     void setTimeout(long usec)
