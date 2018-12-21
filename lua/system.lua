@@ -8,13 +8,24 @@ local rx, tx
 
 
 local function getMemUsage()
-   local memTotal, memUse
-   local file = io.popen('free')
-   if file then
-      file:read('*l')
-      local value = file:read('*l')
-      file:close()
-      memTotal, memUse = string.match(value, "%S+%s+(%d+)%s+(%d+)")
+   local memTotal, memUse, memFree, memCached
+   local counter = 0
+   for line in io.lines('/proc/meminfo') do
+      local key, value = string.match(line, '(%w+):%s+(%d+)')
+      if key == 'MemTotal' then
+         memTotal = value
+         counter = counter + 1
+      elseif key == 'MemFree' then
+         memFree = value
+         counter = counter + 1
+      elseif key == 'Cached' then
+         memCached = value
+         counter = counter + 1
+      end
+      if counter >= 3 then break end
+   end
+   if memTotal and memFree and memCached then
+      memUse = memTotal - memFree - memCached
    end
    return memTotal, memUse
 end
