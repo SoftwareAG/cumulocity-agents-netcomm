@@ -61,11 +61,11 @@
       }
     },
     "cumulocity-chaos-monkey": {
-      "group": {
-        "my-custom-service": {
-          "search_query": "role:my-custom-service AND role:mn-active-core"
-        }
-      }
+      "working_hours": {
+        "start": 11,
+        "end": 14
+      },
+      "mean_time_between_kills": 1
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "35fd2a651c866163f172274ba43a1a15632c68b49f9bcd5c96ba0b2213be257b8265ab3255d20a516a7c68dff6190a698e49f613a8e61b2e3740901d8ce44f1f",
@@ -123,9 +123,10 @@
         "contextService.rdbmsUser": "postgres",
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
+        "auth.checkBlockingFromOutside": "true",
         "auth.  ": "true",
         "migration.tomongo.default": "MONGO_READ_WRITE_POSTGRES_WRITE",
-        "smsGateway.host": "http://localhost:80/service/messaging",
+        "smsGateway.host": "http://localhost/service/messaging",
         "email.host": "postfix.cumulocity-staging-nonprod.svc.cluster.local",
         "email.from": "no-reply@app.domain.com",
         "errorMessageRepresentationBuilder.includeDebug": "false",
