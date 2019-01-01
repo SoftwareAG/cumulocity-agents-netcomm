@@ -99,17 +99,17 @@ override_attributes(
       #"system.two-factor-authentication.logout-on-browser-termination" => true,
       #"system.two-factor-authentication.max.inactive" => "14",
       #"system.two-factor-authentication.provider" => "<customer>",
-      #"system.two-factor-authentication.<customer>.baseUrl" => "https://m1free.rcs.msg.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",             
-      #"system.two-factor-authentication.<customer>.baseUrl" => "https://free.rcs.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",             
-      #"system.two-factor-authentication.<customer>.username" => "cumulocity",                                                                                        
-      #"system.two-factor-authentication.<customer>.password" => "xBg5Wa8M",                                                                                          
+      #"system.two-factor-authentication.<customer>.baseUrl" => "https://m1free.rcs.msg.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
+      #"system.two-factor-authentication.<customer>.baseUrl" => "https://free.rcs.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
+      #"system.two-factor-authentication.<customer>.username" => "cumulocity",
+      #"system.two-factor-authentication.<customer>.password" => "xBg5Wa8M",
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",  <--for 8.19
 #      "migration.tomongo.default" => "MONGO_READ_WRITE", <--for 8.19
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",
       "default.tenant.microservices" => "device-simulator, jwireless, sms-gateway",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
-      #"tenant.admin.grants.disabled" => true,  
-      "system.support-user.enabled" => true, 
+      #"tenant.admin.grants.disabled" => true,
+      "system.support-user.enabled" => true,
       "tenantSuspend.mail.sendtosuspended" => false,
       #"tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
       "microservice.websocket.port" => 8303,
@@ -211,6 +211,11 @@ override_attributes(
          "version" => "9.0.11-1",
          " esperha.storage" => "/mnt/esperha-storage/"
      },
+  },
+  'cumulocity-opsmanager' => {
+     'mmsGroupId' => '5c120f8cfd6a9006cb99cba8',
+     'mmsApiKey' => '5c2b73e14352d86e483b1175a985498786f16e2e76ca3ac946377a28',
+     'mmsBaseUrl' => 'https://opsmanager.cumulocity.com'
   }
 
 )
