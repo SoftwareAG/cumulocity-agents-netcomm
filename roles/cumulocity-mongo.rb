@@ -12,10 +12,10 @@ override_attributes(
         "process_hard_limit": 160000
       },
       "mongod": {
-        "filehandle_soft_limit": 150000,
-        "filehandle_hard_limit": 160000,
-        "process_soft_limit": 150000,
-        "process_hard_limit": 160000
+        "filehandle_soft_limit": 393216,
+        "filehandle_hard_limit": 393216,
+        "process_soft_limit": 393216,
+        "process_hard_limit": 393216
       }
     }
   },
