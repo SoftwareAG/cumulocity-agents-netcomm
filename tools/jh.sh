@@ -96,6 +96,12 @@ f_reg(){
   unsortedEnvlist+=( "$1" )
 }
 
+f_name_cleanup(){
+  for c in ':' '|' ; do
+    eval $1="\${${1}%%${c}*}"
+  done
+}
+
 thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
 configfile1="$( dirname ${thisscript} )/$( basename ${thisscript} sh)conf"
 configfile2="${HOME}/.jh.conf"
@@ -242,7 +248,7 @@ f_ssh_host_set(){
     if [[ ! -z ${sshenv} ]] ; then
       for e in ${filteredHostList} ; do
         arr[i]="$e"
-        e="${e%%|*}"
+        f_name_cleanup e
         ${useWhiptail} && wtarg+="$((i++)) ${e,,} "
         ${useWhiptail} || printf "${grn}%2d${neu}) ${cyn}%s${neu}\n" "$((i++))" "${e,,}"
       done
@@ -295,7 +301,8 @@ f_env_print(){
   local tmphLength hLength=10
   local tmpiLength iLength=15
   for h in ${hostlist} ; do
-    tmphLength=$( wc -c <<< "${h%%|*}" )
+    f_name_cleanup h
+    tmphLength=$( wc -c <<< "${h}" )
     [[ "${tmphLength}" -gt ${hLength:-0} ]] && hLength="${tmphLength}"
   done
   for i in "${!printArray[@]}" JH ; do
@@ -320,7 +327,8 @@ f_env_print(){
     else
       optBit=' '
     fi
-    p="${p,,}" ; p="${p%%|*}" ; p="${p%%:*}"
+    f_name_cleanup p
+    p="${p,,}"
     if ${tablePrint:-false} ; then
       if ${firstLine} ; then
         printf "${BbFw}${tl}${deviderLineA}${tm}${deviderLineB}${tr}${colorReset}\n"
@@ -361,6 +369,8 @@ f_env_conf(){
   done
   KeyLength="$(( ${KeyLength} + 3 ))"
 
+  keysString=" ${keysString// /, }"
+
   echo "${sshenv}=("
 
   for section in \
@@ -372,10 +382,10 @@ f_env_conf(){
   ; do
     conf_title="$( cut -d: -f 1 <<< "${section}" )"
     conf_regex="$( cut -d: -f 2 <<< "${section}" )"
-    for k in $( egrep -o -w "${conf_regex}" <<< "${keysString}" ) ; do
+    for k in $( egrep -o -w "${conf_regex}" <<< "${keysString//,}" ) ; do
       conf_section+="$( printf '%'${KeyLength}'s="%s"' '["'$k'"]' "$( eval echo \${$sshenv["$k"]} )" )
 " # newline
-      keysString="${keysString//$k }"
+      keysString="${keysString// $k,}"
     done
     if [[ ! -z ${conf_section} ]] ; then
       conf_section_sorted="$( sort <<< "${conf_section}" )"
@@ -391,14 +401,16 @@ f_ssh_opt_set(){
   if ${useWhiptail} ; then
     if ${switchOptions} ; then
       sshopts1=( $( whiptail --title "Extra settings" --checklist "Switch other settings for host ${sshhosttoprint^^} in environment ${sshenv^^}" $wtWinSize -- \
-        "-L8111:localhost:8111"   "| Local Map port Karaf support"       OFF \
-        "-L8443:localhost:443"    "| Local Map port HTTPS"               OFF \
-        "-L8080:localhost:80"     "| Local Map port HTTP"                OFF \
-        "-R10022:localhost:22"    "| Remote Map port ssh"                OFF \
-        "-L3128:localhost:3128"   "| Local Map port Squid"               OFF \
-        "-L14239:localhost:14239" "| Local Map port Squid alternative"   OFF \
-        "-fnN"                    "| Start in background/no shell"       OFF \
-        "other..."                "| specify other options via inputbox" OFF \
+        "-L8111:localhost:8111"          "| Local Map port Karaf support"       OFF \
+        "-L8443:localhost:443"           "| Local Map port HTTPS"               OFF \
+        "-L8080:localhost:80"            "| Local Map port HTTP"                OFF \
+        "-R10022:localhost:22"           "| Remote Map port ssh"                OFF \
+        "-L3128:localhost:3128"          "| Local Map port Squid"               OFF \
+        "-L14239:localhost:14239"        "| Local Map port Squid alternative"   OFF \
+        "-fnN"                           "| Start in background/no shell"       OFF \
+        "-oStrictHostKeyChecking=no"     "| Automatically update known_hosts"   OFF \
+        "-oUserKnownHostsFile=/dev/null" "| Use 'null' as known_hosts"          OFF \
+        "other..."                       "| specify other options via inputbox" OFF \
         3>&1 1>&2 2>&3 ) ) || f_abort
     fi
     if [[ ${#sshopts1[@]} -gt 0 ]] ; then
@@ -486,6 +498,7 @@ jh(){
   [[ ! -z ${!pw}   ]] && ${sshpassInstalled:-false} &&   precmd="sshpass -p ${!pw} "
 
   declare host=$sshenv["$sshhost"]
+  declare -g sshhosttoprint="$( ${sed} -r 's/[|:].*//g' <<< "${sshhost,,}" )"
   if [[ -z ${sshhost} ]] && ${gotojh:-false} ; then
     [[ -z ${!jh} ]] && f_color_pr red "ERROR: No jumphost defined for environment ${sshenv}!" && exit
     f_color_pr cyn "${prejhcmd}${cmd:-ssh} connection to jumphost '${!jh}' (${sshenv})"
@@ -506,7 +519,7 @@ jh(){
          *) f_color_pr red "ERROR: UNKNOWN COMMAND!" ;;
     esac
   elif [[ ! -z ${!host} && -z ${!jh} ]] || [[ ${sshhost^^} == ${sshhost} ]] ; then
-    f_color_pr cyn "${precmd}${cmd:-ssh} connection to host '${!host}' (${sshenv}/${sshhost,,})"
+    f_color_pr cyn "${precmd}${cmd:-ssh} connection to host '${!host}' (${sshenv}/${sshhosttoprint})"
     case ${cmd:=ssh} in
        ssh) fullcmd="${precmd}${cmd} \
         ${!port:+-p'${!port}'} \
@@ -524,7 +537,7 @@ jh(){
   elif [[ -z ${!host} ]] ; then
     f_color_pr red "ERROR: NO EXISTING HOST SPECIFIED!"
   else
-    declare -g sshhosttoprint="$( ${sed} -r 's/[|:].*//g' <<< "${sshhost,,}" )"
+#    declare -g sshhosttoprint="$( ${sed} -r 's/[|:].*//g' <<< "${sshhost,,}" )"
     f_color_pr cyn "${cmd:-ssh} connection via '${!jh}' to '${!host}' (${sshenv}/${sshhosttoprint}) ${!user:+"as '${!user}' "}${!key:+"with '${!key}' "}"
     proxycmd="
       ${prejhcmd}ssh -A -W %h:%p
@@ -770,7 +783,7 @@ If you want to submit complex scripts, you can use the '${B}Here Document${N}' o
 E.g. with 'Here Document':
 ${B}NOTE${N}: variables are expanded locally, therefore you need to escape them in this stage.
 
-${D}jhmulticmd ${I}environment hostregex${N}${D} sudo -s bash << EOF${N}
+${D}jhmulticmd ${I}environment hostregex${N}${D} sudo -s bash << 'EOF'${N}
 ${D}  echo HOSTNAME: \$( hostname ) ; echo ---${N}
 ${D}  echo UPTIME: \$( uptime ) ; echo ---${N}
 ${D}  echo MOTD: ; cat /etc/motd ; echo ---${N}
@@ -925,6 +938,7 @@ jhmulticmd(){
     f_color_pr red "       not possible to create folder ${multicmdOutputSubDir}"
     exit
   fi
+  stty -echo
   f_color_pr cyn "The defined command will be executed in the matching group of hosts in environment '${sshenv}'"
   if [[ -z ${stdinData} ]] ; then
     printf "${grn}Command   ${blu}==> ${grn}%s${neu}\n" "${cmdExec}"
@@ -947,7 +961,8 @@ jhmulticmd(){
   ln -snf "${dateTag}" "${multicmdOutputEnvDir}/latest"
   printf "${blu}%-30s --- %10s   %s${neu}  \n" "HOST" "PID" "STATUS"
   for n in ${multicmdHosts[@]} ; do
-    pureName="${n%%|*}" ; pureName="${pureName%%:*}"
+    pureName="${n}"
+    f_name_cleanup pureName
     if [[ -z ${stdinData} ]] ; then
       jhssh "${sshenv}" "${pureName,,}" -q -o ConnectTimeout=${sshConfigConnectTimeout:-${sshCCT:-10}} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
     else
@@ -979,7 +994,8 @@ jhmulticmd(){
     for p in ${!bgProc[@]} ; do
       if ! kill -0 ${bgProc[p]} &>/dev/null ; then
         [[ -t 1 ]] && tput cup $(( ${endLine} - ${diffLine[p]} - 1 )) 0
-        pureName="${bgHost[p]%%|*}" ; pureName="${pureName%%:*}"
+        pureName="${bgHost[p]}"
+        f_name_cleanup pureName
         if wait ${bgProc[p]} ; then
           printf "${wht}%-30s --- %10s [ ${grn}%s${neu} ]\n" "${pureName,,}" "${bgProc[p]}" " DONE! "
           procLogSucceded[p]="${procLog[p]}"
@@ -995,6 +1011,7 @@ jhmulticmd(){
   done
   wait
 
+  stty echo
   while [[ -z ${mcmdOutputPrint} ]] ; do
     if ! [[ ${confirmPrint[*],,} =~ ^((((y(es)?)|(no?)|(f(ailures)?))( [0-9]+)?)|([0-9]+))$ ]] ; then
       printf "${wht}Do you want to print the output? [y/N/f]: "
