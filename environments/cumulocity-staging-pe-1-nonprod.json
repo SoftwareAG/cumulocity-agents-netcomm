@@ -2,9 +2,9 @@
   "name": "cumulocity-staging-pe-1-nonprod",
   "description": "The production environment",
   "cookbook_versions": {
-    "cumulocity": "~> 9.16",
-    "cumulocity-kubernetes": "~> 9.16",
-    "cumulocity-ssagents": "~> 9.16"
+    "cumulocity": "~> 9.20",
+    "cumulocity-kubernetes": "~> 9.20",
+    "cumulocity-ssagents": "~> 9.20"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
