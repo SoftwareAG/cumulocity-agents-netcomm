@@ -14,12 +14,13 @@ f_color_pr(){
   printf "$COLOR""$@\n"'\e[m'
 }
 
-while getopts "Svik:c:a:" opt ; do
+while getopts "Svik:m:c:a:" opt ; do
   case $opt in
     S) SOLO=true ;;
     v) VERBOSE=true ;;
     i) interactive=true ;;
     k) karafver="${OPTARG}" ;;
+    m) mainver="${OPTARG}" ;;
     c) cepver="${OPTARG}" ;;
     a) ssaver="${OPTARG}" ;;
   esac
@@ -28,6 +29,12 @@ done
 if [[ -z $karafver || -z $cepver ]] ; then
   f_color_pr red "ERROR: specify release version for both karaf and cep!" && exit 1
 fi
+
+if [[ -z $mainver ]] ; then
+  mainver=$karafver
+fi
+
+echo "Main ${mainver}"
 
 if [[ -z $ssaver ]] ; then
   ssaver="$( sed -r 's/^(([0-9]+[.]){2})[0-9]+-1/\11-1/g' <<< "${karafver}" )"
@@ -183,7 +190,7 @@ if ${SOLO} ; then
 ##########
 
   export prefixName="cumulocity-chef-solo"
-  cat > "${prefixName}-v${karafver}.sh" <<< '#!/bin/bash
+  cat > "${prefixName}-v${mainver}.sh" <<< '#!/bin/bash
 
 EXTRACTONLY=false
 AUTO=false
@@ -359,8 +366,8 @@ __ARCHIVE_BELOW__'
 
   ( cd "${thisdir}"
     tar cz${VERBOSE+v}f - "chef-solo"
-  ) | tee "${prefixName}-v${karafver}.tgz" >> "${prefixName}-v${karafver}.sh"
-  chmod a+x "${prefixName}-v${karafver}.sh"
+  ) | tee "${prefixName}-v${mainver}.tgz" >> "${prefixName}-v${mainver}.sh"
+  chmod a+x "${prefixName}-v${mainver}.sh"
 else
   f_color_pr cyn "Creating directory structure..."
   for d in \
@@ -463,11 +470,9 @@ EOF
   f_color_pr cyn "Creating tarball..."
   export prefixName="cumulocity-chef-release-pack"
   ( cd "${thisdir}"
-    tar cz${VERBOSE+v}f "${prefixName}-v${karafver}.tgz" "cumulocity-chef"
+    tar cz${VERBOSE+v}f "${prefixName}-v${mainver}.tgz" "cumulocity-chef"
   )
   echo
   f_color_pr cyn "Eliminating temporary folder..."
   rm -rf${VERBOSE+v} "${relDir}"
 fi
-
-
