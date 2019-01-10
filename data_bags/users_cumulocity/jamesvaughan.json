@@ -1,0 +1,9 @@
+{
+  "id": "jamesvaughan",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBjhQgdhwBwP1hukZbfYYMN41DWzU1spOA9fRJfRBCE0KleYI/rmQarntlnAYnrg6hwCKFLw5KJ9bqUs0Mgl4AeQnaZM0Vz75sapeapPm7DiH64FpdGY7YTDHzv7AuUbBRTDx7kfCzaGClS1R6H20KPTFUMrnpK+dZ76JF9QWtz1gf7aB1W0vmJS/2UV8fuaLHfa5JHbHa1DfxxktUqTaLlL9zSo7r4SHOj8lccq9IZHdB7pja2T6+6kzAtmQ/2ptbZCLXuOsui/szKbuSEvFkV3EC3/raQJIzkHTnlVFGHlcVmzUzaodPGB9/L4Wn3fXxWAX4FrPI2QKVSv/d0kv/ james@recx"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "James Vaughan"
+}
+
+

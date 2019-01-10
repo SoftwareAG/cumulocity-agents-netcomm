@@ -2,9 +2,9 @@
   "name": "cumulocity-staging-performance-test-nonprod",
   "description": "The Staging 7 environment for the latest released version",
   "cookbook_versions": {
-    "cumulocity": "= 0.6.0",
-    "cumulocity-kubernetes": "= 0.6.0",
-    "cumulocity-ssagents": "= 0.4.0"
+    "cumulocity": "= 9.19.2",
+    "cumulocity-kubernetes": "= 9.19.2",
+    "cumulocity-ssagents": "= 9.12.9"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -37,7 +37,7 @@
       ],
       "token": "1e3145.2ff901841c78ad1d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.12.1",
+      "images-version": "9.20.0",
       "images2install": [
         "cep",
         "cep-small",
@@ -50,8 +50,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "5a88b9e58b59256dd2843e2b5562c9b4bb98b996f93efd7d2a0c8724cd8b0be6230cf6d6fd50412a55cc647fd495d71cbd2e9a32075ae157f253c2dedbee6f5b",
-      "version": "9.12.1-1",
-      "ssa-version": "9.11.3-1",
+      "version": "9.20.0-1",
+      "ssa-version": "9.20.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -78,7 +78,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "9.12.1"
+      "version": "9.20.0"
     },
     "cumulocity-ssagents": {
       "useTags": true,

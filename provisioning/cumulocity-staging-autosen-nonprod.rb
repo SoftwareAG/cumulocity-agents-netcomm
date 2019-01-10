@@ -1,7 +1,7 @@
 require 'chef/provisioning/aws_driver'
 with_driver 'aws:cumulocity-stagings:eu-west-1'
 
-environment  = 'cumulocity-copy-of-fra-nonprod'
+environment  = 'cumulocity-staging-autosen-nonprod'
 
 with_chef_environment environment
 with_chef_server(
@@ -20,55 +20,52 @@ with_machine_options({
 
 add_machine_options(
   bootstrap_options: {
-    key_name: 'c8yIreland',
-    instance_type: 'm3.medium',
-    image_id: 'ami-6e28b517',
-    subnet_id: 'subnet-f7d35b91',
-    security_group_ids: ['sg-811fb0fd']
+    key_name: 'chef_cumulocity',
+    instance_type: 'c4.2xlarge',
+    image_id: 'ami-60206719',
+    subnet_id: 'subnet-8f98a6ea',
+    security_group_ids: ['sg-6ddd4e09']
   }
 )
 
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
 c8ycore_count = 2
-flavour_for_c8ycore       = "m4.large"
-volume_size_for_c8ycore   = 26
-private_ips_for_c8ycore   = ["100.64.252.5","100.64.252.69","100.64.252.133"]
+flavour_for_c8ycore       = "c4.xlarge"
+volume_size_for_c8ycore   = 20
+private_ips_for_c8ycore   = ["172.31.10.211","172.31.10.212","172.31.10.213","172.31.10.214","172.31.10.215","172.31.10.216","172.31.10.217","172.31.10.218","172.31.10.219","172.31.10.220"]
 
 ontoplb_count = 1
-flavour_for_ontoplb       = "m4.large"
-private_ips_for_ontoplb   = ["100.64.251.5","100.64.251.69","100.64.251.133"]
+flavour_for_ontoplb       = "c4.large"
+volume_size_for_ontoplb   = 15
+private_ips_for_ontoplb   = ["172.31.10.247","172.31.10.248","172.31.10.249"]
 
 ssagent_count = 1
 flavour_for_ssagent       = "m4.large"
-private_ips_for_ssagent   = ["100.64.251.25"]
+private_ips_for_ssagent   = ["172.31.10.250"]
 ssagent_tags  = [
-        ["ssl-management-agent-server"],
+        ["actility-agent-server","ssl-management-agent-server"],
 ]
 
-mongodb_count = 9
-flavour_for_mongodb       = "m4.2xlarge"
-private_ips_for_mongodb   = ["100.64.253.5","100.64.253.69","100.64.253.133","100.64.253.134","100.64.253.135","100.64.253.136","100.64.253.137","100.64.253.138","100.64.253.139"]
+mongodb_count = 3
+flavour_for_mongodb       = "c4.xlarge"
+volume_size_for_mongodb   = 30
+private_ips_for_mongodb   = ["172.31.10.111","172.31.10.112","172.31.10.113"]
 mongodb_cluster = [
         ["configreplset:config9:P","replicaset:rs01:P","replicaset:rs02:A","replicaset:rs03:S"],
         ["configreplset:config9:S","replicaset:rs01:S","replicaset:rs02:P","replicaset:rs03:A"],
-        ["configreplset:config9:S","replicaset:rs01:A","replicaset:rs02:S","replicaset:rs03:P"],
-        ["replicaset:rs01:S"],
-        ["replicaset:rs02:S"],
-        ["replicaset:rs03:S"],
-        ["replicaset:rs01:S"],
-        ["replicaset:rs02:S"],
-        ["replicaset:rs03:S"]
+        ["configreplset:config9:S","replicaset:rs01:A","replicaset:rs02:S","replicaset:rs03:P"]
 ]
 
-kubernetes_master_count   = 1
-flavour_for_masters       = "m4.large"
-private_ips_for_masters   = ["100.64.252.10","100.64.252.20","100.64.252.30"]
+kubernetes_master_count   = 3
+flavour_for_masters       = "c4.large"
+volume_size_for_masters   = 12
+private_ips_for_masters   = ["172.31.10.55","172.31.10.56","172.31.10.57"]
 
-kubernetes_worker_count   = 3
+kubernetes_worker_count   = 2
+flavour_for_workers       = "c4.xlarge"
 volume_size_for_workers   = 30
-flavour_for_workers       = "m4.xlarge"
-private_ips_for_workers   = ["100.64.252.11","100.64.252.12","100.64.252.13"]
+private_ips_for_workers   = ["172.31.10.61","172.31.10.62","172.31.10.63","172.31.10.64","172.31.10.65"]
 
 
 ### END OF CLUSTER CONFIGURATION ###
@@ -105,13 +102,19 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_mongodb[i-1]}",
-                instance_type: "#{flavour_for_mongodb}"
+                instance_type: "#{flavour_for_mongodb}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_mongodb}",
+                      'delete_on_termination': true }
+                }]
             }
         )
         if step > 1
             role 'cumulocity-base'
             role 'cumulocity-mongo'
-            role 'cumulocity-mongo-configsvr' if mongodb_cluster[i-1].grep(/configreplset:.+:[PS]$/).length > 0
+            role 'cumulocity-mongo-configsvr'
             mongodb_cluster[i-1].each do |m_tag|
                 tag m_tag
             end
@@ -138,7 +141,7 @@ for step in initStep..7
             if step >= 4
                 role 'cumulocity-common-cores'
                 role 'cumulocity-mn-active-core' if step == 6 and i == 1
-                # role 'cumulocity-mn-active-core' if step == 7
+                role 'cumulocity-mn-active-core' if step == 7
                 role 'cumulocity-kubernetes' if step == 5
             end
         end
@@ -150,7 +153,13 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_ontoplb[i-1]}",
-                instance_type: "#{flavour_for_ontoplb}"
+                instance_type: "#{flavour_for_ontoplb}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_ontoplb}",
+                      'delete_on_termination': true }
+                }]
             }
         )
             if step > 1
@@ -173,6 +182,7 @@ for step in initStep..7
                 role 'cumulocity-ssagents'
                 role 'cumulocity-internal-lb'
                 if step >= 6
+                    recipe 'cumulocity::karaf_notification'
                     ssagent_tags[i-1].each do |m_tag|
                         tag m_tag
                     end
@@ -186,7 +196,13 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_masters[i-1]}",
-                instance_type: "#{flavour_for_masters}"
+                instance_type: "#{flavour_for_masters}",
+                block_device_mappings: [{
+                    'device_name': '/dev/sda1',
+                    'ebs': {
+                      'volume_size': "#{volume_size_for_masters}",
+                      'delete_on_termination': true }
+                }]
             }
         )
         role 'cumulocity-base'

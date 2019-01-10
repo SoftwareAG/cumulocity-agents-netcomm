@@ -1,0 +1,7 @@
+{
+  "id": "timaustwick",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDvp7kVvWqyUq+epUds70cCHoHPzPyAWj0ZoFwHMu7Q6I5Y+OHS0p8gnirk+/RlBM1+jhd87pmB6624dKfb/11mIycrZY8+KkkcfuXgeNdZZWjEiNMwA4DqIFSLV/KuTbVSMKr/r78GqRqkLTpgdcCJZQ60hoqt8B7lUbLTpYzlaCS4nfl64jmfLmbO9YU4cYOYL4txSLBD0HiMHpoh6b9rXVk5TQS7LUC7JWF4f22peQQpCC5bnmkMsMAl4l1A+hO0PP3cFfkbmjJCozMlbquCCwbbDB/NlByptJrdzAEaFeAKk0s6KtUUvWmnPV9StEzz5zRMwaRAkCokSfTQtPWod/+ZZvQ5tJZQfcWE1nrKfdo9a3KfHwRXVfVQgsDaXRVzkHotG0uJDmx1h+YtvL29BI1i2TDVXNaLnURU2o63o2qFQSdxeZjH6KoLOFz5xszA/2i2OHxMrFBgfti/zacDZwOYafUlnkA1a7Qf8w6n1CBThOLmNpY36mRMYq7pnk6L8SllzUuKnrk7NjxIirzrqYa+y+kKXhi4hOuX/qSNbOYzMrBK7jRd2zDF1YyeiqR9EhZyF/GYk01m7CKMzZ3zOSpHGoHvG6ZAcXHYH+7wr5VgvtJM1rRRLiWKpoi6nQqoHg4n59yhoicYXN+uPv3ckLS/boJ/Rd+OwW80fsi/Pw== recx@D7470"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Tim Austwick"
+}

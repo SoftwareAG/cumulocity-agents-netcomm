@@ -52,11 +52,11 @@ override_attributes(
      "attachedEnvs" => ["<customer>-multinode-prod"],
      "token" => "<kubernetes_token>",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.0.16",
+     "images-version" => "9.20.0",
      "images2install" => [ "cep","cep-small" ]
   },
   "cumulocity-karaf" => {
-    "version" => "9.0.16-1",
+    "version" => "9.20.0-1",
     "memory_left_for_system" => "4096",
     "notification" => true,
     "oort-enabled" => true,
@@ -78,6 +78,7 @@ override_attributes(
       "management.admin.password" => "", # insert password
       "tenant.admin.password" => "", # insert password
       "admin.password" => "", # insert password
+      "sysadmin.password" => "", # leave this param empty to prevent the platform from creating sysadmin user for new tenants
       #"system.two-factor-authentication.enabled" => false,
       #"system.two-factor-authentication.enforced.group" => "admins",
       #"system.two-factor-authentication.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",

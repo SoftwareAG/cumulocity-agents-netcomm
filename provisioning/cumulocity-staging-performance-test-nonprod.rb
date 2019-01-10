@@ -41,11 +41,11 @@ volume_size_for_ontoplb   = 10
 private_ips_for_ontoplb   = ["172.31.7.247","172.31.7.248","172.31.7.249"]
 
 ssagent_count = 1
-flavour_for_ssagent       = "c4.xlarge"
+flavour_for_ssagent       = "c4.2xlarge"
 volume_size_for_ssagent   = 20
 private_ips_for_ssagent   = ["172.31.7.250"]
 ssagent_tags  = [
-        ["sms-gateway"],
+        ["ssl-management-agent-server"],
 ]
 
 mongodb_count = 3
@@ -59,11 +59,11 @@ mongodb_cluster = [
 ]
 
 kubernetes_master_count   = 3
-flavour_for_masters       = "c4.xlarge"
+flavour_for_masters       = "c4.2xlarge"
 volume_size_for_masters   = 12
 private_ips_for_masters   = ["172.31.7.55","172.31.7.56","172.31.7.57"]
 
-kubernetes_worker_count   = 2
+kubernetes_worker_count   = 3
 flavour_for_workers       = "c4.2xlarge"
 volume_size_for_workers   = 30
 private_ips_for_workers   = ["172.31.7.61","172.31.7.62","172.31.7.63","172.31.7.64","172.31.7.65"]
@@ -103,7 +103,7 @@ for step in initStep..7
         add_machine_options(
             bootstrap_options: {
                 private_ip_address: "#{private_ips_for_mongodb[i-1]}",
-                instance_type: "{flavour_for_mongodb}",
+                instance_type: "#{flavour_for_mongodb}",
                 block_device_mappings: [{
                     'device_name': '/dev/sda1',
                     'ebs': {

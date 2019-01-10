@@ -1,0 +1,7 @@
+{
+  "id": "beatailowiecka",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8gz0sl2T4Us5UfiAzxTI+ZuUr0GH4aBfX1sHLodwuCrvQcyZ6pwOEfgE+9DZ9bJbdZ+mnKIWJv8tOekTMR3Wcpn/FCtIbgSqD5WAjLXsrU25jUJNUcnh/XO7oFsYUfh2WPeAtQKA+Qf5JVxuKkCoRb0kUNDk/T94cgaSeTVIriT8R8F2mOT2RhyNchKR1vdoEzrsrkleOIQ8XMp6GjZNRQAxKpHullSEf8FjWDxYdVQD1KZ3vdMQToveMSQN0BCKTJ5jAxbP/Jf/JBkN4+b3Q/dwr5SI5gEE/mrH8kIpY9E90Jzfg8t1MaD1tR6UzCzN+uQ/FvppIm0RRgKZLUz+T beata@beata-Latitude-E5550"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Beata Ilowiecka"
+}

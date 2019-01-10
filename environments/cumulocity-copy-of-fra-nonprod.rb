@@ -1,15 +1,11 @@
-name "cumulocity-multinode-central-1-prod"
+name "cumulocity-copy-of-fra-nonprod"
 
-description "The production multinode environment in Frankfurt"
+description "The Copy of production multinode environment in Ireland"
 
 cookbook_versions({
-#'cumulocity'=>'= 8.18.0',
-#'cumulocity'=>'= 9.0.11',
-'cumulocity'=>'= 9.16.3',
-#'cumulocity-kubernetes'=>'= 8.18.0',
-#'cumulocity-kubernetes'=>'= 9.0.11',
-'cumulocity-kubernetes'=>'= 9.16.3',
-'cumulocity-ssagents'=>'= 8.18.1'
+    "cumulocity": "= 9.16.3",
+    "cumulocity-kubernetes": "= 9.16.3",
+    "cumulocity-ssagents": "= 9.16.3"
 })
 
 default_attributes(
@@ -53,26 +49,25 @@ override_attributes(
         }
     },
   "cumulocity-kubernetes" => {
-     "deployK8S4env" => "cumulocity-multinode-central-1-prod",
-     "attachedEnvs" => ["cumulocity-multinode-central-1-prod"],
-     "token" => "ta0d1q.byxyv9wyee5rr7we",
-     "docker-registry-image" => "cumulocity/registry:2.6.1",
+     "deployK8S4env" => "cumulocity-copy-of-fra-nonprod",
+     "attachedEnvs" => ["cumulocity-copy-of-fra-nonprod"],
+     "token" => "ta0d1q.byxyv9wyee5rr8we",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.19.19",
+     "images-version" => "9.16.2",
 #     "images2install" => [ "cep" ]
-     "images2install" => [ "" ]
+     "images2install" => []
   },
   "cumulocity-karaf" => {
     "version" => "9.16.2-1",
     "ssa-version" => "9.16.2-1",
-    "memory_left_for_system" => "8192",
-    "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24" ],
+    "memory_left_for_system" => "2048",
+    "management-access" => [ "100.64.251.0/24" ],
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,
-    "revDNSname" => "cepfra.cumulocity.com",
+#    "revDNSname" => "cepfra.cumulocity.com",
 #    "openrelayIP" => "cepfra.cumulocity.com",
-    "openrelayIP" => "52.58.146.111",
+    "openrelayIP" => "100.64.251.25",
     "CUMULOCITY_LICENCE_KEY" => "654176766f1252e56d6eeaa877986f0737164b0e1c6110c048237e0d406f280c27d650ededb20ed6d9f0979696d2da05270a25dc76527ce89c722952e2ab7eb6"
   },
   "cumulocity-core" => {
@@ -86,7 +81,7 @@ override_attributes(
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => true,
 #            "errorMessageRepresentationBuilder.includeDebug" => "false",
-      "default.tenant.applications" => "administration,devicemanagement,cockpit",
+      "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
       "management.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "tenant.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
@@ -105,7 +100,7 @@ override_attributes(
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",  <--for 8.19
 #      "migration.tomongo.default" => "MONGO_READ_WRITE", <--for 8.19
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",
-      "default.tenant.microservices" => "device-simulator, jwireless, sms-gateway",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep, jwireless, sms-gateway",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,  
       "system.support-user.enabled" => true, 
@@ -153,9 +148,9 @@ override_attributes(
   },
     "cumulocity-mongo" => {
         "installEnterprise" => true,
-        "version" => "3.6",
         "initRunUser" => "mongod",
         "initRunGroup" => "mongod",
+        "version" => "3.6.8-1.el7",
         #'members-check' => false,
         #"installEnterprise" => true, # migration change
         "wiredtiger-cache" => 6,
@@ -177,13 +172,12 @@ override_attributes(
         "certificate_domain" => "cumulocity.com",
         "temp_chunkin" => false,
         "useKarafWebsocket" => true,
-	"useLUAforSSLcerts" => true,
+	"useLUAforSSLcerts" => nil,
 	"useLUAforLimits" => true,
 	"useLUAforHealthCheck" => nil,
         "nginx" => {
-            "real_ip_balancing" => true,
             "NGinxPort" => "openresty",
-            "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
+             "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1"
         }
   },
      "cumulocity-ssagents" => {
@@ -198,9 +192,12 @@ override_attributes(
           'leshan_cluster_tenant_password' => "c+ULIQOPu79"
         }
   },
-    'cumulocity-application' => {
-      'vendme' => "application-vendme"
-  },
+    "vendme-platform-agent" => {
+      "use-internal-proxy" => nil,
+      "install-agent" => nil,
+      "install-platform" => nil,
+      "install-tracker" => nil
+    },
     'cumulocity-rsyslog' => {
 #      'cross-env-log-server' => "cumulocity-multinode-prod",
 #      'log-server-ext-address' => "monitoring.cumulocity.com"

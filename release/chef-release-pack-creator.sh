@@ -49,6 +49,8 @@ c8yCB=(
       ["cumulocity-rsyslog"]=1.0.0
 ["cumulocity-backup-script"]=latest
 ["cumulocity-monitoring-agent"]=latest
+   ["cumulocity-opsmanager"]=latest
+ ["cumulocity-chaos-monkey"]=latest
 )
 
 declare -A comCB
@@ -72,9 +74,13 @@ comCB=(
                  ["windows"]=3.1.0
                 ["iptables"]=4.2.0
                      ["apt"]=6.1.0
-                ["homebrew"]=4.2.0
+                ["homebrew"]=4.3.0
          ["compat_resource"]=12.19.0
                     ["ohai"]=5.1.0
+              ["filesystem"]=1.0.0
+                     ["lvm"]=4.5.2
+            ["elastic_repo"]=1.1.1
+  ["yum-plugin-versionlock"]=0.2.1
 )
 
 declare -A mnOnlyC8yCB

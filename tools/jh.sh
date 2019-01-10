@@ -17,7 +17,7 @@ f_pre_run(){
 
 f_pre_run
 
-keywords="JH|KEY|USER|PORT|TFA|OPT_[A-Z]|PASSWD"
+keywords="JH|((JH|ALT_[A-Z]_)?(KEY|USER|PASSWD|PORT|TFA|OPTS))|(OPT_[A-Z])"
 
 _jh_complete(){
   local cur prev jhcmd
@@ -52,7 +52,7 @@ _jh_complete(){
     sshenv="$prev"
     hostlist="$( eval echo '${!'${sshenv}'[@]}' | ${sed} -r -e "s/(${keywords})[ ]?//g" -e 's/ /\n/g' | sort )"
     for h in ${hostlist} ; do
-      h="${h%%|*}"
+      h="${h%%|*}" ; h="${h%%:*}"
       cleanhostlist+="${h,,} "
     done
     COMPREPLY=( $( compgen -W "${cleanhostlist}" -- ${cur} ) )
@@ -315,12 +315,12 @@ f_env_print(){
     else
       B_NH=${BbFw}  F_NH=
     fi
-    if [[ ${p} != ${p%%|*} ]] ; then
+    if [[ ${p} != ${p%%|*} || ${p} != ${p%%:*} ]] ; then
       optBit='+'
     else
       optBit=' '
     fi
-    p="${p,,}" ; p="${p%%|*}"
+    p="${p,,}" ; p="${p%%|*}" ; p="${p%%:*}"
     if ${tablePrint:-false} ; then
       if ${firstLine} ; then
         printf "${BbFw}${tl}${deviderLineA}${tm}${deviderLineB}${tr}${colorReset}\n"
@@ -364,14 +364,15 @@ f_env_conf(){
   echo "${sshenv}=("
 
   for section in \
-          'Jumphost settings:JH[^ ]*'              \
-    'Standard hosts settings:USER|KEY|PORT|PASSWD' \
-              'Extra options:OPT_[A-Z]'            \
-                      'Hosts:.+'                   \
+          'Jumphost settings:JH[^ ]*'                          \
+    'Standard hosts settings:USER|KEY|PORT|PASSWD'             \
+        'Alternative options:ALT_[A-Z]_(USER|KEY|PORT|PASSWD)' \
+              'Extra options:OPT_[A-Z]'                        \
+                      'Hosts:.+'                               \
   ; do
     conf_title="$( cut -d: -f 1 <<< "${section}" )"
     conf_regex="$( cut -d: -f 2 <<< "${section}" )"
-    for k in $( egrep -o "${conf_regex}" <<< "${keysString}" ) ; do
+    for k in $( egrep -o -w "${conf_regex}" <<< "${keysString}" ) ; do
       conf_section+="$( printf '%'${KeyLength}'s="%s"' '["'$k'"]' "$( eval echo \${$sshenv["$k"]} )" )
 " # newline
       keysString="${keysString//$k }"
@@ -408,13 +409,28 @@ f_ssh_opt_set(){
         sshopts2=( $( whiptail --inputbox "Type your extra options here:" 8 ${cols:-78} "" --title "Extra options" 3>&1 1>&2 2>&3 ) ) || f_abort
       fi
     fi
-    if [[ ${sshhost##*|} != ${sshhost} ]] ; then
-      read -a opts < <( ${sed} -r 's/(.)/\1 /g' <<< "${sshhost##*|}" )
-      for o in ${opts[@]} ; do
-        local tmpopt="$sshenv["OPT_${o}"]"
-        sshopts3+=" ${!tmpopt}"
-      done
-    fi
+  fi
+  if [[ ${sshhost##*|} != ${sshhost} ]] ; then
+    local extramapping="${sshhost##*|}"
+    read -a opts < <( ${sed} -r 's/(.)/\1 /g' <<< "${extramapping%%:*}" )
+    for o in ${opts[@]} ; do
+      local tmpopt="$sshenv["OPT_${o}"]"
+      sshopts3+=" ${!tmpopt}"
+    done
+  fi
+}
+
+f_ssh_alt_set(){
+  if [[ ${sshhost##*:} != ${sshhost} ]] ; then
+    local extramapping="${sshhost##*:}"
+    read -a opts < <( ${sed} -r 's/(.)/\1 /g' <<< "${extramapping%%|*}" )
+    for o in ${opts[@]} ; do
+      #alts="$( eval egrep -o "(ALT_${o}_[A-Z]+)[ ]?" <<< '${!'${sshenv}'[@]}' | sort )"
+      alts="$( egrep -o "ALT_${o}_[A-Z]+[ ]?" <<< "$( eval echo '${!'${sshenv}'[@]}' )" | sort )"
+        for a in ${alts} ; do
+          eval override_$( ${sed} -r 's/ALT_[A-Z]_//g' <<< "$a" )="$sshenv["${a}"]"
+        done
+    done
   fi
 }
 
@@ -453,10 +469,11 @@ jh(){
   [[ -z ${!jhport} && ! -z ${defaultjhport}    ]] && jhport="defaultjhport"
   [[ -z ${!jhtfa}  && ! -z ${defaultjhtfa}     ]] &&  jhtfa="defaultjhtfa"
   # normal hosts parameters
-  declare   user=$sshenv["USER"]
-  declare    key=$sshenv["KEY"]
-  declare     pw=$sshenv["PASSWD"]
-  declare   port=$sshenv["PORT"]
+  f_ssh_alt_set
+  declare   user="${override_USER:-$sshenv["USER"]}"
+  declare    key="${override_KEY:-$sshenv["KEY"]}"
+  declare     pw="${override_PASSWD:-$sshenv["PASSWD"]}"
+  declare   port="${override_PORT:-$sshenv["PORT"]}"
   [[ -z ${!user}   && ! -z ${defaultuser}      ]] &&   user="defaultuser"
   [[ -z ${!key}    && ! -z ${defaultkey}       ]] &&    key="defaultkey"
   [[ -z ${!port}   && ! -z ${defaultport}      ]] &&   port="defaultport"
@@ -500,14 +517,14 @@ jh(){
       sftp) fullcmd="${precmd}${cmd} \
         ${!port:+-P'${!port}'} \
         ${!key:+-i'${!key}'} \
-        ${!user:+'${!user}'@}${!host}"
+        ${!user:+'${!user}'@}${!host}${sftppath:+:$sftppath}"
         ;;
          *) f_color_pr red "ERROR: UNKNOWN COMMAND!" ;;
     esac
   elif [[ -z ${!host} ]] ; then
     f_color_pr red "ERROR: NO EXISTING HOST SPECIFIED!"
   else
-    declare -g sshhosttoprint="$( ${sed} -r 's/[|].*//g' <<< "${sshhost,,}" )"
+    declare -g sshhosttoprint="$( ${sed} -r 's/[|:].*//g' <<< "${sshhost,,}" )"
     f_color_pr cyn "${cmd:-ssh} connection via '${!jh}' to '${!host}' (${sshenv}/${sshhosttoprint}) ${!user:+"as '${!user}' "}${!key:+"with '${!key}' "}"
     proxycmd="
       ${prejhcmd}ssh -A -W %h:%p
@@ -528,7 +545,7 @@ jh(){
         -o ProxyCommand='${proxycmd}' \
         ${!port:+-P'${!port}'} \
         ${!key:+-i'${!key}'} \
-        ${!user:+'${!user}'@}${!host}"
+        ${!user:+'${!user}'@}${!host}${sftppath:+:$sftppath}"
         ;;
          *) f_color_pr red "ERROR: UNKNOWN COMMAND!" ;;
     esac
@@ -643,9 +660,12 @@ the following options can be specified inside an array:
   • ${B}KEY${N}      : overrides '${B}defaultkey${N}'
   • ${B}PASSWD${N}   : defines a password for autologin as an alternative to ssh key
   • ${B}PORT${N}     : overrides '${B}defaultport${N}'
+  • ${B}ALT_X_Y${N}  : defines a set of options '${B}X${N}' and overrides one of the basic options ( ${B}USER${N}, ${B}KEY${N}, ${B}PASSWD${N} or ${B}PORT${N} ) specified by '${B}Y${N}'
+               To map an alternative set of options to an host, write the relative letter after a colon symbol ':' in the hostname definition (check in the example below)
   • ${B}OPT_X${N}    : defines custom option '${B}X${N}' that can be mapped to an individual host
-               To map a custom option to an host write the relative letter after a pipe symbol '|' in the hostname definition (check in the example below)
-               ${B}NOTE${N}: OPT_X parameters are ignored for sftp connections and will be appended to the command for ssh connection only.
+               To map a custom option to an host, write the relative letter after a pipe symbol '|' in the hostname definition (check in the example below)
+               ${B}NOTE1${N}: OPT_X parameters are ignored for sftp connections and will be appended to the command for ssh connection only.
+               ${B}NOTE2${N}: ALT_X_Y and OPT_X parameters can be used together.
 
   ${U}Jumphosts${N}:
   • ${B}JHUSER${N}   : overrides '${B}defaultjhuser${N}'
@@ -657,7 +677,7 @@ the following options can be specified inside an array:
   • ${B}JHOPTS${N}   : overrides '${B}defaultjhoptions${N}'
 
 ${B}Example${N}:
-${B}NOTE${N}: this configuration shows an example of usage for each options, even though some them
+${B}NOTE${N}: this configuration shows an example of usage for each options, even though some of them
       are not supposed to be configured at the same time (e.g.: Password and OTP).
 
 ${D}	customer_prod=(${N}
@@ -675,12 +695,15 @@ ${D}	         [\"USER\"]=\"centos\"${N}
 ${D}	          [\"KEY\"]=\"\${keyfolder}/customer.pem\"${N}
 ${D}	       [\"PASSWD\"]=\"Passw0rd01\"${N}
 ${D}	         [\"PORT\"]=\"10022\"${N}
+${D}	  # -- Alternative options:${N}
+${D}	   [\"ALT_A_USER\"]=\"alternativeusername\"              # this is mapped on chef${N}
+${D}	    [\"ALT_A_KEY\"]=\"/path/to/another/sshkey\"          # this is mapped on chef${N}
 ${D}	  # -- Extra options:${N}
-${D}	        [\"OPT_A\"]=\"-l alternativeusername\"     # this is mapped on chef${N}
-${D}	        [\"OPT_B\"]=\"-i /path/to/another/sshkey\" # this is mapped on chef${N}
-${D}	        [\"OPT_C\"]=\"-L 8111:localhost:8111\"     # this is mapped on lb${N}
+${D}	        [\"OPT_A\"]=\"-o UserKnownHostsFile=/dev/null\"  # this is mapped on chef${N}
+${D}	        [\"OPT_B\"]=\"-o StrictHostKeyChecking=no\"      # this is mapped on chef${N}
+${D}	        [\"OPT_C\"]=\"-L 8111:localhost:8111\"           # this is mapped on lb${N}
 ${D}	  # -- Hosts:${N}
-${D}	      [\"chef|AB\"]=\"10.0.0.12\"${N}
+${D}	    [\"chef:A|AB\"]=\"10.0.0.12\"${N}
 ${D}	         [\"lb|C\"]=\"10.0.1.5\"${N}
 ${D}	        [\"core1\"]=\"10.0.1.21\"${N}
 ${D}	        [\"core2\"]=\"10.0.1.22\"${N}
@@ -780,6 +803,7 @@ ${U}Description${N}: like the 'remote management' category, also this one uses '
 but '${B}sftp${N}' client will be used to connect on designated host.
 
 ${B}JHSFTP${N}: very similar to 'jhssh' command, '${B}jhsftp${N}' is used to establish an sftp connection to an host.
+You can specify a file to download direcly by adding '${B}:/path/to/file${N}' as you would do with a normal sftp command.
 
 ${B}JHSFTPJ${N}: '${B}jhsftpj${N}' is a shortcut which will autoselect the jumphost of the chosen environment for an sftp connection.
 
@@ -923,7 +947,7 @@ jhmulticmd(){
   ln -snf "${dateTag}" "${multicmdOutputEnvDir}/latest"
   printf "${blu}%-30s --- %10s   %s${neu}  \n" "HOST" "PID" "STATUS"
   for n in ${multicmdHosts[@]} ; do
-    pureName="${n%%|*}"
+    pureName="${n%%|*}" ; pureName="${pureName%%:*}"
     if [[ -z ${stdinData} ]] ; then
       jhssh "${sshenv}" "${pureName,,}" -q -o ConnectTimeout=${sshConfigConnectTimeout:-${sshCCT:-10}} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@" &>> "${multicmdOutputSubDir}/${pureName,,}.log" &
     else
@@ -955,7 +979,7 @@ jhmulticmd(){
     for p in ${!bgProc[@]} ; do
       if ! kill -0 ${bgProc[p]} &>/dev/null ; then
         [[ -t 1 ]] && tput cup $(( ${endLine} - ${diffLine[p]} - 1 )) 0
-        pureName="${bgHost[p]%%|*}"
+        pureName="${bgHost[p]%%|*}" ; pureName="${pureName%%:*}"
         if wait ${bgProc[p]} ; then
           printf "${wht}%-30s --- %10s [ ${grn}%s${neu} ]\n" "${pureName,,}" "${bgProc[p]}" " DONE! "
           procLogSucceded[p]="${procLog[p]}"
@@ -1014,7 +1038,13 @@ jhmulticmd(){
 jhsftp(){
 # description: basic tool for direct sftp connections or via jumphost
 # arguments: 2
-  jh sftp "$@"
+  sftpenv="${1}"
+  sftphost="${2%%:*}"
+  if [[ "$2" != "${sftphost}" ]] ; then
+    sftppath="${2##*:}"
+  fi
+  shift 2
+  jh sftp "${sftpenv}" "${sftphost}" "$@"
 }
 
 jhsftpprint(){

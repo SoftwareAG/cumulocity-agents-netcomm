@@ -1,21 +1,19 @@
 {
-  "name": "cumulocity-4lukasz-nonprod",
-  "description": "The complete cumulocity plus multi master kubernetes env",
+  "name": "cumulocity-development-smoke",
+  "description": "The jenkins and cucumber test environment",
   "cookbook_versions": {
-    "cumulocity": "~> 9.16.3",
-    "cumulocity-kubernetes": "~> 9.16.3",
-    "cumulocity-chaos-monkey": "~> 9.20.0",
-    "cumulocity-ssagents": "~> 9.16.3"
+    "cumulocity": "= 0.6.0",
+    "cumulocity-kubernetes": "= 0.6.0",
+    "cumulocity-ssagents": "= 0.4.0"
   },
-  "json_class": "Chef::Environment",
-  "chef_type": "environment",
   "default_attributes": {
-
+    "fixhostname": false,
+    "fixhostsfile": false
   },
   "override_attributes": {
-    "domainname": "4lukasz.c8y.io",
+    "domainname": "staging-jenkins.c8y.io",
     "environment": {
-      "address": "management.4lukasz.c8y.io"
+      "address": "management.staging-jenkins.c8y.io"
     },
     "swapfilesize": 512,
     "yum": {
@@ -32,36 +30,44 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-4lukasz-nonprod",
+      "deployK8S4env": "cumulocity-development-smoke",
       "attachedEnvs": [
-        "cumulocity-4lukasz-nonprod"
+        "cumulocity-development-smoke"
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.20.0",
+      "images-version": "9.12.8",
       "images2install": [
         "cep",
         "cep-small",
         "device-simulator",
         "smartrule",
+        "jwireless",
         "apama-small",
-        "sms-gateway-server"
+        "sms-gateway",
+        "billwerk-agent-server",
+        "connectivity-agent-server",
+        "branding",
+        "cellid-agent-server",
+        "remote-access",
+        "speech-agent-server"
       ],
       "monitoring": {
         "enabled": false
       }
     },
     "cumulocity-karaf": {
-      "CUMULOCITY_LICENCE_KEY": "df4712118ff6757781dfff074ec1f40a86635b253e12226467341d97e5f8f01b6685e1668d1bc13e180f6cb11342670cfcf8699b013ffcbc8af6f9f844273a9a",
-      "version": "9.20.0-1",
-      "ssa-version": "9.20.0-1",
+      "CUMULOCITY_LICENCE_KEY": "1456d5050bb58ae50ea99079c193573bfeb769322fdec1f8e2cb599aa5026478428bd927410ba042885167daade61567a6444baeec7ce4fee6b4cec0fd0fe84d",
+      "version": "9.12.8-1",
+      "ssa-version": "9.12.8-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
-      "CUMULOCITY_LICENCE_DIR": "/etc/cumulocity/",
+      "CUMULOCITY_LICENCE_DIR": null,
       "management-access": [
         "0.0.0.0/0"
       ],
+      "openrelayIP": "172.31.15.250",
       "karaf": {
         "memory": {
           "xms": "1024M"
@@ -69,21 +75,20 @@
       }
     },
     "cumulocity-cep": {
-      "version": "9.12.2-1",
-      "package_name": "cep",
       "properties": {
         "esperha.storage": "/mnt/esperha-storage"
       }
     },
     "cumulocity-mongo": {
-      "sharedkey-content": "1y7LbnZkJvDgtUOHN+8L++DAABlWdLO6kA+GXR23vl5QlslmqlB6goKQmDzgeMdA\nGC38ZcPLejm2Mnvk3TF7QHlhW1OvQZFOk600/Z9qbkzIjfQLNU4RIOdWq7pTq70w\nsyIbBXAZ+ZS2AUQnObxRiToIeDxakzjuiTQbwfYz7Z2bA/hJMrKNdI//IeRl93gt\nMAV5f07l5WQQ8OcKjqYlga1J2izcVmcbd6Q0PCtp38MrmBe3iEn34FpiAgDVZp06\ncuNJDUwr2YF90KWLs53g85vfhybNchxISXMSJBFApId8cuVeZ2oRKf7HjcyrsRR6\nUxk/74MMKvsXdxG2e2pfgTywyZ5Ndk5pGKXj6TZ5QY4Qw2QHryVPyRT90xogdDtg\nA4A8iSWRBgnrtJP+qvlfBSCpdN0EqmHqGuWcqzkc4sjpO9ubQdqvBFni9X0A6mxE\nWwGH2tk6uWQU4+OPfoQkVgUCFgepFWuzWHj9TA71sn0hmDLnBZDUh3yKcEz++qKy\nchfOPrnhSPpvZI0762F5LdIp7cuAwMC4wEYSSloawzqBnCpvQ0BsFAyprhZhFDdV\nUP67nmp/q5oaXgdr3TJOTGkRgcPXRSuf4zV4nKdMdyy7HM9o24LGXiJ40b3CZGhm\nyG0tRoTRNTd6hgFQWYp8hT4EK++kf60boGhUSPxvlkbERZ/mx4kPGY1fYWkRN8Y8\nbZXDnwu+A3kqCwSTJ6tjzrtqlQ51z5rJWl14eIo2Ienfym1tquoPNMeksQroivRB\n1ZXlA3v68+nHy2HljMsLUjt8oxho3HhN1RcDXazf4b39n5nZS4wOxjvPvqSrX4bw\n/Hwh8wL2+IDfOLl1yAO6isrEXApJSTiXFt5fSbaPW6T7hCiCkNPzdS+FYLArozNE\nYrzvmkbcHfMqqTCdWDSOWV7pRqvUARRFi0CvjWh85zmt4LG7IY/GBKJvmSAfFX1O\n5OCavvQrRbnH/m1xW7NHXbeWH80K",
       "mongodb.initUser": "init-root",
-      "mongodb.initPassword": "felix",
       "version": "3.6"
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "3.6",
+      "version": "9.12.8"
+    },
+    "cumulocity-ssagents": {
+      "useTags": true,
       "lwm2m-agent": {
         "host_fwUpdate": "34.251.8.163",
         "leshan_cluster_tenant": "management",
@@ -91,28 +96,29 @@
         "leshan_cluster_tenant_password": "passw0rd_a"
       }
     },
-    "cumulocity-ssagents": {
-      "useTags": true
-    },
     "cumulocity-core": {
       "properties": {
-        "system.connectivity.microservice.url": "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
-        "c8y.internal.users": "service_cep,service_apama",
-        "device-simulator.microservice.url": "http://localhost:8111/service/device-simulator",
-        "smartrule.microservice.url": "http://localhost:8111/service/smartrule",
-        "smsGateway.host": "http://localhost:8111/service/sms-gateway",
-        "default.tenant.microservices": "device-simulator, smartrule, sms-gateway, cep",
+        "system.connectivity.microservice.url": "http://127.0.0.1:8092/",
+        "default.tenant.microservices": "device-simulator, smartrule, cep, tenant-sla-monitoring",
+        "device-simulator.microservice.url": "http://localhost:8181/service/device-simulator",
+        "smartrule.microservice.url": "http://localhost:8181/service/smartrule",
         "sendDashboardAgent.url": "http://localhost:19191/report",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
-        "migration.tomongo.default": "MONGO_READ_WRITE",
         "contextService.rdbmsURL": "jdbc:postgresql://localhost",
         "contextService.rdbmsDriver": "org.postgresql.Driver",
         "contextService.rdbmsUser": "postgres",
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": "false",
+        "migration.tomongo.default": "MONGO_READ_WRITE_POSTGRES_WRITE",
+        "smsGateway.host": "http://localhost:8181/service/messaging",
+        "email.host": "postfix.cumulocity-staging7-nonprod.svc.cluster.local",
         "email.from": "no-reply@app.domain.com",
+        "system.two-factor-authentication.enabled": true,
+        "system.two-factor-authentication.max.inactive": "10",
+        "system.two-factor-authentication.enforced": "ashutosh",
+        "system.two-factor-authentication.enforced.group": "ashutoshTfaTest",
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
         "passwordReset.email.subject": "Password reset",
@@ -123,9 +129,9 @@
       }
     },
     "cumulocity-external-lb": {
-      "landing_page": "https://4lukasz.c8y.io/apps/devicemanagement",
-      "paas_default_page": "https://$http_host/apps/devicemanagement",
-      "paas_public_default_page": "https://4lukasz.c8y.io/apps/dmpublic",
+      "landing_page": "https://staging-jenkins.c8y.io/apps/devicemanagement",
+      "paas_default_page": "https://$http_host/apps/$defapp",
+      "paas_public_default_page": "https://staging-jenkins.c8y.io/apps/dmpublic",
       "usePostgresForPaaS": false,
       "paas_redirection": true,
       "temp_chunkin": false,
@@ -133,10 +139,14 @@
       "useSSL": true,
       "useHSTS": false,
       "useMQTTsupport": true,
+      "useMQTTlogs": false,
       "useMasterForPushOperations": false,
       "useKarafWebsocket": true,
       "proxy_cache": true,
       "certificate_domain": "staging.c8y.io",
+      "useLUAforLimits": true,
+      "useLUAforSSLcerts": true,
+      "useLUAforHealthCheck": true,
       "nginx": {
         "NGinxPort": "openresty",
         "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"

@@ -4,6 +4,7 @@ host="127.0.0.1"
 port="8111"
 user="admin"
 pass='$PASSWORD'
+tfatoken=
 
 dryrun=false
 
@@ -27,7 +28,7 @@ f_exec(){
 
 f_list_tenants(){
   cmd=$( cat << EOF
-curl -s -X GET http://${host}${port:+:$port}/tenant/tenants?pageSize=2000 -u "management/${user}:${pass}" -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' | jq '.tenants[].id' 2>/dev/null | tr -d \"
+curl -s -X GET http://${host}${port:+:$port}/tenant/tenants?pageSize=2000 -u "management/${user}:${pass}" ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' | jq '.tenants[].id' 2>/dev/null | tr -d \"
 EOF
   ) ; eval "$cmd"
 }
@@ -62,6 +63,7 @@ fi
 
 if [[ -f "${file}" ]] ; then
   . "${file}"
+  tfaopt="${tfatoken:+-H 'tfatoken: $tfatoken' }"
 else
   f_color_pr red "ERROR: file missing or not defined. Default names for examples will be provided"
   dryrun=true
@@ -82,14 +84,14 @@ L)
 C)
   f_color_pr cyn "# check management tenant"
   cmd=$( cat << EOF
-curl -s -X GET http://${host}${port:+:$port}/tenant/options/migration.tomongo/id_mapping.state -u 'management/${user}:${pass}' -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' | python -m json.tool
+curl -s -X GET http://${host}${port:+:$port}/tenant/options/migration.tomongo/id_mapping.state -u 'management/${user}:${pass}' ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' | python -m json.tool
 EOF
   ) ; f_exec
   f_color_pr cyn "# check other tenants"
   for t in $( f_list_tenants | egrep -v '^management$' ) ; do
   echo " -- $t"
   cmd=$( cat << EOF
-curl -s -X GET http://${host}${port:+:$port}/tenant/options/migration.tomongo/id_mapping.state -u '${t}/${user}\$:${pass}' -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' | python -m json.tool
+curl -s -X GET http://${host}${port:+:$port}/tenant/options/migration.tomongo/id_mapping.state -u '${t}/${user}\$:${pass}' ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' | python -m json.tool
 EOF
   ) ; f_exec
   done
@@ -98,21 +100,21 @@ EOF
   f_color_pr cyn "# REVERT: "
   f_color_pr cyn "# set everything to postgres_read_write"
   cmd=$( cat << EOF
-curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options/each -u "management/${user}:${pass}" -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "postgres_read_write", "category": "migration.tomongo", "key": "*.state"}'
+curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options/each -u "management/${user}:${pass}" ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "postgres_read_write", "category": "migration.tomongo", "key": "*.state"}'
 EOF
   ) ; f_exec
 ;;
 1)
   f_color_pr cyn "# set management to postgres_read_write_mongo_write"
   cmd=$( cat << EOF
-curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u "management/${user}:${pass}" -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "postgres_read_write_mongo_write", "category": "migration.tomongo", "key": "*.state"}'
+curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u "management/${user}:${pass}" ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "postgres_read_write_mongo_write", "category": "migration.tomongo", "key": "*.state"}'
 EOF
   ) ; f_exec
 ;;
 2)
   f_color_pr cyn "# set other tenants to postgres_read_write_mongo_write"
   cmd=$( cat << EOF
-curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options/each -u "management/${user}:${pass}" -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "postgres_read_write_mongo_write", "category": "migration.tomongo", "key": "*.state"}'
+curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options/each -u "management/${user}:${pass}" ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "postgres_read_write_mongo_write", "category": "migration.tomongo", "key": "*.state"}'
 EOF
   ) ; f_exec
 ;;
@@ -121,7 +123,7 @@ EOF
   for t in $( f_list_tenants | egrep -v '^management$' ) ; do
   echo " -- $t"
   cmd=$( cat << EOF
-curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u '${t}/${user}\$:${pass}' -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write_postgres_write", "category": "migration.tomongo", "key": "*.state"}'
+curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u '${t}/${user}\$:${pass}' ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write_postgres_write", "category": "migration.tomongo", "key": "*.state"}'
 EOF
   ) ; f_exec
   done
@@ -129,14 +131,14 @@ EOF
 3a)
   f_color_pr cyn "# set other tenants to mongo_read_write_postgres_write"
   cmd=$( cat << EOF
-curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options/each -u "management/${user}:${pass}" -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write_postgres_write", "category": "migration.tomongo", "key": "*.state"}'
+curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options/each -u "management/${user}:${pass}" ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write_postgres_write", "category": "migration.tomongo", "key": "*.state"}'
 EOF
   ) ; f_exec
 ;;
 4)
   f_color_pr cyn "# set management to mongo_read_write_postgres_write"
   cmd=$( cat << EOF
-curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u "management/${user}:${pass}" -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write_postgres_write", "category": "migration.tomongo", "key": "*.state"}'
+curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u "management/${user}:${pass}" ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write_postgres_write", "category": "migration.tomongo", "key": "*.state"}'
 EOF
   ) ; f_exec
 ;;
@@ -145,7 +147,7 @@ EOF
   for t in $( f_list_tenants | egrep -v '^management$' ) ; do
   echo " -- $t"
   cmd=$( cat << EOF
-curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u '${t}/${user}\$:${pass}' -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write", "category": "migration.tomongo", "key": "*.state"}'
+curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u '${t}/${user}\$:${pass}' ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write", "category": "migration.tomongo", "key": "*.state"}'
 EOF
   ) ; f_exec
   done
@@ -153,14 +155,14 @@ EOF
 5a)
   f_color_pr cyn "# set other tenants to mongo_read_write"
   cmd=$( cat << EOF
-curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options/each -u "management/${user}:${pass}" -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write", "category": "migration.tomongo", "key": "*.state"}'
+curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options/each -u "management/${user}:${pass}" ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write", "category": "migration.tomongo", "key": "*.state"}'
 EOF
   ) ; f_exec
 ;;
 6)
   f_color_pr cyn "# set management to mongo_read_write"
   cmd=$( cat << EOF
-curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u "management/${user}:${pass}" -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write", "category": "migration.tomongo", "key": "*.state"}'
+curl -v -X PUT http://${host}${port:+:$port}/tenant/migration/options -u "management/${user}:${pass}" ${tfaopt}-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{ "value": "mongo_read_write", "category": "migration.tomongo", "key": "*.state"}'
 EOF
   ) ; f_exec
 ;;

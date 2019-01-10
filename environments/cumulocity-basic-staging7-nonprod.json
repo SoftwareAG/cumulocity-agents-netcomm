@@ -2,9 +2,9 @@
   "name": "cumulocity-basic-staging7-nonprod",
   "description": "The Basic Staging 7 environment for test releases",
   "cookbook_versions": {
-    "cumulocity": "= 0.6.0",
-    "cumulocity-kubernetes": "= 0.6.0",
-    "cumulocity-ssagents": "= 0.4.0"
+    "cumulocity": "= 9.19.2",
+    "cumulocity-kubernetes": "= 9.19.2",
+    "cumulocity-ssagents": "= 9.19.2"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -35,7 +35,7 @@
       ],
       "token": "1e3145.2ff901941c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.16.1",
+      "images-version": "9.20.1",
       "images2install": [
         "cep",
         "cep-small",
@@ -48,19 +48,22 @@
         "connectivity-agent-server",
         "branding",
         "cellid-agent-server",
-        "remote-access",
+        "cloud-remote-access",
         "speech-agent-server"
       ],
       "docker-registry-image": "cumulocity/registry:2.6.1",
       "monitoring": {
-        "enabled": false
+        "enabled": true,
+        "dashboard-only": true,
+        "components": {
+          "heapster": true
+        }
       }
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "9cfda1bd57553c744d813970705747ef3c3c1f97ad669c0ff9a3c8bba40675705f458e46b46bd9710d7bc99594fe3030d7637457e94c6982ab9de77acce75806",
-      "version": "9.16.1-1",
-      "ssa-version": "9.16.1-1",
-      "memory_left_for_system": "2048",
+      "version": "9.20.1-1",
+      "ssa-version": "9.20.1-1",
       "notification": true,
       "cep-server-enabled": true,
       "CUMULOCITY_LICENCE_DIR": null,
@@ -82,11 +85,12 @@
     "cumulocity-mongo": {
       "sharedkey-content": "U1nZc+UvINPiri3RRriSERbpUcJpgtvITqiwHAIN+dYcdOEGAEv2P2nKCRhRaUvB\nXy1eI/gwcFjKGFcqB/iRQ4EPL/KRJ9LKajOmbmOuMTFeYQ276d9QnnXE5Wkj10sC\nBjjSkVAeF/erOKvFdJed15Q+QXsUslwswPOxFgkUYDw7emIvkJsd6BYRS0yD8Sj3\n4ykeHs/+UK/bnPstnQfLMBq+yyLNkbY/UbKOT1gBY9A6B1MBWLlaPU9gMYO+YKMd\nauARB5WolUVjbA5Hgt0WY14tao/KYEJPig3LCrlcBsoe+W4BRHXgcIqrYNO3c2Yy\nggpNSDP2cyU8LF6uaKzr6GQqa4Gw8CwgSUbR6ylp8i/EeCrzgklHdMqclF4E7b4R\n0nAk/hZu7am2TVRIU3Lzly30jInXh9Zcd34CId8Q14VWDPh+SN3gHeCfG5yPWEsS\nm6fDTzCFK84BV/6lPG1dBxSD8qYygK+GSHzkGc2SJEmbXUz+q1xMe5dzz8g7ukTa\n0HbjAseVS1/2dtSxNgJxzerC/zOhslN6Zu2dGl3pjUuuH+GcapBfn7kmSxtOTfw8\nsfi5OejOMHEtKSiKnBNwW7vpjgq+0F9H/pbJIhiYgNlENBFkZraU1EXxNLr/jdd6\nJS3eL3/T76MYHaBe48tUfbFhaGMLG8p9EbMEqg/x5EGhs+px/np9ci6qTDaeRbFP\nP764aXLoWyL6UcDyQDl6+Oge9TJaoq5STn9TngdJendQDuZTNUcsSAlK9Tz6mb0i\nGbzFMZqpqQHBmw+3WYannksDwA++1K1zS8z0JFhNIfAG0up2cIEUHSFOwe9F4isM\n3IA/razLXXZXIFdFxFcMg9vMY3DcBvgwXwgWAs56z+tzlY5SwswVpEbMAeUBpMIB\nIvMWtkHom9Bb4vDcHBw+HxRaevHyTS40eyKBqZMFROa6B78YOwRUssMulaCBb+cA\nFOWpBFHpH884t51c7jrBLPCmjL/8",
       "mongodb.initUser": "init-root",
-      "mongodb.initPassword": "StagBasic777^^^"
+      "mongodb.initPassword": "StagBasic777^^^",
+      "version": "3.6"
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "9.16.1"
+      "version": "9.20.1"
     },
     "cumulocity-ssagents": {
       "useTags": true,
@@ -99,6 +103,7 @@
     },
     "cumulocity-core": {
       "properties": {
+        "microservice.docker.registry.chunk.size": "200000000",
         "system.connectivity.microservice.url": "http://localhost:8111/service/connectivity",
         "default.tenant.microservices": "device-simulator, smartrule, cep, sms-gateway",
         "device-simulator.microservice.url": "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
@@ -106,6 +111,7 @@
         "sendDashboardAgent.url": "http://localhost:19191/report",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
+        "c8y.internal.users": "service_apama-small",
         "contextService.rdbmsURL": "jdbc:postgresql://localhost",
         "contextService.rdbmsDriver": "org.postgresql.Driver",
         "contextService.rdbmsUser": "postgres",
