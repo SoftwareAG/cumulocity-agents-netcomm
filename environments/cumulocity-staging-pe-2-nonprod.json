@@ -38,7 +38,7 @@
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.12.14",
+      "images-version": "9.12.16",
       "images2install": [
         "cep",
         "cep-small",
@@ -55,8 +55,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "6bb04eb257929e13114e1526b0b55bd1a8861b3acc87a20d7ca4c63eb5e93a4390776b1d9953ca8096a579a2e8947e4b9c46ddbab0a5e0c38362fe141374b493",
-      "version": "9.12.14-1",
-      "ssa-version": "9.12.14-1",
+      "version": "9.12.16-1",
+      "ssa-version": "9.12.16-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -83,7 +83,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "9.12.14"
+      "version": "9.12.16"
     },
     "cumulocity-ssagents": {
       "useTags": true,
@@ -108,7 +108,7 @@
         "contextService.rdbmsUser": "postgres",
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
-        "auth.checkBlockingFromOutside": "false",
+        "auth.checkBlockingFromOutside": "true",
         "migration.tomongo.default": "MONGO_READ_WRITE",
         "smsGateway.host": "http://localhost:8181/service/messaging",
         "email.host": "postfix.cumulocity-staging-pe-2-nonprod.svc.cluster.local",

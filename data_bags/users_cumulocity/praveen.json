@@ -1,0 +1,7 @@
+{
+  "id": "praveen",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDeHpHsTlOiyRBHv9B8/yuh6CJECqkEiSdiDT7pvm5lwkzIMwjrmcTJaYBO6sumGUjkLpop/YsrEiHprkwP7jcgGgk6CyCWtziAqrYnEZ7AlUmcqq0j6S/0RH0z0EfrVXGyYU2Zuw2akUvsOu/1p39K2JcsJw7zDzhIn3DKfz/SfAd2EeTSYbPdO+huGCXqPtpoDUM2ZujL4BH9sG/3OwVCYJpYDLE6nmoxzNEEAUDDb4s3paI1T1dK5QcSoiBdOon/PZLb6U5W3sNergMCZYlRGPlFYX9sju25zOppWcLUzEbo+ocCQHnkPejhxztZynddksxvfTrYWEbtdoZy5wUx prva@pravc8y01"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Praveen Vaidya"
+}
