@@ -33,6 +33,6 @@ flavour_for_dev = "m3.large"
 dev_id = "smoke"
 
 ### END OF CLUSTER CONFIGURATION ###
-machine "#{environment}_#{dev_id}" do
+machine "#{dev_id}" do
   action :destroy
 end
