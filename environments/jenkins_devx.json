@@ -8,9 +8,9 @@
     "fixhostsfile": false
   },
   "override_attributes": {
-    "domainname": "staging-jenkins.c8y.io",
+    "domainname": "cumulocity.com",
     "environment": {
-      "address": "management.staging-jenkins.c8y.io"
+      "address": "cumulocity.com"
     },
     "swapfilesize": 512,
     "yum": {
