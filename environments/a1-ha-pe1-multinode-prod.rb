@@ -177,6 +177,11 @@ override_attributes(
       'karaf' => {
         'reaction' => 'alert'
      }
+  },
+  'cumulocity-opsmanager' => {
+     'mmsGroupId' => '5c174fff4cfd37d6811474ae',
+     'mmsApiKey' => '5c3eef3992890e62c83df304802284ca4f7ef31c089e3e59dd92f4cd',
+     'mmsBaseUrl' => 'https://opsmanager.mongodb.a1.digital'
   }
 
 )
