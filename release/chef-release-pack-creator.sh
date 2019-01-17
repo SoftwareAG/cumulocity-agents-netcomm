@@ -14,12 +14,13 @@ f_color_pr(){
   printf "$COLOR""$@\n"'\e[m'
 }
 
-while getopts "Svik:c:a:" opt ; do
+while getopts "Svik:m:c:a:" opt ; do
   case $opt in
     S) SOLO=true ;;
     v) VERBOSE=true ;;
     i) interactive=true ;;
     k) karafver="${OPTARG}" ;;
+    m) mainver="${OPTARG}" ;;
     c) cepver="${OPTARG}" ;;
     a) ssaver="${OPTARG}" ;;
   esac
@@ -28,6 +29,11 @@ done
 if [[ -z $karafver || -z $cepver ]] ; then
   f_color_pr red "ERROR: specify release version for both karaf and cep!" && exit 1
 fi
+
+mainver="${mainver:=$karafver}"
+
+f_color_pr cyn "Main version:"
+f_color_pr wht "  ${mainver}"
 
 if [[ -z $ssaver ]] ; then
   ssaver="$( sed -r 's/^(([0-9]+[.]){2})[0-9]+-1/\11-1/g' <<< "${karafver}" )"
@@ -44,13 +50,14 @@ template_archive="${thisdir}/chef-solo-12-template.tgz"
 
 declare -A c8yCB
 c8yCB=(
-              ["cumulocity"]=0.6.0
-     ["cumulocity-ssagents"]=0.4.0
-      ["cumulocity-rsyslog"]=1.0.0
-["cumulocity-backup-script"]=latest
+                 ["cumulocity"]=0.6.0
+        ["cumulocity-ssagents"]=0.4.0
+         ["cumulocity-rsyslog"]=1.0.0
+   ["cumulocity-backup-script"]=latest
 ["cumulocity-monitoring-agent"]=latest
-   ["cumulocity-opsmanager"]=latest
- ["cumulocity-chaos-monkey"]=latest
+        ["cumulocity-filebeat"]=latest
+      ["cumulocity-opsmanager"]=latest
+    ["cumulocity-chaos-monkey"]=latest
 )
 
 declare -A comCB
@@ -79,6 +86,7 @@ comCB=(
                     ["ohai"]=5.1.0
               ["filesystem"]=1.0.0
                      ["lvm"]=4.5.2
+                ["filebeat"]=2.1.0
             ["elastic_repo"]=1.1.1
   ["yum-plugin-versionlock"]=0.2.1
 )
@@ -183,7 +191,7 @@ if ${SOLO} ; then
 ##########
 
   export prefixName="cumulocity-chef-solo"
-  cat > "${prefixName}-v${karafver}.sh" <<< '#!/bin/bash
+  cat > "${prefixName}-v${mainver}.sh" <<< '#!/bin/bash
 
 EXTRACTONLY=false
 AUTO=false
@@ -359,8 +367,8 @@ __ARCHIVE_BELOW__'
 
   ( cd "${thisdir}"
     tar cz${VERBOSE+v}f - "chef-solo"
-  ) | tee "${prefixName}-v${karafver}.tgz" >> "${prefixName}-v${karafver}.sh"
-  chmod a+x "${prefixName}-v${karafver}.sh"
+  ) | tee "${prefixName}-v${mainver}.tgz" >> "${prefixName}-v${mainver}.sh"
+  chmod a+x "${prefixName}-v${mainver}.sh"
 else
   f_color_pr cyn "Creating directory structure..."
   for d in \
@@ -463,11 +471,9 @@ EOF
   f_color_pr cyn "Creating tarball..."
   export prefixName="cumulocity-chef-release-pack"
   ( cd "${thisdir}"
-    tar cz${VERBOSE+v}f "${prefixName}-v${karafver}.tgz" "cumulocity-chef"
+    tar cz${VERBOSE+v}f "${prefixName}-v${mainver}.tgz" "cumulocity-chef"
   )
   echo
   f_color_pr cyn "Eliminating temporary folder..."
   rm -rf${VERBOSE+v} "${relDir}"
 fi
-
-

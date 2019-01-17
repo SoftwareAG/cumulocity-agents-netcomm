@@ -1,0 +1,7 @@
+{
+  "id": "rohit",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEApuaKMYTCug39vd5iovH+neeHDr9t9eaFUCH1amKjMQrLk+4IDV9P6GIfBJF0TT1nkT9adNnGIoVpK/z8crgX7HgAY2Q8lrdJSwwsMt6UsHaUWRm8mFc2PSthvzh09hmXqaReDYSa8yHWWFv6VdrMbU3sDVf1QEmc96cb+4688g87iiQZa3NJbNM5/fuKqFDC/sJBzGVkSwMW2S57/8TrVTxpGn+27wnu2MeWrG/q7ctYKF34kjjkvKfjBaW3KlOpcTa1C1vK1sV+7gsmUT5uPudmmJcj/L852gtbHcQyFcqfwW9MW59PSZmU5xrzyXLCoUWOm3FHaTYHATlW7knZyw=="],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Rohit Joshi"
+}

@@ -112,7 +112,7 @@ for step in initStep..7
                 },{
                     device_name: '/dev/xvdf',
                     ebs: {
-                      volume_size: 16384,
+                      volume_size: 15000,
                       delete_on_termination: true,
                       volume_type: 'gp2' }
                 },

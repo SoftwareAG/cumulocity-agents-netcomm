@@ -1,29 +1,30 @@
+# frozen_string_literal: true
+
 name "cumulocity-mongo"
 description "Mongo setup for replica sets"
 
-override_attributes(
-
+default_attributes(
   "ulimit": {
     "users": {
       "root": {
-        "filehandle_soft_limit": 150000,
-        "filehandle_hard_limit": 160000,
-        "process_soft_limit": 150000,
-        "process_hard_limit": 160000
+        "filehandle_soft_limit": 1048576,
+        "filehandle_hard_limit": 1048576,
+        "process_soft_limit": 1048576,
+        "process_hard_limit": 1048576
       },
       "mongod": {
-        "filehandle_soft_limit": 150000,
-        "filehandle_hard_limit": 160000,
-        "process_soft_limit": 150000,
-        "process_hard_limit": 160000
+        "filehandle_soft_limit": 1048576,
+        "filehandle_hard_limit": 1048576,
+        "process_soft_limit": 1048576,
+        "process_hard_limit": 1048576
       }
     }
   },
-      "systemd": {
-        "ulimits": {
-            "DefaultLimitNOFILE": 64000,
-            "DefaultLimitNPROC": 64000,
-        }
+  "systemd": {
+    "ulimits": {
+      "DefaultLimitNOFILE": 1048576,
+      "DefaultLimitNPROC": 1048576
+    }
   },
   "nagios" => {
     "checks" => {
@@ -34,7 +35,6 @@ override_attributes(
     }
   }
 )
-
 
 run_list(
   "role[cumulocity-base]",
