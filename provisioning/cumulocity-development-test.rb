@@ -41,7 +41,7 @@ machine "#{environment}_#{dev_id}" do
             block_device_mappings: [{
               'device_name': '/dev/sda1',
               'ebs': {
-               'volume_size': 100,
+               'volume_size': 200,
                'delete_on_termination': true }
           }]
         },

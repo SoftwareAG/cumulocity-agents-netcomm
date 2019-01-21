@@ -33,10 +33,10 @@ flavour_for_dev = "m3.large"
 dev_id = "dev-e"
 
 ### END OF CLUSTER CONFIGURATION ###
-machine "#{environment}_#{dev_id}" do
+machine "#{dev_id}" do
     add_machine_options(
         bootstrap_options: {
-            private_ip_address: "#{private_ips}",
+            # private_ip_address: "#{private_ips}",
             instance_type: "#{flavour_for_dev}"
         }
     )
