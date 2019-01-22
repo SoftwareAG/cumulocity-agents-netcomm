@@ -48,7 +48,7 @@ _jh_complete(){
   if [[ ${COMP_CWORD} == 1 ]] && ! [[ ${jhcmd} =~ ${limit0arg} ]] ; then
     COMPREPLY=( $( compgen -W "${envlist}" -- ${cur} ) )
     return 0
-  elif [[ ${COMP_CWORD} == 2 ]] && ! [[ ${jhcmd} =~ ${limit1arg} ]] ; then
+  elif [[ ${COMP_CWORD} == 2 ]] && ! [[ ${jhcmd} =~ (${limit1arg}|${limit0arg}) ]] ; then
     sshenv="$prev"
     hostlist="$( eval echo '${!'${sshenv}'[@]}' | ${sed} -r -e "s/(${keywords})[ ]?//g" -e 's/ /\n/g' | sort )"
     for h in ${hostlist} ; do
@@ -57,7 +57,7 @@ _jh_complete(){
     done
     COMPREPLY=( $( compgen -W "${cleanhostlist}" -- ${cur} ) )
     return 0
-  elif [[ ${COMP_CWORD} -ge 3 ]] && ! [[ ${jhcmd} =~ ${limit2arg} ]] ; then
+  elif [[ ${COMP_CWORD} -ge 3 ]] && ! [[ ${jhcmd} =~ (${limit2arg}|${limit1arg}|${limit0arg}) ]] ; then
     COMPREPLY=( $( compgen -W "$( ${sed} -r -n '/sshopts[1]=/,/other/{/other/d;s/"(.*)"([ ]+)"[|](.*)"[ ]+OFF [\]/\1/gp}' ${thisscript} )" -- ${cur} ) )
     return 0
   fi
