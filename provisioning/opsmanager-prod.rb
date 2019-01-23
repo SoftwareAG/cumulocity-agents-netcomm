@@ -22,7 +22,7 @@ with_machine_options({
 })
 
 opsmanagers_count = 3
-external_ips_for_opsmanagers = ['18.185.184.239', '18.184.230.68', '18.194.244.115']
+external_ips_for_opsmanagers = ['18.185.184.239', '18.194.244.115', '3.120.247.228']
 internal_ips_for_opsmanagers = ['172.31.10.161', '172.31.10.163', '172.31.10.182']
 opsmanager_mongodb_cluster = [
   ['replicaset:rs09:P'],
