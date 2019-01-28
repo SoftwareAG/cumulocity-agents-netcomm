@@ -1,34 +1,38 @@
-name "opsmanager-nonprod"
-description "Ops Manager nonprod environment"
+# frozen_string_literal: true
 
-cookbook_versions({
-'cumulocity'=>'= 9.16.3',
-'cumulocity-opsmanager'=>'= 9.16.3'
-})
+name 'opsmanager-nonprod'
+description 'Ops Manager nonprod environment'
+
+cookbook_versions(
+  'cumulocity' => '= 9.20.3',
+  'cumulocity-opsmanager' => '= 9.20.3'
+)
 
 default_attributes(
- "fixhostname" => false,
- "fixhostsfile" => false,
- "useVaults" => false,
+  'fixhostname' => false,
+  'fixhostsfile' => false,
+  'useVaults' => false
 )
 
 override_attributes(
-  "swapfilesize" => 1024,
+  'swapfilesize' => 0,
   'cumulocity-rsyslog' => {
-    'cross-env-log-server' => "cumulocity-multinode-prod",
-    'log-server-ext-address' => "monitoring.cumulocity.com"
+    'cross-env-log-server' => 'cumulocity-multinode-prod',
+    'log-server-ext-address' => 'monitoring.cumulocity.com'
   },
   'cumulocity-opsmanager' => {
-     'mmsGroupId' => '5c00d7f4c8eabe2224af36eb',
-     'mmsApiKey' => '5c00e5b1c8eabe2224af9f585c9c0f6b417bc652ba92c898f81bfbb0',
-     'mmsBaseUrl' => 'http://ip-172-31-28-30.eu-central-1.compute.internal:8080',
-     'mongoUri' => 'mongodb://172.31.28.33:27019,172.31.28.34:27019,172.31.28.35:27019/?maxPoolSize=150&replicaSet=rs09'
+    'mmsGroupId' => '5c4711a298ff422958492cc6',
+    'mmsApiKey' => '5c47135e98ff4229584939f0f0587d9a1ae3f83728530888500b03d7',
+    'mmsBaseUrl' => 'http://ip-172-31-28-30.eu-central-1.compute.internal:8080',
+    'mongoUri' => 'mongodb://172.31.28.30:27019,172.31.28.31:27019,172.31.28.32:27019/?maxPoolSize=150&replicaSet=rs09'
   },
   'cumulocity-mongo' => {
-     'initRunUser' => 'mongod',
-     'initRunGroup' => 'mongod',
+    'initRunGroup' => 'mongod',
+    'initRunUser' => 'mongod',
+    'repo-version' => '4.0',
+    'wiredtiger-cache' => 4
   },
-  "cumulocity-karaf" => {
-    "version" => "9.16.0-1",
-  },
+  'cumulocity-karaf' => {
+    'version' => '9.16.0-1'
+  }
 )

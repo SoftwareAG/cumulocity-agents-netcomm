@@ -13,10 +13,10 @@ default_attributes(
   'fixhostname' => false,
   'fixhostsfile' => false,
   'swapfilesize' => 0,
-#   'cumulocity-rsyslog' => {
-#     'cross-env-log-server' => 'cumulocity-multinode-prod',
-#     'log-server-ext-address' => 'monitoring.cumulocity.com'
-#   },
+  #   'cumulocity-rsyslog' => {
+  #     'cross-env-log-server' => 'cumulocity-multinode-prod',
+  #     'log-server-ext-address' => 'monitoring.cumulocity.com'
+  #   },
   'cumulocity-opsmanager' => {
     # 'appBlock' => '/dev/nvme2n1',
     # 'certificate' => 'opsmanager-internal',
@@ -33,5 +33,5 @@ default_attributes(
   },
   'cumulocity-karaf' => {
     'version' => '9.16.0-1'
-  },
+  }
 )
