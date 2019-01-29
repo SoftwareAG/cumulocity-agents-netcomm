@@ -36,7 +36,7 @@ _jh_complete(){
     configfile2="${HOME}/.jh.conf"
     for configfile in "${configfile1}" "${configfile2}" ; do
       if [[ -f "$configfile" ]] ; then
-        for e in $( ${sed} -n -r 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
+        for e in $( ${sed} -n -r -e '/^[ \t]*[#]/d' -e 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
           _jh_f_reg "$e"
         done
         envlist="${unsortedEnvlist[@]//DEF_*}"
@@ -107,7 +107,7 @@ configfile1="$( dirname ${thisscript} )/$( basename ${thisscript} sh)conf"
 configfile2="${HOME}/.jh.conf"
 for configfile in "${configfile1}" "${configfile2}" ; do
   if [[ -f "$configfile" ]] ; then
-    for e in $( ${sed} -n -r 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
+    for e in $( ${sed} -n -r -e '/^[ \t]*[#]/d' -e 's/([^=]+)=\(/\1/gp' "${configfile}" ) ; do
       f_reg "$e"
     done
     . "${configfile}"
@@ -458,7 +458,7 @@ jh(){
   if ${envPrint:-false} ; then
     f_env_print && return
   elif ${envConf:-false} ; then
-    f_env_conf && return
+    f_env_conf | ${sed} -r 's@'${keyfolder}'@${keyfolder}@g' && return
   else
     [[ -z ${sshhost} ]] && ! ${gotojh:-false} && f_ssh_host_set
   fi
@@ -1040,11 +1040,11 @@ jhmulticmd(){
       currentColor=$(( cIndex++ % 7 ))
       f_color_pr "${colorChoice[currentColor]}" "=== $( basename ${log} ) ==="
       if ${noColors:-false} ; then
-        sed '1,3d' "${log}" | tail -n${linesToTail:-+1}
+        ${sed} '1,3d' "${log}" | tail -n${linesToTail:-+1}
       else
         while IFS= read line ; do
           f_color_pr "${colorChoice[currentColor]}" "${line}"
-        done < <( sed '1,3d' "${log}" | tail -n${linesToTail:-+1} )
+        done < <( ${sed} '1,3d' "${log}" | tail -n${linesToTail:-+1} )
       fi
       f_color_pr "${colorChoice[currentColor]}" "===================="
       echo
@@ -1149,8 +1149,22 @@ jhglobalconf(){
     done
   fi
 
-  printf "# ENVIRONMENT MAPPINGS:\n\n"
+  local normalenvlist="${envlist[@]}"
+  local commonenvlist
   for E in "${envlist[@]}" ; do
+    if [[ $E =~ [^\ ]+_common ]] ; then
+      normalenvlist="${normalenvlist//$E}"
+      commonenvlist+="$E "
+    fi
+  done
+
+  printf "# COMMON ENVIRONMENT MAPPINGS:\n\n"
+  for E in ${commonenvlist} ; do
+    jh envconf "${E}"
+  done
+
+  printf "# STANDARD ENVIRONMENT MAPPINGS:\n\n"
+  for E in ${normalenvlist} ; do
     jh envconf "${E}"
   done
 }
