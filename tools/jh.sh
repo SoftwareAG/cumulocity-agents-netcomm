@@ -17,7 +17,7 @@ f_pre_run(){
 
 f_pre_run
 
-keywords="JH|((JH|ALT_[A-Z]_)?(KEY|USER|PASSWD|PORT|TFA|OPTS))|(OPT_[A-Z])"
+keywords="JH([0-9]+)?|((JH|ALT_[A-Z]_)?(KEY|USER|PASSWD|PORT|TFA|OPTS))|(OPT_[A-Z])"
 
 _jh_complete(){
   local cur prev jhcmd
@@ -1111,7 +1111,17 @@ done )
 keyfolder="${keyfolder}"
 
 # OPTIONAL:
-$( for o in 'defaultuser="$USER"' 'defaultjhuser=$defaultuser' 'defaultjhkey="/.ssh/keys/id_rsa"' 'defaultjhoptions=""' 'outputBaseDir=""' ; do
+$( for o in \
+    'defaultuser="$USER"' \
+    'defaultkey="$HOME/.ssh/id_rsa"' \
+    'defaultport="22"' \
+    'defaultjhuser=$defaultuser' \
+    'defaultjhkey="$HOME/.ssh/keys/id_rsa"' \
+    'defaultjhport="22"' \
+    'defaultjhtfa="true"' \
+    'defaultjhoptions=""' \
+    'outputBaseDir=""' \
+  ; do
   v="$( cut -d= -f1 <<< "${o}" )"
   k="$( cut -d= -f2 <<< "${o}" )"
   [[ -z ${!v} ]] && printf '# '
@@ -1135,15 +1145,16 @@ jhglobalconf(){
   printf '#!/bin/bash\n\n'
   jhshowset
   envConf=true
+  declare -A conf_shortcuts
 
   if [[ ! -z ${deflist[@]} ]] ; then
     printf "# SPECIAL DEFINITIONS:\n\n"
     local def
     for D in "${deflist[@]}" ; do
-      def="$( eval echo '${!'$D'[@]}' )"
+      def=( $( eval echo '${!'$D'[@]}' ) )
       echo "${D}=("
       for k in "${def[@]}" ; do
-        echo "  [$k]='$( eval echo '${'${D}'['$k']}' )'"
+        echo "  [\"$k\"]='$( eval echo '${'${D}'['$k']}' )'"
       done
       printf ")\n\n"
     done
@@ -1158,15 +1169,40 @@ jhglobalconf(){
     fi
   done
 
+  envinshortcuts=( $(
+    for k in "${!DEF_shortcuts[@]}" ; do
+      cut -d'|' -f1 <<< "$k"
+    done | sort -u
+  ) )
+
   printf "# COMMON ENVIRONMENT MAPPINGS:\n\n"
   for E in ${commonenvlist} ; do
     jh envconf "${E}"
+    if [[ ${envinshortcuts[@]//$E} != ${envinshortcuts[@]} ]] ; then
+      for k in "${!DEF_shortcuts[@]}" ; do
+        if [[ ${k//$E} != ${k} ]] ; then
+          local v="$( ${sed} -r 's@(.+)/(.+)@${\1["\2"]}@g' <<< "${k}" )"
+          printf '%20s="%s"\n' "${DEF_shortcuts[$k]}" "$v"
+          conf_shortcuts["${DEF_shortcuts[$k]}"]="$( eval echo "$v" )"
+        fi
+      done
+      printf '\n'
+    fi
   done
+
+  relinkcmd='${sed} -r'
+  if ${relink:-true} && [[ ! -z ${conf_shortcuts[@]} ]] ; then
+    for m in "${!conf_shortcuts[@]}" ; do
+      relinkcmd+=" -e 's/"${conf_shortcuts[$m]//./[.]}"/\$$m/g'"
+    done
+  else
+    relinkcmd="cat"
+  fi
 
   printf "# STANDARD ENVIRONMENT MAPPINGS:\n\n"
   for E in ${normalenvlist} ; do
     jh envconf "${E}"
-  done
+  done | eval "$relinkcmd"
 }
 
 f_map_cmd(){
