@@ -77,10 +77,17 @@ for step in initStep..3
           opsmanager_mongodb_cluster[i - 1].each do |m_tag|
             tag m_tag
           end
-          role 'cumulocity-base'
-          role 'cumulocity-mongo'
-          role 'cumulocity-opsmanager-agent'
-          role 'cumulocity-opsmanager-server'
+
+          if step == 1
+            role 'cumulocity-base'
+            role 'cumulocity-opsmanager-backing'
+          end
+
+          if step == 2
+            role 'cumulocity-opsmanager-agent'
+            role 'cumulocity-opsmanager-server'
+          end
+
         end
       end
     end
