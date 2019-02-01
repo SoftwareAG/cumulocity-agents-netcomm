@@ -171,8 +171,14 @@ override_attributes(
    "cumulocity-cep" => {
        "properties" => {
          " esperha.storage" => "/mnt/esperha-storage/"
-     },
-  },
+       },
+    },
+
+    "cumulocity-opsmanager" => {
+        "mmsGroupId" => "5c53ea45b324c77c8d24b13a",
+        "mmsApiKey" => "5c53ea6fb324c77c8d24b1cce80622ca1f58493d12e1362e8844e001",
+        "mmsBaseUrl" => "http://nxopsprd01v.db.prd.nif.nordex.nexinto.com:8080",
+    },
 
    "cumulocity-ssagents" => {
 	"scriptDir" => "/root",

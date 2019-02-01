@@ -33,7 +33,7 @@ add_machine_options(
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
 opsmanagers_count = 3
-flavours_for_opsmanagers = ['c5.2xlarge', 'c5.4xlarge', 'c5.2xlarge']
+flavours_for_opsmanagers = ['c5d.4xlarge', 'c5d.4xlarge', 'c5d.4xlarge']
 private_ips_for_opsmanagers = ['172.31.28.30', '172.31.28.31', '172.31.28.32']
 ebses_for_opsmanagers = [2000, 16384, 16384]
 opsmanager_mongodb_cluster = [
