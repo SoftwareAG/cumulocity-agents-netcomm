@@ -50,6 +50,7 @@
         "billwerk-agent-server",
         "connectivity-agent-server",
         "branding",
+        "sigfox-agent",
         "cellid-agent-server",
         "cloud-remote-access",
         "speech-agent-server"
