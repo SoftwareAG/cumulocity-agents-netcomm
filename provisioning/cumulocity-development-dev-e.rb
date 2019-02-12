@@ -43,9 +43,19 @@ machine "#{dev_id}" do
     tags ["standalone:mongod7:"]
     attributes(
       ddclient: {
-        domain: "#{dev_id}.cumulocity.com"
+        domain: "#{dev_id}.cumulocity.com",
+        login:  "13107q-m2mdyndns",
+        password: "p2AN8xG9)e.K",
+        use: "web, web=checkip.dyndns.com/, web-skip='IP Address'",
+        server: "members.dyndns.org"
       }
     )
     recipe 'cumulocity-ddclient'
-    role 'cumulocity-dev-singlenode' 
+    role 'cumulocity-base'
+    recipe 'cumulocity::mongo'
+    role 'cumulocity-kubernetes'
+    role 'cumulocity-common-cores'
+    recipe 'cumulocity::karaf_dev-x-agents'
+    role 'cumulocity-mn-active-core'
+    recipe 'cumulocity::external-lb'
 end

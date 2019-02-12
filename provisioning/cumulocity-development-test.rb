@@ -55,4 +55,5 @@ machine "#{environment}_#{dev_id}" do
     )
     recipe 'cumulocity-ddclient'
     role 'cumulocity-dev-singlenode' 
+    role 'cumulocity-mn-active-core'
 end
