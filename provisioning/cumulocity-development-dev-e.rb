@@ -31,31 +31,32 @@ add_machine_options(
 private_ips = "172.31.18.177"
 flavour_for_dev = "m3.large"
 dev_id = "dev-e"
-
 ### END OF CLUSTER CONFIGURATION ###
-machine "#{dev_id}" do
-    add_machine_options(
-        bootstrap_options: {
-            # private_ip_address: "#{private_ips}",
-            instance_type: "#{flavour_for_dev}"
+
+for step in 1..2
+  machine "#{dev_id}" do
+      add_machine_options(
+          bootstrap_options: {
+              # private_ip_address: "#{private_ips}",
+              instance_type: "#{flavour_for_dev}"
+          }
+      )
+      tags ["standalone:mongod7:"]
+      attributes(
+        ddclient: {
+          domain: "#{dev_id}.cumulocity.com",
+          login:  "13107q-m2mdyndns",
+          password: "p2AN8xG9)e.K",
+          use: "web, web=checkip.dyndns.com/, web-skip='IP Address'",
+          server: "members.dyndns.org"
         }
-    )
-    tags ["standalone:mongod7:"]
-    attributes(
-      ddclient: {
-        domain: "#{dev_id}.cumulocity.com",
-        login:  "13107q-m2mdyndns",
-        password: "p2AN8xG9)e.K",
-        use: "web, web=checkip.dyndns.com/, web-skip='IP Address'",
-        server: "members.dyndns.org"
-      }
-    )
-    recipe 'cumulocity-ddclient'
-    role 'cumulocity-base'
-    recipe 'cumulocity::mongo'
-    role 'cumulocity-kubernetes'
-    role 'cumulocity-common-cores'
-    recipe 'cumulocity::karaf_dev-x-agents'
-    role 'cumulocity-mn-active-core'
-    recipe 'cumulocity::external-lb'
+      )
+      recipe 'cumulocity-ddclient'
+      role 'cumulocity-base'
+      recipe 'cumulocity::mongo'
+      role 'cumulocity-common-cores'
+      role 'cumulocity-kubernetes'
+      recipe 'cumulocity::karaf_dev-x-agents'
+      role 'cumulocity-mn-active-core' if step == 2
+  end
 end
