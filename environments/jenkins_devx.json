@@ -70,6 +70,22 @@
         "leshan_cluster_tenant_password": "passw0rd_a"
       }
     },
+    "cumulocity-kubernetes": {
+      "deployK8S4env": "cumulocity-development-multikube-nonprod",
+      "attachedEnvs": [
+        ""
+      ],
+      "token": "1e3145.2ff901841c78af1d",
+      "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
+      "images-version": "9.16.0",
+      "images2install": [
+      
+      ],
+      "monitoring": {
+        "enabled": true,
+        "dashboard-only": true
+      }
+    },
     "cumulocity-core": {
       "properties": {
         "system.connectivity.microservice.url": "http://127.0.0.1:8092/",
