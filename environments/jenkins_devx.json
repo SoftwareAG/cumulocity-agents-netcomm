@@ -34,7 +34,7 @@
       "ssa-version": null,
       "memory_left_for_system": "2048",
       "notification": true,
-      "cep-server-enabled": true,
+      "cep-server-enabled": false,
       "CUMULOCITY_LICENCE_DIR": null,
       "management-access": [
         "0.0.0.0/0"

@@ -19,12 +19,12 @@ if [ ! -z ${CUMULOCITY_NODE_NAME} ]; then
     echo "Node name updated to ${CUMULOCITY_NODE_NAME}"
 fi
 
-# if [ ! -z ${CUMULOCITY_KUBERNETES_IMAGE} ]; then
-#     cat ${OUTPUT_FILE} | \
-#     jq '.override_attributes["cumulocity-kubernetes"]["images-version"] = env.CUMULOCITY_KUBERNETES_IMAGE' > ${OUTPUT_FILE}'.tmp';
-#     mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
-#     echo "Image version updated to ${CUMULOCITY_KUBERNETES_IMAGE}"
-# fi
+if [ ! -z ${CUMULOCITY_KUBERNETES_IMAGE} ]; then
+    cat ${OUTPUT_FILE} | \
+    jq '.override_attributes["cumulocity-kubernetes"]["images-version"] = env.CUMULOCITY_KUBERNETES_IMAGE' > ${OUTPUT_FILE}'.tmp';
+    mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
+    echo "Image version updated to ${CUMULOCITY_KUBERNETES_IMAGE}"
+fi
 if [ ${ITS_SNAPSHOT} == 'snapshot' ]; then
     cat ${OUTPUT_FILE} | \
     jq '.override_attributes["yum"]["repositories"]["cumulocity"]["url"] = "https://cumulocity:ACceP=m+2m@yum.cumulocity.com/centos/7/cumulocity-testing/x86_64/"' > ${OUTPUT_FILE}'.tmp';
