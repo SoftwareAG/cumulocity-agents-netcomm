@@ -88,6 +88,9 @@
     },
     "cumulocity-core": {
       "properties": {
+        "management.admin.password":"b9ffdcca5d8bde8d57562963de3572f2971a840a3c1d40c434738bed731bcb6c",	
+        "admin.password":"b9ffdcca5d8bde8d57562963de3572f2971a840a3c1d40c434738bed731bcb6c",			
+        "sysadmin.password":"ba150527caf1471b21bbe71ce4d95fcdf8597c865ab72523d42b65929f59b3ec",	
         "system.connectivity.microservice.url": "http://127.0.0.1:8092/",
         "default.tenant.microservices": "device-simulator, smartrule, cep, tenant-sla-monitoring",
         "device-simulator.microservice.url": "http://localhost:8181/service/device-simulator",
