@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 INPUT_FILE=$1
 OUTPUT_FILE="auto_provisioning_env.json"
