@@ -20,6 +20,9 @@ if [ ! -z ${CUMULOCITY_NODE_NAME} ]; then
 fi
 
 if [ ! -z ${CUMULOCITY_KUBERNETES_IMAGE} ]; then
+    if [ ${ITS_SNAPSHOT} == 'snapshot' ]; then
+      CUMULOCITY_KUBERNETES_IMAGE=`curl https://K8Simages:K8S\^imAgEs5000%@resources.cumulocity.com/kubernetes-images/images-latest.txt`
+    fi
     cat ${OUTPUT_FILE} | \
     jq '.override_attributes["cumulocity-kubernetes"]["images-version"] = env.CUMULOCITY_KUBERNETES_IMAGE' > ${OUTPUT_FILE}'.tmp';
     mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
