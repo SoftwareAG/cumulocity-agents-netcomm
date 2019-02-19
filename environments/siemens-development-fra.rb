@@ -56,9 +56,13 @@ override_attributes(
      "images2install" => [ "" ]
   },
   "cumulocity-karaf" => {
-    "version" => "9.12.5-1",
-    "ssa-version" => "9.12.5-1",
-    "memory_left_for_system" => "2048",
+    #"version" => "9.12.5-1",
+    #"version" => "9.16.2-1",
+    "version" => "9.16.6-1",
+    #"ssa-version" => "9.12.5-1",
+    "ssa-version" => "9.12.18-1",
+    #"memory_left_for_system" => "2048",
+    "memory_left_for_system" => "5120",
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,
@@ -171,6 +175,20 @@ override_attributes(
 #      'cross-env-log-server' => "cumulocity-multinode-prod",
 #      'log-server-ext-address' => "monitoring.cumulocity.com"
   },
+    'cumulocity-ssagents' => {
+      'useTags' => true
+    },
+
+ 'lwm2m-agent' => {
+          'subscriptions_fetch_delay' => 60000,
+          'device-tenant_mapping_reload_delay' => 60000,
+          'host_fwUpdate' => "18.196.157.82",
+          'C8Y_lwm2mEventLoggingEnabled' => true,
+          'leshan_cluster_tenant' => "management",
+          'leshan_cluster_tenant_username' => "lwm2m-user",
+          'leshan_cluster_tenant_password' => "zaeVee1ooJIe4yam"
+        },
+
    "cumulocity-cep" => {
        "properties" => {
          " esperha.storage" => "/mnt/esperha-storage/"
