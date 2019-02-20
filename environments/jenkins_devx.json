@@ -1,5 +1,5 @@
 {
-  "name": "cumulocity-development-smoke",
+  "name": "cumulocity-development-smoke-nonprod",
   "description": "The jenkins and cucumber test environment",
   "json_class": "Chef::Environment",
   "chef_type": "environment",
