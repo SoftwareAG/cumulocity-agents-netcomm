@@ -1,7 +1,7 @@
 require 'chef/provisioning/aws_driver'
 with_driver 'aws:cumulocity:eu-central-1'
 
-environment  = 'cumulocity-development-dev-a'
+environment  = 'cumulocity-development-dev-a-nonprod'
 
 with_chef_environment environment
 with_chef_server(
