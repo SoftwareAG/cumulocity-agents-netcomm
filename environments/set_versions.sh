@@ -7,8 +7,9 @@ cp ${INPUT_FILE} ${OUTPUT_FILE}
 
 
 if [ ! -z ${CUMULOCITY_NODE_NAME} ]; then
+    CUMULOCITY_ENVIRONMENT_NAME="${CUMULOCITY_NODE_NAME}-nonprod"
     cat ${OUTPUT_FILE} | \
-    jq '."name" = env.CUMULOCITY_NODE_NAME' > ${OUTPUT_FILE}'.tmp';
+    jq '."name" = env.CUMULOCITY_ENVIRONMENT_NAME' > ${OUTPUT_FILE}'.tmp';
     mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
     # cat ${OUTPUT_FILE} | \
     # jq '.override_attributes["cumulocity-kubernetes"]["deployK8S4env"] = env.CUMULOCITY_NODE_NAME' > ${OUTPUT_FILE}'.tmp';
