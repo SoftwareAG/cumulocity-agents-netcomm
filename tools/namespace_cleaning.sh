@@ -12,7 +12,7 @@ function containsElement(){
 }
 
 function get_pods() {
- result=`kubectl -n cumulocity-development-${devx_name} get pods --no-headers=true 2>/dev/null | wc -l`
+ result=`kubectl -n cumulocity-development-${devx_name}-nonprod get pods --no-headers=true 2>/dev/null | wc -l`
  echo ${result}
 }
 
@@ -23,7 +23,7 @@ if (( $res > 0 )); then
   echo "Namespace not in allowed list"
   exit 1
 else
-  kubectl delete namespace cumulocity-development-${devx_name}
+  kubectl delete namespace cumulocity-development-${devx_name}-nonprod
   find /etc/kubernetes/ -iname "*${devx_name}*" -exec rm {} \;
   ok=$(get_pods)
   while (( $ok > 0 )); do
