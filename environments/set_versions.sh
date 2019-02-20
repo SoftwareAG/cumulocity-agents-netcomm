@@ -7,7 +7,7 @@ cp ${INPUT_FILE} ${OUTPUT_FILE}
 
 
 if [ ! -z ${CUMULOCITY_NODE_NAME} ]; then
-    CUMULOCITY_ENVIRONMENT_NAME="${CUMULOCITY_NODE_NAME}-nonprod"
+    export CUMULOCITY_ENVIRONMENT_NAME="${CUMULOCITY_NODE_NAME}-nonprod"
     cat ${OUTPUT_FILE} | \
     jq '."name" = env.CUMULOCITY_ENVIRONMENT_NAME' > ${OUTPUT_FILE}'.tmp';
     mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
