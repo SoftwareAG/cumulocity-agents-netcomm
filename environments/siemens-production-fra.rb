@@ -1,6 +1,6 @@
-name "siemens-pre-prod"
+name "siemens-aws-el7-production"
 
-description "The Siemens production environment"
+description "The Siemens Mindsphere Frankfurt production multinode environment"
 
 default_attributes(
 # DISABLED AFTER MIGRATION COMPLETE
@@ -17,11 +17,12 @@ default_attributes(
     }
 )
 override_attributes(
-#  "chef_client" => {
-#        "server_url" => "https://<url_or_ip_chef_server>"
-#  },
-  "domainname" => "mciotextension.eu1-int.mindsphere.io",
+  "chef_client" => {
+        "server_url" => "https://cumulocity-prod-chef12"
+  },
+  "domainname" => "mciotextension.eu-central.mindsphere.io",
   'yum' => {
+    'proxy' => 'http://172.21.0.57:14239',
     'repositories' => {
         'cumulocity-testing' => {
             'enabled' => "0"
@@ -36,7 +37,7 @@ override_attributes(
         }
   },
   "environment" => {
-    "address" => "mciotextension.eu1-int.mindsphere.io"
+    "address" => "manage.mciotextension.eu-central.mindsphere.io"
   },
   "java" => {
      "jdk_version" => "8"
@@ -48,25 +49,32 @@ override_attributes(
         }
     },
   "cumulocity-kubernetes" => {
-     "deployK8S4env" => "siemens-pre-prod",
-     "attachedEnvs" => ["siemens-pre-prod"],
-     "token" => "8i37gl.uz4hyr4jpwic2d4n",
+     "deployK8S4env" => "siemens-aws-el7-production",
+     "attachedEnvs" => ["siemens-aws-el7-production"],
+     "docker-registry-image" => "cumulocity/registry:2.6.1",
+     "token" => "2xa912.80gkbk4eo10vv0li",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.0.13",
-     "images2install" => [ "" ]
+#     "images-version" => "9.0.17",
+     "images-version" => "9.16.6",
+#     "images2install" => [ "cep","cep-small" ]
+     "images2install" => [ ]
   },
   "cumulocity-karaf" => {
-    #"version" => "9.12.5-1",
-    #"version" => "9.16.2-1",
+#    "version" => "8.19.27-1",
+#    "version" => "9.8.11-1",
     "version" => "9.16.6-1",
-    #"ssa-version" => "9.12.5-1",
+# For lwm2m:
     "ssa-version" => "9.12.18-1",
-    #"memory_left_for_system" => "2048",
-    "memory_left_for_system" => "5120",
+#    "ssa-version" => "9.16.6-1",
+#    "memory_left_for_system" => "2048",
+    "memory_left_for_system" => "4096",
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,
-    "CUMULOCITY_LICENCE_KEY" => "16ccda636bb309b74b5ddf4462ae110c1620f98cce085fecc755a7fdb98b1e9da7fcabbcc5a6e07a3daf7a1858471210c65085f7bf0649d02c8f845544bb300a"
+    "CUMULOCITY_LICENCE_KEY" => "31747ac9ee4e400951260921bfd20c680c681f0e5d7408f38813259fd709074c5065d01016649b1965bf66efdcc6a95495150f8efe58a3d6f465b5944d44d09e",
+    "openrelayIP" => "email-smtp.eu-west-1.amazonaws.com",
+#    "openrelayIP" => "54.171.198.162",
+     "openrelayPORT" => "587",
   },
   "cumulocity-core" => {
     "properties" => {
@@ -78,12 +86,14 @@ override_attributes(
       "contextService.tenantManagementDB" => "management",
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => false,
-#            "errorMessageRepresentationBuilder.includeDebug" => "false",
-      "default.tenant.applications" => "administration,devicemanagement,cockpit",
-      "management.admin.password" => "", # insert password
-      "tenant.admin.password" => "", # insert password
-      "admin.password" => "", # insert password
-      "system.files.max.size" => "524288000",
+      "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting",
+      "management.admin.password" => "fa0c9e480dc8778c5bd4f1fcb7d5325b6459c41bb59494cfe27d643de7a7f940", # insert password
+      "tenant.admin.password" => "fa0c9e480dc8778c5bd4f1fcb7d5325b6459c41bb59494cfe27d643de7a7f940", # insert password
+      "admin.password" => "fa0c9e480dc8778c5bd4f1fcb7d5325b6459c41bb59494cfe27d643de7a7f940", # insert password
+#      "system.files.max.size" => "524288000",
+      "system.plugin.eventprocessing.enabled" => false,
+      "system.plugin.eventprocessing.forwarding.enabled" => false,
+      "system.plugin.eventprocessing.appmodule.enabled" => false,
       #"system.two-factor-authentication.enabled" => false,
       #"system.two-factor-authentication.enforced.group" => "admins",
       #"system.two-factor-authentication.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
@@ -91,14 +101,14 @@ override_attributes(
       #"system.two-factor-authentication.senderName" => "Siemens",
       #"system.two-factor-authentication.logout-on-browser-termination" => true,
       #"system.two-factor-authentication.max.inactive" => "14",
-      #"system.two-factor-authentication.provider" => "siemens",
-      #"system.two-factor-authentication.siemens.baseUrl" => "https://m1free.rcs.msg.siemens.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
-      #"system.two-factor-authentication.siemens.baseUrl" => "https://free.rcs.siemens.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
-      #"system.two-factor-authentication.siemens.username" => "cumulocity",
-      #"system.two-factor-authentication.siemens.password" => "xBg5Wa8M",
-      ##"default.tenant.microservices" => "device-simulator, smartrule, cep",
-      "default.tenant.microservices" => "device-simulator, smartrule, cep, feature-cep-custom-rules, sigfox-agent",
-#      "migration.tomongo.default" => "POSTGRES_READ_WRITE",
+      #"system.two-factor-authentication.provider" => "<customer>",
+      #"system.two-factor-authentication.<customer>.baseUrl" => "https://m1free.rcs.msg.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
+      #"system.two-factor-authentication.<customer>.baseUrl" => "https://free.rcs.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
+      #"system.two-factor-authentication.<customer>.username" => "cumulocity",
+      #"system.two-factor-authentication.<customer>.password" => "<smspassword>",
+      ##"default.tenant.microservices" => "device-simulator,oc2-data-mapper,oc2-map-config",
+      "default.tenant.microservices" => "device-simulator,oc2-data-mapper,oc2-map-config,smartrule,cep,sigfox-agent,feature-cep-custom-rules",
+      #"migration.tomongo.default" => "POSTGRES_READ_WRITE",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,
       "system.support-user.enabled" => true,
@@ -106,12 +116,9 @@ override_attributes(
       #"tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
       "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
       "smartrule.microservice.url" => "http://127.0.0.1:8334",
-      "email.from" => "no-reply@mciotextension.eu1-int.mindsphere.io",
+      "email.from" => "no-reply@mciotextension.eu-central-rc.mindsphere.io",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "passwordReset.email.subject" => "Password reset",
-      "system.plugin.eventprocessing.enabled" => false,
-      "system.plugin.eventprocessing.forwarding.enabled" => false,
-      "system.plugin.eventprocessing.appmodule.enabled" => false,
       "passwordReset.token.email.template" => 'Dear Siemens user,\n\n\
             You or someone else entered this email address when trying to change the password of a Siemens portal user.\n\n\
             Please use the following link to reset your password: \n\
@@ -120,7 +127,7 @@ override_attributes(
             Kind regards,\n\
             Siemens support team\n',
       "passwordReset.user.not.found.email.template" => 'Hi there,\n\n\
-            you or someone else entered this email address when trying to change the password of a Siemensportal user.\n\n\
+            you or someone else entered this email address when trying to change the password of a Siemens portal user.\n\n\
             However, we could not find the email address in your account. Please contact the administrator of your \
             account to set your email address and password. If you are the administrator of the account,\
             please use the email address that you registered with.\n\n\
@@ -142,25 +149,28 @@ override_attributes(
     }
   },
     "cumulocity-mongo" => {
-#        'members-check' => false,
+        'initRunUser' => 'mongod',
+        'initRunGroup' => 'mongod',
+        #'members-check' => false,
         #"installEnterprise" => true, # migration change
-        "wiredtiger-cache" => 2,
+        "wiredtiger-cache" => 8,
         "sharedkey-content" => "XSF8n3qBBbyUZYUWuuShHra9pj8aF2tMXZ/pApCGwtf6o+nl8uJ4RcbR9jzhQcom\nmWxQ8yWy4Q5rbZF6KY+4inJXQ9Z0dRWYJ6TqTRhOF9v9OjySiSVKvQ192KIlggQ4\n/lLkiYt769/aRvPkqE5KgreFxHtxW5AufUBwoCENDSr2gu7O/wLLAahXwg+ZkCeZ\nEZ66XkU6sbuTe1BMLF3jP5FIYfqTkUnfllwYXnnyWfYWChVPF/Uu+nEg3frsb77f\nYrkRZ0pPUEU1m179c6MGLYW7VC4ObrkYHFCQcqfcEJhs+jhp8f/aA1wURe0QbxDA\nOrUkccN7enfv8h8bIfYzH9zFIba3ezvzPefez4R8WngMDh9gIWL2QYpT6cw0r9xb\nZ2mI6T2cvqbw1vXrZCzCfY7HIVE6Ui77dGBsC5E+lK8HTtP5ZxjenF45VPz8ANXD\nKVVmgCTio7muYAma+x9JHcc4SVkWOel60OhwoTum+i1lAB4a8z3kbMrqoKbjZbYb\n3hLoBYZDbj0mg77SNvge2Eiw56oHQW6Hl93H79bQsZi/mGFfRVpQwoeZAe6jJStn\n7eUnVvlB8BrTa85rafOuyZqSbSfL/NMtQiiDdvtBpxl7ySQVeT0XkSc2NJE6j4RZ\nVl/xVJKqpsZJEcxXO9TfIue6fbEjt+GzAMCoLcfetIbnBRnpGdpRjnnCndgz2v+6\nzDXaFvO6ZEV8L6HwwgZGT08FNs4dubW1Tb+RffIRYrok/uqBsQHATmi6ddRdVHNd\nLTL/TJ6Evp2k1+2KmP5AOA7vgtoHNBSEJF3HW68WidTli4GyHCRT1zjld+EL2+ye\ny0GqierUhR0Vc0RKKbaDAw3i/ppE8xnzSLFzJhIzRnOIHCLQQnUzTwz6WS7inJ6A\n5qJx/qLJn1JZg3XeVAnM7yPNTimYr6TlSgIzNUAGVGarvzSBarHjQsIjncpR0xye\njFgQciRUGyngHDUZHPEhRaCmA0n3",
         "mongodb.initUser" => "init-root",
-	"version" => "3.6"
+        "version" => "3.6"
   },
     "cumulocity-external-lb" => {
-        "landing_page" => "https://mciotextension.eu1-int.mindsphere.io/apps/devicemanagement",
+        "landing_page" => "https://mciotextension.eu-central.mindsphere.io/apps/devicemanagement",
         "paas_default_page" => "https://$http_host/apps/$defapp/",
-        "paas_public_default_page" => "https://mciotextension.eu1-int.mindsphere.io/apps/dmpublic",
+        "paas_public_default_page" => "https://mciotextension.eu-central.mindsphere.io/apps/dmpublic",
         "usePostgresForPaaS" => false,
         "paas_redirection" => true,
         "proxy_cache" => true,
         "useIPAddress" => true,
         "useMQTTsupport" => true,
+        "useMQTTlogs" => true,
         "useSSL" => true,
         "force_proto_for_link_processor" => "https",
-        "certificate_domain" => "mciotextension.eu1-int.mindsphere.io",
+        "certificate_domain" => "mciotextension.eu-central-rc.mindsphere.io",
         "temp_chunkin" => false,
         "useKarafWebsocket" => true,
 	"useLUAforSSLcerts" => nil,
@@ -168,13 +178,21 @@ override_attributes(
 	"useLUAforHealthCheck" => true,
         "nginx" => {
             "NGinxPort" => "openresty",
-             "version" => "1.11.2.4-20.el7.centos.c8y.8.11.1" # migration change
+             "version" => "1.13.6.1-20.el7.centos.c8y.8.11.1" # migration change
         }
   },
     'cumulocity-rsyslog' => {
-#      'cross-env-log-server' => "cumulocity-multinode-prod",
-#      'log-server-ext-address' => "monitoring.cumulocity.com"
+      'log-server-ext-address' => '172.21.0.138',
+      'CAfile' => '/etc/pki/tls/certs/ca-bundle.crt',
+#      'cross-env-log-server' => "siemens-fra-prod",
+       'log-server-role' => "siemens-syslog-ng-monitoring-part"
   },
+   "cumulocity-cep" => {
+       "properties" => {
+         " esperha.storage" => "/mnt/esperha-storage/"
+     },
+  },
+
     'cumulocity-ssagents' => {
       'useTags' => true
     },
@@ -186,14 +204,15 @@ override_attributes(
           'C8Y_lwm2mEventLoggingEnabled' => true,
           'leshan_cluster_tenant' => "management",
           'leshan_cluster_tenant_username' => "lwm2m-user",
-          'leshan_cluster_tenant_password' => "zaeVee1ooJIe4yam"
+          'leshan_cluster_tenant_password' => "zaeVee1prodJIe4yam"
         },
 
-   "cumulocity-cep" => {
-       "properties" => {
-         " esperha.storage" => "/mnt/esperha-storage/"
-     },
-  }
+  "postfix" =>    {
+        "smtp_sasl_auth_enable" => true,
+        "smtp_sasl_security_options" => "noanonymous",
+        "smtp_relay_username" => "AKIAJI6ZRJ5M4ZDRGHVQ",
+        "smtp_relay_password" => "sHKomTOYYTATA4OMoq2a3SUxAZgC9Ex2bLK4TIwjEWg"
+        },
 
 )
 
