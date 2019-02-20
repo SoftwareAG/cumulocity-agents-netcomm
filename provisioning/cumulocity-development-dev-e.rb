@@ -59,4 +59,11 @@ for step in 1..2
       recipe 'cumulocity::karaf_dev-x-agents'
       role 'cumulocity-mn-active-core' if step == 2
   end
+  ruby_block 'wait for registry and mongo' do
+    block do 
+        sleep 180
+    end
+    action :run
+    only_if { step == 1 }
+  end
 end
