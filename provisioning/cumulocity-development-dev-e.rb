@@ -34,6 +34,17 @@ dev_id = "dev-e"
 ### END OF CLUSTER CONFIGURATION ###
 step = ENV['STEP'].to_i || 1
 
+ruby_block 'next-step-is' do
+  block do
+  puts ""
+  puts "===================================="
+  puts "T h e  c u r r e n t  s t e p  is  #{step}/4"
+  puts "===================================="
+  puts ""
+  sleep 4
+  end
+end
+
 machine "#{dev_id}" do
     add_machine_options(
         bootstrap_options: {
