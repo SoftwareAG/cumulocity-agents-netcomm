@@ -33,7 +33,7 @@ flavour_for_dev = "m3.large"
 dev_id = "dev-e"
 ### END OF CLUSTER CONFIGURATION ###
 
-for step in 1..2
+for step in 1..3
   machine "#{dev_id}" do
       add_machine_options(
           bootstrap_options: {
@@ -55,15 +55,8 @@ for step in 1..2
       role 'cumulocity-base'
       recipe 'cumulocity::mongo'
       role 'cumulocity-common-cores'
-      role 'cumulocity-kubernetes'
+      role 'cumulocity-kubernetes' if step == 2
       recipe 'cumulocity::karaf_dev-x-agents'
-      role 'cumulocity-mn-active-core' if step == 2
-  end
-  ruby_block 'wait for registry and mongo' do
-    block do 
-        sleep 180
-    end
-    action :run
-    only_if { step == 1 }
+      role 'cumulocity-mn-active-core' if step == 3
   end
 end
