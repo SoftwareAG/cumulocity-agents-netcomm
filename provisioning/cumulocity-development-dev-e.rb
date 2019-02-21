@@ -66,7 +66,7 @@ machine "#{dev_id}" do
       recipe 'cumulocity-ddclient'
       role 'cumulocity-base'
       recipe 'cumulocity::mongo'
-      role 'cumulocity-common-cores' if step >= 3
+      role 'cumulocity-common-cores'
       role 'cumulocity-kubernetes' if step >= 3
       recipe 'cumulocity::karaf_dev-x-agents' if step >= 3
       role 'cumulocity-mn-active-core' if step >= 4
