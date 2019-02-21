@@ -32,31 +32,32 @@ private_ips = "172.31.18.177"
 flavour_for_dev = "m3.large"
 dev_id = "dev-e"
 ### END OF CLUSTER CONFIGURATION ###
+step = ENV['STEP'].to_i || 1
 
-for step in 1..3
-  machine "#{dev_id}" do
-      add_machine_options(
-          bootstrap_options: {
-              # private_ip_address: "#{private_ips}",
-              instance_type: "#{flavour_for_dev}"
-          }
-      )
-      tags ["standalone:mongod7:"]
-      attributes(
-        ddclient: {
-          domain: "#{dev_id}.cumulocity.com",
-          login:  "13107q-m2mdyndns",
-          password: "p2AN8xG9)e.K",
-          use: "web, web=checkip.dyndns.com/, web-skip='IP Address'",
-          server: "members.dyndns.org"
+machine "#{dev_id}" do
+    add_machine_options(
+        bootstrap_options: {
+            # private_ip_address: "#{private_ips}",
+            instance_type: "#{flavour_for_dev}"
         }
-      )
+    )
+    tags ["standalone:mongod7:"]
+    attributes(
+      ddclient: {
+        domain: "#{dev_id}.cumulocity.com",
+        login:  "13107q-m2mdyndns",
+        password: "p2AN8xG9)e.K",
+        use: "web, web=checkip.dyndns.com/, web-skip='IP Address'",
+        server: "members.dyndns.org"
+      }
+    )
+    if step > 1
       recipe 'cumulocity-ddclient'
       role 'cumulocity-base'
       recipe 'cumulocity::mongo'
-      role 'cumulocity-common-cores'
-      role 'cumulocity-kubernetes' if step == 2
-      recipe 'cumulocity::karaf_dev-x-agents'
-      role 'cumulocity-mn-active-core' if step == 3
-  end
+      role 'cumulocity-common-cores' if step >= 3
+      role 'cumulocity-kubernetes' if step >= 3
+      recipe 'cumulocity::karaf_dev-x-agents' if step >= 3
+      role 'cumulocity-mn-active-core' if step >= 4
+    end
 end
