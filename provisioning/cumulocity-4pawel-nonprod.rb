@@ -31,7 +31,7 @@ add_machine_options(
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
 c8ycore_count = 1
-flavour_for_c8ycore       = "m5.4xlarge"
+flavour_for_c8ycore       = "c4.4xlarge"
 private_ips_for_c8ycore   = ["172.31.29.60","172.31.29.61","172.31.29.62","172.31.29.63","172.31.29.64","172.31.29.65"]
 
 ontoplb_count = 1
@@ -65,7 +65,7 @@ flavour_for_masters       = "c5.xlarge"
 private_ips_for_masters   = ["172.31.29.76","172.31.29.77","172.31.29.78"]
 
 kubernetes_worker_count   = 1
-flavour_for_workers       = "m5.4xlarge"
+flavour_for_workers       = "c5.xlarge"
 private_ips_for_workers   = ["172.31.29.79","172.31.29.80","172.31.29.81","172.31.29.82"]
 
 ### END OF CLUSTER CONFIGURATION ###
@@ -112,7 +112,7 @@ for step in initStep..7
                 },{
                     device_name: '/dev/xvdf',
                     ebs: {
-                      volume_size: 16384,
+                      volume_size: 15000,
                       delete_on_termination: true,
                       volume_type: 'gp2' }
                 },

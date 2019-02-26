@@ -30,11 +30,10 @@ if [[ -z $karafver || -z $cepver ]] ; then
   f_color_pr red "ERROR: specify release version for both karaf and cep!" && exit 1
 fi
 
-if [[ -z $mainver ]] ; then
-  mainver=$karafver
-fi
+mainver="${mainver:=$karafver}"
 
-echo "Main ${mainver}"
+f_color_pr cyn "Main version:"
+f_color_pr wht "  ${mainver}"
 
 if [[ -z $ssaver ]] ; then
   ssaver="$( sed -r 's/^(([0-9]+[.]){2})[0-9]+-1/\11-1/g' <<< "${karafver}" )"
@@ -51,13 +50,14 @@ template_archive="${thisdir}/chef-solo-12-template.tgz"
 
 declare -A c8yCB
 c8yCB=(
-              ["cumulocity"]=0.6.0
-     ["cumulocity-ssagents"]=0.4.0
-      ["cumulocity-rsyslog"]=1.0.0
-["cumulocity-backup-script"]=latest
+                 ["cumulocity"]=0.6.0
+        ["cumulocity-ssagents"]=0.4.0
+         ["cumulocity-rsyslog"]=1.0.0
+   ["cumulocity-backup-script"]=latest
 ["cumulocity-monitoring-agent"]=latest
-   ["cumulocity-opsmanager"]=latest
- ["cumulocity-chaos-monkey"]=latest
+        ["cumulocity-filebeat"]=latest
+      ["cumulocity-opsmanager"]=latest
+    ["cumulocity-chaos-monkey"]=latest
 )
 
 declare -A comCB
@@ -86,6 +86,7 @@ comCB=(
                     ["ohai"]=5.1.0
               ["filesystem"]=1.0.0
                      ["lvm"]=4.5.2
+                ["filebeat"]=2.1.0
             ["elastic_repo"]=1.1.1
   ["yum-plugin-versionlock"]=0.2.1
 )

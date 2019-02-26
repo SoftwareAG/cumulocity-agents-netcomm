@@ -32,14 +32,11 @@ add_machine_options(
 
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
-opsmanagers_count = 6
-flavours_for_opsmanagers = ['t3.xlarge', 't3.2xlarge', 't3.2xlarge', 'm5.xlarge', 'm5.xlarge', 'm5.xlarge']
-private_ips_for_opsmanagers = ['172.31.28.30', '172.31.28.31', '172.31.28.32', '172.31.28.33', '172.31.28.34', '172.31.28.35']
-ebses_for_opsmanagers = [2000, 16_384, 16_384, 2000, 2000, 2000]
+opsmanagers_count = 3
+flavours_for_opsmanagers = ['c5d.4xlarge', 'c5d.4xlarge', 'c5d.4xlarge']
+private_ips_for_opsmanagers = ['172.31.28.30', '172.31.28.31', '172.31.28.32']
+ebses_for_opsmanagers = [2000, 16384, 16384]
 opsmanager_mongodb_cluster = [
-  [],
-  [],
-  [],
   ['replicaset:rs09:P'],
   ['replicaset:rs09:S'],
   ['replicaset:rs09:S']
@@ -95,10 +92,8 @@ end
               }]
             }
           )
-          if i > 3
-            opsmanager_mongodb_cluster[i - 1].each do |m_tag|
-              tag m_tag
-            end
+          opsmanager_mongodb_cluster[i - 1].each do |m_tag|
+            tag m_tag
           end
 
           if step == 1
@@ -107,8 +102,8 @@ end
           end
 
           if step == 2
-            role 'cumulocity-opsmanager-agent' if i > 3
-            role 'cumulocity-opsmanager-server' if i <= 3
+            role 'cumulocity-opsmanager-agent'
+            role 'cumulocity-opsmanager-server'
           end
 
         end

@@ -4,7 +4,7 @@ require 'chef/provisioning/ssh_driver'
 
 with_driver 'ssh'
 
-environment = 'opsmanager-prod'
+environment = 'opsmanager-nordex-prod'
 
 with_chef_environment environment
 # with_chef_server(
@@ -22,8 +22,8 @@ with_machine_options({
 })
 
 opsmanagers_count = 3
-external_ips_for_opsmanagers = ['18.185.184.239', '18.194.244.115', '3.120.247.228']
-internal_ips_for_opsmanagers = ['172.31.10.161', '172.31.10.163', '172.31.10.182']
+external_ips_for_opsmanagers = ['10.90.162.71', '10.90.162.72', '10.90.162.73']
+# internal_ips_for_opsmanagers = ['172.31.10.161', '172.31.10.163', '172.31.10.182']
 opsmanager_mongodb_cluster = [
   ['replicaset:rs09:P'],
   ['replicaset:rs09:S'],
@@ -67,18 +67,27 @@ for step in initStep..3
           add_machine_options(
             transport_options: {
               'ip_address' => external_ips_for_opsmanagers[i - 1].to_s,
-              'username' => 'centos',
+              'username' => 'pbrzozowski',
               'ssh_options' => {
-                'password' => 'centos'
+                'password' => 'centos',
+                'keys' => ['/home/core/.ssh/id_rsa_elite'],
               }
             }
           )
           opsmanager_mongodb_cluster[i - 1].each do |m_tag|
             tag m_tag
           end
-          role 'cumulocity-base'
-          role 'cumulocity-opsmanager-agent'
-          role 'cumulocity-opsmanager-server'
+
+          if step == 1
+            role 'cumulocity-base'
+            role 'cumulocity-opsmanager-backing'
+          end
+
+          if step == 2
+            role 'cumulocity-opsmanager-agent'
+            role 'cumulocity-opsmanager-server'
+          end
+
         end
       end
     end

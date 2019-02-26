@@ -5,11 +5,11 @@ description "The production multinode environment in Frankfurt"
 cookbook_versions({
 #'cumulocity'=>'= 8.18.0',
 #'cumulocity'=>'= 9.0.11',
-'cumulocity'=>'= 9.20.1',
+'cumulocity'=>'= 9.20.3',
 #'cumulocity-kubernetes'=>'= 8.18.0',
 #'cumulocity-kubernetes'=>'= 9.0.11',
-'cumulocity-kubernetes'=>'= 9.20.1',
-'cumulocity-ssagents'=>'= 8.18.1'
+'cumulocity-kubernetes'=>'= 9.20.3',
+'cumulocity-ssagents'=>'= 9.20.3'
 })
 
 default_attributes(
@@ -58,13 +58,14 @@ override_attributes(
      "token" => "ta0d1q.byxyv9wyee5rr7we",
      "docker-registry-image" => "cumulocity/registry:2.6.1",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "8.19.19",
+     "images-version" => "9.20.3",
 #     "images2install" => [ "cep" ]
      "images2install" => [ "" ]
   },
   "cumulocity-karaf" => {
-    "version" => "9.19.2-1",
-    "ssa-version" => "9.19.2-1",
+#    "version" => "9.19.3-1",
+    "version" => "9.20.4-1",
+    "ssa-version" => "9.20.3-1",
     "memory_left_for_system" => "8192",
     "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24", "100.64.252.0/24", "18.185.5.234" ],
     "notification" => true,
@@ -90,6 +91,7 @@ override_attributes(
       "management.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "tenant.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
+      "sysadmin.password" => "",
       "cepServer.queue.batch.limit" => "5",
       #"system.two-factor-authentication.enabled" => false,
       #"system.two-factor-authentication.enforced.group" => "admins",
@@ -211,6 +213,12 @@ override_attributes(
          "version" => "9.0.11-1",
          " esperha.storage" => "/mnt/esperha-storage/"
      },
+  },
+  'monitoring-agent' => {
+    'autoRegistration' => {
+      'enable' => true,
+      'groupName' => 'Cumulocity NG Production FRA'
+    }
   },
   'cumulocity-opsmanager' => {
      'mmsGroupId' => '5c120f8cfd6a9006cb99cba8',
