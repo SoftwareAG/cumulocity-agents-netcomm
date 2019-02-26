@@ -2,10 +2,14 @@
   "name": "cumulocity-4lukasz-nonprod",
   "description": "The complete cumulocity plus multi master kubernetes env",
   "cookbook_versions": {
-    "cumulocity": "~> 9.16.3",
-    "cumulocity-kubernetes": "~> 9.16.3",
+    "cumulocity": "~> 9.20.0",
+    "cumulocity-kubernetes": "~> 9.20.0",
     "cumulocity-chaos-monkey": "~> 9.20.0",
-    "cumulocity-ssagents": "~> 9.16.3"
+    "cumulocity-rsyslog": "~> 9.20.0",
+    "cumulocity-syslog-ng-forwarder": "~> 9.20.0",
+    "cumulocity-monitoring-agent": "~> 9.20.0",
+    "cumulocity-filebeat": "~> 9.20.0",
+    "cumulocity-ssagents": "~> 9.20.0"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -13,6 +17,7 @@
 
   },
   "override_attributes": {
+    "useVaults": false,
     "domainname": "4lukasz.c8y.io",
     "environment": {
       "address": "management.4lukasz.c8y.io"
@@ -32,6 +37,10 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
+      "dockerUser": "admin",
+      "dockerPassword": "admin",
+      "extPort": 30001,
+      "useMongoDriver": true,
       "deployK8S4env": "cumulocity-4lukasz-nonprod",
       "attachedEnvs": [
         "cumulocity-4lukasz-nonprod"
@@ -62,6 +71,10 @@
       "management-access": [
         "0.0.0.0/0"
       ],
+      "logging": {
+        "microservice_client": { "enabled": true },
+        "microservice_proxy": { "enabled": true }
+      },
       "karaf": {
         "memory": {
           "xms": "1024M"
@@ -104,6 +117,7 @@
         "default.tenant.microservices": "device-simulator, smartrule, sms-gateway, cep",
         "sendDashboardAgent.url": "http://localhost:19191/report",
         "mongodb.user": "c8y-root",
+        "mongodb.password": "test",
         "mongodb.admindb": "admin",
         "migration.tomongo.default": "MONGO_READ_WRITE",
         "contextService.rdbmsURL": "jdbc:postgresql://localhost",
