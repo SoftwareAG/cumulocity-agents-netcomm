@@ -53,7 +53,8 @@
         "sigfox-agent",
         "cellid-agent-server",
         "cloud-remote-access",
-        "speech-agent-server"
+        "speech-agent-server",
+        "impact"
       ],
       "monitoring": {
         "enabled": true,
