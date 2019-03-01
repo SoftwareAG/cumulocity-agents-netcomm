@@ -1,0 +1,9 @@
+{
+  "id": "lavika",
+  "comment": "Lavika Bansal",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAiLFlpBMUuq86yfxVejFa6EpdxJIOJZ/MhMTzccymyjSeHix3llNPKnbrHmFlBfCAVJyUrCC3lkK1+TNqXN2wA/OgIRL694rJThmDk1h4X98Z9Vc9NMYFmLY7OArrIXPArQoJIA0ckrgB+2+4Gkdy7NIQCxDhREpf+TNk17FDtk/bHVdwpWQkHd2NTCYheGTLTcP3mkLg+xqCzeavf41QLEV2+CxiKpe0n9y9+izEViU6KdD8fmZkSS4QH61Iuq4bN+hbglM04kPuhfybDDwvWMUT+/f17VWS3Q4o4YvkSqdKBu2CRYc5HOriNIJ2ZLJWlDmwFUs/UFEMzYc/ls0fjw=="
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}
