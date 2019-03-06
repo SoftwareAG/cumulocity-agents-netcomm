@@ -1,0 +1,10 @@
+{
+  "id": "praveens",
+  "comment": "Praveen Kumar Saithala",
+  "ssh_keys": [
+    "ssh-rsa AAAB3NzaC1yc2EAAAABJQAAAQEAtsz7J9KprfKDUFgiv0DnulvX6LQqWwWa6tD6vtRqB60HCB5Z+LAoZIaA0QeT6vn/bAEW/cN1j6PlCYNmw1UTOWGgkuQAnxOT1CDVkiq4OKowrOHlaKKD1jNHscsu2uDwh2nZJnjqxoynTmg55GJwO2fH3f5T1z9doz/UO0LTFnxwbIeeetHgY2F6XbpSHY52RK8fa01MC089n3Y5ckyhjYgGyVh4Z882BLXRogNHbDAZZM0UodGm2OScYG2e9xd/bGd6uf48QeNglKa5JcLuDpPwAY1vLbEmai//ybGFwc4qTxCW64Ht0R+Ey/KWDEz/xmLp92CJUxS5bmWElZrWSw=="
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}
+
