@@ -1,0 +1,7 @@
+{
+  "id": "san",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDVcDrugd/sTuK+XB1NJVM+NEJl6CsxPJosHWbpay9535v3MLOSxOuMPWsChwoXC4M+F/Qe5SI1j3nwSao3ASBWUWG3ttDP4fpRqXVYcKJLCTjwsi8+9TNfAoBOCGDjOIngD3noNKTJnFt1QW1KrnMQFKhS7H+Fz0D1aAgcjrxEALjWucE6b6CZxsvhnt/mGuDJZARvztS+cZscOtTgfoYdtKSKml9gDgUzEk/MG3SrUXkzRQAxO66Td7tpNrIz7qrEHdFi1jWWeSWRLYQcP7Kde+kDyuCFQ356eXvSnHPTGuOREBV/zeJGbIY2CaZ3E/dfq6USZlYBJ+p+RDVTjL5RF57tQt/6HGLTNeM2xSxc7RRgfdO44hsS61OpmrdkoezUxcIUJt2EqMwetX4Sm7piYJX95vdoJKGA+xIUsI1owpHHoYy6uFe5UMLY+oHbRoo2IdquHRaebh+rGIuQoKvkUiOv6OITK1B8rxqFKp/jGKOJtVEWz7+qgPKEUx3r7lIvbZ+yFe3f/1bIbm4E8G9oBq1nMKxIC5MNuJaHJ6eX4jMuaTV3JFSPueEw2UXIaBgLSpvozCczvF5EyyE/vWjGPoYWcKWkXOdJuHJ7Xk+EXJUvnxBeKY2COEu+qUWVrjTTfDCY0ciYa327S21JOs5sV1ddDpjmzk14HT14L9e7rw== santhosh.radhakrishna@softwareag.com"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Santhosh Radhakrishna"
+}
