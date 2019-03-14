@@ -18,15 +18,18 @@ with_machine_options({
   ssh_username: "centos"
 })
 
-add_machine_options(
+add_machine_options({
   bootstrap_options: {
     key_name: 'chef_cumulocity',
     instance_type: 'm3.medium',
     image_id: 'ami-0597ae12f89cbc55c',
     subnet_id: 'subnet-c477d0bf',
-    security_group_ids: ['sg-02ed752df3d92fa8f']
-  }
-)
+    security_group_ids: ['sg-02ed752df3d92fa8f'],
+    create_timeout: 360,
+    start_timeout: 360
+  },
+  ssh_timeout: 360
+})
 
 private_ips = "172.31.18.177"
 flavour_for_dev = "m3.large"
