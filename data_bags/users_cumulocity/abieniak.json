@@ -1,0 +1,9 @@
+{
+  "id": "abieniak",
+  "comment": "Arkadiusz Bieniak",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvEEjB3Un6TSCvh6D/jm8AxdkrupyBNdIEFecWwaUtEbPV52HdE3aYFRTRPrGe/UGYTlkIcE2O08WKzZifYTF/3IBGp1Qj4b1KfjTwttztp3n1Ot2SgD6OTs/rEFTFpE/Ok6/WgEjz25nVt3s6rPKzKD4ruW2CFZG4qKJBcS+bCqKB0rI6xWhnbe0B/GZJs592UMS3utkgHVkN2yzPquxPKutuJ2nFUlnQamokiHrpAtylJNzsvIPnROx2cwtD96/1ORQVUx/kaywGq3fvJk+rnb+Mycda0Q5zMrDlTzHLr9WbXB/Qu9rKbPPcK0TRtnnd2H0KFz1ulMECW9EgR6Rxw== abieniak@linux-phgj"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}

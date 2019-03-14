@@ -46,7 +46,15 @@
         "smartrule",
         "jwireless",
         "apama-small",
-        "sms-gateway"
+        "sms-gateway",
+        "billwerk-agent-server",
+        "connectivity-agent-server",
+        "branding",
+        "sigfox-agent",
+        "cellid-agent-server",
+        "cloud-remote-access",
+        "speech-agent-server",
+        "impact"
       ],
       "monitoring": {
         "enabled": true,
