@@ -25,10 +25,10 @@ add_machine_options({
     # image_id: 'ami-e499ae0f',
     image_id: 'ami-0597ae12f89cbc55c',
     subnet_id: 'subnet-c477d0bf',
-    security_group_ids: ['sg-02ed752df3d92fa8f'],
-    create_timeout: 360,
-    start_timeout: 360
+    security_group_ids: ['sg-02ed752df3d92fa8f']
   },
+  create_timeout: 360,
+  start_timeout: 360,
   ssh_timeout: 360
 })
 
