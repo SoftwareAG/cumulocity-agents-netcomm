@@ -2,8 +2,8 @@
 
 # Simple script for adding OPS user groups, accounts and ssh keys to a local system
 
-users=("lucafuso" "rzeznik" "michaelwe" "lundsten" "tovukman" "tsschuel")
-ids=("1001" "1002" "1003" "1004" "1005" "1006")
+users=("lucafuso" "rzeznik" "michaelwe" "lundsten" "tovukman" "tsschuel" "pabrzozowski")
+ids=("1101" "1102" "1103" "1104" "1105" "1106" "1107")
 
 # get the length of the arrays
 length=${#users[@]}
@@ -44,6 +44,9 @@ chown tovukman:tovukman /home/tovukman/.ssh/authorized_keys
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDf27KTGNOs+tPp6xMPeNtk7jBXUvK9I0eQjOuJlH/PdpFEJfPxaojjZcaVP7vWiN3z5MFinq7sh6/CnKpYhHsJGUqIz1PHcrCNQK5JRIEtm93rZNTd7kx+iuyfjTcDWwVDlCoTUesTvPN3V1/B+F7rKSIrVjEyE/a0jSveM5pVe+K864iX6PDIHj5eteyQsBcues7BsKFn+TIdM937018Y/QoWsJVXN5a7mfLllhJw2rpE3cpTChj+pj2+RC19cgJCsgfj5xzeXp8bRWXStUFIUDpap/Fr+8g9jJ5Vblg0M+jG2Jx8uhYCKht3qSXSihciXdcEfaOxA+SPS2/5hSaR" > /home/tsschuel/.ssh/authorized_keys
 chown tsschuel:tsschuel /home/tsschuel/.ssh/authorized_keys
 
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+PzbmizurpCqbcePXZmYFehTX6Zu3xQzV7PMApgu4yBYjzIsIzN15nz/wx57xiP99Srs8zH4qWcGv2mboCvMHzAt3/WowsmWuofA8YOBVsFoZK1o/rlVEDQKqsUT2cmtgvdGbA1JcIdHcr/6NmWImRf1btzuqg5KlApTX9ku+lpyCLCLE4mPxZvbarad2xaoaLK74PDFFTU47Md4dYyuv4xzkrGA24DdD5X2VQDK1Rx/FpW+52SzU0661KEHuzX9/MNV29xAe4oBxQJl8Pf/PPjsc2aikS0uAmXLvtWlt6eZq4tDCBYDJF5qRx3ufkqxeOB1LDbdm0wtDmaWKuAOcROidYLFcVt26pWfcVnpKM5HK1yo2+GCS06M9lDkl+1qVo0delkVinw3H0mLD+I6SxxPxChuKjw1D1Eyx/8om2OqPCKrNCuySR3n3KEfHllA8XCbyMyp7MBVwx9DsXkDKDHa8KS3MXmhHB2pCv8euqIRpKUAtz6LBa5YhV041KEzlkCkqnqtIa42H8TbAeMJwu5zmA9cJJ8JB9o5QCV54e14m7C4lDuyAf1ua+u0hdxWHE5QNGHBV+QrnJaeK7iEjdc33R3E4cxYzPifa/FMSkNY46737dVurTfn0o/PUm0cIxbrVCeVlYcD6voZFkGbe++ZLqc3U+O8MmXBD+jd7kw== pbrzozowski@elite" > /home/pabrzozowski/.ssh/authorized_keys
+chown pabrzozowski:pabrzozowski /home/pabrzozowski/.ssh/authorized_keys
+
 cd /home
 find . -name authorized_keys -exec chmod 0600 {} \;
 find . -type d -name .ssh -exec chmod 0700 {} \;
@@ -52,5 +55,5 @@ find . -type d -name .ssh -exec chmod 0700 {} \;
 # Sudoers
 chmod 0660 /etc/sudoers
 sed -i '/"# %wheel/c\%wheel        ALL=(ALL)       NOPASSWD: ALL' /etc/sudoers
-chmod 0440
+chmod 0440 /etc/sudoers
 

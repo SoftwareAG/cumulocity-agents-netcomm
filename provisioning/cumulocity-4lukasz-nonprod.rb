@@ -23,8 +23,9 @@ add_machine_options(
       key_name: 'chef_cumulocity',
       instance_type: 'm3.medium',
       # image_id: 'ami-60206719', #Ireland
-      image_id: 'ami-0597ae12f89cbc55c', #Frankfurt
+    #   image_id: 'ami-0597ae12f89cbc55c', #Frankfurt
       # image_id: 'ami-337be65c', #Frankfurt
+      image_id: 'ami-8632626d', # Frankfurt
       subnet_id: 'subnet-c477d0bf',
       security_group_ids: ['sg-02ed752df3d92fa8f']
     }
@@ -32,7 +33,7 @@ add_machine_options(
 
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
-c8ycore_count = 3
+c8ycore_count = 1
 flavour_for_c8ycore       = "c4.large"
 
 volume_size_for_c8ycore   = 20
@@ -56,9 +57,9 @@ flavour_for_mongodb       = "c4.large"
 volume_size_for_mongodb   = 30
 private_ips_for_mongodb   = ["172.31.19.111","172.31.19.112","172.31.19.113"]
 mongodb_cluster = [
-    ["configreplset:config9:P","replicaset:rs01:P","replicaset:rs02:S","replicaset:rs03:A"],
-    ["configreplset:config9:S","replicaset:rs01:A","replicaset:rs02:P","replicaset:rs03:S"],
-    ["configreplset:config9:S","replicaset:rs01:S","replicaset:rs02:A","replicaset:rs03:P"]
+    ["configreplset:config9:P","replicaset:rs01:P"],
+    ["configreplset:config9:S","replicaset:rs01:S"],
+    ["configreplset:config9:S","replicaset:rs01:S"]
 ]
 
 kubernetes_master_count   = 3
@@ -79,7 +80,6 @@ defaultStep = ENV['STEP'].to_i || 1
 initStep = Integer(::File.read("/tmp/.ps-#{environment}.steps").chomp) rescue defaultStep
 
 for step in initStep..7
-
   if step >= 1
 
   current_step = lambda {step}
@@ -236,7 +236,7 @@ for step in initStep..7
             node_tags << 'k8s-master-init' if step == 4 && i == 1
             node_tags << 'k8s-master-add' if step >= 6 && i != 1
             tags node_tags
-            role 'cumulocity-chaos-monkey' if step == 7
+            # role 'cumulocity-chaos-monkey' if step == 7
             recipe 'cumulocity-kubernetes::certs_upload' if step == 5 && i == 1
         end
         end
@@ -263,7 +263,7 @@ for step in initStep..7
             node_tags = []
             node_tags << 'k8s-worker' if step >= 5
             tags node_tags
-            role 'cumulocity-chaos-monkey' if step == 7
+            # role 'cumulocity-chaos-monkey' if step == 7
         end
         end
     end

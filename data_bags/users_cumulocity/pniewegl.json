@@ -1,0 +1,9 @@
+{
+  "id": "pniewegl",
+  "comment": "Piotr Nieweglowski",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCz9TtJaFH0czPVmc9kCPTmrFu2AM8dS2iQ59Z7HGD9G1N5y89fYG0oxScU6vyCH9vhrl45kOhavP+6PROjek+yshyalsJpyVR/7pe31MRuXtzoKu/j5rt7howfKZCDK7XCPXyTqdKDk8/oMyicN508l1XRd0LMh3A6HsYJ6M6PzFmejaJj6QMm0p2gM+BdB7bCUuBtBzxMg5AxnY/IboBEmZDitHH2YSkMWX0/00DLrimDYBsTufPZg2vbJGiE8ZA2M7z1yBc8+eTZ9BXST170u3o0FKH3a5dT4iZqkY+MBiZTeLzAvPHqsXSNbn0p6n1bFWPGkLoTvFiC9crHu12l piotrekn@WAW-BLACK11"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}
