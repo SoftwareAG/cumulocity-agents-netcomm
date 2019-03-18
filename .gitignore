@@ -127,3 +127,4 @@ Gemfile.lock
 .bundle
 vendor/
 Gemfile.lock
+Berksfile.lock

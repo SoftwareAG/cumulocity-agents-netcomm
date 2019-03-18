@@ -47,7 +47,7 @@
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.20.0",
+      "images-version": "1004.0.1",
       "images2install": [
         "cep",
         "cep-small",
@@ -62,8 +62,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "df4712118ff6757781dfff074ec1f40a86635b253e12226467341d97e5f8f01b6685e1668d1bc13e180f6cb11342670cfcf8699b013ffcbc8af6f9f844273a9a",
-      "version": "9.20.0-1",
-      "ssa-version": "9.20.0-1",
+      "version": "1004.0.1-1",
+      "ssa-version": "1004.0.1-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -79,13 +79,6 @@
         "memory": {
           "xms": "1024M"
         }
-      }
-    },
-    "cumulocity-cep": {
-      "version": "9.12.2-1",
-      "package_name": "cep",
-      "properties": {
-        "esperha.storage": "/mnt/esperha-storage"
       }
     },
     "cumulocity-mongo": {
