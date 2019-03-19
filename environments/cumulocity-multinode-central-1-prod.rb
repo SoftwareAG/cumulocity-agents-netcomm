@@ -9,7 +9,8 @@ cookbook_versions({
 #'cumulocity-kubernetes'=>'= 8.18.0',
 #'cumulocity-kubernetes'=>'= 9.0.11',
 'cumulocity-kubernetes'=>'= 9.20.3',
-'cumulocity-ssagents'=>'= 9.20.3'
+#'cumulocity-ssagents'=>'= 9.20.3'
+'cumulocity-ssagents'=>'= 1004.0.1'
 })
 
 default_attributes(
@@ -67,7 +68,7 @@ override_attributes(
     "version" => "9.20.6-1",
     "ssa-version" => "9.20.3-1",
     "memory_left_for_system" => "8192",
-    "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24", "100.64.252.0/24", "18.185.5.234" ],
+    "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24", "100.64.252.0/24", "18.185.5.234", "10.201.0.0/24", "10.201.0.187" ],
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,
