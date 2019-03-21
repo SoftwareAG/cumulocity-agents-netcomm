@@ -18,7 +18,7 @@ with_machine_options({
   ssh_username: "centos"
 })
 
-dev_id = "dev-c"
+dev_id = "dev-d"
 
 ### END OF CLUSTER CONFIGURATION ###
 machine "#{dev_id}" do
