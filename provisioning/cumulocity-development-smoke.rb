@@ -32,7 +32,7 @@ add_machine_options({
 })
 
 private_ips = "172.31.18.177"
-flavour_for_dev = "m3.large"
+flavour_for_dev = "c4.xlarge"
 dev_id = "smoke"
 
 step = ENV['STEP'].to_i || 1

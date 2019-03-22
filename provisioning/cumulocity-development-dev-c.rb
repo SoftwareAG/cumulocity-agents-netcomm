@@ -21,7 +21,7 @@ with_machine_options({
 add_machine_options(
   bootstrap_options: {
     key_name: 'chef_cumulocity',
-    instance_type: 'm3.medium',
+    instance_type: "#{flavour_for_dev}",
     image_id: 'ami-0597ae12f89cbc55c',
     subnet_id: 'subnet-c477d0bf',
     security_group_ids: ['sg-02ed752df3d92fa8f']

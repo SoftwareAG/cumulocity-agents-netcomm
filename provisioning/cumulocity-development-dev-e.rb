@@ -2,6 +2,9 @@ require 'chef/provisioning/aws_driver'
 with_driver 'aws:cumulocity:eu-central-1'
 
 environment  = 'cumulocity-development-dev-e-nonprod'
+private_ips = "172.31.18.177"
+flavour_for_dev = "c4.xlarge"
+dev_id = "dev-e"
 
 with_chef_environment environment
 with_chef_server(
@@ -21,7 +24,7 @@ with_machine_options({
 add_machine_options({
   bootstrap_options: {
     key_name: 'chef_cumulocity',
-    instance_type: 'm3.medium',
+    instance_type: "#{flavour_for_dev}",
     # image_id: 'ami-e499ae0f',
     image_id: 'ami-0597ae12f89cbc55c',
     subnet_id: 'subnet-c477d0bf',
@@ -32,9 +35,6 @@ add_machine_options({
   ssh_timeout: 360
 })
 
-private_ips = "172.31.18.177"
-flavour_for_dev = "m3.large"
-dev_id = "dev-e"
 ### END OF CLUSTER CONFIGURATION ###
 step = ENV['STEP'].to_i || 1
 
