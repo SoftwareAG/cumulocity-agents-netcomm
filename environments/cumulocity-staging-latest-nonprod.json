@@ -1,9 +1,7 @@
 {
   "name": "cumulocity-staging-latest-nonprod",
   "description": "The Staging 7 environment for the latest released version",
-  "cookbook_versions": {
-    
-  },
+  "cookbook_versions": {},
   "json_class": "Chef::Environment",
   "chef_type": "environment",
   "default_attributes": {},
