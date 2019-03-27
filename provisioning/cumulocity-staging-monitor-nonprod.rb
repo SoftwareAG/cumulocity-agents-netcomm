@@ -33,16 +33,16 @@ add_machine_options(
 
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
-c8ycore_count = 1
+c8ycore_count = 2
 flavour_for_c8ycore       = "c4.large"
 
 volume_size_for_c8ycore   = 20
-private_ips_for_c8ycore   = ["172.31.15.211","172.31.15.212","172.31.15.213","172.31.15.214","172.31.15.215","172.31.15.216","172.31.15.217","172.31.15.218","172.31.15.219","172.31.15.220"]
+private_ips_for_c8ycore   = ["172.31.15.211","172.31.15.212"]
 
 ontoplb_count = 1
 flavour_for_ontoplb       = "m4.large"
 volume_size_for_ontoplb   = 16
-private_ips_for_ontoplb   = ["172.31.15.247","172.31.15.248","172.31.15.249"]
+private_ips_for_ontoplb   = ["172.31.15.247"]
 
 ssagent_count = 1
 flavour_for_ssagent       = "m4.large"
@@ -67,10 +67,10 @@ flavour_for_masters       = "m4.large"
 volume_size_for_masters   = 16
 private_ips_for_masters   = ["172.31.15.55","172.31.15.56","172.31.15.57"]
 
-kubernetes_worker_count   = 3
+kubernetes_worker_count   = 2
 flavour_for_workers       = "c4.large"
 volume_size_for_workers   = 30
-private_ips_for_workers   = ["172.31.15.61","172.31.15.62","172.31.15.63","172.31.15.64","172.31.15.65"]
+private_ips_for_workers   = ["172.31.15.61","172.31.15.62"]
 
 
 ### END OF CLUSTER CONFIGURATION ###
