@@ -1,0 +1,7 @@
+{
+  "id": "manases",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0JX0I0+2Sl+9OxWErA4fACwZ8FD24zbwD6nRQK627KdQZTyBhoPHxyYF1dAenth7Hnnn0ia++jxwZkm7eyWlnrf6+KhCQrR1R7LX54GCIqXtjuQHZOoqBH3dX/mWg/PBMt9UGNjlLGCkLk0mZ+91nlDSb5AzmHGv7Hyh2mZhXVg0wapU7zAPZocjE0JgLsWsHEVb84Z0bOz6PFrmpQmwbGKZ6P9ZkG3jP7HhRCwBFshmMvIog1ATVvVPZhPgwcd2YT00KXomEXisiHDgIwVEZhdlSdCQMhcq4a0VBPBhXsBGojle3OhOK6L91AJRMQWnmKHTVdugR6oENQkekELct manga@SAG-FVFXN17AHV2H.local"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Manases Jesus Galindo Bello"
+}
