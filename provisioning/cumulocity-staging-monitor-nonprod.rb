@@ -1,11 +1,11 @@
 require 'chef/provisioning/aws_driver'
-with_driver 'aws:cumulocity-stagings:eu-central-1'
+with_driver 'aws:cumulocity:eu-central-1'
 
 environment  = 'cumulocity-staging-monitor-nonprod'
 
 with_chef_environment environment
 with_chef_server(
-  "https://chef12.cumulocity.com/organizations/cumulocity-stagings",
+  "https://chef12.cumulocity.com/organizations/cumulocity-devel",
   client_name: Chef::Config[:node_name],
   signing_key_filename: Chef::Config[:client_key]
 )
