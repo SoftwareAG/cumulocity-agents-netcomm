@@ -30,7 +30,7 @@ add_machine_options({
       'ebs': {
        'volume_size': 30,
        'delete_on_termination': true }
-  }]
+    }],
     # image_id: 'ami-e499ae0f',
     image_id: 'ami-0597ae12f89cbc55c',
     subnet_id: 'subnet-c477d0bf',
