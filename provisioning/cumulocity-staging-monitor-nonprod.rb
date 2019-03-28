@@ -23,7 +23,7 @@ add_machine_options(
       key_name: 'chef_cumulocity',
       instance_type: 'm3.medium',
       image_id: 'ami-8632626d', # Frankfurt
-      subnet_id: 'subnet-c477d0bf',
+      subnet_id: 'subnet-caeb6da3',
       security_group_ids: ['sg-02ed752df3d92fa8f']
     }
   )
