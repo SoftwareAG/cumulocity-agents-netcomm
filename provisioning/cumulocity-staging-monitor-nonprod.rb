@@ -20,7 +20,7 @@ with_machine_options({
 
 add_machine_options(
   bootstrap_options: {
-    key_name: 'c8yStagingFrankfurt',
+    key_name: 'chef_cumulocity',
     instance_type: 'm3.medium',
     image_id: 'ami-9a183671',
     subnet_id: 'subnet-7a4b9813',
