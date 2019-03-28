@@ -20,13 +20,14 @@ with_machine_options({
 
 add_machine_options(
   bootstrap_options: {
-    key_name: 'c8yStagingFrankfurt',
+    key_name: 'chef_cumulocity',
     instance_type: 'm3.medium',
     image_id: 'ami-9a183671',
     subnet_id: 'subnet-7a4b9813',
     security_group_ids: ['sg-48c5ca25']
   }
 )
+
 
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
@@ -58,8 +59,8 @@ kubernetes_master_count   = 3
 private_ips_for_masters   = ["172.31.15.57","172.31.15.58","172.31.15.59"]
 flavour_for_masters       = "m4.large"
 
-kubernetes_worker_count   = 2
-private_ips_for_workers   = ["172.31.15.61","172.31.15.62"]
+kubernetes_worker_count   = 1
+private_ips_for_workers   = ["172.31.15.61"]
 flavour_for_workers       = "m4.xlarge"
 
 
