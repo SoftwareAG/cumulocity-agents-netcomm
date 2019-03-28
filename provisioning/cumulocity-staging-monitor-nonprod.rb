@@ -1,5 +1,5 @@
 require 'chef/provisioning/aws_driver'
-with_driver 'aws:cumulocity-stagings:eu-central-1'
+with_driver 'aws:default:eu-central-1'
 
 environment  = 'cumulocity-staging-monitor-nonprod'
 
