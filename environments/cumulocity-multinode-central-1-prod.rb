@@ -65,8 +65,11 @@ override_attributes(
   },
   "cumulocity-karaf" => {
 #    "version" => "9.19.3-1",
-    "version" => "9.20.6-1",
-    "ssa-version" => "9.20.3-1",
+    "version" => "9.20.8-1",
+#   tracker-agent-server version
+#    "ssa-version" => "9.20.0-1",
+#   lwm2m-agent-server-version
+   "ssa-version" => "9.20.3-1",
     "memory_left_for_system" => "8192",
     "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24", "100.64.252.0/24", "18.185.5.234", "10.201.0.0/24", "10.201.0.187" ],
     "notification" => true,
