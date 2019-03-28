@@ -31,9 +31,9 @@ add_machine_options(
 
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
-c8ycore_count = 3
+c8ycore_count = 2
 flavour_for_c8ycore       = "c4.xlarge"
-private_ips_for_c8ycore   = ["172.31.15.211","172.31.15.212","172.31.15.213"]
+private_ips_for_c8ycore   = ["172.31.15.211","172.31.15.212"]
 
 ontoplb_count = 1
 flavour_for_ontoplb       = "m3.medium"
@@ -59,8 +59,8 @@ kubernetes_master_count   = 3
 private_ips_for_masters   = ["172.31.15.57","172.31.15.58","172.31.15.59"]
 flavour_for_masters       = "m4.large"
 
-kubernetes_worker_count   = 3
-private_ips_for_workers   = ["172.31.15.61","172.31.15.62","172.31.15.63"]
+kubernetes_worker_count   = 1
+private_ips_for_workers   = ["172.31.15.61"]
 flavour_for_workers       = "m4.xlarge"
 
 
