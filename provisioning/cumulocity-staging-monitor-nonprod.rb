@@ -19,14 +19,14 @@ with_machine_options({
 })
 
 add_machine_options(
-  bootstrap_options: {
-    key_name: 'chef_cumulocity',
-    instance_type: 'm3.medium',
-    image_id: 'ami-9a183671',
-    subnet_id: 'subnet-7a4b9813',
-    security_group_ids: ['sg-48c5ca25']
-  }
-)
+    bootstrap_options: {
+      key_name: 'chef_cumulocity',
+      instance_type: 'm3.medium',
+      image_id: 'ami-8632626d', # Frankfurt
+      subnet_id: 'subnet-c477d0bf',
+      security_group_ids: ['sg-02ed752df3d92fa8f']
+    }
+  )
 
 
 ### CONFIGURE YOUR CLUSTER BELOW ###
