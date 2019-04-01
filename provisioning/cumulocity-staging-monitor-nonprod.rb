@@ -5,7 +5,7 @@ environment  = 'cumulocity-staging-monitor-nonprod'
 
 with_chef_environment environment
 with_chef_server(
-  "https://chef12.cumulocity.com/organizations/cumulocity-devel",
+  "https://chef12.cumulocity.com/organizations/cumulocity-stagings",
   client_name: Chef::Config[:node_name],
   signing_key_filename: Chef::Config[:client_key]
 )
