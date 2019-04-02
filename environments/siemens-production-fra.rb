@@ -86,7 +86,7 @@ override_attributes(
       "contextService.tenantManagementDB" => "management",
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => false,
-      "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting",
+      "default.tenant.applications" => "administration,devicemanagement,cockpit,feature-microservice-hosting,cloud-remote-access",
       "management.admin.password" => "fa0c9e480dc8778c5bd4f1fcb7d5325b6459c41bb59494cfe27d643de7a7f940", # insert password
       "tenant.admin.password" => "fa0c9e480dc8778c5bd4f1fcb7d5325b6459c41bb59494cfe27d643de7a7f940", # insert password
       "admin.password" => "fa0c9e480dc8778c5bd4f1fcb7d5325b6459c41bb59494cfe27d643de7a7f940", # insert password
@@ -107,7 +107,7 @@ override_attributes(
       #"system.two-factor-authentication.<customer>.username" => "cumulocity",
       #"system.two-factor-authentication.<customer>.password" => "<smspassword>",
       ##"default.tenant.microservices" => "device-simulator,oc2-data-mapper,oc2-map-config",
-      "default.tenant.microservices" => "device-simulator,oc2-data-mapper,oc2-map-config,smartrule,cep,sigfox-agent,feature-cep-custom-rules",
+      "default.tenant.microservices" => "device-simulator,oc2-data-mapper,oc2-map-config,smartrule,cep,sigfox-agent,feature-cep-custom-rules,cloud-remote-access",
       #"migration.tomongo.default" => "POSTGRES_READ_WRITE",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,
