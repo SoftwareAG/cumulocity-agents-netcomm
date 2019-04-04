@@ -1,78 +1,12 @@
-telstra-preprod:
-  node_name: admin
-  client_key: admin.pem
-  pub: https://c8y-preprod-chef12/organizations/telstra-preprod
-  knife:
-    ssh_key_name: cumulocity-telstra.pem
-    aws_access_key_id: AAAAAAAAAAAAAAAAAAAA
-    aws_secret_access_key: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-myorg:
-  node_name: cli
-  client_key: cli.pem
-  pub: https://ec2-52-16-90-217.eu-west-1.compute.amazonaws.com/organizations/myorg
-  knife:
-    ssh_key_name: chef_cumulocity
-    aws_access_key_id: AKIAIVNXBZD76HNCLQJA
-    aws_secret_access_key: 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
-
-cumulocity-production:
-  node_name: admin12
-  client_key: admin12.pem
-  pub: https://chef12.cumulocity.com/organizations/cumulocity-production
-  knife:
-    ssh_key_name: chef_cumulocity
-    aws_access_key_id: AKIAIVNXBZD76HNCLQJA
-    aws_secret_access_key: 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
-
 cumulocity-devel:
   node_name: admin12
   client_key: admin12.pem
   pub: https://chef12.cumulocity.com/organizations/cumulocity-devel
   knife:
     ssh_key_name: chef_cumulocity
-    aws_access_key_id: AKIAIVNXBZD76HNCLQJA
-    aws_secret_access_key: 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
-
-cumulocity-virginia:
-  pub: 10.120.0.145
-  priv: 10.120.0.145
-
-telstra-testbed-el7:
-  node_name: admin12
-  client_key: admin12.pem
-  pub: https://chef12.cumulocity.com/organizations/telstra-testbed-el7
-  knife:
-    ssh_key_name: cumulocity-telstra.pem
     aws_access_key_id: AAAAAAAAAAAAAAAAAAAA
-    aws_secret_access_key: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-cumulocity-staging7:
-  node_name: admin12
-  client_key: admin12.pem
-  pub: https://chef12.cumulocity.com/organizations/cumulocity-staging7
-  knife:
-    ssh_key_name: cumulocity-telstra.pem
-    aws_access_key_id: AAAAAAAAAAAAAAAAAAAA
-    aws_secret_access_key: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-adamos-preproduction:
-  node_name: admin
-  client_key: admin.pem
-  pub: https://jvchefserver-12.cumulocity.com/organizations/adamos-preproduction
-  knife:
-    ssh_key_name: <name-of-the-AWS-region-key.pem>
-    aws_access_key_id: XXXXXX
-    aws_secret_access_key: YYYYYYY
-
-cumulocity-production: 
-  node_name: admin12 
-  client_key: admin12.pem 
-  pub: https://chef12.cumulocity.com/organizations/cumulocity-production 
-  knife: 
-    ssh_key_name: chef_cumulocity 
-    aws_access_key_id: AKIAIVNXBZD76HNCLQJA 
-    aws_secret_access_key: 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
 
 cumulocity-stagings:
   node_name: admin12
@@ -80,6 +14,6 @@ cumulocity-stagings:
   pub: https://chef12.cumulocity.com/organizations/cumulocity-stagings
   knife:
     ssh_key_name: chef_cumulocity
-    aws_access_key_id: AKIAJ6JVWT5B2BNFIR7A
-    aws_secret_access_key: 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
+    aws_access_key_id: AAAAAAAAAAAAAAAAAAAA
+    aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
