@@ -171,6 +171,7 @@
     },
     "monitoring-agent": {
       "server_url" : "http://staging-monitor.c8y.io",
+      "tenants" : "environment",
       "autoRegistration": {
         "enable" : true,
         "groupName" : "staging-monitor"
