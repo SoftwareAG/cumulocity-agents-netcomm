@@ -168,6 +168,13 @@
     "cumulocity-rsyslog": {
       "cross-env-log-server": "cumulocity-multinode-prod",
       "log-server-ext-address": "monitoring.cumulocity.com"
+    },
+    "monitoring-agent": {
+      "server_url" : "http://staging-monitor.c8y.io",
+      "autoRegistration": {
+        "enable" : true,
+        "groupName" : "staging-monitor"
+      }
     }
   }
 }
