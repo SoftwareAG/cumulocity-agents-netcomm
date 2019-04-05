@@ -171,7 +171,7 @@
     },
     "monitoring-agent": {
       "server_url" : "http://management.staging-monitor.c8y.io",
-      "tenants" : "platform",
+      "tenants" : "management",
       "autoRegistration": {
         "enable" : true,
         "groupName" : "staging-monitor"
