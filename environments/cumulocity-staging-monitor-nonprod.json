@@ -170,8 +170,8 @@
       "log-server-ext-address": "monitoring.cumulocity.com"
     },
     "monitoring-agent": {
-      "server_url" : "http://staging-monitor.c8y.io",
-      "tenants" : "environment",
+      "server_url" : "http://management.staging-monitor.c8y.io",
+      "tenants" : "platform",
       "autoRegistration": {
         "enable" : true,
         "groupName" : "staging-monitor"
