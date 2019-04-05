@@ -2,18 +2,24 @@ name "cumulocity-deployment-test-nonprod"
 description "This is an environment only for chef's deployment testing purposes. DO NOT use it for backend/GUI testing"
 
 cookbook_versions({
-'cumulocity'=>'= 9.17.1',
-'cumulocity-kubernetes'=>'= 9.16.3',
-'cumulocity-ssagents'=>'= 9.16.3'
+'cumulocity'=>'= 9.20.3',
+'cumulocity-kubernetes'=>'= 9.20.3',
+'cumulocity-ssagents'=>'= 9.20.3',
+'cumulocity-monitoring-agent'=>'= 9.20.3',
+'cumulocity-rsyslog'=>'= 9.20.3',
 })
 
 override_attributes(
   "domainname" => "chef-deployment.c8y.io",
+  "useVaults" => true,
+  "useProxyRegister" => false,
 
   "environment" => {
       "address" => "management.chef-deployment.c8y.io"
   },
   "swapfilesize" => 512,
+  "skipUsersConfig" => false,
+  "extra_packages" => ["mc","telnet"],
   'yum' => {
     'repositories' => {
       'cumulocity-testing' => {
@@ -32,17 +38,25 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-deployment-test-nonprod"],
      "token" => "1e3145.2ff901841c78ad1d",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.18.0",
-     "images2install" => [ "cep","cep-small","device-simulator","smartrule","sms-gateway" ],
+##     "images-version" => "1004.3.0",
+     "images-version" => "9.20.8",
+     "images2install" => [ "smartrule","sms-gateway","cep","cep-small","device-simulator" ],
      "monitoring" => {
        "enabled" => false,
        "dashboard-only" => nil
+     },
+     "docker" => {
+        "log" => {
+            "on-file" => true
+        }
      }
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "935ee00dfb58a74061cd9ec999dbda5c8936f82f9c56bc247863b00622f9a9119be7088f04efd56db66e40dc7adec14c0cf22cb6fa1be5d0539a0195513f40a8",
-    "version" => "9.18.0-1",
-    "ssa-version" => "9.17.0-1",
+##    "version" => "1004.3.0-1",
+    "version" => "9.20.8-1",
+##    "ssa-version" => "1004.3.0-1",
+    "ssa-version" => "9.20.3-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "cep-server-enabled" => true,
@@ -78,12 +92,14 @@ override_attributes(
   },
   "cumulocity-mongo" => {
     "sharedkey-content" => "oxUyBP8EojiqPKeF/pTSwkQGQb5/Nj9K0OcbBDfJA5eAqAiADLR1AMapq8PTYWx7\npd3z5/aLcjptklZS39Ea7sqsZakrcdeOsJ6BN3F1xct9LGbsDjWtSwkphBImjvJR\nBg+ZVJdbiwEe8q85F/e47M3hE+yxZiN9gShb37Q5oOVBrl6GYMZIlWAz7u7gZp5C\nYWY5y+hp1DaR3Ime2i4mqy19aMAqVgTVgeU9Aewmb4Q3TtOrehNjXRglWJdQUdgN\n4yo5LvlW1s7eyeqrwSWVg/WjEEUFK5ZxDkUPNIRIg1sgJR2a0FsD6rwTiJoiE2cS\nq8QRPAhMFqSwpusKcZU53/FoRrqovciLAxxYqsl5w7gtr3FyCqAJpFyUqDBGNtvC\njGztVC1eg5T7SGPFbUG2CJWuaBDJ4zo2faCVuHvgLjR3KMhF7og+k5WpqrJ+TSN0\nWha9/pH3N/zS9WtVJnFmBFW0yWXRfHWqmMB0N9+rmlEtlhT29pZlXeaPiBLr94dj\nYRTxuhS/NMIuiN674ODSA/dzWRY3F+0w+z6+GeGSK0fg5hsxvm4KR6yW1OLErWXL\n9CKjIV42nZGB5SDFoth9bZSCcR/2qJaBKfcy9o2Ua8BBBK+AT3nOjjUYn+jT9WsT\nadxlTXyvKcbYv1mAJgPQkZs8vK94brgJG3a0BtFA56yVxzujnYVadyIoHHoJ2hQ4\nL36lW50ltSCtpADEtua/LmCW60FNjRu3V7+rNSJ6YO8EdTGcb1HLO3lMIqopmadk\nAXa1q1HblDfTgsxZ1QKYSVvxdSdRh8Id/wkHLaKzgG4s305+pJe7LZsFpKGkfvvf\n97hIjngs6Ck07VzWB1O3QxMDJRZuPxKoRkRbc1uqeJAwJ4MmJSc1C6epQ9uXY0rQ\noeWkPdj/ce0486piVdrI1fpCmiOIaIjkSAZ6yzFD2cgvjzdc0y5xzuzAMs0Z8QP1\nSWrl8KNltY4U8CdIwrtvdNoEcC5Q",
-    "mongodb.initUser" => "init-root"
+    "mongodb.initUser" => "init-root",
+    "mongodb.initPassword" => "init-pass"
   },
 
   "cumulocity-GUI" => {
     "connString" => "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-    "version" => '9.16.2'
+##    "version" => '1004.0.0'
+      "version" => "9.20.3"
   },
   "cumulocity-ssagents" => {
     "useTags" => true,
@@ -103,6 +119,7 @@ override_attributes(
       "sendDashboardAgent.url" => "http://localhost:19191/report",
       "mongodb.user" => "c8y-root",
       "mongodb.admindb" => "admin",
+      "mongodb.password" => "Moabit-7777^",
       "contextService.rdbmsURL" => "jdbc:postgresql://localhost",
       "contextService.rdbmsDriver" => "org.postgresql.Driver",
       "contextService.rdbmsUser" => "postgres",
@@ -148,7 +165,7 @@ override_attributes(
 
   "cumulocity-external-lb" => {
     "landing_page" => "https://chef-deployment.c8y.io/apps/devicemanagement",
-    "paas_default_page" => "https://$http_host/apps/$defapp",
+    "paas_default_page" => "http://$http_host/apps/$defapp",
     "paas_public_default_page" => "https://chef-deployment.c8y.io/apps/dmpublic",
     "usePostgresForPaaS" => false,
     "paas_redirection" => true,
