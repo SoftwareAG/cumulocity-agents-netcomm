@@ -57,7 +57,7 @@
         "sms-gateway-server"
       ],
       "monitoring": {
-        "enabled": false
+        "enabled": true
       }
     },
     "cumulocity-karaf": {
@@ -184,7 +184,7 @@
       "autoRegistration" : {
         "server_url" : "http://staging-monitor.c8y.io",
         "enable" : true,
-        "tenant" : "environments",
+        "tenant" : "environment",
         "username" : "autoregister",
         "groupName" : "staging-monitor"
         }
