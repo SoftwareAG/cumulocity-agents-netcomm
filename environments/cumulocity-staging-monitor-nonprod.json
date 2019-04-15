@@ -17,7 +17,7 @@
 
   },
   "override_attributes": {
-    "useVaults": false,
+    "useVaults": true,
     "domainname": "staging-monitor.c8y.io",
     "environment": {
       "address": "management.staging-monitor.c8y.io"
