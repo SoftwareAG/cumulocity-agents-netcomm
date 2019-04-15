@@ -181,7 +181,7 @@
       "autoRegistration" : {
         "server_url" : "http://staging-monitor.c8y.io",
         "enable" : true,
-        "tenant" : "environment",
+        "tenant" : "environments",
         "username" : "autoregister",
         "groupName" : "staging-monitor"
         }
