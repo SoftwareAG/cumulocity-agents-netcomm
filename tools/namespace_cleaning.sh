@@ -23,6 +23,7 @@ if (( $res > 0 )); then
   echo "Namespace not in allowed list"
   exit 1
 else
+  kubectl -n cumulocity-development-${devx_name}-nonprod delete po --all --force --grace-period=60
   kubectl delete namespace cumulocity-development-${devx_name}-nonprod
   find /etc/kubernetes/ -iname "*${devx_name}*" -exec rm {} \;
   ok=$(get_pods)
