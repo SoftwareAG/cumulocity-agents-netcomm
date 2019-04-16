@@ -51,7 +51,7 @@
         "sms-gateway",
         "connectivity-agent-server",
         "branding",
-        "cloud-remote-access",
+        "cloud-remote-access"
       ],
       "monitoring": {
         "enabled": true,
