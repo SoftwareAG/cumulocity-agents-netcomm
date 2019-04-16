@@ -1,5 +1,5 @@
 {
-  "name": "cumulocity-staging-pe-1-nonprod",
+  "name": "cumulocity-staging-monitor-nonprod",
   "description": "The production environment",
   "cookbook_versions": {
     "cumulocity": "~> 9.20",
@@ -33,9 +33,9 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-staging-pe-1-nonprod",
+      "deployK8S4env": "cumulocity-staging-monitor-nonprod",
       "attachedEnvs": [
-        "cumulocity-staging-pe-1-nonprod"
+        "cumulocity-staging-monitor-nonprod"
       ],
       "docker-registry-image": "cumulocity/registry:2.6.2",
       "token": "1e3145.2ff901841c48af2e",
