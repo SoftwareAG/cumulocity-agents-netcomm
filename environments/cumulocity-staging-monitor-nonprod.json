@@ -173,13 +173,6 @@
       "cross-env-log-server": "cumulocity-multinode-prod",
       "log-server-ext-address": "monitoring.cumulocity.com"
     },
-    "monitoring-agent": {
-      "server_url" : "http://staging-monitor.c8y.io",
-      "tenants" : "management",
-      "autoRegistration": {
-        "enable" : true,
-        "groupName" : "staging-monitor"
-      },
       "monitoring-agent" : {
       "server_url" : "http://staging-monitor.c8y.io",
       "platformUsername" : "monitoring-agent",
