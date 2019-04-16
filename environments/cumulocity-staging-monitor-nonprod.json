@@ -1,20 +1,16 @@
 {
-  "name": "cumulocity-staging-monitor-nonprod",
-  "description": "The complete cumulocity plus multi master kubernetes env",
+  "name": "cumulocity-staging-pe-1-nonprod",
+  "description": "The production environment",
   "cookbook_versions": {
-    "cumulocity": "~> 9.20.0",
-    "cumulocity-kubernetes": "~> 9.20.0",
-    "cumulocity-chaos-monkey": "~> 9.20.0",
-    "cumulocity-rsyslog": "~> 9.20.0",
-    "cumulocity-syslog-ng-forwarder": "~> 9.20.0",
-    "cumulocity-monitoring-agent": "~> 9.20.0",
-    "cumulocity-filebeat": "~> 9.20.0",
-    "cumulocity-ssagents": "~> 9.20.0"
+    "cumulocity": "~> 9.20",
+    "cumulocity-kubernetes": "~> 9.20",
+    "cumulocity-ssagents": "~> 9.20"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
   "default_attributes": {
-
+    "fixhostname": false,
+    "fixhostsfile": false
   },
   "override_attributes": {
     "useVaults": true,
@@ -37,25 +33,33 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
-      "dockerUser": "admin",
-      "dockerPassword": "admin",
-      "extPort": 30001,
-      "useMongoDriver": true,
-      "deployK8S4env": "cumulocity-staging-monitor-nonprod",
+      "deployK8S4env": "cumulocity-staging-pe-1-nonprod",
       "attachedEnvs": [
-        "cumulocity-staging-monitor-nonprod"
+        "cumulocity-staging-pe-1-nonprod"
       ],
+      "docker-registry-image": "cumulocity/registry:2.6.2",
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.20.0",
+      "images-version": "9.20.11",
       "images2install": [
         "cep",
         "cep-small",
         "device-simulator",
         "smartrule",
+        "jwireless",
         "apama-small",
-        "sms-gateway-server"
-      ]
+        "sms-gateway",
+        "connectivity-agent-server",
+        "branding",
+        "cloud-remote-access",
+      ],
+      "monitoring": {
+        "enabled": true,
+        "dashboard-only": true,
+        "components": {
+          "heapster": true
+        }
+      }
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "e511ad5cb600955088be51730614e6dada8c833743a5bebaf6ab6cafe685013591f3c36d4a074493b7c9fa8a7be92133d41942347fc5ddf78f3749474c5995af",
@@ -79,8 +83,6 @@
       }
     },
     "cumulocity-cep": {
-      "version": "9.12.2-1",
-      "package_name": "cep",
       "properties": {
         "esperha.storage": "/mnt/esperha-storage"
       }
@@ -93,16 +95,16 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "3.6",
+      "version": "9.20.11"
+    },
+    "cumulocity-ssagents": {
+      "useTags": true,
       "lwm2m-agent": {
         "host_fwUpdate": "34.251.8.163",
         "leshan_cluster_tenant": "management",
         "leshan_cluster_tenant_username": "lwm2m_user",
         "leshan_cluster_tenant_password": "passw0rd_a"
       }
-    },
-    "cumulocity-ssagents": {
-      "useTags": true
     },
     "cumulocity-core": {
       "properties": {
@@ -147,10 +149,15 @@
       "useSSL": true,
       "useHSTS": false,
       "useMQTTsupport": true,
+      "useMQTTlogs": false,
       "useMasterForPushOperations": false,
       "useKarafWebsocket": true,
       "proxy_cache": true,
-      "certificate_domain": "staging.c8y.io",
+      "certificate_domain": "staging-1.c8y.io",
+      "useLUAforLimits": true,
+      "useLUAforSSLcerts": true,
+      "useLUAforHealthCheck": true,
+      "useK8SDashboard": true,
       "nginx": {
         "NGinxPort": "openresty",
         "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
