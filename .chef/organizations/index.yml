@@ -17,3 +17,12 @@ cumulocity-stagings:
     aws_access_key_id: AAAAAAAAAAAAAAAAAAAA
     aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+cumulocity-production:
+  node_name: admin12
+  client_key: admin12.pem
+  pub: https://chef12.cumulocity.com/organizations/cumulocity-production
+  knife:
+    ssh_key_name: chef_cumulocity
+    aws_access_key_id: AAAAAAAAAAAAAAAAAAAA
+    aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
