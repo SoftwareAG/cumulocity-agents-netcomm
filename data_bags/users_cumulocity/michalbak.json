@@ -1,0 +1,7 @@
+{
+  "id": "michalbak",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtMQCcETzgi1jLZitWA6DNl52OA2LnKsG7PF1SYIej1yTxg04U1nYDS7jwRL3E5bjXqIrj58pCa1jyU8Tr6+EHz6ZLoT0dAyWv8pfzPwXoTapdWvpWOwV9qOu+dc1ft7GaiuXGZ2q2U3pVdzf06Fo8anDJTNTT7gk9VEXxjHKg50Ytli61tTUv+OfsCs568I4Ss7TRrADbKmsezj0OeomiV30NbIE117FBSgnFINm4i1YdpHYp0idR7uFNfpfQwVYZ3v/lDogDg8bAVcJPJAtlYMpCFdz9WB1O5mcrTwqG/FrlkE/E/pIQXgblMjJ+Y/o1YLzjZQL8z9fjsHwYALSF michal@WAW-ST002346"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Michał Bak"
+}
