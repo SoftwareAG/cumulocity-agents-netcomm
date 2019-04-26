@@ -108,7 +108,7 @@ fi
 
 echo "INFO: upgrading karaf"
 
-nodes=$(NO_PROMPT_ORGANIZATION=true bundle exec knife search "chef_environment:$CHEF_ENV AND role:cumulocity-common-cores" -F json)
+nodes=$(NO_PROMPT_ORGANIZATION=true bundle exec knife search "chef_environment:$CHEF_ENV AND role:cumulocity-mn-active-core" -F json)
 node_names=$(echo $nodes | jq '.rows |= sort_by(.name) | .rows[] | .name' | tr -d \")
 
 ip_for_node() {
