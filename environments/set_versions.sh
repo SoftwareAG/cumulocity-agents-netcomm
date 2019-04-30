@@ -55,12 +55,11 @@ else
         jq '.override_attributes["cumulocity-karaf"]["ssa-version"] = env.CUMULOCITY_KARAF_SSA' > ${OUTPUT_FILE}'.tmp';
         mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
     fi
-
-    if [ ! -z ${CUMULOCITY_GUI} ]; then
-        cat ${OUTPUT_FILE} | \
-        jq '.override_attributes["cumulocity-GUI"]["version"] = env.CUMULOCITY_GUI' > ${OUTPUT_FILE}'.tmp';
-        mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
-    fi
+fi
+if [ ! -z ${CUMULOCITY_GUI} ]; then
+    cat ${OUTPUT_FILE} | \
+    jq '.override_attributes["cumulocity-GUI"]["version"] = env.CUMULOCITY_GUI' > ${OUTPUT_FILE}'.tmp';
+    mv ${OUTPUT_FILE}'.tmp' ${OUTPUT_FILE};
 fi
 if [ ! -z ${#MODULES_LIST[@]} ]; then
     echo $MODULES_LIST

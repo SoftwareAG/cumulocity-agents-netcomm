@@ -2,6 +2,9 @@ require 'chef/provisioning/aws_driver'
 with_driver 'aws:cumulocity:eu-central-1'
 
 environment  = 'cumulocity-development-dev-d-nonprod'
+private_ips = "172.31.18.177"
+flavour_for_dev = "c4.xlarge"
+dev_id = "dev-d"
 
 with_chef_environment environment
 with_chef_server(
@@ -15,13 +18,20 @@ with_machine_options({
     ssl_verify_mode: 'verify_none',
     chef_version: "12.21.31"
   },
-  ssh_username: "centos"
+  ssh_username: "centos",
 })
 
 add_machine_options({
   bootstrap_options: {
     key_name: 'chef_cumulocity',
-    instance_type: 'm3.medium',
+    instance_type: "#{flavour_for_dev}",
+    block_device_mappings: [{
+      'device_name': '/dev/sda1',
+      'ebs': {
+       'volume_size': 30,
+       'delete_on_termination': true }
+    }],
+    # image_id: 'ami-e499ae0f',
     image_id: 'ami-0597ae12f89cbc55c',
     subnet_id: 'subnet-c477d0bf',
     security_group_ids: ['sg-02ed752df3d92fa8f']
@@ -31,12 +41,8 @@ add_machine_options({
   ssh_timeout: 360
 })
 
-private_ips = "172.31.18.177"
-flavour_for_dev = "c4.xlarge"
-dev_id = "dev-d"
-
-step = ENV['STEP'].to_i || 1
 ### END OF CLUSTER CONFIGURATION ###
+step = ENV['STEP'].to_i || 1
 
 ruby_block 'next-step-is' do
   block do
