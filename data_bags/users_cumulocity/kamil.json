@@ -1,0 +1,7 @@
+{
+  "id": "kamil",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfpyopREFVhUD/EqMnwfVhdvFliqjCh7eMWq1awjdfiSX28A/QEvQgobat4k4m1rXS94jo34t2l/p+zNjk3zOunO64XaRp/uNK5l9mN+9/qp17a62NUr6tLgl34HXMZshc/zZTf9LnbcAD6j/baKy/UpNK3NTfqbh8VKd40gY/Q+kCmM2sa46dGY+Br1GkcaAI7C3uTUkjnb1Qj4hAZgMXZgO6hdF3uY2zFVk+6iL/gWvKDtSd/n1OaH+LUjut62S+leMIdfzdKxqwOTcrwHq4Z4VPcHqLpfX1BON9L7HWqTs7IbkixnOs8Zwqwni+3k+9P52dmMVpFHlX7cEqkipH kamil@kamil-HP-EliteBook-850-G4"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Kamil Sobala"
+}

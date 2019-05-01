@@ -1,0 +1,7 @@
+{
+  "id": "sudarshan",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMT1zX/pgi4ePopSrDOMHdX3wZYh5cTkyBg21lZ7JasH6gKsggAPH6rQT7lCgytKUYVmATBZKTY+1tVfbN/AuYiOJJwA3WcXC/B9EbeMW5c6FIu75UCBhcu9R3QLC4yX47JqLgbkRMRjHPuDPX8u5gqvNONLKELfF4ZjMIwR28sD4+nNVC4Q91mm615btTdS/guzIqKuBk6hijtSn6xVgQx638AUxr/RBLLvPiBptBkS5YuLxHAZYKhykY5M99HRhuMOYa41gVjdehT6zsY2MfmUUcwOH1k7ZQ9pV6uxrct8qMhiPQ5xSAhY7yVV4jrhEdsF1ar5RZhQONVOx63lU/ sudarshan.chakravarthy@softwareag.com"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Sudarshan Chakravarthy"
+}

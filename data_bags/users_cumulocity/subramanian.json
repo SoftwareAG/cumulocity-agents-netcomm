@@ -1,0 +1,7 @@
+{
+  "id": "subramanian",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPf34wwNszCom4v02kYhu/XTHIoAqqtXYtE3syDtW90fzgj4DYK8WftqO7sFutueYqVZDOC3mlYLNb3DEaIhYZ1qTCLeNQtvBeyWyh1x2ZW8aOOp2DmEx8q2P6B4ckY4T548gI1CnPo1ksogE/+uJzHfFaEMQtfPuUXc/iLnGou6gi6R+c9UI3JWiyl8d4cfsVDwBoHdDSOGxhSAFsQdkurd37s/wKvxfOUmSHJj00aqRxHbfgsUXTrkQf4bF3UvhoqOCxpNjjvK1I8Ii6rG6zGt+jCOlU3wEksvlrp7WfwzmAW5vA3yx1015wIHPAjcekLTQ1+xzfEN0bGpy77F0H subramanian@subramanian-virtual-machine"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Subramanian Narayanan"
+}

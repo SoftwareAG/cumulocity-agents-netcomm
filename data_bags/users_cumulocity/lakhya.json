@@ -1,0 +1,7 @@
+{
+  "id": "lakhya",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/TMjj+AEzLSqowLq3WySf/FLUeLw1qpMysb5zY9AwDEJCBbww2PUpsIpub4uJSU95VQs0ApGyWNWNwq9QHsI4i+g4f10cbiHc2jFkJ4/5hZ0aetO2CADo42gl+PqiIPWTtekiO7tWqe4t2ebJo8mr+8JPEIT5TydQufaiNfjBtxHHk4dfY7HVnS/7iPNRAcNYZsJYtL3tTkrpjZy4QJVxuw82luM7Iky8jb8JMcp1QgzSr8+D8v8FgWJN/iJLigFFdtyv3RjRXYJ3OlwFjjHfDIRvmIrOhC6wzN7r+vr/+OWuIybp2GOPZFOLQvLjhhu5V1topNM/7oHo6+GOzeQ5 ljnath@c8y-vm"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Lakhya Jyoti Nath"
+}

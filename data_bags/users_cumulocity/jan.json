@@ -1,0 +1,9 @@
+{
+  "id": "jan",
+  "comment": "Jan Hommes",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFcKFqcj8Q4Jf+UtPk+uiy5qUSfiZ29zvh75/JyiJQ1J1Eq4ThXbi3Y/WmP1HPe/g+PmVD9ytOkNn53IqOGR9K7q2M+dPPuyrB3JxskKwz72iP2VL/fDWKRz4umFsWQ25tTTAvI/5ftQhILNKprO27h1T/QDhUL6ZK0Y+6/52bgb0kyL3ptwzSFHKTjorVdJakxOaeEGNyuBdhdQmu7+FAzLq1AI2NVH9XGDoPb8dy8y8YGK6lYrFPC4uu65pZ5AbWGUOoasWee29+ge5PPz/JeS8gg40lb6KNPg5l02aHlGNhEgfWp7Qu00Wr3xVYSqJ1ZsFxnmnTzCRoQDCXb4zP jan.hommes@cumulocity.com"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}
