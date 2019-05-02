@@ -1,6 +1,11 @@
 {
   "name": "cumulocity-development-smoke-nonprod",
   "description": "The jenkins and cucumber test environment",
+  "cookbook_versions": {
+    "cumulocity": "= 1004.0.3",
+    "cumulocity-kubernetes": "= 1005.0.2",
+    "cumulocity-ssagents": "= 1004.0.3"
+  },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
   "default_attributes": {
@@ -8,6 +13,7 @@
     "fixhostsfile": false
   },
   "override_attributes": {
+    "useVaults": false,
     "domainname": "cumulocity.com",
     "environment": {
       "address": "cumulocity.com"
@@ -27,6 +33,26 @@
     },
     "java": {
       "jdk_version": "8"
+    },
+    "cumulocity-kubernetes": {
+      "multikubeclient": true,
+      "dockerUser": "admin",
+      "dockerPassword": "admin",
+      // "extPort": 30001,
+      "deployK8S4env": "cumulocity-development-multikube-nonprod",
+      "attachedEnvs": [
+        ""
+      ],
+      "token": "1e3145.2ff901841c78af1d",
+      "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
+      "images-version": "9.16.0",
+      "images2install": [
+      
+      ],
+      "monitoring": {
+        "enabled": true,
+        "dashboard-only": true
+      }
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "1456d5050bb58ae50ea99079c193573bfeb769322fdec1f8e2cb599aa5026478428bd927410ba042885167daade61567a6444baeec7ce4fee6b4cec0fd0fe84d",
@@ -55,6 +81,7 @@
     },
     "cumulocity-mongo": {
       "mongodb.initUser": "init-root",
+      "mongodb.initPassword":"Moabit-4PS",
       "version": "3.6"
     },
     "cumulocity-GUI": {
@@ -70,22 +97,6 @@
         "leshan_cluster_tenant_password": "passw0rd_a"
       }
     },
-    "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-development-multikube-nonprod",
-      "attachedEnvs": [
-        ""
-      ],
-      "token": "1e3145.2ff901841c78af1d",
-      "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.16.0",
-      "images2install": [
-      
-      ],
-      "monitoring": {
-        "enabled": true,
-        "dashboard-only": true
-      }
-    },
     "cumulocity-core": {
       "properties": {
         "management.admin.password" : "d59651ad01af3df933cd9c1167fc25c91d6133949efaf517632ee921c59c6aa4",
@@ -98,6 +109,7 @@
         "sendDashboardAgent.url": "http://localhost:19191/report",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
+        "mongodb.password": "Moabit-4ops^",
         "contextService.rdbmsURL": "jdbc:postgresql://localhost",
         "contextService.rdbmsDriver": "org.postgresql.Driver",
         "contextService.rdbmsUser": "postgres",
