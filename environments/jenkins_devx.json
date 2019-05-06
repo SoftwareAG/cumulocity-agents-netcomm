@@ -13,7 +13,7 @@
     "fixhostsfile": false
   },
   "override_attributes": {
-    "useVaults": false,
+    "useVaults": true,
     "domainname": "cumulocity.com",
     "environment": {
       "address": "cumulocity.com"
