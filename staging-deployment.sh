@@ -146,6 +146,7 @@ for node in $node_names; do
       run_ssh_command $ip "ps -ef | grep -i karaf | grep -v grep | awk '{print \$2}' | sudo xargs kill -9"
     fi
 
+    run_ssh_command $ip 'sudo yum clean metadata;'
     run_ssh_command $ip 'sudo chef-client;'
 
     bundle exec knife node run_list add $node 'role[cumulocity-mn-active-core]' && \
