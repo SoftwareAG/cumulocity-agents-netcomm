@@ -1,0 +1,7 @@
+{
+  "id": "jakub",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDTHfN00flm/0uD9cDsyJaSoum6XJ4Z59eD4WlF2Nn7BDba5lFg/CKrejhWaAklmKgfNc4Y0FW/p4clf7cDVEQEg/CaW6ufZsFwKXRoTTE9ekvtakK3B18fIxld26p38ob8zC8dsLZgP5plEONNOY77a2igifTrLSUNrSztWjzccKF8R7nOMf+T73Qlp42LcTOXdeGu5XQfB3kL/067dhsZP23EYCIu+YUxyNivRyFmA+Ih/R3nlmXguGM2jhd3N4gzImMO3AKna1mdHx/sb0ID1O8LITF8+dQ6qP1WBo1Ow0hZbxF4VT9Z3YbfVMo3bp4TOX06qfdYK6KLh9KGhjTD jakub.kotorowicz@impaqgroup.com"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Jakub Kotorowicz"
+}

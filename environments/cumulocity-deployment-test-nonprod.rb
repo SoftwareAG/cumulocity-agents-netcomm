@@ -2,11 +2,16 @@ name "cumulocity-deployment-test-nonprod"
 description "This is an environment only for chef's deployment testing purposes. DO NOT use it for backend/GUI testing"
 
 cookbook_versions({
-'cumulocity'=>'= 1004.0.2',
-'cumulocity-kubernetes'=>'= 1004.0.2',
-'cumulocity-ssagents'=>'= 1004.0.2',
-'cumulocity-monitoring-agent'=>'= 1004.0.2',
-'cumulocity-rsyslog'=>'= 1004.0.2',
+'cumulocity'=>'= 1004.0.3',
+'cumulocity-kubernetes'=>'= 1004.0.3',
+'cumulocity-ssagents'=>'= 1004.0.3',
+'cumulocity-monitoring-agent'=>'= 1004.0.3',
+'cumulocity-rsyslog'=>'= 1004.0.3',
+#'cumulocity'=>'= 9.20.3',
+#'cumulocity-kubernetes'=>'= 9.20.3',
+#'cumulocity-ssagents'=>'= 9.20.3',
+#'cumulocity-monitoring-agent'=>'= 9.20.3',
+#'cumulocity-rsyslog'=>'= 9.20.3',
 })
 
 override_attributes(
@@ -38,7 +43,7 @@ override_attributes(
      "attachedEnvs" => ["cumulocity-deployment-test-nonprod"],
      "token" => "1e3145.2ff901841c78ad1d",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "1004.3.0",
+     "images-version" => "1004.5.0",
 ##     "images-version" => "9.20.8",
      "images2install" => [ "smartrule","sms-gateway","cep","cep-small","device-simulator" ],
      "monitoring" => {
@@ -53,9 +58,9 @@ override_attributes(
   },
   "cumulocity-karaf" => {
     "CUMULOCITY_LICENCE_KEY" => "935ee00dfb58a74061cd9ec999dbda5c8936f82f9c56bc247863b00622f9a9119be7088f04efd56db66e40dc7adec14c0cf22cb6fa1be5d0539a0195513f40a8",
-    "version" => "1004.3.0-1",
+    "version" => "1004.5.0-1",
 ##    "version" => "9.20.8-1",
-    "ssa-version" => "1004.3.0-1",
+    "ssa-version" => "1004.4.0-1",
 ##    "ssa-version" => "9.20.3-1",
     "memory_left_for_system" => "2048",
     "notification" => true,

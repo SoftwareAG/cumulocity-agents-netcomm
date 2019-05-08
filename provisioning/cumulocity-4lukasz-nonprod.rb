@@ -275,10 +275,6 @@ else
         machine "#{environment}_mongodb#{i}"
     end
 
-    1.upto(kubernetes_worker_count) do |i|
-        machine "#{environment}_worker_#{i}"
-    end
-
     1.upto(c8ycore_count) do |i|
         machine "#{environment}_core#{i}"
     end

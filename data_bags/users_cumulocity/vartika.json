@@ -1,0 +1,7 @@
+{
+  "id": "vartika",
+  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDgE6dCcpGm0umns1WhjcQOLXGcmGQeUao41voXGTJeSygBssh+Hq+2qwzrWg5rFCrvRfjFeOTF9QfSK92IvBUz6E/jf3aHIFHIjnVKvOpXTmxvGPcxAMc+p5Lfn0jjLnRmVrhRrRKRm8+H4Oa889OlruHKsn+fMrJ3Wl4fKDqXBq60trJc+1LJO1U4fbIsbOvdduQ6LvsL79TZWzfoCsJocEtEPfvReKglfAtsLgENivFpuoNv1zmAKUva+FivLD+0K8pPvZq1FekxQ+bGEyQ8NssCZCI9u1LUMnAv1xOf9iKzy/Ops/iVkuyLdXOqANsBWNF8sESwM0BfoAFr4yhT+5G9oNH/F8BmS4Z/sjuqsjkn5H3zl72ClD0FSo4PH7kGPtCEwZgmeQSuCbKqjS1HHCs5kJzzao8MlZShQjRX9ZqFO72cw7PSyPutOpq1o0UyV2F99Eo2g0xAMzQhT7/4QkrRI1rDpfCgfGxcytJ94ite5pB11rhtXk5esCnJuMxswlhojaSKcY1YInh9Io41cIdl4C5e/VzaDqh/uumRbrtNeqlOSV6YtyH/f2b7OB5drvO165M2kXJs3do3Mt193c8miymGef0/YNdzD0BCD5g5ERwDNOsALzr7K3bzzfZNUWcpx9BOOOjH1dwJLFIEIglHNE5gzySjz2txUglCnQ== VARA@SAG-H448N72",
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Vartika Rai"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "bbubak",
+  "comment": "Bartosz Bubak",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQvHyaKfVaqr1izPUKPwrPm79qvKSjAwecM7vu4eAzjH4qNI3MVlyHaVTspEPqatTvj6tfORQRcaJvEg3RJF1JkDgO9ywp2aa9Jb/O/PNFztWI4HI4yDbL2iC/ezBBcPJzdvjZpF+VZ5cvN9AZ/DCDWO6H7pk2D8yWOZbqBq8Sd1am58iFj5Tr2V0ZrA0xLBxGgJhapedZqGwEHUkCzPKlhiBItCbIaThKVapPd31yRdjfqH5m7itaq1j5etekgvpE+xcyIEDBB0YAESTLHOLcooH6BXgTYa+sH88Kv3KjmWTbg/gu7rwTLKRNETvGjQAy+WdyPW74+w5Ra+2AaZyj bart@newdelli"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}

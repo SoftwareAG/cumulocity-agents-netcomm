@@ -1,5 +1,5 @@
 {
-  "name": "cumulocity-staging-performance-test-nonprod",
+  "name": "cumulocity-pe1-performance-test-nonprod",
   "description": "The Staging 7 environment for the latest released version",
   "cookbook_versions": {
     "cumulocity": "= 1004.0.3",
@@ -12,13 +12,13 @@
 
   },
   "override_attributes": {
-    "domainname": "staging-pt.c8y.io",
+    "domainname": "pe1-staging-pt.c8y.io",
     "useVaults": false,
     "chef_client": {
-        "interval": 450
+        "interval": 500
     },
     "environment": {
-      "address": "management.staging-pt.c8y.io"
+      "address": "management.pe1-staging-pt.c8y.io"
     },
     "swapfilesize": 512,
     "yum": {
@@ -35,27 +35,32 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-staging-performance-test-nonprod",
+      "deployK8S4env": "cumulocity-pe1-performance-test-nonprod",
       "attachedEnvs": [
-        "cumulocity-staging-performance-test-nonprod"
+        "cumulocity-pe1-performance-test-nonprod"
       ],
-      "token": "1e3145.2ff901841c78ad1d",
+      "token": "1e3145.2ff901841c78af1d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.5.0",
+      "images-version": "1004.0.4",
       "images2install": [
         "cep",
         "cep-small",
+        "cep-medium",
+        "cep-large",
         "device-simulator",
-        "smartrule"
+        "smartrule",
+        "apama-small",
+        "apama-medium",
+        "apama-large"
       ],
       "monitoring": {
         "enabled": false
       }
     },
     "cumulocity-karaf": {
-      "CUMULOCITY_LICENCE_KEY": "5a88b9e58b59256dd2843e2b5562c9b4bb98b996f93efd7d2a0c8724cd8b0be6230cf6d6fd50412a55cc647fd495d71cbd2e9a32075ae157f253c2dedbee6f5b",
-      "version": "1004.5.0-1",
-      "ssa-version": "1004.5.0-1",
+      "CUMULOCITY_LICENCE_KEY": "27d80a8c011a007f2a765052d6badc686c044c558c4e91221f63a174b1bc953f527fad85e33c367f108c4023b4e22c64c198bdced8234b0e491324b7fdf8c9da",
+      "version": "1004.0.4-1",
+      "ssa-version": "1004.0.4-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -115,6 +120,7 @@
         "email.host": "postfix.cumulocity-staging-nonprod.svc.cluster.local",
         "email.from": "no-reply@app.domain.com",
         "errorMessageRepresentationBuilder.includeDebug": "false",
+        "mqtt.max.message.size": "307200",
         "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
         "passwordReset.email.subject": "Password reset",
         "passwordReset.token.email.template": "Dear app.domain.com user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
@@ -124,9 +130,9 @@
       }
     },
     "cumulocity-external-lb": {
-      "landing_page": "https://staging-pt.c8y.io/apps/devicemanagement",
+      "landing_page": "https://pe1-staging-pt.c8y.io/apps/devicemanagement",
       "paas_default_page": "https://$http_host/apps/$defapp",
-      "paas_public_default_page": "https://staging-pt.c8y.io/apps/dmpublic",
+      "paas_public_default_page": "https://pe1-staging-pt.c8y.io/apps/dmpublic",
       "usePostgresForPaaS": false,
       "paas_redirection": true,
       "temp_chunkin": false,

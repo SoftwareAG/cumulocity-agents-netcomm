@@ -1,0 +1,7 @@
+{
+  "id": "yeshwanth",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSZoT5io1rIYg6xoWji1sjyKArqT0DVdoKmcpXiW4HM9BSBufrVT52PlnXR4QDjUthY1E73qAHETihfPceO85476i8qYPKxWIG3pC3DJfPwis4QYAxUr7FH+z6muV/Y1RnxaIxZuH8hb2jR0dgna/mXI5aqHQKsVv3WSsLRx0Q+Ux6F9m5Mzw/mGrU0zbfH89i9VEw/p2gFo1RU8viXMXM/ng6sIn+nHh+N9A/+w76shvXY01vLnjVss3wh3ZjuiyvwHzaqU7i2xUQdytPaGh2vz/9L8/VxRE8usTk2KHf3ztT0viSQvsYqzIONeRJngmi5dsFItj/xyWVnXPOTnYD"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Yeshwanth Kumar Jayashankar"
+}

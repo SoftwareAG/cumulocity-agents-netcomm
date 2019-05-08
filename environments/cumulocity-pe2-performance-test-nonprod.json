@@ -1,5 +1,5 @@
 {
-  "name": "cumulocity-staging-performance-test-nonprod",
+  "name": "cumulocity-pe2-performance-test-nonprod",
   "description": "The Staging 7 environment for the latest released version",
   "cookbook_versions": {
     "cumulocity": "= 1004.0.3",
@@ -12,13 +12,13 @@
 
   },
   "override_attributes": {
-    "domainname": "staging-pt.c8y.io",
+    "domainname": "pe2-staging-pt.c8y.io",
     "useVaults": false,
     "chef_client": {
-        "interval": 450
+        "interval": 500
     },
     "environment": {
-      "address": "management.staging-pt.c8y.io"
+      "address": "management.pe2-staging-pt.c8y.io"
     },
     "swapfilesize": 512,
     "yum": {
@@ -35,25 +35,28 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-staging-performance-test-nonprod",
+      "deployK8S4env": "cumulocity-pe2-performance-test-nonprod",
       "attachedEnvs": [
-        "cumulocity-staging-performance-test-nonprod"
+        "cumulocity-pe2-performance-test-nonprod"
       ],
-      "token": "1e3145.2ff901841c78ad1d",
+      "token": "1e3145.2ff901841c78a31d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
       "images-version": "1004.5.0",
       "images2install": [
         "cep",
         "cep-small",
         "device-simulator",
-        "smartrule"
+        "smartrule",
+        "apama-small",
+        "apama-medium",
+        "apama-large"
       ],
       "monitoring": {
         "enabled": false
       }
     },
     "cumulocity-karaf": {
-      "CUMULOCITY_LICENCE_KEY": "5a88b9e58b59256dd2843e2b5562c9b4bb98b996f93efd7d2a0c8724cd8b0be6230cf6d6fd50412a55cc647fd495d71cbd2e9a32075ae157f253c2dedbee6f5b",
+      "CUMULOCITY_LICENCE_KEY": "86a85dcb40fd9a78403182cf18e59f0fd73b306929c69214280931df506152c4f8d8de59c3af201a9bf7959d2d1f7eacc1062c67c09b1b2943b0762d2a989129",
       "version": "1004.5.0-1",
       "ssa-version": "1004.5.0-1",
       "memory_left_for_system": "2048",
@@ -103,7 +106,7 @@
         "sendDashboardAgent.url": "http://localhost:19191/report",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
-        "mongodb.password": "Moabit-7777^",
+        "mongodb.password": "Moabit-7777%",
         "contextService.rdbmsURL": "jdbc:postgresql://localhost",
         "contextService.rdbmsDriver": "org.postgresql.Driver",
         "contextService.rdbmsUser": "postgres",
@@ -124,9 +127,9 @@
       }
     },
     "cumulocity-external-lb": {
-      "landing_page": "https://staging-pt.c8y.io/apps/devicemanagement",
+      "landing_page": "https://pe2-staging-pt.c8y.io/apps/devicemanagement",
       "paas_default_page": "https://$http_host/apps/$defapp",
-      "paas_public_default_page": "https://staging-pt.c8y.io/apps/dmpublic",
+      "paas_public_default_page": "https://pe2-staging-pt.c8y.io/apps/dmpublic",
       "usePostgresForPaaS": false,
       "paas_redirection": true,
       "temp_chunkin": false,

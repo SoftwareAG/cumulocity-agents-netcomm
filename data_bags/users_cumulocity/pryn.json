@@ -1,0 +1,7 @@
+{
+  "id": "pryn",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAgYRXiSdRIlNFGc3ekx0mzvQRd5NJ7+YmDR3pn801HfzytrxUxpDouzKBcC8lDmY1igiAoq2DduItwyg+AgAtEM/eUW3hFBlwI4c65z1n8Dno+F9f94/LdVQP2vsWe9HZS+svD0ptosZyKGcXgAvl5Ast3NRrs4J4BQuZkbrJxUkQYJ9usUsYvTMssluiB2E75zyl0FPziGEzEeDTFH85zhrTe4FLAO4SrAdNo+d0RcYbDkAT0PlxcgOKcta9liJQ3mgrZL+dio4CFD6Wbesmr7eGihq1MXM6DZnpfol0/Sj4smMMvUy8jhFg1jNXWEamrUnYcQX/eIshVWJaMs+yKQ== pawel-rynarzewski-cumulocity-ssh"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Paweł Rynarzewski"
+}

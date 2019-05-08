@@ -1,0 +1,7 @@
+{
+  "id": "khoi",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDl/taBLEqA1xV7YE4r7S6qdf+R20ZEKeswhStbbiOOVwhjd3HJbK+EskgTkwP9h1b68WYZ+x4JOHgsHD4+uI615EiVX40JpzF73OAsgczHDmQiTjLDCnvZemSgnZdVM+sK/pQZI8/Thngva4X2VX//p2cDUEBLbSvO4dPYxwhexBiiIWlgyznF5nBYoCuB8hKMZsVnXyrAUfEUEVw3YYF4FxIw2c4UtcpvuThMrQgEwkpNW60f+b41U11sZvCt15ZRpYH6HK6EoX6xPyzHqAqHD+Z5YZM4jMwn1RwvTkdmjUdWkI0BxCCXZrQFdTLVqoJOTCQuEYJeGV70qUmNgWfr khoinguyen@Khois-MacBook-Pro.local"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Khoi Nguyen"
+}

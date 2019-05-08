@@ -1,0 +1,7 @@
+{
+  "id": "lukaszs",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4zFrKPe/yjZtm46XUg8wVhplT8LPyaDaNKM1Ca0JVjKAhPBp+d5LYvlNspt7JZcolSdB3DS/GXLbIiv5Zq324qi9afc8ndlcZdMGAeBdNLRz/batigydThRlGnx72yIG3ADoufji5sTRTTGUoLRdi8B8Uqumg8IcI3Dk3wynvewAg5gF6g2b5cggxBbr0+/gTx1hWejC9sb50o2mThO3sY7JBklbIyLYV2t2kUpeMSfm047oCi2qC4DFr2vBe3YeRP1RR+qh0tTSe/8JgEk1rhBNea9gs+6zKK/PiRLXXGLzXU/xsyC9KalpFFuW2rom3GHPdGNqrxNIUSuL5bj6x lukasz@lukasz-HP-EliteBook-850-G5"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Lukasz Soszynski"
+}
