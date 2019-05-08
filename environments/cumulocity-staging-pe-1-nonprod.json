@@ -63,6 +63,11 @@
         "components": {
           "heapster": true
         }
+      },
+      "docker": {
+        "log": {
+          "on-file": true
+        }
       }
     },
     "cumulocity-chaos-monkey": {
