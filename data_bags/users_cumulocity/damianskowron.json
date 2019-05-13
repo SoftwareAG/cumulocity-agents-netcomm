@@ -1,0 +1,7 @@
+{
+  "id": "damianskowron",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJr/kIZRskb+xAiO8o9wLRRq3aWPhGhgZijQIJMTBMThqY2bfG+CTmXzp0RaVL9MPslwVFoQDipeBNwwF0eh+LDWOKj/dAKawDI/ogbcAv2dXzadW+z9PjYeMFRpSwKRVBtjcduXqypYOsL5rWc+df0nF80UaaeosuR6T7pkqNMu7/HKI5yilPb55lsvpBtVmbM1SwGIjXWIA0mxzJqs3Eq0qt9eUaZbjsRzWC+Vol8CLjqkKI19UvZxHqJ10mbxOvhUi/9Lz84lFA6737QB+6STejvQA/lP+L7bRnCsaNL5k5/l7121gyz6a5aXbQsuqbXAUJcttcvI0/FXFITdkB damian.skowron@impaqgroup.com"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Damian Skowron"
+}
