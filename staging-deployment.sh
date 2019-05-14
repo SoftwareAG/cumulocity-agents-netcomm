@@ -199,7 +199,7 @@ for node in ${node_names[@]}; do
     ip=$(ip_for_node $node)
 
     echo "INFO: upgrading on node ${node}"
-    run_ssh_command $ip 'sudo yum clean meatadata;'
+    run_ssh_command $ip 'sudo yum clean metadata;'
     run_ssh_command $ip 'sudo chef-client;'
     echo "INFO: finished upgrading node ${node}"
 done
