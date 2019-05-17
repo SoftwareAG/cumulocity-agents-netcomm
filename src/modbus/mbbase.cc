@@ -304,7 +304,7 @@ int ModbusBase::updateHRBits(int slave, int addr, const char *val, int sb,
 
         uint64_t status = getValue(resp, n, littleEndian);
         const uint64_t mask = (0xffffffffffffffff >> (64 - nb)) << sb;
-        status = (status & mask) | (v << sb);
+        status = (status & ~mask) | (v << sb);
         if (littleEndian) {
                 for (int i = 0; i < n; ++i) {
                         uint16_t a = status & 0xffff;
