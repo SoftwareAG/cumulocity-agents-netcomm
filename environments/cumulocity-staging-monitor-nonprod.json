@@ -1,265 +1,190 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue254;\red144\green1\blue18;
-\red9\green60\blue148;\red81\green59\blue178;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c99608;\cssrgb\c63922\c8235\c8235;
-\cssrgb\c1569\c31765\c64706;\cssrgb\c39608\c32941\c75294;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
-\deftab720
-\pard\pardeftab720\sl400\partightenfactor0
-
-\f0\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 \{\cb1 \
-\cb3   \cf4 \strokec4 "name"\cf2 \strokec2 : \cf5 \strokec5 "cumulocity-staging-monitor-nonprod"\cf2 \strokec2 ,\cb1 \
-\cb3   \cf4 \strokec4 "description"\cf2 \strokec2 : \cf5 \strokec5 "The production environment"\cf2 \strokec2 ,\cb1 \
-\cb3   \cf4 \strokec4 "cookbook_versions"\cf2 \strokec2 : \{\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity"\cf2 \strokec2 : \cf5 \strokec5 "~> 9.20"\cf2 \strokec2 ,\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-kubernetes"\cf2 \strokec2 : \cf5 \strokec5 "~> 9.20"\cf2 \strokec2 ,\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-ssagents"\cf2 \strokec2 : \cf5 \strokec5 "~> 9.20"\cf2 \cb1 \strokec2 \
-\cb3   \},\cb1 \
-\cb3   \cf4 \strokec4 "json_class"\cf2 \strokec2 : \cf5 \strokec5 "Chef::Environment"\cf2 \strokec2 ,\cb1 \
-\cb3   \cf4 \strokec4 "chef_type"\cf2 \strokec2 : \cf5 \strokec5 "environment"\cf2 \strokec2 ,\cb1 \
-\cb3   \cf4 \strokec4 "default_attributes"\cf2 \strokec2 : \{\cb1 \
-\cb3     \cf4 \strokec4 "fixhostname"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 false
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3     \cf4 \strokec4 "fixhostsfile"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 false
-\f0\b0 \cf2 \cb1 \strokec2 \
-\cb3   \},\cb1 \
-\cb3   \cf4 \strokec4 "override_attributes"\cf2 \strokec2 : \{\cb1 \
-\cb3     \cf4 \strokec4 "useVaults"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3     \cf4 \strokec4 "domainname"\cf2 \strokec2 : \cf5 \strokec5 "staging-monitor.c8y.io"\cf2 \strokec2 ,\cb1 \
-\cb3     \cf4 \strokec4 "environment"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "address"\cf2 \strokec2 : \cf5 \strokec5 "management.staging-monitor.c8y.io"\cf2 \cb1 \strokec2 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "swapfilesize"\cf2 \strokec2 : \cf6 \strokec6 512\cf2 \strokec2 ,\cb1 \
-\cb3     \cf4 \strokec4 "yum"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "repositories"\cf2 \strokec2 : \{\cb1 \
-\cb3         \cf4 \strokec4 "cumulocity-testing"\cf2 \strokec2 : \{\cb1 \
-\cb3           \cf4 \strokec4 "enabled"\cf2 \strokec2 : \cf5 \strokec5 "0"\cf2 \cb1 \strokec2 \
-\cb3         \},\cb1 \
-\cb3         \cf4 \strokec4 "cumulocity"\cf2 \strokec2 : \{\cb1 \
-\cb3           \cf4 \strokec4 "url"\cf2 \strokec2 : \cf5 \strokec5 "https://cumulocity:ACceP=m+2m@yum.cumulocity.com/centos/7/cumulocity/x86_64/"\cf2 \cb1 \strokec2 \
-\cb3         \}\cb1 \
-\cb3       \}\cb1 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "java"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "jdk_version"\cf2 \strokec2 : \cf5 \strokec5 "8"\cf2 \cb1 \strokec2 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-kubernetes"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "deployK8S4env"\cf2 \strokec2 : \cf5 \strokec5 "cumulocity-staging-monitor-nonprod"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "attachedEnvs"\cf2 \strokec2 : [\cb1 \
-\cb3         \cf4 \strokec4 "cumulocity-staging-monitor-nonprod"\cf2 \cb1 \strokec2 \
-\cb3       ],\cb1 \
-\cb3       \cf4 \strokec4 "docker-registry-image"\cf2 \strokec2 : \cf5 \strokec5 "cumulocity/registry:2.6.2"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "token"\cf2 \strokec2 : \cf5 \strokec5 "1e3145.2ff901841c48af2e"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "images-connString"\cf2 \strokec2 : \cf5 \strokec5 "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "images-version"\cf2 \strokec2 : \cf5 \strokec5 "9.20.11"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "images2install"\cf2 \strokec2 : [\cb1 \
-\cb3         \cf4 \strokec4 "cep"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "cep-small"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "device-simulator"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "smartrule"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "jwireless"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "apama-small"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "sms-gateway"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "connectivity-agent-server"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "branding"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "cloud-remote-access"\cf2 \cb1 \strokec2 \
-\cb3       ],\cb1 \
-\cb3       \cf4 \strokec4 "monitoring"\cf2 \strokec2 : \{\cb1 \
-\cb3         \cf4 \strokec4 "enabled"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "dashboard-only"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "components"\cf2 \strokec2 : \{\cb1 \
-\cb3           \cf4 \strokec4 "heapster"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \cb1 \strokec2 \
-\cb3         \}\cb1 \
-\cb3       \}\cb1 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-karaf"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "CUMULOCITY_LICENCE_KEY"\cf2 \strokec2 : \cf5 \strokec5 "e511ad5cb600955088be51730614e6dada8c833743a5bebaf6ab6cafe685013591f3c36d4a074493b7c9fa8a7be92133d41942347fc5ddf78f3749474c5995af"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "version"\cf2 \strokec2 : \cf5 \strokec5 "9.20.11-1"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "ssa-version"\cf2 \strokec2 : \cf5 \strokec5 "9.20.11-1"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "memory_left_for_system"\cf2 \strokec2 : \cf5 \strokec5 "2048"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "notification"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "cep-server-enabled"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "CUMULOCITY_LICENCE_DIR"\cf2 \strokec2 : \cf5 \strokec5 "/etc/cumulocity/"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "management-access"\cf2 \strokec2 : [\cb1 \
-\cb3         \cf4 \strokec4 "0.0.0.0/0"\cf2 \cb1 \strokec2 \
-\cb3       ],\cb1 \
-\cb3       \cf4 \strokec4 "logging"\cf2 \strokec2 : \{\cb1 \
-\cb3         \cf4 \strokec4 "microservice_client"\cf2 \strokec2 : \{ \cf4 \strokec4 "enabled"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2  \},\cb1 \
-\cb3         \cf4 \strokec4 "microservice_proxy"\cf2 \strokec2 : \{ \cf4 \strokec4 "enabled"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2  \}\cb1 \
-\cb3       \},\cb1 \
-\cb3       \cf4 \strokec4 "karaf"\cf2 \strokec2 : \{\cb1 \
-\cb3         \cf4 \strokec4 "memory"\cf2 \strokec2 : \{\cb1 \
-\cb3           \cf4 \strokec4 "xms"\cf2 \strokec2 : \cf5 \strokec5 "1024M"\cf2 \cb1 \strokec2 \
-\cb3         \}\cb1 \
-\cb3       \}\cb1 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-cep"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "properties"\cf2 \strokec2 : \{\cb1 \
-\cb3         \cf4 \strokec4 "esperha.storage"\cf2 \strokec2 : \cf5 \strokec5 "/mnt/esperha-storage"\cf2 \cb1 \strokec2 \
-\cb3       \}\cb1 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-mongo"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "sharedkey-content"\cf2 \strokec2 : \cf5 \strokec5 "1y7LbnZkJvDgtUOHN+8L++DAABlWdLO6kA+GXR23vl5QlslmqlB6goKQmDzgeMdA\\nGC38ZcPLejm2Mnvk3TF7QHlhW1OvQZFOk600/Z9qbkzIjfQLNU4RIOdWq7pTq70w\\nsyIbBXAZ+ZS2AUQnObxRiToIeDxakzjuiTQbwfYz7Z2bA/hJMrKNdI//IeRl93gt\\nMAV5f07l5WQQ8OcKjqYlga1J2izcVmcbd6Q0PCtp38MrmBe3iEn34FpiAgDVZp06\\ncuNJDUwr2YF90KWLs53g85vfhybNchxISXMSJBFApId8cuVeZ2oRKf7HjcyrsRR6\\nUxk/74MMKvsXdxG2e2pfgTywyZ5Ndk5pGKXj6TZ5QY4Qw2QHryVPyRT90xogdDtg\\nA4A8iSWRBgnrtJP+qvlfBSCpdN0EqmHqGuWcqzkc4sjpO9ubQdqvBFni9X0A6mxE\\nWwGH2tk6uWQU4+OPfoQkVgUCFgepFWuzWHj9TA71sn0hmDLnBZDUh3yKcEz++qKy\\nchfOPrnhSPpvZI0762F5LdIp7cuAwMC4wEYSSloawzqBnCpvQ0BsFAyprhZhFDdV\\nUP67nmp/q5oaXgdr3TJOTGkRgcPXRSuf4zV4nKdMdyy7HM9o24LGXiJ40b3CZGhm\\nyG0tRoTRNTd6hgFQWYp8hT4EK++kf60boGhUSPxvlkbERZ/mx4kPGY1fYWkRN8Y8\\nbZXDnwu+A3kqCwSTJ6tjzrtqlQ51z5rJWl14eIo2Ienfym1tquoPNMeksQroivRB\\n1ZXlA3v68+nHy2HljMsLUjt8oxho3HhN1RcDXazf4b39n5nZS4wOxjvPvqSrX4bw\\n/Hwh8wL2+IDfOLl1yAO6isrEXApJSTiXFt5fSbaPW6T7hCiCkNPzdS+FYLArozNE\\nYrzvmkbcHfMqqTCdWDSOWV7pRqvUARRFi0CvjWh85zmt4LG7IY/GBKJvmSAfFX1O\\n5OCavvQrRbnH/m1xW7NHXbeWH80K"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "mongodb.initUser"\cf2 \strokec2 : \cf5 \strokec5 "init-root"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "mongodb.initPassword"\cf2 \strokec2 : \cf5 \strokec5 "felix"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "version"\cf2 \strokec2 : \cf5 \strokec5 "3.6"\cf2 \cb1 \strokec2 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-GUI"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "connString"\cf2 \strokec2 : \cf5 \strokec5 "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "version"\cf2 \strokec2 : \cf5 \strokec5 "9.20.11"\cf2 \cb1 \strokec2 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-ssagents"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "useTags"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "lwm2m-agent"\cf2 \strokec2 : \{\cb1 \
-\cb3         \cf4 \strokec4 "host_fwUpdate"\cf2 \strokec2 : \cf5 \strokec5 "34.251.8.163"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "leshan_cluster_tenant"\cf2 \strokec2 : \cf5 \strokec5 "management"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "leshan_cluster_tenant_username"\cf2 \strokec2 : \cf5 \strokec5 "lwm2m_user"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "leshan_cluster_tenant_password"\cf2 \strokec2 : \cf5 \strokec5 "passw0rd_a"\cf2 \cb1 \strokec2 \
-\cb3       \}\cb1 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-core"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "properties"\cf2 \strokec2 : \{\cb1 \
-\cb3         \cf4 \strokec4 "system.connectivity.microservice.url"\cf2 \strokec2 : \cf5 \strokec5 "http://$\{JWIRELESS-AGENT-SERVER\}:8092/jwireless"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "c8y.internal.users"\cf2 \strokec2 : \cf5 \strokec5 "service_cep,service_apama"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "device-simulator.microservice.url"\cf2 \strokec2 : \cf5 \strokec5 "http://localhost:8111/service/device-simulator"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "smartrule.microservice.url"\cf2 \strokec2 : \cf5 \strokec5 "http://localhost:8111/service/smartrule"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "smsGateway.host"\cf2 \strokec2 : \cf5 \strokec5 "http://localhost:8111/service/sms-gateway"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "default.tenant.microservices"\cf2 \strokec2 : \cf5 \strokec5 "device-simulator, smartrule, sms-gateway, cep"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "sendDashboardAgent.url"\cf2 \strokec2 : \cf5 \strokec5 "http://localhost:19191/report"\cf2 \strokec2 ,\cb1 \
-\cb3 \'a0\'a0    \cf4 \strokec4 "management.admin.password"\cf2 \strokec2 : \cf5 \strokec5 "3915096d8bfd3119db2c16ec1090a70f4f37ff403cfdf458b9f1109080066346"\cf2 \strokec2 ,\cb1 \
-\cb3 \'a0\'a0    \cf4 \strokec4 "admin.password"\cf2 \strokec2 : \cf5 \strokec5 "3915096d8bfd3119db2c16ec1090a70f4f37ff403cfdf458b9f1109080066346"\cf2 \strokec2 ,\cb1 \
-\cb3 \'a0\'a0    \cf4 \strokec4 "tenant.admin.password"\cf2 \strokec2 : \cf5 \strokec5 "3915096d8bfd3119db2c16ec1090a70f4f37ff403cfdf458b9f1109080066346"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "mongodb.user"\cf2 \strokec2 : \cf5 \strokec5 "c8y-root"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "mongodb.password"\cf2 \strokec2 : \cf5 \strokec5 "test"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "mongodb.admindb"\cf2 \strokec2 : \cf5 \strokec5 "admin"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "migration.tomongo.default"\cf2 \strokec2 : \cf5 \strokec5 "MONGO_READ_WRITE"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "contextService.rdbmsURL"\cf2 \strokec2 : \cf5 \strokec5 "jdbc:postgresql://localhost"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "contextService.rdbmsDriver"\cf2 \strokec2 : \cf5 \strokec5 "org.postgresql.Driver"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "contextService.rdbmsUser"\cf2 \strokec2 : \cf5 \strokec5 "postgres"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "contextService.tenantManagementDB"\cf2 \strokec2 : \cf5 \strokec5 "management"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "cumulocity.environment"\cf2 \strokec2 : \cf5 \strokec5 "PRODUCTION"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "auth.checkBlockingFromOutside"\cf2 \strokec2 : \cf5 \strokec5 "false"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "email.from"\cf2 \strokec2 : \cf5 \strokec5 "no-reply@app.domain.com"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "errorMessageRepresentationBuilder.includeDebug"\cf2 \strokec2 : \cf5 \strokec5 "false"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "default.tenant.applications"\cf2 \strokec2 : \cf5 \strokec5 "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "passwordReset.email.subject"\cf2 \strokec2 : \cf5 \strokec5 "Password reset"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "passwordReset.token.email.template"\cf2 \strokec2 : \cf5 \strokec5 "Dear app.domain.com user,\\\\n\\\\n\\\\\\n            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\\\n\\\\n\\\\\\n            Please use the following link to reset your password: \\\\n\\\\\\n            \{host\}?token=\{token\}&showTenant\\\\n\\\\n\\\\\\n            If you were not expecting this email, please ignore it. \\\\n\\\\n\\\\\\n            Kind regards,\\\\n\\\\\\n            app.domain.com support team\\\\n"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "passwordReset.user.not.found.email.template"\cf2 \strokec2 : \cf5 \strokec5 "Hi there,\\\\n\\\\n\\\\\\n            you or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\\\n\\\\n\\\\\\n            However, we could not find the email address in your account. Please contact the administrator of your \\\\\\n            account to set your email address and password. If you are the administrator of the account,\\\\\\n            please use the email address that you registered with.\\\\n\\\\n\\\\\\n            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of app.domain.com portal. \\\\n\\\\n\\\\\\n            Kind regards,\\\\n\\\\\\n            app.domain.com support team\\\\n"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "passwordReset.success.email.template"\cf2 \strokec2 : \cf5 \strokec5 "Dear app.domain.com user,\\\\n\\\\n\\\\\\n            Your password on \{host\} has been recently changed. \\\\n\\\\\\n            If you or your administrator made this change, you do not need to do anything more. \\\\n\\\\\\n            If you did not make this change, please contact your administrator.\\\\n\\\\n\\\\\\n            Kind regards,\\\\n\\\\\\n            app.domain.com support team\\\\n"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "passwordReset.invite.template"\cf2 \strokec2 : \cf5 \strokec5 "Hi there,\\\\n\\\\n\\\\\\n            Please use the following link to reset your password: \\\\n\\\\\\n            \{host\}/apps/devicemanagement/index.html?token=\{token\}\\\\n\\\\n\\\\\\n            If you were not expecting this email, please ignore it. \\\\n\\\\n\\\\\\n            Kind regards,\\\\n\\\\n\\\\\\n            app.domain.com support team\\\\n"\cf2 \cb1 \strokec2 \
-\cb3       \}\cb1 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-external-lb"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "landing_page"\cf2 \strokec2 : \cf5 \strokec5 "https://staging-monitor.c8y.io/apps/devicemanagement"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "paas_default_page"\cf2 \strokec2 : \cf5 \strokec5 "https://$http_host/apps/devicemanagement"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "paas_public_default_page"\cf2 \strokec2 : \cf5 \strokec5 "https://staging-monitor.c8y.io/apps/dmpublic"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "usePostgresForPaaS"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 false
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "paas_redirection"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "temp_chunkin"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 false
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useIPAddress"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useSSL"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useHSTS"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 false
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useMQTTsupport"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useMQTTlogs"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 false
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useMasterForPushOperations"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 false
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useKarafWebsocket"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "proxy_cache"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "certificate_domain"\cf2 \strokec2 : \cf5 \strokec5 "staging-1.c8y.io"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useLUAforLimits"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useLUAforSSLcerts"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useLUAforHealthCheck"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "useK8SDashboard"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "nginx"\cf2 \strokec2 : \{\cb1 \
-\cb3         \cf4 \strokec4 "NGinxPort"\cf2 \strokec2 : \cf5 \strokec5 "openresty"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "version"\cf2 \strokec2 : \cf5 \strokec5 "1.11.2.4-20.el7.centos.c8y.8.11.1"\cf2 \cb1 \strokec2 \
-\cb3       \}\cb1 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "vendme-platform-agent"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "use-internal-proxy"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 null
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "install-agent"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 null
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "install-platform"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 null
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "install-tracker"\cf2 \strokec2 : 
-\f1\b \cf5 \strokec5 null
-\f0\b0 \cf2 \cb1 \strokec2 \
-\cb3     \},\cb1 \
-\cb3     \cf4 \strokec4 "cumulocity-rsyslog"\cf2 \strokec2 : \{\cb1 \
-\cb3       \cf4 \strokec4 "cross-env-log-server"\cf2 \strokec2 : \cf5 \strokec5 "cumulocity-multinode-prod"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "log-server-ext-address"\cf2 \strokec2 : \cf5 \strokec5 "monitoring.cumulocity.com"\cf2 \cb1 \strokec2 \
-\cb3     \},\cb1 \
-\cb3       \cf4 \strokec4 "monitoring-agent"\cf2 \strokec2  : \{\cb1 \
-\cb3       \cf4 \strokec4 "server_url"\cf2 \strokec2  : \cf5 \strokec5 "http://staging-monitor.c8y.io"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "platformUsername"\cf2 \strokec2  : \cf5 \strokec5 "monitoring-agent"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "platformUsergroup"\cf2 \strokec2  : \cf5 \strokec5 "readers"\cf2 \strokec2 ,\cb1 \
-\cb3       \cf4 \strokec4 "shaBlacklist"\cf2 \strokec2  : [ \cf4 \strokec4 "2be5ec0ff74937e0c11fcf6ec9564f9d6fbc7a3be3cfd5ab85ba779975677b98"\cf2 \strokec2  ],\cb1 \
-\cb3       \cf4 \strokec4 "autoRegistration"\cf2 \strokec2  : \{\cb1 \
-\cb3         \cf4 \strokec4 "server_url"\cf2 \strokec2  : \cf5 \strokec5 "http://staging-monitor.c8y.io"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "enable"\cf2 \strokec2  : 
-\f1\b \cf5 \strokec5 true
-\f0\b0 \cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "tenant"\cf2 \strokec2  : \cf5 \strokec5 "environments"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "username"\cf2 \strokec2  : \cf5 \strokec5 "autoregister"\cf2 \strokec2 ,\cb1 \
-\cb3         \cf4 \strokec4 "groupName"\cf2 \strokec2  : \cf5 \strokec5 "staging-monitor"\cf2 \cb1 \strokec2 \
-\cb3         \}\cb1 \
-\cb3     \}\cb1 \
-\cb3   \}\cb1 \
-\cb3 \}\cb1 \
-\
+{
+  "name": "cumulocity-staging-monitor-nonprod",
+  "description": "The production environment",
+  "cookbook_versions": {
+    "cumulocity": "~> 9.20",
+    "cumulocity-kubernetes": "~> 9.20",
+    "cumulocity-ssagents": "~> 9.20"
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+    "fixhostname": false,
+    "fixhostsfile": false
+  },
+  "override_attributes": {
+    "useVaults": true,
+    "domainname": "staging-monitor.c8y.io",
+    "environment": {
+      "address": "management.staging-monitor.c8y.io"
+    },
+    "swapfilesize": 512,
+    "yum": {
+      "repositories": {
+        "cumulocity-testing": {
+          "enabled": "0"
+        },
+        "cumulocity": {
+          "url": "https://cumulocity:ACceP=m+2m@yum.cumulocity.com/centos/7/cumulocity/x86_64/"
+        }
+      }
+    },
+    "java": {
+      "jdk_version": "8"
+    },
+    "cumulocity-kubernetes": {
+      "deployK8S4env": "cumulocity-staging-monitor-nonprod",
+      "attachedEnvs": [
+        "cumulocity-staging-monitor-nonprod"
+      ],
+      "docker-registry-image": "cumulocity/registry:2.6.2",
+      "token": "1e3145.2ff901841c48af2e",
+      "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
+      "images-version": "9.20.11",
+      "images2install": [
+        "cep",
+        "cep-small",
+        "device-simulator",
+        "smartrule",
+        "jwireless",
+        "apama-small",
+        "sms-gateway",
+        "connectivity-agent-server",
+        "branding",
+        "cloud-remote-access"
+      ],
+      "monitoring": {
+        "enabled": true,
+        "dashboard-only": true,
+        "components": {
+          "heapster": true
+        }
+      }
+    },
+    "cumulocity-karaf": {
+      "CUMULOCITY_LICENCE_KEY": "e511ad5cb600955088be51730614e6dada8c833743a5bebaf6ab6cafe685013591f3c36d4a074493b7c9fa8a7be92133d41942347fc5ddf78f3749474c5995af",
+      "version": "9.20.11-1",
+      "ssa-version": "9.20.11-1",
+      "memory_left_for_system": "2048",
+      "notification": true,
+      "cep-server-enabled": true,
+      "CUMULOCITY_LICENCE_DIR": "/etc/cumulocity/",
+      "management-access": [
+        "0.0.0.0/0"
+      ],
+      "logging": {
+        "microservice_client": { "enabled": true },
+        "microservice_proxy": { "enabled": true }
+      },
+      "karaf": {
+        "memory": {
+          "xms": "1024M"
+        }
+      }
+    },
+    "cumulocity-cep": {
+      "properties": {
+        "esperha.storage": "/mnt/esperha-storage"
+      }
+    },
+    "cumulocity-mongo": {
+      "sharedkey-content": "1y7LbnZkJvDgtUOHN+8L++DAABlWdLO6kA+GXR23vl5QlslmqlB6goKQmDzgeMdA\nGC38ZcPLejm2Mnvk3TF7QHlhW1OvQZFOk600/Z9qbkzIjfQLNU4RIOdWq7pTq70w\nsyIbBXAZ+ZS2AUQnObxRiToIeDxakzjuiTQbwfYz7Z2bA/hJMrKNdI//IeRl93gt\nMAV5f07l5WQQ8OcKjqYlga1J2izcVmcbd6Q0PCtp38MrmBe3iEn34FpiAgDVZp06\ncuNJDUwr2YF90KWLs53g85vfhybNchxISXMSJBFApId8cuVeZ2oRKf7HjcyrsRR6\nUxk/74MMKvsXdxG2e2pfgTywyZ5Ndk5pGKXj6TZ5QY4Qw2QHryVPyRT90xogdDtg\nA4A8iSWRBgnrtJP+qvlfBSCpdN0EqmHqGuWcqzkc4sjpO9ubQdqvBFni9X0A6mxE\nWwGH2tk6uWQU4+OPfoQkVgUCFgepFWuzWHj9TA71sn0hmDLnBZDUh3yKcEz++qKy\nchfOPrnhSPpvZI0762F5LdIp7cuAwMC4wEYSSloawzqBnCpvQ0BsFAyprhZhFDdV\nUP67nmp/q5oaXgdr3TJOTGkRgcPXRSuf4zV4nKdMdyy7HM9o24LGXiJ40b3CZGhm\nyG0tRoTRNTd6hgFQWYp8hT4EK++kf60boGhUSPxvlkbERZ/mx4kPGY1fYWkRN8Y8\nbZXDnwu+A3kqCwSTJ6tjzrtqlQ51z5rJWl14eIo2Ienfym1tquoPNMeksQroivRB\n1ZXlA3v68+nHy2HljMsLUjt8oxho3HhN1RcDXazf4b39n5nZS4wOxjvPvqSrX4bw\n/Hwh8wL2+IDfOLl1yAO6isrEXApJSTiXFt5fSbaPW6T7hCiCkNPzdS+FYLArozNE\nYrzvmkbcHfMqqTCdWDSOWV7pRqvUARRFi0CvjWh85zmt4LG7IY/GBKJvmSAfFX1O\n5OCavvQrRbnH/m1xW7NHXbeWH80K",
+      "mongodb.initUser": "init-root",
+      "mongodb.initPassword": "felix",
+      "version": "3.6"
+    },
+    "cumulocity-GUI": {
+      "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
+      "version": "9.20.11"
+    },
+    "cumulocity-ssagents": {
+      "useTags": true,
+      "lwm2m-agent": {
+        "host_fwUpdate": "34.251.8.163",
+        "leshan_cluster_tenant": "management",
+        "leshan_cluster_tenant_username": "lwm2m_user",
+        "leshan_cluster_tenant_password": "passw0rd_a"
+      }
+    },
+    "cumulocity-core": {
+      "properties": {
+        "system.connectivity.microservice.url": "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
+        "c8y.internal.users": "service_cep,service_apama",
+        "device-simulator.microservice.url": "http://localhost:8111/service/device-simulator",
+        "smartrule.microservice.url": "http://localhost:8111/service/smartrule",
+        "smsGateway.host": "http://localhost:8111/service/sms-gateway",
+        "default.tenant.microservices": "device-simulator, smartrule, sms-gateway, cep",
+        "sendDashboardAgent.url": "http://localhost:19191/report",
+	    "management.admin.password": "3915096d8bfd3119db2c16ec1090a70f4f37ff403cfdf458b9f1109080066346",
+	    "admin.password": "3915096d8bfd3119db2c16ec1090a70f4f37ff403cfdf458b9f1109080066346",
+	    "tenant.admin.password": "3915096d8bfd3119db2c16ec1090a70f4f37ff403cfdf458b9f1109080066346",
+        "mongodb.user": "c8y-root",
+        "mongodb.password": "test",
+        "mongodb.admindb": "admin",
+        "migration.tomongo.default": "MONGO_READ_WRITE",
+        "contextService.rdbmsURL": "jdbc:postgresql://localhost",
+        "contextService.rdbmsDriver": "org.postgresql.Driver",
+        "contextService.rdbmsUser": "postgres",
+        "contextService.tenantManagementDB": "management",
+        "cumulocity.environment": "PRODUCTION",
+        "auth.checkBlockingFromOutside": "false",
+        "email.from": "no-reply@app.domain.com",
+        "errorMessageRepresentationBuilder.includeDebug": "false",
+        "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
+        "passwordReset.email.subject": "Password reset",
+        "passwordReset.token.email.template": "Dear app.domain.com user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
+        "passwordReset.user.not.found.email.template": "Hi there,\\n\\n\\\n            you or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            However, we could not find the email address in your account. Please contact the administrator of your \\\n            account to set your email address and password. If you are the administrator of the account,\\\n            please use the email address that you registered with.\\n\\n\\\n            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of app.domain.com portal. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
+        "passwordReset.success.email.template": "Dear app.domain.com user,\\n\\n\\\n            Your password on {host} has been recently changed. \\n\\\n            If you or your administrator made this change, you do not need to do anything more. \\n\\\n            If you did not make this change, please contact your administrator.\\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
+        "passwordReset.invite.template": "Hi there,\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}/apps/devicemanagement/index.html?token={token}\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\n\\\n            app.domain.com support team\\n"
+      }
+    },
+    "cumulocity-external-lb": {
+      "landing_page": "https://staging-monitor.c8y.io/apps/devicemanagement",
+      "paas_default_page": "https://$http_host/apps/devicemanagement",
+      "paas_public_default_page": "https://staging-monitor.c8y.io/apps/dmpublic",
+      "usePostgresForPaaS": false,
+      "paas_redirection": true,
+      "temp_chunkin": false,
+      "useIPAddress": true,
+      "useSSL": true,
+      "useHSTS": false,
+      "useMQTTsupport": true,
+      "useMQTTlogs": false,
+      "useMasterForPushOperations": false,
+      "useKarafWebsocket": true,
+      "proxy_cache": true,
+      "certificate_domain": "staging-1.c8y.io",
+      "useLUAforLimits": true,
+      "useLUAforSSLcerts": true,
+      "useLUAforHealthCheck": true,
+      "useK8SDashboard": true,
+      "nginx": {
+        "NGinxPort": "openresty",
+        "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
+      }
+    },
+    "vendme-platform-agent": {
+      "use-internal-proxy": null,
+      "install-agent": null,
+      "install-platform": null,
+      "install-tracker": null
+    },
+    "cumulocity-rsyslog": {
+      "cross-env-log-server": "cumulocity-multinode-prod",
+      "log-server-ext-address": "monitoring.cumulocity.com"
+    },
+      "monitoring-agent" : {
+      "server_url" : "http://staging-monitor.c8y.io",
+      "platformUsername" : "monitoring-agent",
+      "platformUsergroup" : "readers",
+      "shaBlacklist" : [ "2be5ec0ff74937e0c11fcf6ec9564f9d6fbc7a3be3cfd5ab85ba779975677b98" ],
+      "autoRegistration" : {
+        "server_url" : "http://staging-monitor.c8y.io",
+        "enable" : true,
+        "tenant" : "environments",
+        "username" : "autoregister",
+        "groupName" : "staging-monitor"
+        }
+    }
+  }
 }
