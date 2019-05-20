@@ -184,6 +184,20 @@
     "cumulocity-rsyslog": {
       "cross-env-log-server": "cumulocity-multinode-prod",
       "log-server-ext-address": "monitoring.cumulocity.com"
-    }
+    },
+      "monitoring-agent" : {
+      "createPlatformUser" : true,
+      "server_url" : "http://staging-monitor.c8y.io",
+      "platformUsername" : "monitoring-agent",
+      "platformUsergroup" : "readers",
+      "shaBlacklist" : [ "2be5ec0ff74937e0c11fcf6ec9564f9d6fbc7a3be3cfd5ab85ba779975677b98" ],
+      "autoRegistration" : {
+        "server_url" : "http://staging-monitor.c8y.io",
+        "enable" : true,
+        "tenant" : "environments",
+        "username" : "autoregister",
+        "groupName" : "staging-1"
+        }
+      }
   }
 }
