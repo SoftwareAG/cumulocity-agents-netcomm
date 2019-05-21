@@ -26,12 +26,6 @@ add_machine_options({
   bootstrap_options: {
     key_name: 'chef_cumulocity',
     instance_type: "#{flavour_for_dev}",
-    block_device_mappings: [{
-      'device_name': '/dev/sda1',
-      'ebs': {
-       'volume_size': 30,
-       'delete_on_termination': true }
-    }],
     # image_id: 'ami-e499ae0f',
     image_id: 'ami-0597ae12f89cbc55c',
     subnet_id: 'subnet-c477d0bf',
@@ -60,13 +54,13 @@ machine "#{dev_id}" do
     add_machine_options(
         bootstrap_options: {
             # private_ip_address: "#{private_ips}",
-            instance_type: "#{flavour_for_dev}"
+            instance_type: "#{flavour_for_dev}",
             block_device_mappings: [{
               'device_name': '/dev/sda1',
               'ebs': {
-                'volume_size': "#{volume_size}",
-                'delete_on_termination': true }
-          }]
+               'volume_size': "#{volume_size}",
+               'delete_on_termination': true }
+            }],
         }
     )
     tags ["standalone:mongod7:"]

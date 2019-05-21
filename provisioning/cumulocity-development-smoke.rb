@@ -54,7 +54,7 @@ machine "#{dev_id}" do
     add_machine_options(
         bootstrap_options: {
             # private_ip_address: "#{private_ips}",
-            instance_type: "#{flavour_for_dev}"
+            instance_type: "#{flavour_for_dev}",
             block_device_mappings: [{
               'device_name': '/dev/sda1',
               'ebs': {

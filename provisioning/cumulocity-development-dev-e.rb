@@ -54,13 +54,13 @@ machine "#{dev_id}" do
     add_machine_options(
         bootstrap_options: {
             # private_ip_address: "#{private_ips}",
-            instance_type: "#{flavour_for_dev}"
+            instance_type: "#{flavour_for_dev}",
             block_device_mappings: [{
               'device_name': '/dev/sda1',
               'ebs': {
                 'volume_size': "#{volume_size}",
                 'delete_on_termination': true }
-          }]
+            }]
         }
     )
     tags ["standalone:mongod7:"]
