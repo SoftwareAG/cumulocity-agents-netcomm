@@ -5,6 +5,7 @@ environment  = 'cumulocity-development-dev-d-nonprod'
 private_ips = "172.31.18.177"
 flavour_for_dev = "c4.xlarge"
 dev_id = "dev-d"
+volume_size = 30
 
 with_chef_environment environment
 with_chef_server(
@@ -60,6 +61,12 @@ machine "#{dev_id}" do
         bootstrap_options: {
             # private_ip_address: "#{private_ips}",
             instance_type: "#{flavour_for_dev}"
+            block_device_mappings: [{
+              'device_name': '/dev/sda1',
+              'ebs': {
+                'volume_size': "#{volume_size}",
+                'delete_on_termination': true }
+          }]
         }
     )
     tags ["standalone:mongod7:"]
