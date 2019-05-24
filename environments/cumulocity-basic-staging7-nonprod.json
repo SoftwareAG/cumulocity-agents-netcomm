@@ -133,6 +133,7 @@
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": "true",
+        "system.feature.track.changes": "true",
         "migration.tomongo.default": "MONGO_READ_WRITE",
         "smsGateway.host": "http://localhost:8111/service/messaging",
         "email.host": "postfix.cumulocity-basic-staging7-nonprod.svc.cluster.local",
