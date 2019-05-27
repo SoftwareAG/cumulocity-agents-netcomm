@@ -50,7 +50,10 @@
       ],
       "monitoring": {
         "enabled": true,
-        "dashboard-only": true
+        "dashboard-only": true,
+        "components": {
+          "heapster": true
+        }
       }
     },
     "cumulocity-karaf": {
