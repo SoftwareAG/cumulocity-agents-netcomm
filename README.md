@@ -1,6 +1,6 @@
 # Cumulocity Netcomm Agent #
 
-Cumulociyt Netcomm agent is a dedicated agent software for connecting the NetComm router to Cumulocity.
+Cumulocity Netcomm agent is a dedicated agent software for connecting the NetComm router to Cumulocity.
 
 ### How to build the agent? ###
 
