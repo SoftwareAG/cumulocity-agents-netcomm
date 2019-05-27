@@ -52,7 +52,11 @@
         "sms-gateway-server"
       ],
       "monitoring": {
-        "enabled": false
+        "enabled": true,
+        "dashboard-only": true,
+        "components": {
+          "heapster": true
+        }
       }
     },
     "cumulocity-karaf": {
