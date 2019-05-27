@@ -7,9 +7,9 @@ $(basename $0) ask                   -- Show ntcagent and smsagent current versi
 $(basename $0) <ntcagent> <smsagent> -- Update <ntcagent> and <smsagent> version number.
                                       - for no update."
 
-if [ "$1" == "" -o "$1" == "-h" ]; then
+if [ "$1" = "" -o "$1" = "-h" ]; then
     echo "$USAGE"
-elif [ "$1" == "ask" ]; then
+elif [ "$1" = "ask" ]; then
     echo -n "ntcagent: "
     grep Version: debian/ntcagent/control | cut -c 10-
     echo -n "smsagent: "
