@@ -15,7 +15,13 @@ with_machine_options({
     ssl_verify_mode: 'verify_none',
     chef_version: "12.21.31"
   },
-  ssh_username: "centos"
+  transport_options: {
+    ssh_options: {
+      timeout: 360
+    }
+  },
+  ssh_username: "centos",
+  ssh_timeout: 360
 })
 
 add_machine_options({
