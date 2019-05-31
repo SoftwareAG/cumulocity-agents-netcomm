@@ -1,7 +1,7 @@
 {
   "id": "ulrich",
   "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAlPiGKFaYdIrK38iUUHfoHO0BqH+PIplFXw3v77E5HmHoiE/7sgbEkRxMj5DyIXocRYjJn1Z/BiosPbOW01yOQgFk8VxFTFy2+8GlPlIb6uTHz11vqZ39e2itf4usIhwBOzxK16HSC1bhpzNJwYvoCLY8l60jcxMmN5Zn1ngEoYu4u6LeQzpBjDfTI8Y0T3aMVD3a4b83azS3Dv2xjQ6BNq9oTOOGSZjaz/14d49J8NZ+Tcsl/VoEInuC9i7p2ZJS8WKxezGPErlQMqRBFuTLhzEC2Z93LcUeVFcDucf6lyhDWTaUviTaVdZEH6hB5hu12VGnW1+k1x+jyt2rBWSrJw== rsa-key-20190415"],
-  "groups": ["users"],
+  "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Ulrich Post"
 }
