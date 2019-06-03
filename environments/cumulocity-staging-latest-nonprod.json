@@ -118,6 +118,7 @@
         "device-simulator.microservice.url": "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
         "smartrule.microservice.url": "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
         "sendDashboardAgent.url": "http://localhost:19191/report",
+        "errorMessageRepresentationBuilder.documentationBaseUrl": "https://cumulocity.com/guides/reference/rest-implementation",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
         "system.files.microservice.zipped.max.size": "6294967296",

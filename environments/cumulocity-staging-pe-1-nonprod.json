@@ -125,6 +125,7 @@
         "device-simulator.microservice.url": "",
         "smartrule.microservice.url": "",
         "sendDashboardAgent.url": "http://localhost:19191/report",
+        "errorMessageRepresentationBuilder.documentationBaseUrl": "https://cumulocity.com/guides/reference/rest-implementation",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
         "contextService.rdbmsURL": "jdbc:postgresql://localhost",
