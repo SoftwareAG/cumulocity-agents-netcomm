@@ -47,7 +47,8 @@
         "cellid-agent-server",
         "cloud-remote-access",
         "speech-agent-server",
-        "impact"
+        "impact",
+        "opcua-mgmt-service"
       ],
       "monitoring": {
         "enabled": true,
