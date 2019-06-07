@@ -1,0 +1,7 @@
+{
+  "id": "shweta",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDf2mXIBFsoXSTq7oJa73+t5iLVWU24qhsCypewbLE9Kgq594aHSTLuZ9NLYRBHQAPkz8Db39MzZL9o8MRgllAkGBfzpDS03m+g/zz0XwW8YiIsZNZMTfaE4EltZEEEJCVi+ikWu1QUty/vMXRG3PCI0n2w6lVQ6ql8ClNbnDBYNcqC+wZm+n53XMTzo30ThAkHAw6HalUcY+bVNuHGVNeSANR8ReifsgkUkxKrQd/rmwggu6FX7pNK4uHsoxJ1gY0yWyFPQPTP3Egv+RdArDRPbUYlKo0W5JNFzMBYqGTkgnglyUzp3tIFvg5ksvddcaIBUiUYIPNJVAPg0CCSB8oJ shweta@shweta-virtual-machine"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Shweta Chaubey"
+}

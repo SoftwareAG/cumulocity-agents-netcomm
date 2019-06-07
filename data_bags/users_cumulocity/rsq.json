@@ -1,0 +1,7 @@
+{
+  "id": "rsq",
+  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDx3VRjRFX6g6vk421JHmpKu/GMDG6hRL1jn2zyjw1aJAfi4YRKQ0llegrPrMqRssFGLmwKN/UFJnBxM74wc7FANS0NMUIZgveBVZoe+8cuVPmuUKcQL4Cf69+XFyvpQNSjHYVmBmFEDEU8LN0MHb8//lbcyYuWykW/BmB9WpZgBCyjUwBNQYG4iX+w/F3edYaB8ZL9VB/5ttpTyl94yOLInook3WiYBdMPz86jQ9LTlvgq2fqnn9qBIlTew5S17nUTf+j2yZfV40MZ1oVY90t++wKk+xYOK3/QoU19069KLvt8SglQtT25DVeSUaeB8g+7A+4PLHvO3IlL/sXEc8Fh RSQ@SAG-G5KJHR2",
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Robert Squire"
+}

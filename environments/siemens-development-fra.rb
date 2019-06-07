@@ -79,7 +79,7 @@ override_attributes(
       "cumulocity.environment" => "PRODUCTION",
       "auth.checkBlockingFromOutside" => false,
 #            "errorMessageRepresentationBuilder.includeDebug" => "false",
-      "default.tenant.applications" => "administration,devicemanagement,cockpit",
+      "default.tenant.applications" => "administration,devicemanagement,cockpit,cloud-remote-access",
       "management.admin.password" => "", # insert password
       "tenant.admin.password" => "", # insert password
       "admin.password" => "", # insert password
@@ -97,7 +97,7 @@ override_attributes(
       #"system.two-factor-authentication.siemens.username" => "cumulocity",
       #"system.two-factor-authentication.siemens.password" => "xBg5Wa8M",
       ##"default.tenant.microservices" => "device-simulator, smartrule, cep",
-      "default.tenant.microservices" => "device-simulator, smartrule, cep, feature-cep-custom-rules, sigfox-agent",
+      "default.tenant.microservices" => "device-simulator, smartrule, cep, feature-cep-custom-rules, sigfox-agent,cloud-remote-access",
 #      "migration.tomongo.default" => "POSTGRES_READ_WRITE",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
       #"tenant.admin.grants.disabled" => true,

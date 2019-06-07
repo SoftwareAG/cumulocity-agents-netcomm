@@ -1,0 +1,7 @@
+{
+  "id": "ivan",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9kuooks1qdu7XuUeXumHjKFJYouWmwzj4rmdjcSLZPREqXxZ2aqbRskr5VQU1baTirSg4WEWoTKnjUMdK1lLuK4hp0ZxiSIRue08sJAMTFzC1ynXsU4MGNMIKsEqlPIKJkmH4ft6dNdn4JUiVrCKo7o1EdL26X2JA8qitqA5cG2HDk0Q2agCP1JtWIFru5UPQou/rrt6/1X7eFwbfp9SUE2cLNeRPptkRo1+rlCn+yoRBzKKnlJYqCk3/4bn4Jpp/qEmncYgGiuhTrewwDUgYuo214yKO2PUNntSWxK8uYI+m9YmwI976XAR6NMclZt3x4i4Dbv3tTxJHFxNgsRJd ivan@omega"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Ivan Korolev"
+}

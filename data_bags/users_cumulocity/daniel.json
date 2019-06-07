@@ -1,0 +1,9 @@
+{
+  "id": "daniel",
+  "comment": "Daniel Primm",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQC1zSCg3Qk/YNeXPKcBrOIKgvNxMjPu+8Wx0XNVuSmKRGuv+kzyKHnr27U5B8kV3duycnFm3byxlm4i216FdTx65IzgcCMSYWScXkztmuoSi155b3XtR+zwmg2tO1OoKVWvdIszBqJn4hY0Bf4DUh5DogWfA0D2eMDOcMeSo4oo7w== danielprimm@Daniels-MBP"
+  ],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "abor",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDm5q2cADznLMovAnuSW6sPJOUxZHhoqmXPmWc9mWj/OJ/rPrQohpOxpwBKdh8+Uw0brt25fGl2kgMzAgaNKVrKELhigCIDyy9sEy5Tl0eOnOF2NwxQZubQ0WEJlkfsR3iiFAfCIybQ2jvzTBApCyigxlV02D0zu3vqgmUQ0le802H/23RHFzaWQS9+bCIrhgcDK6xCztKlnqRbQNRINJlu39yeLz+ylZrZDwEO5h+eKyjhIsccdIgqtH8Kb5/ex7VcmkslM292z1A5wLYKxNOrV8/BIi5ayOfCNqQSiGFIT3IlQGw/wGv9e9qxBGwYx8By/XdWuC7LsLK5CqsyoToF abor@ubuntu"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Anthony Borret"
+}

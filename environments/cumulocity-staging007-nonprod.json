@@ -44,8 +44,12 @@
         "cep-small"
       ],
       "monitoring": {
-        "enabled": false
-      },
+        "enabled": true,
+        "dashboard-only": true,
+        "components": {
+          "heapster": true
+        }
+      }
       "remote-logging": {
         "enabled": true
       }

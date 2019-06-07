@@ -1,0 +1,7 @@
+{
+  "id": "alexandra",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4oifH7UljcyRReZaHEDsPig+352ecu7Jb61bAKP8avYlfd5FLxbEJS7MqSiLps61naVO4Iwx8exgW6U+LaCw7EQH6xj7ozW9ejVpVYuj2r5ldpqIqzatdSByJAwSBCYiijg02sLOXkub4REalsD35YMfiTJgB3Sx8ZZtFHM6xaudcrcbNMZQTL4SpMZoThXcm0Htzl6ZcxM5tYJpQZbpntP/B8SXPBYm66AqKvAwScrsha5uqotqpc3/He3oYX+GP/Xo6Qo5txMH0bqb5Du7zRj1hObCild1sLIzUZYJNv+l9kBr3Byv7+fO9/+LU5bGjPdov9UXFeYlr8Z/O0zwX alpr@SAG-C02TV4K6HV2H.local"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Alexandra Retman"
+}

@@ -30,6 +30,14 @@ case $environment in
     staging-7)
         export CHEF_ENV=cumulocity-staging7-nonprod
     ;;
+    staging-performance-pe-1)
+        export CHEF_ENV=cumulocity-pe1-performance-test-nonprod
+        export ORGNAME=cumulocity-devel
+    ;;
+    staging-performance-pe-2)
+        export CHEF_ENV=cumulocity-pe2-performance-test-nonprod
+        export ORGNAME=cumulocity-devel
+    ;;
     staging-latest)
         export CHEF_ENV=cumulocity-staging-latest-nonprod
     ;;
@@ -108,7 +116,7 @@ fi
 
 echo "INFO: upgrading karaf"
 
-nodes=$(NO_PROMPT_ORGANIZATION=true bundle exec knife search "chef_environment:$CHEF_ENV AND role:cumulocity-common-cores" -F json)
+nodes=$(NO_PROMPT_ORGANIZATION=true bundle exec knife search "chef_environment:$CHEF_ENV AND role:cumulocity-mn-active-core" -F json)
 node_names=$(echo $nodes | jq '.rows |= sort_by(.name) | .rows[] | .name' | tr -d \")
 
 ip_for_node() {
@@ -146,6 +154,7 @@ for node in $node_names; do
       run_ssh_command $ip "ps -ef | grep -i karaf | grep -v grep | awk '{print \$2}' | sudo xargs kill -9"
     fi
 
+    run_ssh_command $ip 'sudo yum clean metadata;'
     run_ssh_command $ip 'sudo chef-client;'
 
     bundle exec knife node run_list add $node 'role[cumulocity-mn-active-core]' && \
@@ -198,6 +207,7 @@ for node in ${node_names[@]}; do
     ip=$(ip_for_node $node)
 
     echo "INFO: upgrading on node ${node}"
+    run_ssh_command $ip 'sudo yum clean metadata;'
     run_ssh_command $ip 'sudo chef-client;'
     echo "INFO: finished upgrading node ${node}"
 done

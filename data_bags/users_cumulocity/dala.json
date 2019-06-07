@@ -1,0 +1,7 @@
+{
+  "id": "dala",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC35Horq/RHMYPeh1l0pqnm4buOKmKJW9JZNujd13y6EW0/BaNBK4uC1FIBKugYeTkSOF+pKG8dDfu7QRfXi1ASi5tTE3bd8Wx8eRMr7UxgZj/FnW+WQVK2tmtst4EgXEDPLNO+oAHmV+2UWuySAIKKnBFAs4XhRYe2Qq1+SfmemPBYdQb+RdjtUGWHL1ZaTt/VXGrAUrVGO+Wo8kgIPMMpU8HFGkxh18vV/F1WUPQ2eNy/zPxGrcTr6C4PwN8LuQ/WjGgxHeiub9qjsdB+9kgS/F+ONw+Mw6M5cHejNl/8XL295yq+EHEB1goiP2bo8bG2lYEvrhR/AQnHizoSqKe3 dala@MCDALA02"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Darpan Lalani"
+}

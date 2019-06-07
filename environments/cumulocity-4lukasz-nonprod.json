@@ -2,14 +2,9 @@
   "name": "cumulocity-4lukasz-nonprod",
   "description": "The complete cumulocity plus multi master kubernetes env",
   "cookbook_versions": {
-    "cumulocity": "~> 9.20.0",
-    "cumulocity-kubernetes": "~> 9.20.0",
-    "cumulocity-chaos-monkey": "~> 9.20.0",
-    "cumulocity-rsyslog": "~> 9.20.0",
-    "cumulocity-syslog-ng-forwarder": "~> 9.20.0",
-    "cumulocity-monitoring-agent": "~> 9.20.0",
-    "cumulocity-filebeat": "~> 9.20.0",
-    "cumulocity-ssagents": "~> 9.20.0"
+    "cumulocity": "1004.0.3",
+    "cumulocity-kubernetes": "1005.0.2", 
+    "cumulocity-ssagents": "1004.0.3"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -47,7 +42,7 @@
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.0.1",
+      "images-version": "1004.4.0",
       "images2install": [
         "cep",
         "cep-small",
@@ -57,13 +52,17 @@
         "sms-gateway-server"
       ],
       "monitoring": {
-        "enabled": false
+        "enabled": true,
+        "dashboard-only": true,
+        "components": {
+          "heapster": true
+        }
       }
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "df4712118ff6757781dfff074ec1f40a86635b253e12226467341d97e5f8f01b6685e1668d1bc13e180f6cb11342670cfcf8699b013ffcbc8af6f9f844273a9a",
-      "version": "1004.0.1-1",
-      "ssa-version": "1004.0.1-1",
+      "version": "1004.4.0-1",
+      "ssa-version": "1004.4.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,

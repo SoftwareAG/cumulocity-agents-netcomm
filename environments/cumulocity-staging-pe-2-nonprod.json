@@ -2,9 +2,9 @@
   "name": "cumulocity-staging-pe-2-nonprod",
   "description": "The production environment",
   "cookbook_versions": {
-    "cumulocity": "= 0.6.0",
-    "cumulocity-kubernetes": "= 0.6.0",
-    "cumulocity-ssagents": "= 0.4.0"
+    "cumulocity": "= 9.20.3",
+    "cumulocity-kubernetes": "= 9.20.2",
+    "cumulocity-ssagents": "= 9.20.2"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -38,7 +38,7 @@
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "9.12.18",
+      "images-version": "9.20.15",
       "images2install": [
         "cep",
         "cep-small",
@@ -46,17 +46,28 @@
         "smartrule",
         "jwireless",
         "apama-small",
-        "sms-gateway"
+        "sms-gateway",
+        "billwerk-agent-server",
+        "connectivity-agent-server",
+        "branding",
+        "sigfox-agent",
+        "cellid-agent-server",
+        "cloud-remote-access",
+        "speech-agent-server",
+        "impact"
       ],
       "monitoring": {
         "enabled": true,
-        "dashboard-only": true
+        "dashboard-only": true,
+        "components": {
+          "heapster": true
+        }
       }
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "6bb04eb257929e13114e1526b0b55bd1a8861b3acc87a20d7ca4c63eb5e93a4390776b1d9953ca8096a579a2e8947e4b9c46ddbab0a5e0c38362fe141374b493",
-      "version": "9.12.18-1",
-      "ssa-version": "9.12.18-1",
+      "version": "9.20.15-1",
+      "ssa-version": "9.20.15-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -83,7 +94,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "9.12.18"
+      "version": "9.20.15"
     },
     "cumulocity-ssagents": {
       "useTags": true,
@@ -101,6 +112,7 @@
         "device-simulator.microservice.url": "http://localhost:8181/service/device-simulator",
         "smartrule.microservice.url": "http://localhost:8181/service/smartrule",
         "sendDashboardAgent.url": "http://localhost:19191/report",
+        "errorMessageRepresentationBuilder.documentationBaseUrl": "https://cumulocity.com/guides/reference/rest-implementation",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
         "contextService.rdbmsURL": "jdbc:postgresql://localhost",
@@ -160,6 +172,22 @@
     "cumulocity-rsyslog": {
       "cross-env-log-server": "cumulocity-multinode-prod",
       "log-server-ext-address": "monitoring.cumulocity.com"
+    },
+    "monitoring-agent": {
+      "createPlatformUser": true,
+      "server_url": "http://staging-monitor.c8y.io",
+      "platformUsername": "monitoring-agent",
+      "platformUsergroup": "readers",
+      "shaBlacklist": [
+        "2be5ec0ff74937e0c11fcf6ec9564f9d6fbc7a3be3cfd5ab85ba779975677b98"
+      ],
+      "autoRegistration": {
+        "server_url": "http://staging-monitor.c8y.io",
+        "enable": true,
+        "tenant": "environments",
+        "username": "autoregister",
+        "groupName": "staging-2"
+      }
     }
   }
 }

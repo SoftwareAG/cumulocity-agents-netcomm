@@ -1,0 +1,7 @@
+{
+  "id": "ashutosh",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCohvXVzPWh4WC7oVKXtAsSV6YBAuYj+ZSVGxbZrqnocJXCUniJZNTfWuWHam0Kz9d8TuaupoI5EqME7ydyrL3KMwQautMhSfOjAKnoBu8qaXtGuROukd5fPjYRTIaStEJqZkQRmQM84syp8UgcMojtM9x21GNQE30SVzCpCe9t3X5jMT63V0hHejQoPPAQx8h1Lbfb1UcBG06rwB36hkIWJewOF2p/GBBH1kltfgUqSMjPch9ouppbaObU4uT6QWzY8yzP67NmzpHa/R/Giijua0QDI59yW/GAyyf5a7K+DxRy4TWhmojWcumce2xyrhulsUZKVKI80IyaIpYIwv0B"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Ashutosh Dash"
+}

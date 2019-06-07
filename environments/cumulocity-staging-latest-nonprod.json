@@ -1,11 +1,7 @@
 {
   "name": "cumulocity-staging-latest-nonprod",
   "description": "The Staging 7 environment for the latest released version",
-  "cookbook_versions": {
-    "cumulocity": "~> 9.20",
-    "cumulocity-kubernetes": "~> 9.20",
-    "cumulocity-ssagents": "~> 9.20"
-  },
+  "cookbook_versions": {},
   "json_class": "Chef::Environment",
   "chef_type": "environment",
   "default_attributes": {},
@@ -35,7 +31,7 @@
       ],
       "token": "1e3145.2ff901841c78af1d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.1.0",
+      "images-version": "1004.8.1",
       "images2install": [
         "cep",
         "cep-small",
@@ -51,13 +47,19 @@
         "cellid-agent-server",
         "cloud-remote-access",
         "speech-agent-server",
-        "impact"
+        "impact",
+        "opcua-mgmt-service"
       ],
       "monitoring": {
         "enabled": true,
         "dashboard-only": true,
         "components": {
           "heapster": true
+        }
+      },
+      "docker": {
+        "log": {
+          "on-file": true
         }
       }
     },
@@ -70,8 +72,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "35fd2a651c866163f172274ba43a1a15632c68b49f9bcd5c96ba0b2213be257b8265ab3255d20a516a7c68dff6190a698e49f613a8e61b2e3740901d8ce44f1f",
-      "version": "1004.1.0-1",
-      "ssa-version": "1004.1.0-1",
+      "version": "1004.8.1-1",
+      "ssa-version": "1004.8.1-1",
       "notification": true,
       "cep-server-enabled": true,
       "CUMULOCITY_LICENCE_DIR": null,
@@ -97,7 +99,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "1004.1.0"
+      "version": "1004.8.1"
     },
     "cumulocity-ssagents": {
       "useTags": true,
@@ -117,14 +119,21 @@
         "device-simulator.microservice.url": "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
         "smartrule.microservice.url": "http://${SMARTRULE-AGENT-SERVER-ESPER}:8334",
         "sendDashboardAgent.url": "http://localhost:19191/report",
+        "errorMessageRepresentationBuilder.documentationBaseUrl": "https://cumulocity.com/guides/reference/rest-implementation",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
+        "system.files.microservice.zipped.max.size": "6294967296",
+        "system.files.microservice.unzipped.max.size": "6294967296",
+        "system.files.webapp.zipped.max.size": "6294967296",
+        "system.files.webapp.unzipped.max.size": "6294967296",
+        "system.files.max.size": "6294967296",
         "contextService.rdbmsURL": "jdbc:postgresql://localhost",
         "contextService.rdbmsDriver": "org.postgresql.Driver",
         "contextService.rdbmsUser": "postgres",
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": "true",
+        "system.feature.track.changes": "true",
         "migration.tomongo.default": "MONGO_READ_WRITE_POSTGRES_WRITE",
         "smsGateway.host": "http://localhost/service/messaging",
         "email.host": "postfix.cumulocity-staging-nonprod.svc.cluster.local",
@@ -173,6 +182,22 @@
     "cumulocity-rsyslog": {
       "cross-env-log-server": "cumulocity-multinode-prod",
       "log-server-ext-address": "monitoring.cumulocity.com"
+    },
+    "monitoring-agent": {
+      "createPlatformUser": true,
+      "server_url": "http://staging-monitor.c8y.io",
+      "platformUsername": "monitoring-agent",
+      "platformUsergroup": "readers",
+      "shaBlacklist": [
+        "2be5ec0ff74937e0c11fcf6ec9564f9d6fbc7a3be3cfd5ab85ba779975677b98"
+      ],
+      "autoRegistration": {
+        "server_url": "http://staging-monitor.c8y.io",
+        "enable": true,
+        "tenant": "environments",
+        "username": "autoregister",
+        "groupName": "staging-latest"
+      }
     }
   }
 }
