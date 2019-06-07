@@ -55,8 +55,7 @@
         "cellid-agent-server",
         "cloud-remote-access",
         "speech-agent-server",
-        "impact",
-        "statuspage.io-agent-server"
+        "impact"
       ],
       "docker-registry-image": "cumulocity/registry:2.6.1",
       "monitoring": {
