@@ -45,8 +45,12 @@ case $environment in
         export CHEF_ENV=cumulocity-staging-performance-test-nonprod
         export ORGNAME=cumulocity-devel
     ;;
+    staging-develop)
+        export CHEF_ENV=cumulocity-staging-develop-nonprod
+        export ORGNAME=cumulocity-stagings
+    ;;
     *)
-        echo "You need to choose a valid environment (one of: staging staging-1 staging-2 staging-007 staging-7 staging-latest)"
+        echo "You need to choose a valid environment (one of: staging staging-1 staging-2 staging-007 staging-7 staging-latest staging-develop)"
         exit 1
     ;;
 esac
