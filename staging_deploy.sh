@@ -157,6 +157,7 @@ elif [ $staging_env == "staging-latest" ]; then
   export env_file=./environments/cumulocity-staging-latest-nonprod.json
   search_key="cumulocity-staging-latest-nonprod_core"
 elif [ $staging_env == "staging-develop" ]; then
+  # new staging-develop env
   export ORGNAME=cumulocity-stagings
   export env_file=./environments/cumulocity-staging-develop-nonprod.json 
   search_key="cumulocity-staging-develop-nonprod_core"
