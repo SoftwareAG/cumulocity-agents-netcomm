@@ -156,6 +156,10 @@ elif [ $staging_env == "staging-latest" ]; then
   export ORGNAME=cumulocity-stagings
   export env_file=./environments/cumulocity-staging-latest-nonprod.json
   search_key="cumulocity-staging-latest-nonprod_core"
+elif [ $staging_env == "staging-develop" ]; then
+  export ORGNAME=cumulocity-stagings
+  export env_file=./environments/cumulocity-staging-develop-nonprod.json 
+  search_key="cumulocity-staging-develop-nonprod_core"
 else
   echo "ERROR: There is no such environment as $staging_env. Available environments: staging, staging7, staging007, staging-latest. Try again !"; exit 1;
 fi
