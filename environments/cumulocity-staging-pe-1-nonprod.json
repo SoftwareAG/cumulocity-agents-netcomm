@@ -55,8 +55,7 @@
         "cellid-agent-server",
         "cloud-remote-access",
         "speech-agent-server",
-        "impact",
-        "statuspage.io-agent-server"
+        "impact"
       ],
       "monitoring": {
         "enabled": true,
