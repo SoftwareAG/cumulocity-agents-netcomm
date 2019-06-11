@@ -48,7 +48,8 @@
         "cloud-remote-access",
         "speech-agent-server",
         "impact",
-        "opcua-mgmt-service"
+        "opcua-mgmt-service",
+        "smartgroup"
       ],
       "monitoring": {
         "enabled": true,
