@@ -49,7 +49,8 @@
         "speech-agent-server",
         "impact",
         "opcua-mgmt-service",
-        "smartgroup"
+        "smartgroup",
+        "mibparser"
       ],
       "monitoring": {
         "enabled": true,

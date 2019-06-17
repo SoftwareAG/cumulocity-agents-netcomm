@@ -44,7 +44,8 @@
         "cep",
         "cep-small",
         "device-simulator",
-        "smartrule"
+        "smartrule",
+        "mibparser"
       ],
       "monitoring": {
         "enabled": true,

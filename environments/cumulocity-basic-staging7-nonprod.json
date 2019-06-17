@@ -56,7 +56,8 @@
         "cloud-remote-access",
         "speech-agent-server",
         "impact",
-        "smartgroup"
+        "smartgroup",
+        "mibparser"
       ],
       "docker-registry-image": "cumulocity/registry:2.6.1",
       "monitoring": {

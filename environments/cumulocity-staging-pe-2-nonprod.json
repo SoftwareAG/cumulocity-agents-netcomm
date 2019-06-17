@@ -55,7 +55,8 @@
         "cloud-remote-access",
         "speech-agent-server",
         "impact",
-        "smartgroup"
+        "smartgroup",
+        "mibparser"
       ],
       "monitoring": {
         "enabled": true,

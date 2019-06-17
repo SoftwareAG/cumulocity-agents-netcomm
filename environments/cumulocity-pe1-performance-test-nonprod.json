@@ -51,7 +51,8 @@
         "smartrule",
         "apama-small",
         "apama-medium",
-        "apama-large"
+        "apama-large",
+        "mibparser"
       ],
       "monitoring": {
         "enabled": true,
