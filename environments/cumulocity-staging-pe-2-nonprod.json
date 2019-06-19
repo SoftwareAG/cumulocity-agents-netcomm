@@ -56,7 +56,8 @@
         "speech-agent-server",
         "impact",
         "smartgroup",
-        "mibparser"
+        "mibparser",
+        "provisioning"
       ],
       "monitoring": {
         "enabled": true,
