@@ -57,7 +57,8 @@
         "speech-agent-server",
         "impact",
         "smartgroup",
-        "mibparser"
+        "mibparser",
+        "provisioning"
       ],
       "docker-registry-image": "cumulocity/registry:2.6.1",
       "monitoring": {
