@@ -50,7 +50,8 @@
         "impact",
         "opcua-mgmt-service",
         "smartgroup",
-        "mibparser"
+        "mibparser",
+        "provisioning"
       ],
       "monitoring": {
         "enabled": true,
