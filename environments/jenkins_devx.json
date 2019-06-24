@@ -3,7 +3,7 @@
   "description": "The jenkins and cucumber test environment",
   "cookbook_versions": {
     "cumulocity": "= 1004.0.3",
-    "cumulocity-kubernetes": "= 1005.0.1",
+    "cumulocity-kubernetes": "= 1004.6.2",
     "cumulocity-ssagents": "= 1004.0.3"
   },
   "json_class": "Chef::Environment",
