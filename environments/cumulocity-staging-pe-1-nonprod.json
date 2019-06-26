@@ -39,7 +39,7 @@
       "docker-registry-image": "cumulocity/registry:2.6.2",
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.0.8",
+      "images-version": "1004.0.10",
       "images2install": [
         "cep",
         "cep-small",
@@ -56,7 +56,9 @@
         "cloud-remote-access",
         "speech-agent-server",
         "impact",
-        "statuspage.io-agent-server"
+        "smartgroup",
+        "mibparser",
+        "provisioning"
       ],
       "monitoring": {
         "enabled": true,
@@ -80,8 +82,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "4b4f4c5637e73841134a318d27549c3222e6c950468ea8b10ec1386e492e77bc1816068e0b0a0a9f008f3ad92d88369e268f5a79748013e246ad94851b75d1a3",
-      "version": "1004.0.8-1",
-      "ssa-version": "1004.0.8-1",
+      "version": "1004.0.10-1",
+      "ssa-version": "1004.0.10-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -108,7 +110,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "1004.0.8"
+      "version": "1004.0.10"
     },
     "cumulocity-ssagents": {
       "useTags": true,
