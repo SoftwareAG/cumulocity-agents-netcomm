@@ -12,6 +12,7 @@
 
   },
   "override_attributes": {
+    "extra_packages": ["mc", "telnet", "vim", "lsof", "htop"],
     "useVaults": false,
     "domainname": "lukasz-test.c8y.io",
     "environment": {
@@ -31,7 +32,13 @@
     "java": {
       "jdk_version": "8"
     },
+    "cumulocity": {
+      "chef-client": {
+        "enabled": false
+      }
+    },
     "cumulocity-kubernetes": {
+      "renew-certs": false,
       "dockerUser": "admin",
       "dockerPassword": "admin",
       "extPort": 30001,
