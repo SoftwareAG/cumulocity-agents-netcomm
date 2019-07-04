@@ -6,14 +6,14 @@ cookbook_versions({
 #'cumulocity'=>'= 8.18.0',
 #'cumulocity'=>'= 9.0.11',
 #'cumulocity'=>'= 1004.0.3',
-'cumulocity'=>'= 1004.0.5',
+'cumulocity'=>'= 1004.6.2',
 #'cumulocity-kubernetes'=>'= 8.18.0',
 #'cumulocity-kubernetes'=>'= 9.0.11',
 #'cumulocity-kubernetes'=>'= 1004.0.3',
-'cumulocity-kubernetes'=>'= 1004.0.5',
+'cumulocity-kubernetes'=>'= 1004.6.2',
 #'cumulocity-ssagents'=>'= 9.20.3'
 #'cumulocity-ssagents'=>'= 1004.0.3'
-'cumulocity-ssagents'=>'= 1004.0.5'
+'cumulocity-ssagents'=>'= 1004.6.2'
 })
 
 default_attributes(
@@ -75,12 +75,12 @@ override_attributes(
 #    "version" => "9.19.3-1",
 #    "version" => "9.20.10-1",
 #    "version" => "1004.0.4-1",
-    "version" => "1004.0.6-1",
+    "version" => "1004.0.7-1",
 #   tracker-agent-server version
 #    "ssa-version" => "9.20.0-1",
 #   lwm2m-agent-server-version
 #    "ssa-version" => "1004.0.4-1",
-    "ssa-version" => "1004.0.6-1",
+    "ssa-version" => "1004.0.7-1",
     "memory_left_for_system" => "8192",
     "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24", "100.64.252.0/24", "18.185.5.234", "10.201.0.0/24", "10.201.0.187" ],
     "notification" => true,
@@ -89,7 +89,12 @@ override_attributes(
     "revDNSname" => "cepfra.cumulocity.com",
 #    "openrelayIP" => "cepfra.cumulocity.com",
     "openrelayIP" => "52.58.146.111",
-    "CUMULOCITY_LICENCE_KEY" => "654176766f1252e56d6eeaa877986f0737164b0e1c6110c048237e0d406f280c27d650ededb20ed6d9f0979696d2da05270a25dc76527ce89c722952e2ab7eb6"
+    "CUMULOCITY_LICENCE_KEY" => "654176766f1252e56d6eeaa877986f0737164b0e1c6110c048237e0d406f280c27d650ededb20ed6d9f0979696d2da05270a25dc76527ce89c722952e2ab7eb6",
+     "karaf" => {
+        "memory"=> {
+          "max_direct_memory" => "2048M"
+                 },
+        },
   },
   "cumulocity-core" => {
     "properties" => {
