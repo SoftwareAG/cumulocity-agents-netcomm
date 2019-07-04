@@ -1,16 +1,20 @@
 {
-  "name": "cumulocity-development-multikube-nonprod",
-  "description": "The development  environment for multi kubernetes for devs",
+  "name": "cumulocity-staging-multikube-nonprod",
+  "description": "The Staging  environment for multi kubernetes for devs",
   "cookbook_versions": {
-    "cumulocity-kubernetes": "1004.6.0"
+    "cumulocity": "= 0.6.0",
+    "cumulocity-kubernetes": "= 0.6.0",
+    "cumulocity-ssagents": "= 0.4.0"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
-  "default_attributes": {},
+  "default_attributes": {
+
+  },
   "override_attributes": {
-    "domainname": "development-multikube.c8y.io",
+    "domainname": "staging-multikube.c8y.io",
     "environment": {
-      "address": "management.development-multikube.c8y.io"
+      "address": "management.staging-multikube.c8y.io"
     },
     "swapfilesize": 512,
     "yum": {
@@ -27,17 +31,9 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-development-multikube-nonprod",
+      "deployK8S4env": "cumulocity-staging-multikube-nonprod",
       "attachedEnvs": [
-        "cumulocity-development-multikube-nonprod",
-        "cumulocity-development-dev-a-nonprod",
-        "cumulocity-development-dev-b-nonprod",
-        "cumulocity-development-dev-c-nonprod",
-        "cumulocity-development-dev-d-nonprod",
-        "cumulocity-development-dev-e-nonprod",
-        "cumulocity-development-dev-g-nonprod",
-        "cumulocity-development-dev-v-nonprod",
-        "cumulocity-development-smoke-nonprod"
+        "cumulocity-staging-multikube-nonprod"
       ],
       "token": "1e3145.2ff901841c78af1d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
@@ -132,7 +128,7 @@
         "auth.checkBlockingFromOutside": "false",
         "migration.tomongo.default": "MONGO_READ_WRITE_POSTGRES_WRITE",
         "smsGateway.host": "http://localhost:80/service/messaging",
-        "email.host": "postfix.cumulocity-development-nonprod.svc.cluster.local",
+        "email.host": "postfix.cumulocity-staging-nonprod.svc.cluster.local",
         "email.from": "no-reply@app.domain.com",
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "system.two-factor-authentication.enabled": "true",
@@ -146,9 +142,9 @@
       }
     },
     "cumulocity-external-lb": {
-      "landing_page": "https://development-multikube.c8y.io/apps/devicemanagement",
+      "landing_page": "https://staging-multikube.c8y.io/apps/devicemanagement",
       "paas_default_page": "https://$http_host/apps/$defapp",
-      "paas_public_default_page": "https://development-multikube.c8y.io/apps/dmpublic",
+      "paas_public_default_page": "https://staging-multikube.c8y.io/apps/dmpublic",
       "usePostgresForPaaS": false,
       "paas_redirection": true,
       "temp_chunkin": false,
@@ -159,7 +155,7 @@
       "useMasterForPushOperations": false,
       "useKarafWebsocket": true,
       "proxy_cache": true,
-      "certificate_domain": "staging.c8y.io",
+      "certificate_domain": "staging-multikube.c8y.io",
       "useLUAforLimits": true,
       "useLUAforSSLcerts": true,
       "useLUAforHealthCheck": true,

@@ -1,0 +1,192 @@
+def name_prefix = 'cumulocity-development-'
+def node_name 
+
+pipeline {
+    agent {
+        docker {
+            image 'c8y-centos-ruby-provisioning:0.0.1'
+            args '-v /var/lib/jenkins/.rvm:/root/.rvm'
+        }
+    }
+    parameters {
+        choice(choices: ['smoke','common','dev-a','dev-b','dev-c','dev-d','dev-e','dev-g','dev-v',], 
+            description: 'Choose an environment for deployed instance<br>Please note that "Common" instance means <u>integration.cumulocity.com</u><br>The rest of instances will be available under (dev-a|dev-b|dev-c|dev-x|demo).cumulocity.com', 
+            name: 'DEPLOY_ENVIRONMENT')
+        choice(choices: ['snapshot','release','custom'],
+            description: 'If snapshot/relase is chosen, version number will be IGNORED and latest versions will be taken',
+            name: 'ITS_SNAPSHOT')
+        string(defaultValue: '9.12.8', description: '', name: 'CUMULOCITY_KUBERNETES_IMAGE')
+        string(defaultValue: '9.12.8-1', description: '', name: 'CUMULOCITY_KARAF_IMAGE')
+        string(defaultValue: '9.12.8-1', description: '', name: 'CUMULOCITY_KARAF_SSA')
+        string(defaultValue: '9.12.8', description: '', name: 'CUMULOCITY_GUI')
+        string(defaultValue: 'cep,device-simulator,smartrule,branding', description: 'List modules (coma separated, without spaces)', name: 'MODULES_LIST')
+        booleanParam(defaultValue: false, name: 'ONLY_SMOKE_TESTS')
+        booleanParam(defaultValue: true, name: 'JAVASDK_TESTS')
+        booleanParam(defaultValue: true, name: 'ONLY_FUNCTIONAL_TEST')
+        booleanParam(defaultValue: true, name: 'CUCUMBER_JAVA_TEST')
+        booleanParam(defaultValue: false, name: 'PERFORMANCE_TEST')
+        
+    }
+    environment {
+        CUMULOCITY_DEPLOY_ENV = "${params.DEPLOY_ENVIRONMENT}"
+        ITS_SNAPSHOT = "${params.ITS_SNAPSHOT}"
+        CUMULOCITY_NODE_NAME = "$name_prefix" + "${params.DEPLOY_ENVIRONMENT}"
+        CUMULOCITY_KUBERNETES_IMAGE = "${params.CUMULOCITY_KUBERNETES_IMAGE}"
+        CUMULOCITY_KARAF_IMAGE = "${params.CUMULOCITY_KARAF_IMAGE}"
+        CUMULOCITY_KARAF_SSA = "${params.CUMULOCITY_KARAF_SSA}"
+        CUMULOCITY_GUI = "${params.CUMULOCITY_GUI}"
+        MODULES_LIST= "${params.MODULES_LIST}"
+    }
+    stages {
+        stage('Preparations') {
+            steps {
+                script {
+                    node_name = name_prefix + params.DEPLOY_ENVIRONMENT
+                    echo node_name
+                }
+                sh '''#!/bin/bash --login
+                mkdir -p ~/.aws/
+cat > ~/.aws/config << EOF
+[default]
+region = eu-central-1
+
+[profile cumulocity]
+region=eu-central-1
+EOF
+rvm install ruby-2.4.1
+yum install -y libxml2-devel libcurl-devel
+                '''
+            }
+        }
+        stage('Checkout') {
+            steps {
+                git branch: "bb_develop", credentialsId: "jenkins-hg-key", url:'ssh://git@bitbucket.org/m2m/cumulocity-chef/'
+                
+                checkout([
+                  $class: 'MercurialSCM',
+                  credentialsId: 'jenkins-hg-key',
+                  installation: 'Mercurial',
+                  revision: 'develop',
+                  subdir: 'cumulocity-application',
+                  source: 'ssh://hg@bitbucket.org/m2m/cumulocity-application/'])
+            }
+        }
+        stage('Pre cleanup') {
+            steps {
+                sshagent(['jenkins-hg-key']) {
+                    sh '''#!/bin/bash --login
+                        ssh -o StrictHostKeyChecking=no jenkins@3.120.15.151 -- sudo /opt/cumulocity_cleaning/namespace_cleaning.sh ${CUMULOCITY_DEPLOY_ENV}
+                    '''
+                }
+            }
+        }
+        stage('Provisioning') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'jenkins-aws',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                    sh '''#!/bin/bash --login
+                    cd cumulocity-chef                 
+                    rvm use 2.4.1
+                    export ORGNAME=cumulocity-stagings
+                    export NO_PROMPT_ORGANIZATION=true
+                    rm -f Gemfile.lock
+                    bundle install
+                    echo "Removing old smoke machine"
+                    bundle exec chef-client -l info -z provisioning/cumulocity-development-${CUMULOCITY_DEPLOY_ENV}_destroy.rb
+                    cd ./environments/ && ./set_versions.sh jenkins_devx.json
+                    knife environment from file auto_provisioning_env.json
+                    cd ..
+                    
+                    echo "Node name ${CUMULOCITY_NODE_NAME}"
+                    
+                    echo "Remove old vault"
+                    bundle exec knife vault delete secrets cumulocity-development-${CUMULOCITY_DEPLOY_ENV}.core -M client -y
+                    bundle exec knife vault delete secrets cumulocity-development-${CUMULOCITY_DEPLOY_ENV}.docker -M client -y
+                    
+                    echo "First run"
+                    bundle exec chef-client -l info -z provisioning/cumulocity-development-${CUMULOCITY_DEPLOY_ENV}.rb
+
+                    echo "Add new vaults"
+                    bundle exec knife vault create secrets cumulocity-development-${CUMULOCITY_DEPLOY_ENV}.docker -A 'admin12' -M client -S 'name:*' -J .chef/secrets/cumulocity-development-${CUMULOCITY_DEPLOY_ENV}.docker.json
+                    bundle exec knife vault create secrets cumulocity-development-${CUMULOCITY_DEPLOY_ENV}.core -A 'admin12' -M client -S 'name:*' -J .chef/secrets/cumulocity-development-${CUMULOCITY_DEPLOY_ENV}.core.json
+
+                    echo "Second run"
+                    bundle exec chef-client -l info -z provisioning/cumulocity-development-${CUMULOCITY_DEPLOY_ENV}.rb
+                    knife search "node_name:${CUMULOCITY_DEPLOY_ENV}" -F json | jq '.rows |= sort_by(.name) | .rows[] | .automatic.cloud_v2.public_ipv4' | tr -d \\" > /tmp/lb_ip.txt
+                    LB_IP=$(cat /tmp/lb_ip.txt)
+                    echo "Public IP ${LB_IP}"
+                    echo "5 minutes break... "
+                    sleep 5m
+                    '''
+                }
+            }
+        }
+        stage('Functional Tests'){
+      steps {
+        script {
+          println params
+          if (params.ONLY_FUNCTIONAL_TEST) {
+              println "Only Functional Test"
+              def cucumberRuby = build job:'Cumulocity-Functional-TEST-DEV-x',propagate: false,  parameters: [
+                 [$class: 'StringParameterValue', name: 'DEPLOY_ENVIRONMENT', value: params.DEPLOY_ENVIRONMENT, wait: true]
+              ]
+              if(cucumberRuby.result!='SUCCESS'){
+                   currentBuild.result = 'UNSTABLE'
+              }
+              
+          }
+          
+           if (params.CUCUMBER_JAVA_TEST) {
+              println "Only Functional Java Test"
+              def cucumberJava = build job:'Cumulocity-Cucumber-Java-TEST-DEV-x',propagate: false,  parameters: [
+                 [$class: 'StringParameterValue', name: 'DEPLOY_ENVIRONMENT', value: params.DEPLOY_ENVIRONMENT, wait: true]
+                 
+              ]
+              if(cucumberJava.result!='SUCCESS'){
+                 currentBuild.result = 'UNSTABLE'
+              }
+              
+          }
+
+          if (params.ONLY_SMOKE_TESTS) {
+            println "Only Smoke Test"
+            def smokeBuild = build job:'Cumulocity-Smoke-TEST-DEV-x',  propagate: false,
+              parameters: [
+                [$class: 'StringParameterValue', name: 'DEPLOY_ENVIRONMENT', value: params.DEPLOY_ENVIRONMENT, wait: true]
+              ]
+            if(smokeBuild.result!='SUCCESS'){
+               currentBuild.result = 'UNSTABLE'
+            }
+          }
+          
+          if (params.JAVASDK_TESTS) {
+            println "JAVASDK_TESTS"
+            def props = readProperties  file: params.JOB_NAME+'-'+params.BUILD_NUMBER+'.var'
+            def propsBuild = build job:'Cumulocity-JavaSDK-Integration-TEST', propagate: false,
+              parameters: [
+                [$class: 'StringParameterValue', name: 'DEPLOY_ENVIRONMENT', value: params.DEPLOY_ENVIRONMENT, wait: true]
+              ]
+            if(propsBuild.result!='SUCCESS'){
+               currentBuild.result = 'UNSTABLE'
+            }
+          }
+        }
+      }
+    }
+        stage('Cleanup') {
+            steps {
+                sh '''#!/bin/bash --login
+                if [ "${CUMULOCITY_DEPLOY_ENV}" = "smoke" ]; then 
+                          echo "Removing smoke machine"
+                          export ORGNAME=cumulocity-stagings
+                          #bundle exec chef-client -l info -z provisioning/cumulocity-development-${CUMULOCITY_DEPLOY_ENV}_destroy.rb
+                        fi
+                '''
+            }
+        }
+    }
+}

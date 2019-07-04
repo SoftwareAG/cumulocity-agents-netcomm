@@ -69,7 +69,7 @@ override_attributes(
     }
   }, 
   "tool_list" => ["htop", "mc", "screen"],
-  "agent_server_list" => ["jwireless-agent-server","smartrule-agent-server-esper","device-simulator-agent-server"],
+  "agent_server_list" => ["jwireless","smartrule","device-simulator"],
   "bigcouch" => {
     "cluster" => {
       "number-of-shard-copies" => "1",

@@ -31,8 +31,13 @@ cookbook_path            ["#{current_dir}/../cookbooks"]
 
 
 knife[:ssh_key_name]          = organization['knife']['ssh_key_name']
-knife[:aws_access_key_id]     = organization['knife']['aws_access_key_id']
-knife[:aws_secret_access_key] = organization['knife']['aws_secret_access_key']
+if ENV['AWS_ACCESS_KEY_ID'] && ENV['AWS_SECRET_ACCESS_KEY']
+  knife[:aws_access_key_id] = ENV['AWS_ACCESS_KEY_ID']
+  knife[:aws_secret_access_key] = ENV['AWS_SECRET_ACCESS_KEY']
+else
+  knife[:aws_access_key_id]     = organization['knife']['aws_access_key_id']
+  knife[:aws_secret_access_key] = organization['knife']['aws_secret_access_key']
+end
 knife[:flavor]                = 'm4.large'
 knife[:availability_zone]     = 'eu-west-1a'
 knife[:region]                = 'eu-west-1'
@@ -40,3 +45,7 @@ knife[:ssh_user]              = 'centos'
 # ami-0d063c6b default centos7
 # ami-ac524fca custom centos7 without SELinux
 knife[:image]                 = 'ami-ac524fca'
+
+# knife[:aws_credential_file] = File.join(ENV['HOME'], '/.aws/credentials')
+# knife[:aws_config_file] = File.join(ENV['HOME'], '/.aws/config')
+
