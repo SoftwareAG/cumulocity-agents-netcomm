@@ -1,0 +1,7 @@
+{
+  "id": "prakashgouda",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFHAaKU183ZRgoNL/rHNrDos0CsHHsKmmGgSVrcYA5ekHoTZLdIwuhqKOoHmuN5vQYUct6R/SQqkkHKZ/1AQKW6mcMZ7tKq+tZ0r1E8w54rh9Ot3xZYEt+YyiC0Fv9kP87jl5SEPzVJR2rBRopA9TZv2I2nM0RnXdJU+MG6QvyU/pqG8O9NHwRsC8gfVQjOw6PUFFqhmTqy0H/qAFuoyZsdAN3m8VZ3GZyuXhlBOHg33nBHvk32n09xVmTnXYDDEFJdudyBIRc5cAQEDe9pOazU8eOyUxJ8IFDOjJr25FeHp2XMApzoK7oxyY7Yr7ct6/5fBmO3+plEx7b2zBpkG2H prakashgouda.channagoudra@softwareag.com"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Channagoudra Prakashgouda"
+}
