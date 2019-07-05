@@ -2,12 +2,19 @@
   "name": "cumulocity-development-multikube-nonprod",
   "description": "The development  environment for multi kubernetes for devs",
   "cookbook_versions": {
-    "cumulocity-kubernetes": "1004.6.0"
+    "cumulocity-kubernetes": "= 1004.6.0",
+    "cumulocity": "= 1004.6.0"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
-  "default_attributes": {},
+  "default_attributes": {
+
+  },
   "override_attributes": {
+    "chef-client": {
+      "interval": 300,
+      "splay": 150
+    },
     "domainname": "development-multikube.c8y.io",
     "environment": {
       "address": "management.development-multikube.c8y.io"
@@ -26,7 +33,13 @@
     "java": {
       "jdk_version": "8"
     },
+    "cumulocity": {
+      "chef-client": {
+        "enabled": true
+      }
+    },
     "cumulocity-kubernetes": {
+      "renew-certs": false,
       "deployK8S4env": "cumulocity-development-multikube-nonprod",
       "attachedEnvs": [
         "cumulocity-development-multikube-nonprod",

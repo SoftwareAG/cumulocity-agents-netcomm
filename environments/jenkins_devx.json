@@ -2,9 +2,9 @@
   "name": "cumulocity-development-smoke-nonprod",
   "description": "The jenkins and cucumber test environment",
   "cookbook_versions": {
-    "cumulocity": "= 1004.6.2",
-    "cumulocity-kubernetes": "= 1004.6.2",
-    "cumulocity-ssagents": "= 1004.6.2"
+    "cumulocity": "= 1004.6.0",
+    "cumulocity-kubernetes": "= 1004.6.0",
+    "cumulocity-ssagents": "= 1004.6.0"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
