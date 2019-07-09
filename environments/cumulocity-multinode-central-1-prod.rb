@@ -75,7 +75,9 @@ override_attributes(
 #    "version" => "9.19.3-1",
 #    "version" => "9.20.10-1",
 #    "version" => "1004.0.4-1",
-    "version" => "1004.0.7-1",
+#    "version" => "1004.0.7-1",
+# 09.07.2019 with fix: MTM-27156
+    "version" => "1004.0.12-1",
 #   tracker-agent-server version
 #    "ssa-version" => "9.20.0-1",
 #   lwm2m-agent-server-version
