@@ -2,7 +2,7 @@
   "name": "cumulocity-pe1-performance-test-nonprod",
   "description": "The Staging 7 environment for the latest released version",
   "cookbook_versions": {
-    "cumulocity": "= 1004.0.3",
+    "cumulocity": "= 1004.6.2",
     "cumulocity-kubernetes": "= 1004.0.3",
     "cumulocity-ssagents": "= 1004.0.3"
   },
