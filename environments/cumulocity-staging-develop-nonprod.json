@@ -39,7 +39,7 @@
       "token": "1e3145.2ff901841c78ae1d",
       "dockerPassword": "myPassworddev",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.10.0",
+      "images-version": "1004.11.0-SNAPSHOT",
       "images2install": [
         "cep",
         "cep-small",
@@ -80,8 +80,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "0e09f00c3abfa44ace152ef7e78b776c150c128133e08581852272bbc96dd454797921f8deba6308c69aa1fe02bca31c67666ce9b49344f5e16921e6ff87c176",
-      "version": "1004.10.0-1",
-      "ssa-version": "1004.10.0-1",
+      "version": "1004.11.0-candidate",
+      "ssa-version": "1004.11.0-SNAPSHOT",
       "notification": true,
       "cep-server-enabled": true,
       "CUMULOCITY_LICENCE_DIR": null,
@@ -109,7 +109,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "1004.10.0"
+      "version": "1004.11.0-SNAPSHOT"
     },
     "cumulocity-ssagents": {
       "useTags": true,
