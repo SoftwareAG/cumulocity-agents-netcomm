@@ -80,7 +80,7 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "0e09f00c3abfa44ace152ef7e78b776c150c128133e08581852272bbc96dd454797921f8deba6308c69aa1fe02bca31c67666ce9b49344f5e16921e6ff87c176",
-      "version": "1004.11.0-candidate",
+      "version": "1004.11.0-candidate-1",
       "ssa-version": "1004.11.0-SNAPSHOT",
       "notification": true,
       "cep-server-enabled": true,
