@@ -2,18 +2,20 @@
   "name": "cumulocity-staging-performance-test-nonprod",
   "description": "The Staging 7 environment for the latest released version",
   "cookbook_versions": {
-    "cumulocity": "= 1004.0.3",
+    "cumulocity": "= 1004.6.2",
     "cumulocity-kubernetes": "= 1004.0.3",
     "cumulocity-ssagents": "= 1004.0.3"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
-  "default_attributes": {},
+  "default_attributes": {
+
+  },
   "override_attributes": {
     "domainname": "staging-pt.c8y.io",
     "useVaults": false,
     "chef_client": {
-      "interval": 450
+        "interval": 450
     },
     "environment": {
       "address": "management.staging-pt.c8y.io"
@@ -45,14 +47,13 @@
         "cep-small",
         "device-simulator",
         "smartrule",
-        "mibparser"
+        "apama",
+        "apama-small",
+        "apama-medium",
+        "apama-large"
       ],
       "monitoring": {
-        "enabled": true,
-        "dashboard-only": true,
-        "components": {
-          "heapster": true
-        }
+        "enabled": false
       }
     },
     "cumulocity-karaf": {
