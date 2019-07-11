@@ -138,7 +138,7 @@
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": "true",
         "migration.tomongo.default": "MONGO_READ_WRITE",
-        "smsGateway.host": "http://localhost:8181/service/messaging",
+        "smsGateway.host": "http://localhost/service/messaging",
         "email.host": "postfix.cumulocity-staging-pe-1-nonprod.svc.cluster.local",
         "email.from": "no-reply@staging-1.c8y.io",
         "system.two-factor-authentication.enabled": true,
