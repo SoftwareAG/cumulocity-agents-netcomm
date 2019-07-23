@@ -1,0 +1,501 @@
+#!/usr/bin/env python
+
+import sys
+import getopt
+import logging
+import boto3, botocore
+import json
+import os
+from datetime import datetime
+from time import sleep
+
+instanceId = None
+snapIdDict = {}
+encSnapIdDict = {}
+blockDev = {}
+statefile = None
+prefix = None
+CustomerIdentifierKey = 'Customer'
+CustomerIdentifierValue = None
+
+################################################################################
+
+logfile = __file__.replace('.py', '.log')
+loglevel = logging.INFO
+
+logging.basicConfig(filename=logfile,level=loglevel)
+logStreamHandler = logging.StreamHandler()
+logStreamHandler.setLevel(logging.INFO)
+logging.getLogger().addHandler(logStreamHandler)
+
+################################################################################
+
+def usage():
+  print "USAGE:"
+  print "  Step 1:"
+  print "    " + __file__ + " --instance=i-1234567890abcdef --prefix=TagPrefix --key=AwsEncryptionKey"
+  print "  Step 2:"
+  print "    " + __file__ + " --step 2 --statefile=/path/to/file.state"
+
+def setCreds():
+  try:
+    os.environ['AWS_ACCESS_KEY_ID'] = raw_input("Set the AWS Access Key ID: ")
+    os.environ['AWS_SECRET_ACCESS_KEY'] = raw_input("Set the AWS Secret Access Key: ")
+  except KeyboardInterrupt:
+    print
+    logging.info("Execution aborted..")
+    sys.exit()
+
+def checkVars(*variables):
+  for v in variables:
+    if not v in globals() or globals()[v] is None:
+      return False
+  return True
+
+def saveState(statefile, id, content, trailCom=True):
+  trail = ',' if trailCom else ''
+  f = open(statefile,"a")
+  f.write('"' + id + '": ' + json.dumps(content,indent=4) + trail + "\n")
+  f.close()
+
+def startState(statefile):
+  f = open(statefile,"w+")
+  f.write('{\n')
+  f.close()
+
+def closeState(statefile):
+  f = open(statefile,"a")
+  f.write('}\n')
+  f.close()
+
+def forceConfirm(question):
+  answer = None
+  try:
+    while answer != 'yes':
+      answer = raw_input(question + "\nType 'yes': ")
+  except KeyboardInterrupt:
+    print
+    logging.info("Execution aborted..")
+    sys.exit()
+
+def askConfirm(question):
+  answer = None
+  try:
+    while answer != 'yes' and answer != 'no':
+      answer = raw_input(question + "\nType 'yes' or 'no': ")
+    if answer == 'yes':
+      return True
+    elif answer == 'no':
+      return False
+  except KeyboardInterrupt:
+    print
+    logging.info("Execution aborted..")
+    sys.exit()
+
+def retry(func, retries=4, **kwargs):
+  logging.debug("retry function triggered")
+  count = 0 
+  while True:
+    try:
+      func(**kwargs)
+    except KeyboardInterrupt:
+      print
+      logging.info("Execution aborted..")
+      sys.exit()
+    except:
+      logging.warning("First attempt failed...")
+      count+=1
+      if count <= retries:
+        logging.warning("Trying once more (" + str(count) + "/" + str(retries) + ")")
+        continue
+      else:
+        logging.error("Reached maximum retries and failed")
+    break
+
+
+################################################################################
+
+def step_one(encKey, instanceId, prefix):
+
+  global snapIdDict
+  global encSnapIdDict
+  global blockDev
+  global statefile
+
+  startState(statefile)
+  saveState(statefile, "instance", { "id" : instanceId, "region" : currentRegion }) 
+
+  global logStreamHandler
+  global ec2
+  global client
+  global kms
+  global waitForSnap
+  global waitForVolAvail
+
+  global CustomerIdentifierKey
+  global CustomerIdentifierValue
+
+  try:
+    kms.describe_key(KeyId=encKey)
+  except:
+    for a in kms.list_aliases()['Aliases']:
+      if a['AliasName'] == "alias/" + encKey:
+        encKey = a['TargetKeyId']
+        break
+
+  try:
+    kms.describe_key(KeyId=encKey)
+  except:
+    logging.error("Key " + encKey + " not found!")
+    sys.exit()
+
+  logging.info("Key " + encKey + " has been selected for encryption")
+
+  instance = ec2.Instance(id=instanceId)
+
+  logging.info("Checking if instance " + instanceId + " has a " + CustomerIdentifierKey + " Tag")
+  for tag in instance.tags:
+    if tag['Key'] == CustomerIdentifierKey:
+      CustomerIdentifierValue = tag['Value']
+      break
+  if CustomerIdentifierValue is None:
+    logging.info("No " + CustomerIdentifierKey + " Tag found")
+  else:
+    logging.info(CustomerIdentifierKey + " Tag found: " + CustomerIdentifierValue)
+
+  for v in instance.volumes.all():
+    logging.debug(v.describe_status())
+    logging.info(v.id + " encryption: " +  str(v.encrypted))
+    if not v.encrypted:
+      v.create_tags( Tags=[ { 'Key':'EncryptionMigrationStatus', 'Value':'ToMigrate'} ] )
+      attachment = v.attachments[0]['Device']
+      snapTag = instanceId + "-" + attachment
+      if prefix != '':
+        snapTag = prefix + '-' + snapTag
+      snapTagSpecs = {
+        'ResourceType':'snapshot',
+        'Tags': [
+          { 'Key':'Name',
+            'Value':snapTag }
+        ]
+      }
+      if CustomerIdentifierValue is not None:
+        snapTagSpecs['Tags'].append({'Key':CustomerIdentifierKey, 'Value':CustomerIdentifierValue})
+      snapRes = v.create_snapshot(Description=snapTag, TagSpecifications=[snapTagSpecs])
+      logging.info("Triggered snapshot " + snapRes.id)
+      #snapIdDict.append({ snapRes.id: {'attachment':attachment, 'snapTag':snapTag, 'snapTagSpecs':snapTagSpecs} })
+      snapIdDict[snapRes.id] = {
+        'attachment':attachment,
+        'availability_zone':v.availability_zone,
+        'snapTag':snapTag,
+        'snapTagSpecs':snapTagSpecs,
+        'origVolType':v.volume_type,
+        'origVolId':v.volume_id
+      }
+
+  saveState(statefile, "snapIdDict", snapIdDict)
+
+  if len(snapIdDict) > 0:
+    logging.info("Waiting for these snapshots to finish: " + str(snapIdDict.keys()))
+    retry(waitForSnap.wait, SnapshotIds=snapIdDict.keys())
+    logging.info("All snapshots done")
+
+  for s, d in snapIdDict.iteritems():
+    sCopy = ec2.Snapshot(s).copy(
+      Description=d['snapTag'] + '-encrypted',
+      Encrypted=True,
+      KmsKeyId=encKey,
+      SourceRegion=currentRegion
+    )
+  #  print(json.dumps( d, indent=4))
+    sCopyId = sCopy['SnapshotId']
+    encSnapIdDict[sCopyId] = d
+    encSnapIdDict[sCopyId]['snapTag']+='-encrypted'
+  #  print(json.dumps( encSnapIdDict[sCopyId], indent=4))
+    #sys.exit()
+    encSnapTagSpecs = [{
+      'Key' : 'Name',
+      'Value' : encSnapIdDict[sCopyId]['snapTag']
+    }]
+    if CustomerIdentifierValue is not None:
+      encSnapTagSpecs.append({'Key':CustomerIdentifierKey, 'Value':CustomerIdentifierValue})
+    ec2.Snapshot(sCopyId).create_tags( Tags=encSnapTagSpecs )
+    logging.info("Snapshot " + s + " has been copied and encrypeted to snapshot " + sCopyId)
+
+  saveState(statefile, "encSnapIdDict", encSnapIdDict)
+
+  if len(encSnapIdDict) > 0:
+    logging.info("Waiting for these snapshots to finish: " + str(encSnapIdDict.keys()))
+    retry(waitForSnap.wait, SnapshotIds=encSnapIdDict.keys())
+    logging.info("All snapshots encrypted")
+
+  encryptedVolumes = []
+  for s, d in encSnapIdDict.iteritems():
+    encVolTagSpecs = {
+      'ResourceType': 'volume',
+      'Tags': [
+        {
+          'Key': 'OriginalVolume',
+          'Value': d['origVolId']
+        },
+      ]
+    }
+    if CustomerIdentifierValue is not None:
+      encVolTagSpecs['Tags'].append({'Key':CustomerIdentifierKey, 'Value':CustomerIdentifierValue})
+    volCreation = client.create_volume(
+      AvailabilityZone=d['availability_zone'],
+      SnapshotId=s,
+      VolumeType=d['origVolType'],
+      TagSpecifications=[encVolTagSpecs]
+    )
+    encryptedVolumes.append(volCreation['VolumeId'])
+    logging.info("Creation of volume " + volCreation['VolumeId'] + " has been triggered from snapshot " + s )
+    blockDev[d['attachment']] = {
+      'oldVolume' : d['origVolId'],
+      'newVolume' : volCreation['VolumeId']
+    }
+
+  saveState(statefile, "blockDev", blockDev, trailCom=False)
+  closeState(statefile)
+
+  if len(encryptedVolumes) > 0:
+    logging.info("Waiting for these volumes to be available: " + str(encryptedVolumes))
+    retry(waitForVolAvail.wait, VolumeIds=encryptedVolumes)
+    logging.info("All encrypted volumes have been created")
+
+  logging.info("-- STEP 1 COMPLETE --")
+
+  if len(blockDev) > 0:
+    if askConfirm("Do you want to proceed with step 2?"):
+      step_two()
+    else:
+      print("[1;36mYou can preceed with step 2 later executing this command:[m")
+      print
+      print("[1;32m  " + __file__ + " --step 2 --statefile='" + statefile + "'[m")
+      print
+
+
+################################################################################
+
+def step_two():
+
+  global instanceId
+  global encSnapIdDict
+  global blockDev
+  global statefile
+
+  global logStreamHandler
+  global ec2
+  global client
+  global kms
+  global waitForSnap
+  global waitForVolAvail
+
+  #print 'locals() => ' + str(locals())
+  #print
+  #print 'globals() => ' + str(globals())
+  #print
+  if not checkVars('instanceId', 'encSnapIdDict', 'blockDev'):
+    with open(statefile) as json_data:
+      stateJson = json.load(json_data)
+    instanceId = stateJson['instance']['id']
+    encSnapIdDict = stateJson['encSnapIdDict']
+    blockDev = stateJson['blockDev']
+
+  if len(blockDev) == 0:
+    logging.warning("blockDev dictionary is empty. Aborting...")
+    sys.exit()
+
+  instance = ec2.Instance(instanceId)
+
+  logging.info("Instance " + instanceId + " is " + instance.state['Name'])
+  if instance.state['Name'] != 'stopped':
+    forceConfirm('Do you want to stop instance ' + instanceId + ' and proceed?')
+    instanceWasRunning = True
+    logging.info("Stopping instance " + instanceId + "...")
+    instance.stop()
+  else:
+    instanceWasRunning = False
+
+  waitForInstStop = client.get_waiter('instance_stopped')
+  waitForInstStart = client.get_waiter('instance_running')
+  waitForVolAttach = client.get_waiter('volume_in_use')
+
+  try:
+    waitForInstStop.wait(InstanceIds=[instanceId])
+  except:
+    logging.info("Instance " + instanceId + " is not stopping. Trying with force...")
+    instance.stop(Force=True)
+    retry(waitForInstStop.wait, InstanceIds=[instanceId])
+
+  logging.info("Instance " + instanceId + " has been stopped")
+
+  for dev in blockDev.keys():
+
+    oldVol = blockDev[dev]['oldVolume']
+    newVol = blockDev[dev]['newVolume']
+
+    logging.info("Detaching old volume " + oldVol + " (" + dev + ")...")
+    instance.detach_volume(VolumeId=oldVol)
+    retry(waitForVolAvail.wait, VolumeIds=[oldVol])
+    logging.info("Volume " + oldVol + " is detached")
+    logging.info("Attaching new volume " + newVol + " (" + dev + ")...")
+    instance.attach_volume(VolumeId=newVol, Device=dev)
+
+    retry(waitForVolAttach.wait, VolumeIds=[newVol])
+
+    logging.info("Volume " + newVol + " is attached")
+    ec2.Volume(oldVol).create_tags( Tags=[
+      { 'Key':'EncryptionMigrationStatus', 'Value':'Migrated'},
+      { 'Key':'OriginalInstance', 'Value':instanceId},
+      { 'Key':'NewEncryptedVolume', 'Value':newVol}
+    ] )
+
+  if instanceWasRunning or askConfirm('Do you want to start the instance ' + instanceId + '?'):
+    logging.info("Starting instance " + instanceId + "...")
+    instance.start()
+    logging.info("Instance " + instanceId + " is " + instance.state['Name'])
+    retry(waitForInstStart.wait, InstanceIds=[instanceId])
+    logging.info("Instance " + instanceId + " is running")
+
+  logging.info("-- STEP 2 COMPLETE --")
+
+
+################################################################################
+
+def main():
+
+  global currentSession
+  global currentRegion
+  global ec2
+  global client
+  global kms
+  global waitForSnap
+  global waitForVolAvail
+
+  global prefix
+  global instanceId
+  global encKey
+  global statefile
+
+  currentSession = boto3.session.Session()
+  step = '1'
+
+  try:
+    opts, args = getopt.getopt(sys.argv[1:], "hs:i:r:k:p:S:", [
+          "help", "step=", "instance=", "region=", "awskey=", "awssecret=", "key=", "prefix=", "statefile="])
+  except getopt.GetoptError as err:
+    # print help information and exit:
+    print str(err)  # will print something like "option -a not recognized"
+    usage()
+    sys.exit(2)
+  verbose = False
+  for o, a in opts:
+    if o in ("-h", "--help"):
+      usage()
+      sys.exit()
+    elif o in ("-s", "--step"):
+      step = a
+    elif o in ("-i", "--instance"):
+      instanceId = a
+    elif o in ("-r", "--region"):
+      os.environ['AWS_DEFAULT_REGION'] = a
+    elif o in ("--awskey"):
+      os.environ['AWS_ACCESS_KEY_ID'] = a
+    elif o in ("--awssecret"):
+      os.environ['AWS_SECRET_ACCESS_KEY'] = a
+    elif o in ("-k", "--key"):
+      encKey = a
+    elif o in ("-p", "--prefix"):
+      prefix = a
+    elif o in ("-S", "--statefile"):
+      statefile = a
+    else:
+      assert False, "unhandled option"
+      sys.exit()
+
+  if currentSession.region_name is None:
+    print "[1;33mWARNING: Region is not set. If you want to avoid to set it manually on each run, set[m"
+    print "[1;33m         the environmental variable AWS_DEFAULT_REGION or define it in .aws/credentials[m"
+    print "[1;33m         or set it in the command line with --region argument.[m"
+    try:
+      regionAnswer = raw_input("Set the region where the instance is running: ")
+    except KeyboardInterrupt:
+      print
+      logging.info("Execution aborted..")
+      sys.exit()
+    os.environ['AWS_DEFAULT_REGION'] = regionAnswer
+  currentRegion = currentSession.region_name
+
+  logging.info("Region " + currentRegion + " has been set")
+
+  client = boto3.client('ec2')
+
+  authProbeLimit = 5
+  for i in range(1, authProbeLimit+1):
+    try:
+      if i>1:
+        print "[1;33mAttempt " + str(i) + "/" + str(authProbeLimit) + "[m"
+      client.describe_instances(InstanceIds=[instanceId])
+      break
+    except botocore.exceptions.NoCredentialsError:
+      logging.error("Credentials are not set")
+      print "[1;33mWARNING: Credentials are not set. If you want to avoid to set them manually on each run, set[m"
+      print "[1;33m         the environmental variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY or define them in .aws/credentials[m"
+      print "[1;33m         or set them in the command line with --awskey and --awssecret arguments.[m"
+      setCreds()
+      client = boto3.client('ec2')
+      continue
+    except botocore.exceptions.ClientError as e:
+      logging.error("Credentials are set, but they seem to be invalid")
+      setCreds()
+      client = boto3.client('ec2')
+      continue
+    except:
+      logging.error("Unknown error during client probe execution")
+      sys.exit(255)
+  logging.info("Authentication test succeeded")
+
+  kms = boto3.client('kms')
+  ec2 = boto3.resource('ec2')
+
+  waitForSnap = client.get_waiter('snapshot_completed')
+  waitForVolAvail = client.get_waiter('volume_available')
+
+  if step == '1':
+    if checkVars('instanceId'):
+      for t in ec2.Instance(id=instanceId).tags:
+        if t['Key'] == 'Name':
+          logging.info("Instance name tag found: " + t['Value'])
+          if prefix == None: prefix = t['Value']
+    if checkVars('instanceId', 'encKey', 'prefix'):
+      dt = datetime.now().strftime("%Y%m%d-%H%M%S")
+      statefile = prefix + "-" + instanceId + '-' + dt + ".state"
+      step_one(encKey, instanceId, prefix)
+    else:
+      print "[1;31mERROR: step 1 is getting executed, but parameters are missing![m"
+      usage()
+      sys.exit()
+  elif step == '2':
+    logging.info("This state file will be loaded: " + str(statefile))
+    if checkVars('statefile'):
+      step_two()
+    else:
+      print "[1;31mERROR: step 2 is getting executed, but parameters are missing![m"
+      usage()
+      sys.exit()
+  else:
+    print "[1;31mERROR: step option not recognized: use either '1' or '2'[m"
+    usage()
+    sys.exit()
+
+  logging.info("-- Execution Complete --")
+
+
+################################################################################
+
+if __name__ == "__main__":
+    main()
+
+
+
