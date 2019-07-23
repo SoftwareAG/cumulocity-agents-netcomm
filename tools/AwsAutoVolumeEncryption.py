@@ -330,7 +330,9 @@ def step_two():
 
   logging.info("Instance " + instanceId + " has been stopped")
 
-  for dev in blockDev.keys():
+  sortedBlockDevList = blockDev.keys()
+  sortedBlockDevList.sort()
+  for dev in sortedBlockDevList:
 
     oldVol = blockDev[dev]['oldVolume']
     newVol = blockDev[dev]['newVolume']
