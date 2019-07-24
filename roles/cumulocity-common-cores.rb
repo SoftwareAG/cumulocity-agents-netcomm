@@ -49,9 +49,6 @@ override_attributes(
   }
 )
 
-run_list(
- "role[cumulocity-base]",
- "role[cumulocity-internal-lb]",
- "recipe[cumulocity::core]",
- "role[cumulocity-external-lb]"
-)
+
+env_run_lists "cumulocity-single-node" => [ "role[cumulocity-base]", "recipe[cumulocity::core]" ] , "_default" => [ "role[cumulocity-base]", "role[cumulocity-internal-lb]" ,  "recipe[cumulocity::core]" , "role[cumulocity-external-lb]"]
+

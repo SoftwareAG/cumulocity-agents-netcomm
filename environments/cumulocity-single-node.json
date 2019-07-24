@@ -1,0 +1,128 @@
+{
+  "name": "cumulocity-single-node",
+  "description": "The edge production environment",
+  "default_attributes": {
+    "elb": {
+      "name": "production"
+    }
+  },
+  "override_attributes": {
+    "chef_client": {
+      "server_url": "https://<url_or_ip_chef_server>"
+    },
+    "domainname": "server.domain.com",
+    "useVaults": false,
+    "yum": {
+      "repositories": {
+        "cumulocity-testing": {
+          "enabled": "0"
+        },
+        "cumulocity": {
+          "url": "https://cumulocity:ACceP=m+2m@yum.cumulocity.com/centos/$releasever/cumulocity/x86_64/",
+          "name": "cumulocity",
+          "description": "Cumulocity Repository",
+          "enabled": "1",
+          "sslverify": "0"
+        }
+      }
+    },
+    "environment": {
+      "address": "server.domain.com"
+    },
+    "java": {
+      "jdk_version": "8"
+    },
+    "nagios": {
+      "server": {
+        "version": "3.4.3",
+        "checksum": "adb04a255a3bb1574840ebd4a0f2eb76"
+      }
+    },
+    "cumulocity-kubernetes": {
+      "deployK8S4env": "edge",
+      "attachedEnvs": [
+        "edge"
+      ],
+      "token": "1e3195.2ff901851c48af2e",
+      "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
+      "images-version": "___KARAFVERSION___",
+      "images2install": [
+
+      ]
+    },
+    "cumulocity-karaf": {
+      "version": "___KARAFVERSION___",
+      "memory_left_for_system": "4096",
+      "notification": true,
+      "oort-enabled": true,
+      "cep-server-enabled": true,
+      "CUMULOCITY_LICENCE_KEY": "77e1ed6601df0e7370ec8654fe63875e7b9ea168d14e55093d4ad97bfc79e3a55835c0730380bdc1c0bf39079e3058bcb325f24bbaea877b065ff6b72d4b3e8a"
+    },
+    "cumulocity-core": {
+      "properties": {
+        "contextService.rdbmsURL": "jdbc:postgresql://localhost",
+        "contextService.rdbmsDriver": "org.postgresql.Driver",
+        "contextService.rdbmsUser": "postgres",
+        "mongodb.user": "c8y-root",
+        "mongodb.admindb": "admin",
+        "mongodb.password": "Welcome123",
+        "contextService.tenantManagementDB": "management",
+        "cumulocity.environment": "PRODUCTION",
+        "auth.checkBlockingFromOutside": false,
+        "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
+        "management.admin.password": "b9ffdcca5d8bde8d57562963de3572f2971a840a3c1d40c434738bed731bcb6c",
+        "admin.password": "b9ffdcca5d8bde8d57562963de3572f2971a840a3c1d40c434738bed731bcb6c",
+        "sysadmin.password": "ba150527caf1471b21bbe71ce4d95fcdf8597c865ab72523d42b65929f59b3ec",
+        "default.tenant.microservices": " smartrule, cep",
+        "migration.tomongo.default": "MONGO_READ_WRITE",
+        "system.support-user.enabled": true,
+        "tenantSuspend.mail.sendtosuspended": false,
+        "email.from": "no-reply@server.domain.com",
+        "errorMessageRepresentationBuilder.includeDebug": "false",
+        "passwordReset.email.subject": "Password reset",
+        "passwordReset.token.email.template": "Dear <Customer> user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a <Customer> portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            <Customer> support team\\n",
+        "passwordReset.user.not.found.email.template": "Hi there,\\n\\n\\\n            you or someone else entered this email address when trying to change the password of a <Customer> portal user.\\n\\n\\\n            However, we could not find the email address in your account. Please contact the administrator of your \\\n            account to set your email address and password. If you are the administrator of the account,\\\n            please use the email address that you registered with.\\n\\n\\\n            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of the <Customer> Tesbed portal. \\n\\n\\\n            Kind regards,\\n\\\n            The <Customer> support team\\n",
+        "passwordReset.success.email.template": "Dear <Customer> user,\\n\\n\\\n            Your password on {host} has been recently changed. \\n\\\n            If you or your administrator made this change, you do not need to do anything more. \\n\\\n            If you did not make this change, please contact your administrator.\\n\\n\\\n            Kind regards,\\n\\\n            Your <Customer> support team\\n",
+        "passwordReset.invite.template": "Hi there,\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}/apps/devicemanagement/index.html?token={token}\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\n\\\n            Your <Customer> support team\\n"
+      }
+    },
+    "cumulocity-mongo": {
+      "mongodb.initUser": "init-root",
+      "mongodb.initPassword": "Welcome123",
+      "mongodb.password": "Welcome123",
+      "version": "3.6",
+      "wiredtiger-cache": 2
+    },
+    "cumulocity-external-lb": {
+      "landing_page": "https://management.domain.com/apps/devicemanagement",
+      "paas_default_page": "https://$http_host/apps/$defapp/",
+      "paas_public_default_page": "https://server.domain.com/apps/dmpublic",
+      "usePostgresForPaaS": false,
+      "paas_redirection": true,
+      "proxy_cache": true,
+      "useIPAddress": true,
+      "useMQTTsupport": true,
+      "useSSL": true,
+      "force_proto_for_link_processor": "https",
+      "certificate_domain": "domain.com",
+      "temp_chunkin": false,
+      "useKarafWebsocket": true,
+      "microservice.websocket.port": 8303,
+      "useLUAforSSLcerts": null,
+      "useLUAforLimits": true,
+      "useLUAforHealthCheck": true,
+      "nginx": {
+        "NGinxPort": "openresty",
+        "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
+      }
+    },
+    "cumulocity-rsyslog": {
+
+    },
+    "cumulocity-cep": {
+      "properties": {
+        " esperha.storage": "/mnt/esperha-storage/"
+      }
+    }
+  }
+}

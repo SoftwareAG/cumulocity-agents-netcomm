@@ -43,6 +43,7 @@ thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
    thisdir="$( dirname "${thisscript}" )"
   c8yCBdir="$( readlink -e "${thisdir}/../../cumulocity-cookbooks" )"
   comCBdir="$HOME/.berkshelf/cookbooks"
+    solDir="${thisdir}/chef-solo"
   solCBdir="${thisdir}/chef-solo/cookbooks"
     relDir="${thisdir}/cumulocity-chef"
   relCBdir="${relDir}/cookbooks"
@@ -58,6 +59,7 @@ c8yCB=(
         ["cumulocity-filebeat"]=latest
       ["cumulocity-opsmanager"]=latest
     ["cumulocity-chaos-monkey"]=latest
+      ["cumulocity-kubernetes"]=latest
 )
 
 declare -A comCB
@@ -74,39 +76,29 @@ comCB=(
               ["chef-vault"]=3.0.0
                ["hostsfile"]=3.0.1
                     ["swap"]=2.0.0
-            ["packagecloud"]=0.3.0
-                ["yum-epel"]=2.1.2
-                    ["cron"]=4.1.3
+            ["packagecloud"]=1.0.1
+                ["yum-epel"]=3.3.0
+                    ["cron"]=6.2.1
                ["logrotate"]=2.2.0
-                 ["windows"]=3.1.0
-                ["iptables"]=4.2.0
-                     ["apt"]=6.1.0
+                 ["windows"]=6.0.0
+                ["iptables"]=4.5.0
+                     ["apt"]=7.1.1
                 ["homebrew"]=4.3.0
-         ["compat_resource"]=12.19.0
+         ["compat_resource"]=12.19.1
                     ["ohai"]=5.1.0
               ["filesystem"]=1.0.0
-                     ["lvm"]=4.5.2
+                     ["lvm"]=4.5.3
                 ["filebeat"]=2.1.0
             ["elastic_repo"]=1.1.1
   ["yum-plugin-versionlock"]=0.2.1
-)
-
-declare -A mnOnlyC8yCB
-mnOnlyC8yCB=(
-   ["cumulocity-kubernetes"]=latest
-)
-
-declare -A mnOnlyComCB
-mnOnlyComCB=(
                   ["docker"]=latest
-# addition for kubernetes multi master setup
                  ["haproxy"]=5.0.4
                      ["cpu"]=2.0.0
-         ["build-essential"]=8.1.1
-                   ["poise"]=2.8.1
+         ["build-essential"]=8.2.1
+                   ["poise"]=2.8.2
            ["poise-service"]=1.5.2
                ["seven_zip"]=3.0.0
-                   ["mingw"]=2.0.2
+                   ["mingw"]=2.1.0
 )
 
 declare -a mnRoles
@@ -127,6 +119,15 @@ mnRoles=(
   cumulocity-ontop-lb
   cumulocity-sql-db
   cumulocity-ssagents
+)
+
+declare -a snRoles
+snRoles=(
+  cumulocity-base
+  cumulocity-dev-singlenode
+  cumulocity-common-cores
+  cumulocity-kubernetes
+  cumulocity-mn-active-core
 )
 
 declare -a mnTools
@@ -178,15 +179,39 @@ f_cb_copy(){
 }
 
 if ${SOLO} ; then
-  if [[ -e ${template_archive} ]] ; then
-    f_color_pr cyn "Unpacking chef-solo template..."
-    tar xz${VERBOSE+v}f "${template_archive}" -C "${thisdir}"
-  else
-    f_color_pr red "ERROR: no template archive ${template_archive} found!" && exit 10
-  fi
+  f_color_pr cyn "Creating directory structure..."
+  for d in \
+    config \
+    environments \
+    data_bags/certs \
+    data_bags/users_cumulocity \
+    roles \
+    cookbooks \
+
+  do
+    mkdir -p "${solDir}/${d}" 2> /dev/null
+  done
   echo
 
   f_cb_copy "${solCBdir}"
+
+  f_color_pr cyn "Copying role file..."
+  for r in "${snRoles[@]}" ; do
+    f_color_pr wht "-- $r"
+    cp -a${VERBOSE+v} "${thisdir}/../roles/${r}.rb" "${solDir}/roles" || \
+    f_color_pr red "ERROR: role $r not found!"
+  done
+  echo
+
+  f_color_pr cyn "Copying misc files..."
+  f_color_pr wht "-- data_bags/certs/certificate.json"
+  cp -a${VERBOSE+v} "${thisdir}/../data_bags/certs/cumulocity.json" "${solDir}/data_bags/certs"
+  f_color_pr wht "-- cumulocity-single-node.json"
+  cp -a${VERBOSE+v} "${thisdir}/../environments/cumulocity-single-node.json" "${solDir}/environments"
+  f_color_pr wht "-- chef-solo/config/chef_config"
+  cp -a${VERBOSE+v} "${thisdir}/../chef-solo/config/chef_config" "${solDir}/config"
+  f_color_pr wht "-- chef-solo/chefrun.sh"
+  cp -a${VERBOSE+v} "${thisdir}/../chef-solo/chefrun.sh" "${solDir}/chefrun.sh"
 
 ##########
 
@@ -237,9 +262,7 @@ soloDir="${outputFolder}/chef-solo"
 
 sed -i -r \
   -e "s/___KARAFVERSION___/"'${karafver}'"/g" \
-  -e "s/___AGENTSVERSION___/"'${ssaver}'"/g" \
-  -e "s/___CEPVERSION___/"'${cepver}'"/g" \
-  ${soloDir}/roles/cumulocity-dev-singlenode.rb
+  ${soloDir}/environments/cumulocity-single-node.json
 
 if [[ ! -e "${soloDir}/.systemUpdateDONE" ]] ; then
   while ! [[ ${UpdateQ,,} =~ ^(y(es)?|no?)$ ]] ; do
@@ -388,12 +411,6 @@ else
   done
   echo
 
-  for c in "${!mnOnlyC8yCB[@]}" ; do
-    eval "c8yCB[$c]"="${mnOnlyC8yCB[$c]}"
-  done
-  for c in "${!mnOnlyComCB[@]}" ; do
-    eval "comCB[$c]"="${mnOnlyComCB[$c]}"
-  done
   f_cb_copy "${relCBdir}"
 
   f_color_pr cyn "Copying role files..."
