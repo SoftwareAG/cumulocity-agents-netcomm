@@ -2,8 +2,8 @@
   "name": "cumulocity-pe2-performance-test-nonprod",
   "description": "The Staging 7 environment for the latest released version",
   "cookbook_versions": {
-    "cumulocity": "= 1004.6.2",
-    "cumulocity-kubernetes": "= 1004.0.4",
+    "cumulocity": "= 1004.6.0",
+    "cumulocity-kubernetes": "= 1004.6.0",
     "cumulocity-ssagents": "= 1004.0.4"
   },
   "json_class": "Chef::Environment",
@@ -33,7 +33,9 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
+      "renew-certs": false,
       "deployK8S4env": "cumulocity-pe2-performance-test-nonprod",
+      "docker-version": null,
       "attachedEnvs": [
         "cumulocity-pe2-performance-test-nonprod"
       ],
@@ -144,7 +146,7 @@
       "useLUAforHealthCheck": true,
       "nginx": {
         "NGinxPort": "openresty",
-        "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
+        "version": "1.13.6.2-20.el7.centos.c8y.1004.6.3"
       }
     },
     "vendme-platform-agent": {
