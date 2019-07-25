@@ -3,11 +3,17 @@
 import sys
 import getopt
 import logging
-import boto3, botocore
 import json
 import os
 from datetime import datetime
 from time import sleep
+try:
+  import boto3, botocore
+except:
+  print "ERROR: boto3 library not found"
+  print "install boto3 library running this command:"
+  print "  pip install boto3"
+  sys.exit(127)
 
 instanceId = None
 snapIdDict = {}
@@ -18,6 +24,7 @@ prefix = None
 CustomerIdentifierKey = 'Customer'
 CustomerIdentifierValue = None
 skipConfirm = False
+checkOnly = False
 
 ################################################################################
 
@@ -86,20 +93,23 @@ def checkVars(*variables):
   return True
 
 def saveState(statefile, id, content, trailCom=True):
-  trail = ',' if trailCom else ''
-  f = open(statefile,"a")
-  f.write('"' + id + '": ' + json.dumps(content,indent=4) + trail + "\n")
-  f.close()
+  if not checkOnly:
+    trail = ',' if trailCom else ''
+    f = open(statefile,"a")
+    f.write('"' + id + '": ' + json.dumps(content,indent=4) + trail + "\n")
+    f.close()
 
 def startState(statefile):
-  f = open(statefile,"w+")
-  f.write('{\n')
-  f.close()
+  if not checkOnly:
+    f = open(statefile,"w+")
+    f.write('{\n')
+    f.close()
 
 def closeState(statefile):
-  f = open(statefile,"a")
-  f.write('}\n')
-  f.close()
+  if not checkOnly:
+    f = open(statefile,"a")
+    f.write('}\n')
+    f.close()
 
 def forceConfirm(question):
   answer = 'yes' if skipConfirm else None
@@ -199,7 +209,7 @@ def step_one(encKey, instanceId, prefix):
   for v in instance.volumes.all():
     logging.debug(v.describe_status())
     logging.info(v.id + " encryption: " +  str(v.encrypted))
-    if not v.encrypted:
+    if not v.encrypted and not checkOnly:
       v.create_tags( Tags=[ { 'Key':'EncryptionMigrationStatus', 'Value':'ToMigrate'} ] )
       attachment = v.attachments[0]['Device']
       snapTag = instanceId + "-" + attachment
@@ -225,6 +235,10 @@ def step_one(encKey, instanceId, prefix):
         'origVolType':v.volume_type,
         'origVolId':v.volume_id
       }
+
+  if checkOnly:
+    logging.info("-- ENCRYPTED VOLUMES CHECK COMPLETE --")
+    sys.exit()
 
   saveState(statefile, "snapIdDict", snapIdDict)
 
@@ -413,13 +427,14 @@ def main():
   global encKey
   global statefile
   global skipConfirm
+  global checkOnly
 
   currentSession = boto3.session.Session()
   step = '1'
 
   try:
     opts, args = getopt.getopt(sys.argv[1:], "hs:i:r:k:p:S:y", [
-          "help", "step=", "instance=", "region=", "awskey=", "awssecret=", "key=", "prefix=", "statefile=", "yes"])
+          "help", "step=", "instance=", "region=", "awskey=", "awssecret=", "key=", "prefix=", "statefile=", "yes", "checkonly"])
   except getopt.GetoptError as err:
     # print help information and exit:
     print str(err)  # will print something like "option -a not recognized"
@@ -448,6 +463,8 @@ def main():
       statefile = a
     elif o in ("-y", "--yes"):
       skipConfirm = True
+    elif o in ("--checkonly"):
+      checkOnly = True
     else:
       assert False, "unhandled option"
       sys.exit()
