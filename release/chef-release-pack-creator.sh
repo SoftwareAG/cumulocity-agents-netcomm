@@ -221,11 +221,13 @@ if ${SOLO} ; then
 EXTRACTONLY=false
 AUTO=false
 INST=false
+INSTALLONLY=false
 
-while getopts "veyYo:" opt ; do
+while getopts "veiyYo:" opt ; do
   case $opt in
     v) VERBOSE=true ;;
     e) EXTRACTONLY=true ;;
+    i) INSTALLONLY=true;;
     y) AUTO=true yes="-y";;
     Y) AUTO=true yes="-y" INST=true ;;
     o) outputFolder="$OPTARG" ;;
@@ -249,9 +251,15 @@ $(
  )
 "'
 
-f_color_pr wht "extract chef-solo folder in ${outputFolder:=/var}..."
-sed -n "/^__ARCHIVE_BELOW__$/{s///;:a;n;p;ba;}" "$0" | tar xz${VERBOSE+v}f - -C "${outputFolder}"
-f_color_pr wht "Done!"
+if $INSTALLONLY && $EXTRACTONLY; then
+  f_color_pr red "Invalid combination of options: -e and -i"
+fi
+
+if ! $INSTALLONLY; then
+  f_color_pr wht "extract chef-solo folder in ${outputFolder:=/var}..."
+  sed -n "/^__ARCHIVE_BELOW__$/{s///;:a;n;p;ba;}" "$0" | tar xz${VERBOSE+v}f - -C "${outputFolder}"
+  f_color_pr wht "Done!"
+fi
 
 ${EXTRACTONLY} && exit
 
@@ -371,16 +379,11 @@ if [[ ! -e "${soloDir}/.hostRenameDONE" ]] ; then
 fi
 
 while ! [[ ${runSoloQ,,} =~ ^(y(es)?|no?)$ ]] ; do
-  f_question "run chef-solo and install the platform? [Y/n]: " runSoloQ $INST
+  f_question "run chef-zero and install the platform? [Y/n]: " runSoloQ $INST
   if [[ ${runSoloQ,,} =~ ^(y(es)?)?$ ]] ; then
-    limit=5
-    for ((x=1;x<=$limit;x++)) ; do
-      f_color_pr cyn "chef-solo run attempt number $x..."
-      cd ${soloDir}
-      "${soloDir}/chefrun.sh" && break
-      [[ $x -ge $limit ]] && f_color_pr red "ERROR: could not run chef-solo until the end!"
-    done
-    break
+    cd ${soloDir}
+    "./chefrun.sh" && break
+    f_color_pr red "ERROR: could not run chef-zero!"
   fi
 done
 
@@ -393,6 +396,11 @@ __ARCHIVE_BELOW__'
     tar cz${VERBOSE+v}f - "chef-solo"
   ) | tee "${prefixName}-v${mainver}.tgz" >> "${prefixName}-v${mainver}.sh"
   chmod a+x "${prefixName}-v${mainver}.sh"
+
+  echo
+  f_color_pr cyn "Eliminating temporary folder and archive..."
+  rm -rf${VERBOSE+v} "${solDir}"
+  rm -rf${VERBOSE+v} "${prefixName}-v${mainver}.tgz"
 else
   f_color_pr cyn "Creating directory structure..."
   for d in \
