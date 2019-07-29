@@ -56,7 +56,6 @@ run_list(
   "recipe[cumulocity::core_cep]",
   "recipe[cumulocity::karaf_cep]",
   "recipe[cumulocity::karaf_dev-x-agents]",
-  "recipe[cumulocity::external-lb]",
-  "recipe[cumulocity-ssagents]"
+  "recipe[cumulocity::external-lb]"
 )
 

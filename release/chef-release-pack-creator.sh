@@ -376,6 +376,7 @@ while ! [[ ${runSoloQ,,} =~ ^(y(es)?|no?)$ ]] ; do
     limit=5
     for ((x=1;x<=$limit;x++)) ; do
       f_color_pr cyn "chef-solo run attempt number $x..."
+      cd ${soloDir}
       "${soloDir}/chefrun.sh" && break
       [[ $x -ge $limit ]] && f_color_pr red "ERROR: could not run chef-solo until the end!"
     done

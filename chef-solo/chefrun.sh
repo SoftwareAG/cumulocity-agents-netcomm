@@ -2,12 +2,10 @@
 
 export thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
 export thisdir="$( dirname ${thisscript} )"
-
 (
 	cd "$thisdir"
 )
-
-env_file="$thisdir/environments/cumulocity-single-node.json"
+env_file="$( dirname ${thisscript} )/environments/cumulocity-single-node.json"
 env_name="cumulocity-single-node"
 node=$(hostname -f)
 
@@ -21,11 +19,15 @@ run_chef_client()
 
 #Chef commmands to install the cumulocity with microservice support(kubernetes infrastructure) 
 
+#Initialize chef local mode
+run_chef_client
+
 #Sets up environment for chef-client 
 knife environment from file ${env_file} -z && echo "INFO: Successfully uploaded env file " || { echo "ERROR: failed to setup chef env. Exiting... "; exit 1; }
 knife node environment set $node $env_name -z  && echo "INFO: Successfully setup chef env for the node" || { echo "ERROR: failed to setup chef env. Exiting... "; exit 1; }
 
 #Installs cumulocity software
+knife node run_list add $node 'role[cumulocity-dev-singlenode]' -z  && echo "INFO: Added role[cumulocity-dev-singlenode] successfully" || { echo "ERROR: failed to add role[cumulocity-dev-singlenode]. Exiting..... "; exit 1; }
 run_chef_client
 knife node run_list add $node 'role[cumulocity-common-cores]' -z  && echo "INFO: Added role[cumulocity-common-cores] successfully" || { echo "ERROR: failed to add role[cumulocity-common-cores]. Exiting..... "; exit 1; }
 run_chef_client
