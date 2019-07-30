@@ -3,5 +3,5 @@
   "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA0VPgaYeXW28n2QP+HuKg01kXU560CZ6y3m4JKhtKfRZU3cZz2APHKj7Oizi3xNK1Tz3/bDyTFvAWQxkrsiEZW2z5QqxVm7gV6Pz96e4FXllgMEyF6ubnjhoYgYmWJ/ucFrXK4deinWPWqZP0z1muFucSISi+jJtihx4N+SLkMHNuCjWETRaHzJEfOgNXETvNNHhxONgcuBQI4bLWXlT2lQAcN8XYDksWYcg/CHfcKPFQ764gLrrwqYdHnWwXm+ycSfpfvfvDvQZ8EdrKdUa1q5XTNVMYDyU5CWPZGWIZ39dqUdaoEdHSvZqbkpK7XYyHGnTSIWATQxVCA/4wh304wQ== ostache@Olivers-Mac.local"],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
-  "comment": "Oliver Stache"
+  "comment": "Oliver  Stache"
 }
