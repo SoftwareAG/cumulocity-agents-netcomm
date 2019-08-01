@@ -38,6 +38,12 @@
         "checksum": "adb04a255a3bb1574840ebd4a0f2eb76"
       }
     },
+    "openssh": {
+      "server": {
+        "password_authentication" :"yes",
+        "permit_root_login":"yes"
+      }
+    },
     "cumulocity-kubernetes": {
       "deployK8S4env": "cumulocity-single-node",
       "attachedEnvs": [
