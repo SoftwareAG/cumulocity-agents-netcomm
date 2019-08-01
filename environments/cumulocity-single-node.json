@@ -10,7 +10,7 @@
     "chef_client": {
       "server_url": "https://<url_or_ip_chef_server>"
     },
-    "domainname": "server.domain.com",
+    "domainname": "domain.com",
     "useVaults": false,
     "yum": {
       "repositories": {

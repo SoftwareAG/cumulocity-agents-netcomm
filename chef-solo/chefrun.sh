@@ -14,7 +14,7 @@ node=$(hostname -f)
 run_chef_client()
 {
         echo "Running chef client...."
-        chef-client -z
+        chef-client -z && echo "INFO: Successfully executed " || { echo "ERROR: failed to execute chef-client. Exiting... "; exit 1; }
 }
 
 #Chef commmands to install the cumulocity with microservice support(kubernetes infrastructure) 
