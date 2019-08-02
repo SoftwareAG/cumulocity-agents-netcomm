@@ -221,6 +221,7 @@ EXTRACTONLY=false
 AUTO=false
 INST=false
 INSTALLONLY=false
+outputFolder="/var"
 
 while getopts "veiyYo:" opt ; do
   case $opt in
