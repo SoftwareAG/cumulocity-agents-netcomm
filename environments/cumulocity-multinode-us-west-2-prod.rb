@@ -50,6 +50,10 @@ override_attributes(
     },
   "cumulocity-kubernetes" => {
      "docker" => {
+       "limits" => {
+         "cpu" => "4",
+         "memory" => "8Gi"
+       },
        "log" => {
          "on-file" => true
        }
@@ -57,7 +61,7 @@ override_attributes(
      "deployK8S4env" => "cumulocity-multinode-us-west-2-prod",
      "attachedEnvs" => ["cumulocity-multinode-us-west-2-prod"],
      "token" => "mbxfys.reloo224q7b55iy5",
-     "docker-registry-image" => "cumulocity/registry:2.6.1",
+     "docker-registry-image" => "cumulocity/registry:2.7.1",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
      "images-version" => "9.19.2",
 #     "images2install" => [ "cep" ]
@@ -74,9 +78,11 @@ override_attributes(
 # 18.01.2019
     #"version" => "9.20.4-1",
 # 17.04.2019
-    "version" => "1004.0.6-1",
+    #"version" => "1004.0.6-1",
+# 05.08.2019
+    "version" => "1004.6.8-1",
     #"ssa-version" => "9.20.3-1",
-    "ssa-version" => "1004.0.6-1",
+    "ssa-version" => "1004.6.8-1",
     "memory_left_for_system" => "8192",
     "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.241.0/24", "10.10.0.0/16" ],
     "notification" => true,
