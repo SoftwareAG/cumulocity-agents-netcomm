@@ -1,0 +1,8 @@
+{
+  "id": "gru",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAiLL656YlqLR+qL2ZxMNT4PCG0BxuQsDEUt6R1RAeVoeFQcfFEzjm0HTHG8wrwjmkph0K/7eZJyi0eKW8STlgU2V8ERi4DNe8l/XdFGVu3u8z/E0JV8rEHmXd/odypVskANvZ8Zbebvi40aOhjQj/04U9EuGHgb+vaeAx+xHp2JzZE+RBXJLDMH1rphIMd4Ai7wB3tXImyVao9alMzlcPhEy9B/JrVg35g4K0RpltN8APmrrpyBV04TuKOzyz3UhfBWresghE14XXV6pees9EX22MUzrN+Y8aiNalIjyAgtsJBR3VbjFJB1f22VR2cgn5Ni8KUdk1t5R0Xkc/KIeejw=="],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Martin Grumann",
+  "email": "martin.grumann@softwareag.com"
+}

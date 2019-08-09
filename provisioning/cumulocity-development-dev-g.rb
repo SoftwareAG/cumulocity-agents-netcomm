@@ -20,6 +20,7 @@ with_machine_options({
     chef_version: "12.21.31"
   },
   ssh_username: "centos",
+  tags: {'Stop' => 'No'},
 })
 
 add_machine_options({

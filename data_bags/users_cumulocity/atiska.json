@@ -1,0 +1,8 @@
+{
+  "id": "atiska",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCTLzCfPZitjd4nOEf/QzJsFIjparYQ9Ol6C/lXzY6HwfwKT2lHy5M6QOdDkpBoBhxUHSxWIIL0C0qwZD1sj5XJfXnIpPIkr04WRUHd+rLIt9PMCqwp1YRamL8obVwG1W+qlQekHCIs88VqGh557XCtayk8y8cUvWTQCFU2YfinKArSoW5jQO/iNExq0UMqkEbIZU17HyrcP98xp1DK2AYFbetNHj5Y+WSvqACNEYG2JD+RXs2fYvlG/lF5Rdi6p8Uh1CWasI4hJNK1NjcnL20Wv0+OuCYjohUFmUUM/1AgNNsjMpUlHKtivXNEeVW7QFEmTfEMK2rXLICAtj1hiOeb ATK@MCATK01"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Attila Kocsis",
+  "email": "attila.kocsis@cumulocity.com"
+}

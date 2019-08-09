@@ -1,0 +1,9 @@
+{
+  "id": "rfujino",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe401Y2Qz+7s+tDYSL+2eRSzwpBDaws5IyEl0E1apJvH39ZCJPv6sth9Jv3abD2VGpv6zS7sAFdJsN+oTrfjhMnnsngYEpO4F2s6WYIYiFklzr83O5Rqx3MABUEHbeJTmiaUcNfUd8at/aA1Sfj2GbyuAHhxJhg8O3Opw6ZzhywI9o+rpPi+QJKURsAown33T9xhSRxhU54HGr0Fa43N7L1Uf/CdDDjx9qphalUVTw3YG1FkzSuDuHHn9mHPDaVvI1AiNC28V/4Xbcojkdm7g+MZa/+iVq34sXGKI6EXGQDXt0SYGIX9dgGUho1uxTD+lujeVXSUirEf0uqo592k0b rif@eur.ad.sag@SAG-CFPPNV2-U",
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCb23wjaFHVHW9mbBl/W92uMK5LaO82lNmV+MPr+l4j0eyL2XQOPPpFMFfWYpSolEjfSKfHo7/C4bYSzilAGrxBA7Q1+GYHFqI4GUzprYsoA/iNmpE1TxmTpz12AlRV1IJAV6dcufVdPdY/xON+aLINORxk1t5woIB/D+sK63COTkaGRd4Ik0YF2Oyf3xH3ux/EeWoaHyZBra88JxcqIA+zwP3/pS/VtlgDCKZbVe+GeH9+yjxt9OFx0lycd8kcWFmZJw61YwwMLIOgqWPaT0y/2qz0Q/2ogLRK/5TOqFxG9x9V/VLAJroqgcuB8V5Y2V9a76zpMurGJi0670yZqEip rina@SAG-CFPPNV2-U"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Rina Fujino",
+  "email": "Rina.Fujino@softwareag.com"
+}

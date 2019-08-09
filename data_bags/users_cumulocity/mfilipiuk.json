@@ -1,0 +1,12 @@
+knife is running with organization: cumulocity-devel
+{
+  "id": "mfilipiuk",
+  "comment": "Mateusz Filipiuk",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFtk3dGrzNr9T79i3Znsj2z0XVJA4auPhYZMLo1GJ0I//6W/kehDEkwVb2NEtStbKnLY/lxbDDbgK+35GVDbj9k4iShPDEif9ClLtayHwrREsNPnZEPLOGtcrAoFd1rlPsSA6IyvB7EWNrfYP73oLRVn7G2MENXZKosibSA3yY+uRIT1Qfr+ukVrK4HdVtnIz8PY/XaqkvJ7dcIe7GIuiLSIiRcUehP5tvDV6iJAx3okxRmK3EJhoBt0d0MI3jcEV5u8xsuw1+dn0B9gzhoQrv/tSMlTBJS/MNifTH6y6CVJV370NjtWuKSqMZFheZeCCZzHF5eajQdqlvMYrYbIb5 mfil@mfil-IMPAQ-Latitude-E6520"
+  ],
+  "groups": [
+    "wheel"
+  ],
+  "shell": "/bin/bash"
+}

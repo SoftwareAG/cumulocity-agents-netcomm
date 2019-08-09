@@ -1,0 +1,9 @@
+{
+  "id": "omr",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDk5CjtBfGivmeK2NLAQ8KCpnhJsxVAFPFTE3c1p5UAq0ni4DNCDhY9IbUJoosgG5J+p3kB0ZO5StXsPkPgwHFmOdlqh02VDjgdg+8kYjZX4FVQTEEGNmxoawdWCvRU1HFuJrlBPiA4FtpT1KyvL0gT6nGPvcq1CxDLNNGMsZUhM5eWNgOQGldgwo9ev45U1NfZ0rb3FalJAx5iEWEMZKj3ylYZlbVn2BQrAQiiinEtR9meDrc5D78RNO20larKakaKiaOw1eEtzcM+tr4yMmhkoInyJFAYAaTVTWCpWgPH1/lA0V7gQ6rWVKA9F9asgyfMpM1FPHxy767Ev9EY+TGn omarrashid@Omars-Mac.local",
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDolf/23F4FwfHgXTv7/4EtPwg48tK/M+E+azXzcS7F1U9z0ceRfvFiP5lsbIRYNM95X/cdaA5y8XwJjtvOjKX/zcLyvoP+xKkyW30pfRKwm+jGB0d0WiG+IUTtd1O3tveMIVDjMtUKeQC2vKBe04pBM1hIr5Mb1GnGMnikCRWqYrRxrJTnCDqMtZHRS7sJVJ6IE1RQhDq7kpIUVuZehsRcZTv1Z1bL3jBX0OROOf5DyjM4hv4gqNPO+l3dR68YhegkOIyUMwUQTdYY/2a+4VuWff4J8mmO5CoL3WgL8NwmC0KZLwZOorbQK402SRnD2QZYcz+XDUvHETM5CELKnneo+9Uqj0AtLgEtTwVzErqwEiCZnJXZn0bl7GBAzOALUuwtVt60RQKaZzbFsrGQNDLis7s6Vc6IwXYxX1+yxmV39Kd8Asri/MHKhZo5q4Ifue3op5z5ZfrI2VvmywLbuUc5nplyBTtX7ZuB7+iOB03bEPp/4P5lxqy0Ojlio7pK0jc= OMR@SAG-D9D4YT2"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Omar Rashid",
+  "email": "omar.rashid@softwareag.com"
+}

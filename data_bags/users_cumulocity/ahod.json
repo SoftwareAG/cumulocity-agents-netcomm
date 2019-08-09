@@ -1,0 +1,10 @@
+{
+  "id": "ahod",
+  "ssh_keys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSrHO/zTdzCy8koB3hPLU3imNDTaJ2V1CTunHaIH+X43vq6ogJMzJco9sM4gyxapjQuTKcxQGGiF4oTqYBAbaAOjx+ELV16HNsskRRJpb40Ctdd8stowaCDOavwe1883IooFLdFSNKiqAhOGqN13NZ+kF+VRcjdD3qKtKxdftSrzkFaZf2ryijZMUNWe5TXyyaTvtanjjBkVkMXGkJor6BI155v68LXTQ6k9PZhGDJL8M5ezs24NxKuGhIvtdxzqL+xRlftfSH8/g+lRAF7JWldxmMnoOM926OC9PinTcoSDCBotqt7KpJe0lvi4aT0i7oE7Yrbi4qRVxggahMm9L5 ukayh@VF-WS-UKAYH",
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSrHO/zTdzCy8koB3hPLU3imNDTaJ2V1CTunHaIH+X43vq6ogJMzJco9sM4gyxapjQuTKcxQGGiF4oTqYBAbaAOjx+ELV16HNsskRRJpb40Ctdd8stowaCDOavwe1883IooFLdFSNKiqAhOGqN13NZ+kF+VRcjdD3qKtKxdftSrzkFaZf2ryijZMUNWe5TXyyaTvtanjjBkVkMXGkJor6BI155v68LXTQ6k9PZhGDJL8M5ezs24NxKuGhIvtdxzqL+xRlftfSH8/g+lRAF7JWldxmMnoOM926OC9PinTcoSDCBotqt7KpJe0lvi4aT0i7oE7Yrbi4qRVxggahMm9L5 ukayh@VF-WS-UKAYH"
+  ],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Andrew Hodgetts"
+}
