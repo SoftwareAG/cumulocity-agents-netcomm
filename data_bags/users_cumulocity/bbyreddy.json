@@ -1,0 +1,8 @@
+{
+  "id": "bbyreddy",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGCsrhyhNCcZEurqRZTMDLMDbBRVySexjg4Thus3nlpZEaSv5CmUSc9T9nbsFR/Fkokz1ARCJCBzZtlVf3j0iamQRNtDFAtWhiAv5Y93DzUVHfrzzsbJsKkjOUu/sLSweN5aOOio5jd0hwsYq9qHgZ65ngcWam6C7XkT4+V5Sa85QdWs01y2oSah74xtvrpgBW+vgr7ZN1o8XpA3PP5tBbpmmNdOvZ2I0R9GFFd0hcKnq4CEkpzVVEsQ1rPGGJ261u0PeYuzgbc/0HB1pbmZu+9/c4yuQYKdS3VpJhI5zzJmg7VzPaV/GNnRecMAfGpeGZNkxgdfXfthpzoqR551/7 bbyreddy@bbyreddy-iot"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Bhaskar Byreddy",
+  "email": "bhaskar.byreddy@cumulocity.com"
+}

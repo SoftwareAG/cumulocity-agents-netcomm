@@ -1,0 +1,8 @@
+{
+  "id": "kczu",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkkXZHyearAyWGcj9clYI981JpAuZ4bRR88i2rdbV15f6035m40FFUo6eOf1wvqcE/nLhZudyANR5tkymWW9WAHD52mW69O3WJztYAYLCZZAuY8CR4z/rLLgjpDECgozSKu6R6lPPHzVELzLPqLZ3vtgqsjdKDJrw3eDVDQIpoVorYtMATCLHyIqw0dLnCm3ozMRqqOvw1axcmYmdXWqyQJ6FaqUv3n3hvTk53BLmfXWXL+0DJ8KQqVpBWApYlMVxnRf9j6QGlbFpi1YL2QNS33jCq6XSpR9m1iQ9WpkNY1kjCAycVY+SKS9hT/oZSWTNNRwni8qi8ziGXPdlUnLP1 kczu@kczu-HP-EliteBook-850-G5"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Karol Czub",
+  "email": "Karol.Czub@softwareag.com"
+}

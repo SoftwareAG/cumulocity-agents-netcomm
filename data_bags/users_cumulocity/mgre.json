@@ -1,0 +1,8 @@
+{
+  "id": "mgre",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEOVrDceL3MOqBT0FxgsHoNREy2KfAoWJLcVPiAvFdxlaTW3A7gardH106pzX0pYDuRa6qNjFO4cI7YZUCQyVku+fODUj/7GymtT4jtA27ZRCoH2ii8tLylwPkc5SbTkNG5R43MSYn0x28f/zkf+dlue0ZefbdukS5DkoE/tOCMCGDJHSD98xZziHLQQngvfKic/JJiqKout1K7OI+27z8UUwMeUMIg1mB9P5FvGVg+4Hlv6mCh6VWWQpnjIlSAzoWHfl9O49PzNGXbbWQ0/eQmreHrDSXnlCbCLUROtyTgLRcsizlBz0fcbxttZXbvwJ6HoyhcuwGC3vwBBRlj/vt mgre@d8edevmgre01"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Markus Greiner",
+  "email": "markus.greiner@softwareag.com"
+}
