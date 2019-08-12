@@ -77,14 +77,16 @@ override_attributes(
 #    "version" => "1004.0.4-1",
 #    "version" => "1004.0.7-1",
 # 09.07.2019 with fix: MTM-27156
-    "version" => "1004.0.12-1",
+#    "version" => "1004.0.12-1",
+    "version" => "1004.6.8-1",
 #   tracker-agent-server version
 #    "ssa-version" => "9.20.0-1",
 #   lwm2m-agent-server-version
 #    "ssa-version" => "1004.0.4-1",
 #    "ssa-version" => "1004.0.7-1",
 # 10.07.2019 upgrade, karaf 1004.0.12 but Jens Wildhagen said 1004.0.9 for ui, agents, etc.
-    "ssa-version" => "1004.0.9-1",
+#    "ssa-version" => "1004.0.9-1",
+    "ssa-version" => "1004.6.8-1",
     "memory_left_for_system" => "8192",
     "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24", "100.64.252.0/24", "18.185.5.234", "10.201.0.0/24", "10.201.0.187" ],
     "notification" => true,
@@ -117,6 +119,7 @@ override_attributes(
       "admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "sysadmin.password" => "",
       "cepServer.queue.batch.limit" => "5",
+      "cometd.heartbeat.minutes" => "3",
       #"system.two-factor-authentication.enabled" => false,
       #"system.two-factor-authentication.enforced.group" => "admins",
       #"system.two-factor-authentication.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
@@ -149,6 +152,8 @@ override_attributes(
       "email.from" => "no-reply@cumulocity.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "passwordReset.email.subject" => "Password reset",
+      "smart.host" => "100.64.251.5",
+      "smart.port" => 8111,
       "passwordReset.token.email.template" => 'Dear Cumulocity user,\n\n\
             You or someone else entered this email address when trying to change the password of a Cumulocity portal user.\n\n\
             Please use the following link to reset your password: \n\
@@ -206,7 +211,7 @@ override_attributes(
         "useKarafWebsocket" => true,
 	"useLUAforSSLcerts" => true,
 	"useLUAforLimits" => true,
-	"useLUAforHealthCheck" => nil,
+	"useLUAforHealthCheck" => true,
         "nginx" => {
             "real_ip_balancing" => true,
             "NGinxPort" => "openresty",
