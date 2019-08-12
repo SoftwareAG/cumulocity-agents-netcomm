@@ -74,18 +74,18 @@ comCB=(
               ["chef-vault"]=3.0.0
                ["hostsfile"]=3.0.1
                     ["swap"]=2.0.0
-            ["packagecloud"]=0.3.0
+            ["packagecloud"]=latest
                 ["yum-epel"]=2.1.2
                     ["cron"]=4.1.3
                ["logrotate"]=2.2.0
-                 ["windows"]=3.1.0
-                ["iptables"]=4.2.0
-                     ["apt"]=6.1.0
-                ["homebrew"]=4.3.0
-         ["compat_resource"]=12.19.0
+                 ["windows"]=latest
+                ["iptables"]=latest
+                     ["apt"]=latest
+                ["homebrew"]=latest
+         ["compat_resource"]=latest
                     ["ohai"]=5.1.0
               ["filesystem"]=1.0.0
-                     ["lvm"]=4.5.2
+                     ["lvm"]=latest
                 ["filebeat"]=2.1.0
             ["elastic_repo"]=1.1.1
   ["yum-plugin-versionlock"]=0.2.1
@@ -102,11 +102,11 @@ mnOnlyComCB=(
 # addition for kubernetes multi master setup
                  ["haproxy"]=5.0.4
                      ["cpu"]=2.0.0
-         ["build-essential"]=8.1.1
-                   ["poise"]=2.8.1
-           ["poise-service"]=1.5.2
+         ["build-essential"]=8.2.1
+                   ["poise"]=latest
+           ["poise-service"]=latest
                ["seven_zip"]=3.0.0
-                   ["mingw"]=2.0.2
+                   ["mingw"]=2.1.0
 )
 
 declare -a mnRoles
