@@ -10,7 +10,7 @@
     "chef_client": {
       "server_url": "https://<url_or_ip_chef_server>"
     },
-    "domainname": "server.domain.com",
+    "domainname": "domain.com",
     "useVaults": false,
     "yum": {
       "repositories": {
@@ -36,6 +36,12 @@
       "server": {
         "version": "3.4.3",
         "checksum": "adb04a255a3bb1574840ebd4a0f2eb76"
+      }
+    },
+    "openssh": {
+      "server": {
+        "password_authentication" :"yes",
+        "permit_root_login":"yes"
       }
     },
     "cumulocity-kubernetes": {

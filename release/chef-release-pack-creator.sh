@@ -43,11 +43,10 @@ thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
    thisdir="$( dirname "${thisscript}" )"
   c8yCBdir="$( readlink -e "${thisdir}/../../cumulocity-cookbooks" )"
   comCBdir="$HOME/.berkshelf/cookbooks"
-    solDir="${thisdir}/chef-solo"
-  solCBdir="${thisdir}/chef-solo/cookbooks"
+    solDir="${thisdir}/chef-zero"
+  solCBdir="${thisdir}/chef-zero/cookbooks"
     relDir="${thisdir}/cumulocity-chef"
   relCBdir="${relDir}/cookbooks"
-template_archive="${thisdir}/chef-solo-12-template.tgz"
 
 declare -A c8yCB
 c8yCB=(
@@ -208,20 +207,21 @@ if ${SOLO} ; then
   cp -a${VERBOSE+v} "${thisdir}/../data_bags/certs/cumulocity.json" "${solDir}/data_bags/certs"
   f_color_pr wht "-- cumulocity-single-node.json"
   cp -a${VERBOSE+v} "${thisdir}/../environments/cumulocity-single-node.json" "${solDir}/environments"
-  f_color_pr wht "-- chef-solo/config/chef_config"
-  cp -a${VERBOSE+v} "${thisdir}/../chef-solo/config/chef_config" "${solDir}/config"
-  f_color_pr wht "-- chef-solo/chefrun.sh"
-  cp -a${VERBOSE+v} "${thisdir}/../chef-solo/chefrun.sh" "${solDir}/chefrun.sh"
+  f_color_pr wht "-- chef-zero/config/chef_config"
+  cp -a${VERBOSE+v} "${thisdir}/../chef-zero/config/chef_config" "${solDir}/config"
+  f_color_pr wht "-- chef-zero/chefrun.sh"
+  cp -a${VERBOSE+v} "${thisdir}/../chef-zero/chefrun.sh" "${solDir}/chefrun.sh"
 
 ##########
 
-  export prefixName="cumulocity-chef-solo"
+  export prefixName="cumulocity-chef-zero"
   cat > "${prefixName}-v${mainver}.sh" <<< '#!/bin/bash
 
 EXTRACTONLY=false
 AUTO=false
 INST=false
 INSTALLONLY=false
+outputFolder="/var"
 
 while getopts "veiyYo:" opt ; do
   case $opt in
@@ -256,7 +256,7 @@ if $INSTALLONLY && $EXTRACTONLY; then
 fi
 
 if ! $INSTALLONLY; then
-  f_color_pr wht "extract chef-solo folder in ${outputFolder:=/var}..."
+  f_color_pr wht "extract chef-zero folder in ${outputFolder:=/var}..."
   sed -n "/^__ARCHIVE_BELOW__$/{s///;:a;n;p;ba;}" "$0" | tar xz${VERBOSE+v}f - -C "${outputFolder}"
   f_color_pr wht "Done!"
 fi
@@ -264,9 +264,9 @@ fi
 ${EXTRACTONLY} && exit
 
 [[ ! -d /var/config ]] && mkdir /var/config
-ln -sf "${outputFolder}/chef-solo/config/chef_config" "/var/config/chef_config.rb"
+ln -sf "${outputFolder}/chef-zero/config/chef_config" "/var/config/chef_config.rb"
 
-soloDir="${outputFolder}/chef-solo"
+soloDir="${outputFolder}/chef-zero"
 
 sed -i -r \
   -e "s/___KARAFVERSION___/"'${karafver}'"/g" \
@@ -393,7 +393,7 @@ exit
 __ARCHIVE_BELOW__'
 
   ( cd "${thisdir}"
-    tar cz${VERBOSE+v}f - "chef-solo"
+    tar cz${VERBOSE+v}f - "chef-zero"
   ) | tee "${prefixName}-v${mainver}.tgz" >> "${prefixName}-v${mainver}.sh"
   chmod a+x "${prefixName}-v${mainver}.sh"
 
