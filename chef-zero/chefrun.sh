@@ -27,6 +27,10 @@ knife node environment set $node $env_name -z  && echo "INFO: Successfully setup
 #Installs cumulocity software
 knife node run_list add $node 'role[cumulocity-dev-singlenode]' -z  && echo "INFO: Added role[cumulocity-dev-singlenode] successfully" || { echo "ERROR: failed to add role[cumulocity-dev-singlenode]. Exiting..... "; exit 1; }
 run_chef_client
+
+#install certificate so that c8y-k8s communication goes well...
+keytool -noprompt -import -alias registry -keystore /usr/lib/jvm/jre/lib/security/cacerts -file /etc/nginx/certs/domain.com.cert -storepass changeit && echo "INFO: /etc/nginx/certs/domain.com.cert added successfully in cacerts" || { echo "ERROR: failed to add /etc/nginx/certs/domain.com.cert. Exiting..... "; exit 1; }
+
 knife node run_list add $node 'role[cumulocity-common-cores]' -z  && echo "INFO: Added role[cumulocity-common-cores] successfully" || { echo "ERROR: failed to add role[cumulocity-common-cores]. Exiting..... "; exit 1; }
 run_chef_client
 knife node run_list add $node 'role[cumulocity-mn-active-core]' -z  && echo "INFO: Added role[cumulocity-mn-active-core] successfully" || { echo "ERROR: failed to add role[cumulocity-mn-active-core]. Exiting..... "; exit 1; }
