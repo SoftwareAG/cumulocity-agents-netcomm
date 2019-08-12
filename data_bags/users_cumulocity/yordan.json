@@ -1,0 +1,7 @@
+{
+  "id": "yordan",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEApVYCpyOA69C72NOqOvhSEZNcuv34edcoHYJI6rlT1p9cC3BJ1R3TGRhBus8xGIdliIfKixM0XQUQf1XdqOaAJIMY1flIqzirtlcoY9N2D1jHrYSYvGZino+a7S4iMq42zRPMxdtYo7L6tk5Cr7ZiEefLA81uEhSOmFbkRPzxnoNXwLtXgBLMpsDulI/MqsVz5KHvfSAwSDA0DeGhDfrJgTKTgrROsnEO1QrdytjlHI4+/mRxW76WyJ4iM8FhYvp2THXU1wNiFcwFsFDU4jFjb/lT3hCfBRLq2h1IAy8Zb9rv/oNHoOPzcT+ctAslVZHDVJBE7ZzJ1eJQsQJ42dJv3w=="],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Yordan Kostadinov"
+}

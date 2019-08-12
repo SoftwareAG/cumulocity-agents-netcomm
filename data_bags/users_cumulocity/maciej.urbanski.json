@@ -1,0 +1,7 @@
+{
+  "id": "maciej.urbanski",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkEo7+v+xXeHCBy3kS/Y9Q3Zgd1LS5XexamAHwQHsBJcHb4lDSK1lCHe0Ad53YKTfnqPgawTigR6e3QRIHva9ShHHk/tRhs9lhfwnLTJ+WwaZm2NXWPXlefWwnATPIyCDfi2KvgPAsBYSLSN26QVmqgA0PtCuzmsoPV1wUunfJVBg1LkwFO5wdXm3hM83Qt97HbTzHQ7tugbFWcOTI+jrV9MQVnzxU/1irXQKOH6D66/2J4K/INsunSJivrUBU8yAIVJZ+/piU7SbrtpWWY3t0U9fdBhA5ZPffQ4vjiQshh9CPFvdAWX0csfXaQfuzf795p7BAce5fOzcLMJF0/fD5 klockilego@klockilego-HP-EliteBook-850-G5"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Maciej Urbanski"
+}

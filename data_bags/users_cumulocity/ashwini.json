@@ -1,0 +1,7 @@
+{
+  "id": "ashwini",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEA4eVIJmUTXv33XyNq7vWJ+HPB1M9NxW4MeO7LaVD+0Y+iAQoVJI+oluRyeYuCI/AZXN2vrVKKaFU4FfRDXl3s9ZuGBSoDP+svXxfQk+uOfs2jDI9Z/FuRMJ1EuKvt2wzVdGS/8OIX2xPrhqAvKXLHGiAY0NkKHtpq353VJ4dF6dDN/UcGzjLBxhUFI6egB7luS0FE1MJLJ1MTNNPfgn+Ag0fFM7RVdcaFF9rrgdAEG338AowtFoW0W+UihETcy1leKtgopXeFENIxMbLoJ6V+PxDzPx/V+EaTmG0nNnHRgMaGi9hIHP7bBySGsuBke48BzOrldO2HgAz7Qr1r/Fp0PQ=="],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Ashwini Shanker Gayat"
+}
