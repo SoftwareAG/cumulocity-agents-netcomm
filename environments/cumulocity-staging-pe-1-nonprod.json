@@ -177,7 +177,7 @@
       "useK8SDashboard": true,
       "nginx": {
         "NGinxPort": "openresty",
-        "version": "1.13.6.2-20.el7.centos.c8y.1004.6.3"
+        "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
       }
     },
     "vendme-platform-agent": {
