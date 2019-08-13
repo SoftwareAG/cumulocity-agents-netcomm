@@ -2,7 +2,7 @@
   "name": "cumulocity-basic-staging7-nonprod",
   "description": "The Basic Staging 7 environment for test releases",
   "cookbook_versions": {
-    "cumulocity": "1004.6.2",
+    "cumulocity": "1004.6.3",
     "cumulocity-kubernetes": "1004.6.1",
     "cumulocity-ssagents": "1004.6.1"
   },
