@@ -54,6 +54,7 @@
         "apama-small",
         "apama-medium",
         "apama-large",
+        "sms-gateway",
         "mibparser"
       ],
       "monitoring": {
