@@ -48,6 +48,7 @@
         "apama",
         "apama-small",
         "apama-medium",
+        "sms-gateway",
         "apama-large"
       ],
       "monitoring": {
