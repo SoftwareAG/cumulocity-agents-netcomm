@@ -1,4 +1,5 @@
 #!/bin/bash
+export thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
 export thisdir="$( dirname ${thisscript} )"
 (
 	cd "$thisdir"
