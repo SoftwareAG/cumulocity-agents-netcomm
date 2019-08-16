@@ -56,6 +56,8 @@ knife tag delete $node k8s-master-init -z  && echo "INFO: Deleted tags k8s-maste
 knife node run_list add $node 'recipe[cumulocity-kubernetes::certs_upload]' -z -z  && echo "INFO: Updated runlist with recipe[cumulocity-kubernetes::certs_upload] successfully" || { echo "ERROR: failed to update runlist with recipe[cumulocity-kubernetes::certs_upload]. Exiting..... "; exit 1; }
 run_chef_client
 
+service cumulocity-core-karaf stop && echo "INFO: Successfully stopped karaf" || { echo "ERROR: failed to stop karaf. Exiting..... "; exit 1; }
+
 #Add master node: Enables scheduling on master node, updates /etc/cumulocity/k8s.conf & /etc/resolv.conf files  and restarts kubelet
 knife tag create $node k8s-master-add  -z  && echo "INFO: Added tags k8s-master-add  successfully" || { echo "ERROR: failed to add  tags k8s-master-add . Exiting..... "; exit 1; }
 run_chef_client
