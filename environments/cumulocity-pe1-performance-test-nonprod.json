@@ -2,8 +2,8 @@
   "name": "cumulocity-pe1-performance-test-nonprod",
   "description": "The Staging 7 environment for the latest released version",
   "cookbook_versions": {
-    "cumulocity": "= 1004.6.2",
-    "cumulocity-kubernetes": "= 1004.0.3",
+    "cumulocity": "= 1004.6.0",
+    "cumulocity-kubernetes": "= 1004.6.0",
     "cumulocity-ssagents": "= 1004.0.3"
   },
   "json_class": "Chef::Environment",
@@ -12,6 +12,7 @@
 
   },
   "override_attributes": {
+    "cumulocity-base": {"chef-client": {"enabled": true}},
     "domainname": "pe1-staging-pt.c8y.io",
     "useVaults": false,
     "chef_client": {
@@ -35,6 +36,7 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
+      "renew-certificates": false,
       "deployK8S4env": "cumulocity-pe1-performance-test-nonprod",
       "attachedEnvs": [
         "cumulocity-pe1-performance-test-nonprod"
@@ -52,6 +54,7 @@
         "apama-small",
         "apama-medium",
         "apama-large",
+        "sms-gateway",
         "mibparser"
       ],
       "monitoring": {

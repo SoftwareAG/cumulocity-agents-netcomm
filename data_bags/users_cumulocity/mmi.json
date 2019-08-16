@@ -1,0 +1,8 @@
+{
+  "id": "mmi",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJBaydCE7Q/ww37hHSiBmWOKOkSjIycGDusfg33RlxhuuFwsaxrvEgSJ/Zaa0Qr6ZFz70yF37wYqATzYsIAP45oEl7uRXFA317i8UHWG9ou6eWSCgZWgmTtTxVNGyJhgXWQ9meqkl/1MVMqDBp2BAqYrs62q3qsvB+vOIVwMkvW25WLQrnQrv9B6ZALjJghAAAyptlXfhm0v823n8SH1bRULzgsRYbcF6jyjproQC91ZP9MBpp0wxKJva4e/dZhQoR4i9cn+WJL2MtPEfn/V1a20VLhjd0yhMQVtJ8rhhRvLCti+VZfaH2meiqxmcLET33NUlXSSetDmA4cB9TDA4z mmi@d8edevmmi"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Manfred Michels",
+  "email": "Manfred.Michels@softwareag.com"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "tomasz",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDI4jdWK3WEAahKww+nhxxxXUjO3xxWBBdzoLa6uwnWkasRy0me/XSqaoNt37rF0f+qeIK+409u2iFnLwC+XjPFayJwBQluFw+y3XI7E1CFGbnZNRILAf/2jEVuPJXzceYIO39cNhk1j41bDNbtdByGQ7eFsi7Zqpz8cXCxjSYD50Q5E5BNLiop4r72JHA69n064qivUyAzYqC6HuW/a6Fm2CoWduxxfefvmrqZTPnqsXsuDJHeZxlyFQ4LGpLf+Ednb2T8wvRv6I42o2pbAzmi3qO/oVVFamW+vfnBwBl6z450ybAt7i2DkixgPNpXOxbR6Ex2MlNiumvscF57Qn+v tomasz.jegorow@impaqgroup.com"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Tomasz Jegorow"
+}

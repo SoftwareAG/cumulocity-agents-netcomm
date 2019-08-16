@@ -1,0 +1,8 @@
+{
+  "id": "rpr",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZlU9h+ieJ3K0BWn1ySDveLexGrIFDDtwnvRtRYrcYKQrsznpWxgT6NDEv4fyt3WDrqvBNajVGuDliio34P9rPL1JmJVdGSlk3SkEIqkqYRPBWKVAooMSJmcI2t07kEL9bHn++ago9ZViuyK1dLAC7X7oPY3WI1kffKzDD2NAAhBsPsTkAM/41IX6BSpTUlwaMMj+GIHmuY8jLcmoCkqaAeH4MlIdU3JJW7Ewu2L3tKofpUUTT1EfRVVwuCspzQW6N0kv4gV/q0R5UYf1x4q6F1pdfrSKddNQwdA5rBpixuL1Y8QPf+zvdLR7aJdkrNp2qL5qJVbEXGYhcRFiqo88J rpr@d8edevrpr01"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Robert Pretz",
+  "email": "Robert.Pretz@softwareag.com"
+}

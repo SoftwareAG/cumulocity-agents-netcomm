@@ -1,0 +1,7 @@
+{
+  "id": "apamabld",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCse9S1E7+w3y9/1Dhednp01AA0tWDx+Kep3U13DXAMXOKLPvLWWguNw7A2SAu/t/AfrbC8W8rl90IYwYXgyYdKVVW4vh+Gf2F/kpT/QrCK5gfCKlFU6G90jWQOW6S7TsUyp4xDDkzzVRhaFIgolkJGR5YqM5t1ybPJ/J1w+CucMMicB/MHuyGTCTGfUg0wp3jTSvxFgGCRVNr5izpr03Hd27aRPCYKa4sD1uIlSLChBMtmhmp5cAfuHlTOiSar5s7IHD4t1TVxazc3EdFRaGuS+WjJ+ykXw/Jm6a64VGwyn4yNhjf57mY3e60VsDF1Izc3jr5aCZtxPSnCqn+5jsPz rit@hadron"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "apamabld  - apama team user contact Richard.Thrippleton@softwareag.com"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "suyogwani",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDO66rtaJVHZ8v1UbbhFtw8dSvhhm4169cG5oJMupS1dVXZ5YREewvQCkaf4baG5OHT3fiVc2YBnmhXTLDHIvQTFEJSPIUoMJ9zfFqi5jreBpElZCdX6qyHJ6SyBOFV9jChrAcpZNaGnhVRkieXOaHom8IqpHwBFofcFML6q92D509Lhog7Otjx8arJ2CLyKfUTppP/3ynh6L0oWQTP/Y6l73MhCecQOmXkD699FeNpQsPdlAqg1EYFYWYhrm8tA+OiUtNVXTjxtCzZQ5vsdH86OEMaYfhucrXRGdQAh5vYEbUGp5Bkfec4mFQlrC7ZQ5joFlYZNExIkU7T7FWWfF0l suyogwani@Suyogs-MacBook-Pro.local"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Suyog Wani"
+}

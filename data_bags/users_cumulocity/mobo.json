@@ -1,0 +1,7 @@
+{
+  "id": "mobo",
+  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC8z+K+IOt5cpbTmjPkn0USmsCaPnCw8vuJwzhp8E8lWnxjBfavNPojuF67Pez6rX+MbUZvq6VYUDWc4hsWfWfWkh6uoEy1MSgzPYQqmXlKjTCI3ulvDZPipMZLv50AGWA92AwS4IILHkCO87V73TlsaCUO/duC7jnppsyRVP+A1VcCFHQeA+DPj+CEwkvgEj+1cG9ft2WIF+8DtVVLF3rnNFwcmLsGF8RDwfEYNwNr904TxVy3ktWW56eT5Ryjf0AFuCeRvqz9T7GIDHIdJI7CN4Ro2ZxIKtmqSKnEufWPFuFmA2EYZfdLYgt/6d4bSTVb7QycWRYIXDkO+qxHR0mi1UiKvQ5aS/CuSZBlm4KiiGj41gA+DmFFB6qHdK8ArFqdUgSx4FN3vO0J9n9vUACVNm7ecEU5FykRk8bUrttHtVWnAaFnjauvCcwwCb5uLibLT4WiCBf/h+tUuoghm6arl05wc9avrgHmOpmP6W5FdeeXkX1VDhEU1zMf2hrj/2si+ut3fW9ICZv4V/xIa15Jg4BUMUvWjVB3ahMP41gE2t4Ud4t4jJAuWu7LjTIa5FTKu/O7bxovH5pDtgLG6Sf5/crHpA4AThjL5PY2b40jSsY+HICt3EW5I9R8J07w1ZhNvNng4AmfrNbo8hQn4sRn76O9TBixNHCj6YnBePt6aQ== mobo@cumulocity.com",
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Monjeet Bordoloi"
+}

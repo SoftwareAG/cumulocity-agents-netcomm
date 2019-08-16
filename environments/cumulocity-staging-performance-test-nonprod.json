@@ -8,14 +8,12 @@
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
-  "default_attributes": {
-
-  },
+  "default_attributes": {},
   "override_attributes": {
     "domainname": "staging-pt.c8y.io",
     "useVaults": false,
     "chef_client": {
-        "interval": 450
+      "interval": 450
     },
     "environment": {
       "address": "management.staging-pt.c8y.io"
@@ -41,7 +39,7 @@
       ],
       "token": "1e3145.2ff901841c78ad1d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.6.0",
+      "images-version": "1005.0.0",
       "images2install": [
         "cep",
         "cep-small",
@@ -50,6 +48,7 @@
         "apama",
         "apama-small",
         "apama-medium",
+        "sms-gateway",
         "apama-large"
       ],
       "monitoring": {
@@ -58,8 +57,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "5a88b9e58b59256dd2843e2b5562c9b4bb98b996f93efd7d2a0c8724cd8b0be6230cf6d6fd50412a55cc647fd495d71cbd2e9a32075ae157f253c2dedbee6f5b",
-      "version": "1004.6.0-1",
-      "ssa-version": "1004.6.0-1",
+      "version": "1005.0.0-1",
+      "ssa-version": "1005.0.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -87,7 +86,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "1004.0.0"
+      "version": "1005.0.0"
     },
     "cumulocity-ssagents": {
       "useTags": true,
@@ -147,7 +146,7 @@
       "useLUAforHealthCheck": true,
       "nginx": {
         "NGinxPort": "openresty",
-        "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
+        "version": "1.13.6.2-20.el7.centos.c8y.1004.6.3"
       }
     },
     "vendme-platform-agent": {

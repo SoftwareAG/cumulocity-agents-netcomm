@@ -2,9 +2,9 @@
   "name": "cumulocity-basic-staging7-nonprod",
   "description": "The Basic Staging 7 environment for test releases",
   "cookbook_versions": {
-    "cumulocity": "1004.6.2",
-    "cumulocity-kubernetes": "1004.6.1",
-    "cumulocity-ssagents": "1004.6.1"
+    "cumulocity": "~> 1004.6",
+    "cumulocity-kubernetes": "~> 1004.6",
+    "cumulocity-ssagents": "~> 1004.6"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -35,7 +35,7 @@
       ],
       "token": "1e3145.2ff901941c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.6.8",
+      "images-version": "1004.6.10",
       "images2install": [
         "cep",
         "cep-small",
@@ -76,8 +76,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "9cfda1bd57553c744d813970705747ef3c3c1f97ad669c0ff9a3c8bba40675705f458e46b46bd9710d7bc99594fe3030d7637457e94c6982ab9de77acce75806",
-      "version": "1004.6.8-1",
-      "ssa-version": "1004.6.8-1",
+      "version": "1004.6.10-1",
+      "ssa-version": "1004.6.10-1",
       "notification": true,
       "cep-server-enabled": true,
       "CUMULOCITY_LICENCE_DIR": null,
@@ -104,7 +104,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "1004.6.8"
+      "version": "1004.6.10"
     },
     "cumulocity-ssagents": {
       "useTags": true,
@@ -177,7 +177,7 @@
       "useLUAforHealthCheck": true,
       "nginx": {
         "NGinxPort": "openresty",
-        "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
+        "version": "1.13.6.2-20.el7.centos.c8y.1004.6.3"
       }
     },
     "vendme-platform-agent": {

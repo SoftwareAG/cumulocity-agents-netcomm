@@ -1,0 +1,7 @@
+{
+  "id": "jend",
+  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDO6PcIe/mQ/5ppPwChyYyX+zIMeHlOQnRKBZN3LSMaRDNgVwEdiMNvoD7Ptan7daWXb99FGbXLlBEYTvkKyJVJtc+h0021J6bb1LKyw9xKfEd3XLSG/F6buHPGWCjxqrUudIftShtpJYLYf+belkKyiFasO0vbPTR4oZj3dKldRjHTjw2EORWVMeaqu3V/xkt/IudbROQ0To0GnZgChQCb89us0iKkhW4ZeToY+/zjP38aR9LpBm4aDlsQVIk1dTKmPWjj4GG1wQjrgMcqOz7PXoYmUDOM+TRntYpokXP6y603VZF376AWkNy7I9DywE8OTI9Xu0gngRqURsgwfzST jend@d8edevjend01",
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Jochen Endres"
+}

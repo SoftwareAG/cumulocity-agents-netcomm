@@ -1,0 +1,8 @@
+{
+  "id": "scmi",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDzKMks3DuZntQnTBjmM6YD9lvNLSRaqeNosqlOnM6v2B2rIdWAJSBBsL8dlU6XScV/YiWc+Xpzy3ckSc0ohvBoMgQQsoru03dG6I4QW6GfOncMUJXUZUI5DEmJH1ccYCfqE8tTH4xoCvlHN4ex/20nvALZ6OW9DovyYG8gnxs5GNzAYYjNCSiYv2E6jSW8RA1iuuo4ybNiA3Q0n1JXsRrLqUAigUlG0d8yxtqU3B7T0VUcPcZ4I++XaNDZSuMwXsooHCClaTZAl919Ystv/TNPUXA1eyFdoCVeeXItOfH3LRGAB3N/Sq2fhC+BWwsInesyD8OEU1KnqDeqcVvGXqat scott.mitchell@cumulocity.com"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Scott Mitchell",
+  "email": "scott.mitchell@softwareag.com"
+}

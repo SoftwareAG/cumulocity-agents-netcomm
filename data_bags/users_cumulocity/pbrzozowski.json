@@ -1,6 +1,6 @@
 {
   "id": "pbrzozowski",
-  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCrXbStffY71RH/KrPiIGfF+KVk89SVIVr3XBC8gzhNG5K33gP3tAvHv4fGbHIKblOUqd6sAk2btgKEn6L7Rmho78JvpeG4mP+tv946wiOYqFqd2aIbzVcwwHNZm2PTgQ7r1Rg6PdmmL+crgfRszOd3OUjA4LZnVRW3qp9bZm3Fkf7+DK0k6OeYlSXTQdeAssAERHCD60Y/TliDBIfIG+Vndkuzezy5KuuY/tXZMNDZCFn8Ule5mbCwzZfpAQSpB8tRaKA3I5f8dTcPA+HATq+kKcBrdCcIsH9oeYauaUYaIlCf0a9zKZsoBhF91CoLYcMNs2hK+6dU5Rc7wwU8H4jRuzDJ6h/o42SoIOX4d7V8x2Y6JDce/z1Z67v1UNUWWQYJUq5ZP/5HM+kZVvlECwVju9hOsX3UWjbj1be88uaJxro2WsS6nHzHQXI3xOJnmUohDaUV88tcCChkS8Bq8+GtpIelfKOwTCLNYNVgKBYI3YogziEszVMRjVyIj0Uvx3E2LfnlcqRDzcz05DeZUGWffw8K9tbCPv3wYVLkAao4/1ucH43n6kw08VyUS0X+c1DPs+7unbeMy0c+utKUz7TLAfqGnmPx6FVdnCZwTbHG1rqvdjso7eWIQqBNaF/k2SC4osUP3Y3PBv72g+OKkHh9XtqAX3LobVairerXUu2qbQ== pbrzozowski@lucy"],
+  "ssh_keys": [""],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Paweł Brzozowski"

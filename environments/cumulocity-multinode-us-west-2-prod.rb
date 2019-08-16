@@ -1,35 +1,27 @@
-name "cumulocity-multinode-central-1-prod"
+name "cumulocity-multinode-us-west-2-prod"
 
-description "The production multinode environment in Frankfurt"
+description "The production multinode environment in Oregon"
 
 cookbook_versions({
-#'cumulocity'=>'= 8.18.0',
-#'cumulocity'=>'= 9.0.11',
-#'cumulocity'=>'= 1004.0.3',
-'cumulocity'=>'= 1004.6.2',
-#'cumulocity-kubernetes'=>'= 8.18.0',
-#'cumulocity-kubernetes'=>'= 9.0.11',
-#'cumulocity-kubernetes'=>'= 1004.0.3',
-'cumulocity-kubernetes'=>'= 1004.6.2',
-#'cumulocity-ssagents'=>'= 9.20.3'
-#'cumulocity-ssagents'=>'= 1004.0.3'
-'cumulocity-ssagents'=>'= 1004.6.2'
+#'cumulocity'=>'= 9.20.2',
+#'cumulocity-kubernetes'=>'= 9.20.2',
+#'cumulocity-ssagents'=>'= 9.20.2'
 })
 
 default_attributes(
 # "fixhostname" => false,
 # "fixhostsfile" => false,
- "fixhostname" => true,
- "fixhostsfile" => true,
+# "fixhostname" => true,
+# "fixhostsfile" => true,
  "elb" => {
       "name" => "production"
     }
 )
 override_attributes(
-  "chef_client" => {
-        "server_url" => "https://chef12.cumulocity.com"
-  },
-  "domainname" => "cumulocity.com",
+#  "chef_client" => {
+#        "server_url" => "https://chef12.cumulocity.com"
+#  },
+  "domainname" => "us.cumulocity.com",
   'yum' => {
     'repositories' => {
         'cumulocity-testing' => {
@@ -58,49 +50,48 @@ override_attributes(
     },
   "cumulocity-kubernetes" => {
      "docker" => {
+       "limits" => {
+         "cpu" => "4",
+         "memory" => "8Gi"
+       },
        "log" => {
          "on-file" => true
        }
      },
-     "deployK8S4env" => "cumulocity-multinode-central-1-prod",
-     "attachedEnvs" => ["cumulocity-multinode-central-1-prod"],
-     "token" => "ta0d1q.byxyv9wyee5rr7we",
-     "docker-registry-image" => "cumulocity/registry:2.6.1",
+     "deployK8S4env" => "cumulocity-multinode-us-west-2-prod",
+     "attachedEnvs" => ["cumulocity-multinode-us-west-2-prod"],
+     "token" => "mbxfys.reloo224q7b55iy5",
+     "docker-registry-image" => "cumulocity/registry:2.7.1",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.20.10",
+     "images-version" => "9.19.2",
 #     "images2install" => [ "cep" ]
      "images2install" => [ "" ]
   },
   "cumulocity-karaf" => {
-#    "version" => "9.19.3-1",
-#    "version" => "9.20.10-1",
-#    "version" => "1004.0.4-1",
-#    "version" => "1004.0.7-1",
-# 09.07.2019 with fix: MTM-27156
-#    "version" => "1004.0.12-1",
+    #"version" => "9.19.2-1",
+# 21.12.2018:
+    #"version" => "9.19.3-1",
+# 28.12.2018
+    #"version" => "9.19.5-1",
+# 04.01.2019
+    #"version" => "9.19.6-1",
+# 18.01.2019
+    #"version" => "9.20.4-1",
+# 17.04.2019
+    #"version" => "1004.0.6-1",
+# 05.08.2019
     "version" => "1004.6.8-1",
-#   tracker-agent-server version
-#    "ssa-version" => "9.20.0-1",
-#   lwm2m-agent-server-version
-#    "ssa-version" => "1004.0.4-1",
-#    "ssa-version" => "1004.0.7-1",
-# 10.07.2019 upgrade, karaf 1004.0.12 but Jens Wildhagen said 1004.0.9 for ui, agents, etc.
-#    "ssa-version" => "1004.0.9-1",
+    #"ssa-version" => "9.20.3-1",
     "ssa-version" => "1004.6.8-1",
     "memory_left_for_system" => "8192",
-    "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24", "100.64.252.0/24", "18.185.5.234", "10.201.0.0/24", "10.201.0.187" ],
+    "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.241.0/24", "10.10.0.0/16" ],
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,
     "revDNSname" => "cepfra.cumulocity.com",
 #    "openrelayIP" => "cepfra.cumulocity.com",
     "openrelayIP" => "52.58.146.111",
-    "CUMULOCITY_LICENCE_KEY" => "654176766f1252e56d6eeaa877986f0737164b0e1c6110c048237e0d406f280c27d650ededb20ed6d9f0979696d2da05270a25dc76527ce89c722952e2ab7eb6",
-     "karaf" => {
-        "memory"=> {
-          "max_direct_memory" => "2048M"
-                 },
-        },
+    "CUMULOCITY_LICENCE_KEY" => "6dfa631bb10f97571f0872cb53e1f31a751da6cdce8491bce51cc9cbbc9d01154bd0477c8037830c02d5c659f5ddd184f86f11cd97aae3ca05ba364d0abb51c0"
   },
   "cumulocity-core" => {
     "properties" => {
@@ -117,9 +108,6 @@ override_attributes(
       "management.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "tenant.admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
-      "sysadmin.password" => "",
-      "cepServer.queue.batch.limit" => "5",
-      "cometd.heartbeat.minutes" => "3",
       #"system.two-factor-authentication.enabled" => false,
       #"system.two-factor-authentication.enforced.group" => "admins",
       #"system.two-factor-authentication.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
@@ -128,32 +116,32 @@ override_attributes(
       #"system.two-factor-authentication.logout-on-browser-termination" => true,
       #"system.two-factor-authentication.max.inactive" => "14",
       #"system.two-factor-authentication.provider" => "<customer>",
-      #"system.two-factor-authentication.<customer>.baseUrl" => "https://m1free.rcs.msg.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
-      #"system.two-factor-authentication.<customer>.baseUrl" => "https://free.rcs.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",
-      #"system.two-factor-authentication.<customer>.username" => "cumulocity",
-      #"system.two-factor-authentication.<customer>.password" => "xBg5Wa8M",
+      #"system.two-factor-authentication.<customer>.baseUrl" => "https://m1free.rcs.msg.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",             
+      #"system.two-factor-authentication.<customer>.baseUrl" => "https://free.rcs.<customer>.com/messaging/v1/sms/outbound/acr%3Acumulocity/requests",             
+      #"system.two-factor-authentication.<customer>.username" => "cumulocity",                                                                                        
+      #"system.two-factor-authentication.<customer>.password" => "xBg5Wa8M",                                                                                          
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",  <--for 8.19
 #      "migration.tomongo.default" => "MONGO_READ_WRITE", <--for 8.19
 #      "default.tenant.microservices" => "device-simulator, smartrule, cep",
-      "default.tenant.microservices" => "device-simulator, jwireless, sms-gateway",
+#      "default.tenant.microservices" => "device-simulator, jwireless, sms-gateway",
+#	Added 18.01.2019
+      "default.tenant.microservices" => "device-simulator, jwireless, sms-gateway, smartrule, cep",
       "migration.tomongo.default" => "MONGO_READ_WRITE",
-      #"tenant.admin.grants.disabled" => true,
-      "system.support-user.enabled" => true,
+      #"tenant.admin.grants.disabled" => true,  
+      "system.support-user.enabled" => true, 
       "tenantSuspend.mail.sendtosuspended" => false,
       #"tenantSuspend.mail.additional.address" => "operations@cumulocity.com",
       "microservice.websocket.port" => 8303,
 #      "device-simulator.microservice.url" => "http://${DEVICE-SIMULATOR-AGENT-SERVER}:6666",
 #      "smartrule.microservice.url" => "http://127.0.0.1:8334",
-      "speechAgent.baseURL" => "${SPEECH-AGENT-SERVER}:8030",
-      "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
-      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
+##      "speechAgent.baseURL" => "${SPEECH-AGENT-SERVER}:8030",
+##      "smsGateway.host" => "http://${SMS-GATEWAY-SERVER}:8688/sms-gateway",
+##      "system.connectivity.microservice.url" => "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
 #      "smsGateway.host" => "http://localhost:8111/service/messaging",
 #      "system.connectivity.microservice.url" => "http://localhost:8111/service/connectivity",
       "email.from" => "no-reply@cumulocity.com",
       "errorMessageRepresentationBuilder.includeDebug" => "false",
       "passwordReset.email.subject" => "Password reset",
-      "smart.host" => "100.64.251.5",
-      "smart.port" => 8111,
       "passwordReset.token.email.template" => 'Dear Cumulocity user,\n\n\
             You or someone else entered this email address when trying to change the password of a Cumulocity portal user.\n\n\
             Please use the following link to reset your password: \n\
@@ -191,9 +179,9 @@ override_attributes(
         #'members-check' => false,
         #"installEnterprise" => true, # migration change
         "wiredtiger-cache" => 6,
-        "sharedkey-content" => "qhdToQA1bM4iDoaCQB7Qu3nsalC5vXH1906MBhcppDLWRly0zDHIIJkiHsnQVas7\nQjmCtHPcUKd0vxPLc4TBU7dHe39/NHCEws42k3Ew84bVLD84ojLmIeUBrzkGGiqg\nTeTt0JBGrUx3rLpgfQ7N6kJaBvga3EveKbj6erc/o7mWVuoCzLfc54r9phm9Emw0\nWO+YoHZMOeY55lbrld5nApIztO36Yh3Z9LjCMHyhs58iLcSEugMmdayx67thS1UH\nhgZ9VxD1pYTmbB7wOXOkBTu5etCrX+BsX2Sqdo4XVm1xwcW8NqCACh2dkblGtVQn\n3vOQ/d+j/jzVAi6u1mSwLUVo29XwsLnrGc43QFb0+7VIJf4Xwk9PodEMDgJMeswg\nJCfdIg6EGyfMhyAPqkH7+ynRmBz008tFENjCBB3VLDjy462NyLDQA5KdBeD7swdh\nPmUMNbYb/BoIIDskhVY/bOWUbY3uT7a+HgwQcIDyFGyUWQ3HbpIwy0lebDPhbXnW\nilqGUqW03ujnTryCbVfeooTZNNLzglDfnJZfUXg6Dj7LqaJU0TUCjC1N2ffytcJF\nlqETD1Q1G/EfYqALr0TGh7AqrTmlgYKDsc88elFdz4DdxkYPZCUlTYbWB+W8t7fN\nYY0G6n2venge6b1ItiLQnpHDwRI7g6k2wsYLSMnbdt8ETYRm0+eJ1rrzf5opUYq/\n/oo5y/1PzWwbx3pu8v2oNOLbX4zBntSbWSt2sVcm/8YaFcOw+SKY7E622nCmfeuD\n+cxc14pXRVEmKmimjaT73vfvlXd/KKRxFvXd79qLoGJRLWfYNvPrBEZcCBTkNuoM\nwZDqsYws/jkIxYy5HnO7mnZjSEUJI9kwP+EaXXWSk49R3CgDv4ZT/E0JgewAf/Fd\nJk1YzbPMRVh2ixnbBOPQQOkb4bucvZ9MC/wiRCryyp6pykhG52CeYxOZlFvlJZDI\nlx2h0fvsqJZeZSOTdHrfQsMGjgw3",
+        "sharedkey-content" => "0jPuSN0IWMZ5JISJFkydzD/teH2EEobpkA1eRAEAkSVRJY+pXYuyA4TaAjkWbRe8\nb6GQLZK9wW1ePp/1FAK+zmY1t7cXBPzkK9P+kh2HuQNKKMo/30hDhsno42hwamVO\n3NiOACH2t35ehJlwe+9lNQHIiqcEkGPNil4QS7Ci854+rGHHuwvmlILLarjpw1Kk\ndPyzYf1dUTm+AL7+A868iHWRBHNYx4s0bjGp3qsMBn3hlI2/Ryy2VRXqKuwNCmiP\nCGk2zyZnKj/w9zmEX46yPYmVsZDDHLOi7Q4q7Klv4nPbWQbydAXf5V+WjO3Ukjcy\ndRL8+VLXm29WV8lU1tSYkkddgoYgrdQyZvrqbSfuTxzNhQ4sKUtxoPRziQ4psffw\njHC05W6SSK+y5S9mtAC8mU/7hXKkDmtpoIZHCjYOJ5NM8h1zsjLZRCvoH0cDueEF\nz5mZgzfELxdNe8uOhTkcPKDK1fjEMeW8IxyZXjiHlP8G924wBJ+Vsf1qLz6oXkwm\nFuGaDzAgoZEKhtxa9yK7ESuu/aEZj3TLte6t2MXSOlavJxYPra56/NMOJAv3Jvq9\nb3fCElUd8QqoDIUsFWHRRRbbkef35RWAmAzoKUhfGV7sF7Y8kejlBdBOy6vnPBfz\nqreNKp7NDjUJMW2yKZ0CkvGI7bPn1hlUxKXq3FKWWCqNamxDeJ2I0kR3KP+JRY4B\nolhh6M+UW5xv35JyrufnNYx2cSDBrVv0tbY3zCy+bgLC98oY92+WS5bc+KMHQcKr\nbVE/WHMcLTm5WdTAJ+V+d379uFspCcOJkzaf7hNbJTa2XKtpZ1Fm5a+pEtVgqX7N\nVbtNghC6gArzJFbCCT/7QVT6EQQ48OjZ9yOd5sXurg/OUo0FnQAGhIgphv89v3oU\n8xHN0xbfQbKtoy7L0EyJRsOSrOcglT0hdZe6OY3r/HQNdh24q8mRDBjTRQzgQIJf\n/2aTMasocPDxNna0Ej4RcVINpj5S",
         "mongodb.initUser" => "init-root",
-        "mongodb.initPassword" => "edf933ds^5f"
+#        "mongodb.initPassword" => "qy-LOtumU17"
   },
     "cumulocity-external-lb" => {
         "landing_page" => "https://manage.cumulocity.com/ui",
@@ -206,12 +194,12 @@ override_attributes(
         "useMQTTsupport" => true,
         "useSSL" => true,
         #"force_proto_for_link_processor" => "https",
-        "certificate_domain" => "cumulocity.com",
+        "certificate_domain" => "us.cumulocity.com",
         "temp_chunkin" => false,
         "useKarafWebsocket" => true,
 	"useLUAforSSLcerts" => true,
 	"useLUAforLimits" => true,
-	"useLUAforHealthCheck" => true,
+	"useLUAforHealthCheck" => nil,
         "nginx" => {
             "real_ip_balancing" => true,
             "NGinxPort" => "openresty",
@@ -223,40 +211,29 @@ override_attributes(
         'lwm2m-agent' => {
           'subscriptions_fetch_delay' => 60000,
           'device-tenant_mapping_reload_delay' => 60000,
-          'host_fwUpdate' => "lwm2m-server.cumulocity.com",
+          'host_fwUpdate' => "lwm2m.us.cumulocity.com",
           'C8Y_lwm2mEventLoggingEnabled' => true,
-          'leshan_cluster_tenant' => "management",
+          'leshan_cluster_tenant' => "lwm2mcreds",
           'leshan_cluster_tenant_username' => "lwm2m-user",
-          'leshan_cluster_tenant_password' => "c+ULIQOPu79"
+          'leshan_cluster_tenant_password' => "cISEta@qI10"
         }
   },
     'cumulocity-application' => {
       'vendme' => "application-vendme"
   },
+    'cumulocity-filebeat' => {
+      'tag-rename' => "oregon"
+  },
     'cumulocity-rsyslog' => {
 #      'cross-env-log-server' => "cumulocity-multinode-prod",
 #      'log-server-ext-address' => "monitoring.cumulocity.com"
-  },
-   "cumulocity-cep" => {
-       "properties" => {
-         "version" => "9.0.11-1",
-         " esperha.storage" => "/mnt/esperha-storage/"
-     },
-  },
-  'monitoring-agent' => {
-    'verbose' => true,
-    'includeCustomHosts' => "/usr/share/cumulocity-agent/lua/monitoring/hosts.custom.lua",
-    'includeCustomPlugins' => "/usr/share/cumulocity-agent/lua/monitoring/plugins.custom.lua",
-    'autoRegistration' => {
-      'enable' => true,
-      'groupName' => 'Cumulocity NG Production FRA'
-    }
-  },
-  'cumulocity-opsmanager' => {
-     'mmsGroupId' => '5c120f8cfd6a9006cb99cba8',
-     'mmsApiKey' => '5c2b73e14352d86e483b1175a985498786f16e2e76ca3ac946377a28',
-     'mmsBaseUrl' => 'https://opsmanager.cumulocity.com'
-  }
+  }#,
+#   "cumulocity-cep" => {
+#       "properties" => {
+#         "version" => "9.0.11-1",
+#         " esperha.storage" => "/mnt/esperha-storage/"
+#     },
+#  }
 
 )
 
