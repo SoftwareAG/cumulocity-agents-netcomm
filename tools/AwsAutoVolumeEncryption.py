@@ -632,10 +632,14 @@ def main():
           statefile = prefix + "-" + instanceId + '-' + dt + ".state"
           step_one(encKey, instanceId, prefix, statefile)
           if cleanPrefix: prefix = None
+        else:
+          print color['red'] + "ERROR: step 1 is getting executed, but parameters are missing!" + color['neu']
+          usage()
+          sys.exit(127)
     else:
-      print color['red'] + "ERROR: step 1 is getting executed, but parameters are missing!" + color['neu']
+      print color['red'] + "ERROR: no instance id has been specified!" + color['neu']
       usage()
-      sys.exit()
+      sys.exit(127)
   elif step == '2':
     if checkVars('statefiles'):
       for statefile in statefiles:
