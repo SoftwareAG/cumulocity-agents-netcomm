@@ -135,9 +135,9 @@ ess_cert_id_chain	= no
 EOF
 )"
 
-openssl genrsa -out "${environment}-ca.key" 2048
+[[ -e "${environment}-ca.key" ]] || openssl genrsa -out "${environment}-ca.key" 2048
 key="$( sed ':a;N;$!ba;s/\n/\\n/g' "${environment}-ca.key" )"
-openssl req -new -key "${environment}-ca.key" -x509 -extensions v3_ca -config <( cat <<< "${opensslConf}" ) -out "${environment}-ca.pem"
+openssl req -new -key "${environment}-ca.key" -x509 -extensions v3_ca -config <( cat <<< "${opensslConf}" ) -days 3650 -out "${environment}-ca.pem"
 cert="$( sed ':a;N;$!ba;s/\n/\\n/g' "${environment}-ca.pem" )"
 
 echo '{' > "${environment}-ca.json"
