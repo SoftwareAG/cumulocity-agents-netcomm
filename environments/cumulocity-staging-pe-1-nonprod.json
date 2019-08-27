@@ -2,7 +2,7 @@
   "name": "cumulocity-staging-pe-1-nonprod",
   "description": "The production environment",
   "cookbook_versions": {
-    "cumulocity": "~> 1004.6.0",
+    "cumulocity": "~> 1004.6",
     "cumulocity-kubernetes": "~> 9.20",
     "cumulocity-ssagents": "~> 9.20"
   },
