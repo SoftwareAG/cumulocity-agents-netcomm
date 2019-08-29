@@ -150,7 +150,7 @@
       "useMasterForPushOperations": false,
       "useKarafWebsocket": true,
       "proxy_cache": true,
-      "certificate_domain": "staging.c8y.io",
+      "certificate_domain": "cumulocity.com",
       "useLUAforLimits": true,
       "useLUAforSSLcerts": true,
       "useLUAforHealthCheck": true,
