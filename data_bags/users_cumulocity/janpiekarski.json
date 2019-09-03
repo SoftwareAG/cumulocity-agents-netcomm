@@ -1,0 +1,7 @@
+{
+  "id": "janpiekarski",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSogg0c/AEKsX33fTBebLisWBCFV3GIbgOYHobMtES4gEWRe5KelHjq14o1ilHNakilcsF1aOjJn0TwJOl2tK8SZEMWlTBEzpLN1F9QAqAbK90BWdVNK3CXW9NbGfm78ImAZo+oiLdtLM2H/qDNUXg83l6Sfwwozo5PMYfToRsrxExB7UolJMKeqExRePF1XyaMhOE5286OUgAkxOAY7TVZbmH7IA9CtisBrYI/cTINkrW7Vo7qP7guZk1BxYe4RQs3sCqyy9WpCttUEwU51n7gpViXlt5jkwtMUjb63Df2IaJd5fY/C/bkBrs0iukExTg3bQKNRVYi49W8AiLDvC7 jan@jan-computer"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Jan Piekarski"
+}
