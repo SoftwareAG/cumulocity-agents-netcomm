@@ -58,6 +58,7 @@ c8yCB=(
         ["cumulocity-filebeat"]=latest
       ["cumulocity-opsmanager"]=latest
     ["cumulocity-chaos-monkey"]=latest
+       ["cumulocity-os-update"]=latest
 )
 
 declare -A comCB

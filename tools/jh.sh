@@ -659,6 +659,7 @@ A configuration file can contain default options, better defined on the beginnin
   • ${B}disableSshpass${N}   : disables '${B}sshpass${N}' for automatic password or tfa input. Default: '${B}false${N}'
   • ${B}disableOathtool${N}  : disables '${B}oathtool${N}' for automatic tfa generation. Default: '${B}false${N}'
   • ${B}disableLess${N}      : enable '${B}more${N}' in place of '${B}less${N}' for whenver the latter is not available. Default: '${B}false${N}'
+  • ${B}sshCCT${N}           : short for '${B}sshConfigConnectTimeout${N}', set the maximum seconds for connection timeout during jhmulticmd usage. Default: '${B}10${N}'
 
 After the default options, you can map your hosts and group them in an associative array named after the respective environment.
 The script will take care of setting the array type to associative by itself, you don't need to 'declare -A environment'.
@@ -1098,9 +1099,6 @@ jhshowset(){
 # description: shows the basic settings with configured values
 # arguments: 0
   cat << EOF
-# PRIVATE CONFIG FILE:
-[[ -f ${privConf:=~/.jh.conf.priv} ]] && . ${privConf}
-
 # FEAUTURE SWITCHES:
 $( for v in noColors whiteBG disableWhiptail disableSshpass disableOathtool disableLess ; do
   [[ -z ${!v} ]] && printf '# '
@@ -1121,6 +1119,7 @@ $( for o in \
     'defaultjhtfa="true"' \
     'defaultjhoptions=""' \
     'outputBaseDir=""' \
+    'sshCCT="10"' \
   ; do
   v="$( cut -d= -f1 <<< "${o}" )"
   k="$( cut -d= -f2 <<< "${o}" )"
@@ -1128,6 +1127,12 @@ $( for o in \
   echo "${v}=${!v:-$k}"
 done )
 # defaultjhotp="" # better define in the private conf file ${privConf}
+
+# SECRETS CONFIG FILE:
+[[ -f ${secretsConf:=~/.jh.conf.secrets} ]] && . ${secretsConf}
+
+# PRIVATE CONFIG FILE:
+[[ -f ${privConf:=~/.jh.conf.priv} ]] && . ${privConf}
 
 EOF
 }
