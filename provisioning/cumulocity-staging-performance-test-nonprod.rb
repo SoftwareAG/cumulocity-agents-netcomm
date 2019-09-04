@@ -32,7 +32,7 @@ add_machine_options(
 
 c8ycore_count = 10
 flavour_for_c8ycore       = "c4.2xlarge"
-volume_size_for_c8ycore   = 20
+volume_size_for_c8ycore   = 50
 private_ips_for_c8ycore   = ["172.31.7.211","172.31.7.212","172.31.7.213","172.31.7.214","172.31.7.215","172.31.7.216","172.31.7.217","172.31.7.218","172.31.7.219","172.31.7.220"]
 
 ontoplb_count = 1
@@ -50,7 +50,7 @@ ssagent_tags  = [
 
 mongodb_count = 3
 flavour_for_mongodb       = "c4.2xlarge"
-volume_size_for_mongodb   = 20
+volume_size_for_mongodb   = 50
 private_ips_for_mongodb   = ["172.31.7.111","172.31.7.112","172.31.7.113"]
 mongodb_cluster = [
         ["configreplset:config9:S","replicaset:rs01:P"],
