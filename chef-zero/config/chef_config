@@ -1,0 +1,9 @@
+require 'yaml'
+module ChefConfig
+
+def ChefConfig.chef_server_url(priv_pub = "pub")
+    url = "http://localhost:4000"
+    url
+end
+
+end

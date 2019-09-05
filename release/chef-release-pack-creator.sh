@@ -43,10 +43,10 @@ thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
    thisdir="$( dirname "${thisscript}" )"
   c8yCBdir="$( readlink -e "${thisdir}/../../cumulocity-cookbooks" )"
   comCBdir="$HOME/.berkshelf/cookbooks"
-  solCBdir="${thisdir}/chef-solo/cookbooks"
+    solDir="${thisdir}/chef-zero"
+  solCBdir="${thisdir}/chef-zero/cookbooks"
     relDir="${thisdir}/cumulocity-chef"
   relCBdir="${relDir}/cookbooks"
-template_archive="${thisdir}/chef-solo-12-template.tgz"
 
 declare -A c8yCB
 c8yCB=(
@@ -58,6 +58,7 @@ c8yCB=(
         ["cumulocity-filebeat"]=latest
       ["cumulocity-opsmanager"]=latest
     ["cumulocity-chaos-monkey"]=latest
+      ["cumulocity-kubernetes"]=latest
        ["cumulocity-os-update"]=latest
 )
 
@@ -76,8 +77,8 @@ comCB=(
                ["hostsfile"]=3.0.1
                     ["swap"]=2.0.0
             ["packagecloud"]=latest
-                ["yum-epel"]=2.1.2
-                    ["cron"]=4.1.3
+                ["yum-epel"]=3.3.0
+                    ["cron"]=6.2.1
                ["logrotate"]=2.2.0
                  ["windows"]=latest
                 ["iptables"]=latest
@@ -90,17 +91,7 @@ comCB=(
                 ["filebeat"]=2.1.0
             ["elastic_repo"]=1.1.1
   ["yum-plugin-versionlock"]=0.2.1
-)
-
-declare -A mnOnlyC8yCB
-mnOnlyC8yCB=(
-   ["cumulocity-kubernetes"]=latest
-)
-
-declare -A mnOnlyComCB
-mnOnlyComCB=(
                   ["docker"]=latest
-# addition for kubernetes multi master setup
                  ["haproxy"]=5.0.4
                      ["cpu"]=2.0.0
          ["build-essential"]=8.2.1
@@ -128,6 +119,15 @@ mnRoles=(
   cumulocity-ontop-lb
   cumulocity-sql-db
   cumulocity-ssagents
+)
+
+declare -a snRoles
+snRoles=(
+  cumulocity-base
+  cumulocity-dev-singlenode
+  cumulocity-common-cores
+  cumulocity-kubernetes
+  cumulocity-mn-active-core
 )
 
 declare -a mnTools
@@ -179,29 +179,56 @@ f_cb_copy(){
 }
 
 if ${SOLO} ; then
-  if [[ -e ${template_archive} ]] ; then
-    f_color_pr cyn "Unpacking chef-solo template..."
-    tar xz${VERBOSE+v}f "${template_archive}" -C "${thisdir}"
-  else
-    f_color_pr red "ERROR: no template archive ${template_archive} found!" && exit 10
-  fi
+  f_color_pr cyn "Creating directory structure..."
+  for d in \
+    config \
+    environments \
+    data_bags/certs \
+    data_bags/users_cumulocity \
+    roles \
+    cookbooks \
+
+  do
+    mkdir -p "${solDir}/${d}" 2> /dev/null
+  done
   echo
 
   f_cb_copy "${solCBdir}"
 
+  f_color_pr cyn "Copying role file..."
+  for r in "${snRoles[@]}" ; do
+    f_color_pr wht "-- $r"
+    cp -a${VERBOSE+v} "${thisdir}/../roles/${r}.rb" "${solDir}/roles" || \
+    f_color_pr red "ERROR: role $r not found!"
+  done
+  echo
+
+  f_color_pr cyn "Copying misc files..."
+  f_color_pr wht "-- data_bags/certs/certificate.json"
+  cp -a${VERBOSE+v} "${thisdir}/../data_bags/certs/cumulocity.json" "${solDir}/data_bags/certs"
+  f_color_pr wht "-- cumulocity-single-node.json"
+  cp -a${VERBOSE+v} "${thisdir}/../environments/cumulocity-single-node.json" "${solDir}/environments"
+  f_color_pr wht "-- chef-zero/config/chef_config"
+  cp -a${VERBOSE+v} "${thisdir}/../chef-zero/config/chef_config" "${solDir}/config"
+  f_color_pr wht "-- chef-zero/chefrun.sh"
+  cp -a${VERBOSE+v} "${thisdir}/../chef-zero/chefrun.sh" "${solDir}/chefrun.sh"
+
 ##########
 
-  export prefixName="cumulocity-chef-solo"
+  export prefixName="cumulocity-chef-zero"
   cat > "${prefixName}-v${mainver}.sh" <<< '#!/bin/bash
 
 EXTRACTONLY=false
 AUTO=false
 INST=false
+INSTALLONLY=false
+outputFolder="/var"
 
-while getopts "veyYo:" opt ; do
+while getopts "veiyYo:" opt ; do
   case $opt in
     v) VERBOSE=true ;;
     e) EXTRACTONLY=true ;;
+    i) INSTALLONLY=true;;
     y) AUTO=true yes="-y";;
     Y) AUTO=true yes="-y" INST=true ;;
     o) outputFolder="$OPTARG" ;;
@@ -225,22 +252,26 @@ $(
  )
 "'
 
-f_color_pr wht "extract chef-solo folder in ${outputFolder:=/var}..."
-sed -n "/^__ARCHIVE_BELOW__$/{s///;:a;n;p;ba;}" "$0" | tar xz${VERBOSE+v}f - -C "${outputFolder}"
-f_color_pr wht "Done!"
+if $INSTALLONLY && $EXTRACTONLY; then
+  f_color_pr red "Invalid combination of options: -e and -i"
+fi
+
+if ! $INSTALLONLY; then
+  f_color_pr wht "extract chef-zero folder in ${outputFolder:=/var}..."
+  sed -n "/^__ARCHIVE_BELOW__$/{s///;:a;n;p;ba;}" "$0" | tar xz${VERBOSE+v}f - -C "${outputFolder}"
+  f_color_pr wht "Done!"
+fi
 
 ${EXTRACTONLY} && exit
 
 [[ ! -d /var/config ]] && mkdir /var/config
-ln -sf "${outputFolder}/chef-solo/config/chef_config" "/var/config/chef_config.rb"
+ln -sf "${outputFolder}/chef-zero/config/chef_config" "/var/config/chef_config.rb"
 
-soloDir="${outputFolder}/chef-solo"
+soloDir="${outputFolder}/chef-zero"
 
 sed -i -r \
   -e "s/___KARAFVERSION___/"'${karafver}'"/g" \
-  -e "s/___AGENTSVERSION___/"'${ssaver}'"/g" \
-  -e "s/___CEPVERSION___/"'${cepver}'"/g" \
-  ${soloDir}/roles/cumulocity-dev-singlenode.rb
+  ${soloDir}/environments/cumulocity-single-node.json
 
 if [[ ! -e "${soloDir}/.systemUpdateDONE" ]] ; then
   while ! [[ ${UpdateQ,,} =~ ^(y(es)?|no?)$ ]] ; do
@@ -349,15 +380,11 @@ if [[ ! -e "${soloDir}/.hostRenameDONE" ]] ; then
 fi
 
 while ! [[ ${runSoloQ,,} =~ ^(y(es)?|no?)$ ]] ; do
-  f_question "run chef-solo and install the platform? [Y/n]: " runSoloQ $INST
+  f_question "run chef-zero and install the platform? [Y/n]: " runSoloQ $INST
   if [[ ${runSoloQ,,} =~ ^(y(es)?)?$ ]] ; then
-    limit=5
-    for ((x=1;x<=$limit;x++)) ; do
-      f_color_pr cyn "chef-solo run attempt number $x..."
-      "${soloDir}/chefrun.sh" && break
-      [[ $x -ge $limit ]] && f_color_pr red "ERROR: could not run chef-solo until the end!"
-    done
-    break
+    cd ${soloDir}
+    "./chefrun.sh" && break
+    f_color_pr red "ERROR: could not run chef-zero!"
   fi
 done
 
@@ -367,9 +394,14 @@ exit
 __ARCHIVE_BELOW__'
 
   ( cd "${thisdir}"
-    tar cz${VERBOSE+v}f - "chef-solo"
+    tar cz${VERBOSE+v}f - "chef-zero"
   ) | tee "${prefixName}-v${mainver}.tgz" >> "${prefixName}-v${mainver}.sh"
   chmod a+x "${prefixName}-v${mainver}.sh"
+
+  echo
+  f_color_pr cyn "Eliminating temporary folder and archive..."
+  rm -rf${VERBOSE+v} "${solDir}"
+  rm -rf${VERBOSE+v} "${prefixName}-v${mainver}.tgz"
 else
   f_color_pr cyn "Creating directory structure..."
   for d in \
@@ -389,12 +421,6 @@ else
   done
   echo
 
-  for c in "${!mnOnlyC8yCB[@]}" ; do
-    eval "c8yCB[$c]"="${mnOnlyC8yCB[$c]}"
-  done
-  for c in "${!mnOnlyComCB[@]}" ; do
-    eval "comCB[$c]"="${mnOnlyComCB[$c]}"
-  done
   f_cb_copy "${relCBdir}"
 
   f_color_pr cyn "Copying role files..."
