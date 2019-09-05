@@ -3,7 +3,7 @@
   "description": "The complete cumulocity plus multi master kubernetes env",
   "cookbook_versions": {
     "cumulocity": "1004.6.2",
-    "cumulocity-kubernetes": "1004.6.2", 
+    "cumulocity-kubernetes": "1005.1.99", 
     "cumulocity-ssagents": "1004.6.2"
   },
   "json_class": "Chef::Environment",
@@ -18,6 +18,7 @@
     "environment": {
       "address": "management.lukasz-test.c8y.io"
     },
+    "offline-installation": false,
     "swapfilesize": 512,
     "yum": {
       "repositories": {
@@ -41,11 +42,10 @@
       "renew-certs": false,
       "dockerUser": "admin",
       "dockerPassword": "admin",
-      "extPort": 30001,
+      "extPort": null,
       "useMongoDriver": true,
       "deployK8S4env": "cumulocity-lukasz-test-nonprod",
       "attachedEnvs": [
-        "cumulocity-lukasz-test-nonprod"
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
@@ -58,6 +58,11 @@
         "apama-small",
         "sms-gateway-server"
       ],
+      "docker": {
+        "log": {
+          "on-file": true
+        }
+      },
       "monitoring": {
         "enabled": true,
         "dashboard-only": true,
@@ -85,13 +90,6 @@
         "memory": {
           "xms": "1024M"
         }
-      }
-    },
-    "cumulocity-cep": {
-      "version": "9.12.2-1",
-      "package_name": "cep",
-      "properties": {
-        "esperha.storage": "/mnt/esperha-storage"
       }
     },
     "cumulocity-mongo": {

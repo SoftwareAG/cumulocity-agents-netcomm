@@ -1,0 +1,8 @@
+{
+  "id": "dhy",
+  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPSSUjpXkR2A2Ge/XTt0PzMAA9hygGPZEoM7vZ4V5BoM8JHyNdKuozjvNA8G4AE28PlLGd9BqhM6yJsGVt8OWfclzAL0Qpc3G33mH2J3yJSmbfJMWF0BQWj0KQQHmue2ggkhQXGkXUn2IwgfPeO74S0WE7eeGbX/IgsqK7/GZ58KdOQb3564Rvd2KJ49bCdnKFOqVdZKjreOHV241vVvXayNzczYBdSIp2d+DcwidlzGbbNgBlLKW4jDNjvn3YHbVysa746w/9FY0wvcSjIGMXT6sprNmKNK4N2wYSCvcsTnfj36E7McZNBgqg7JDD5WBdGXWcUDFWbFriSH7ZoAff",
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "email": "dominik.hymon@cumulocity.com",
+  "comment": "Dominik Hymon"
+}
