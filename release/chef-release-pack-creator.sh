@@ -139,6 +139,15 @@ mnTools=(
   postgresToMongo_helper.sh
 )
 
+declare -a mnOITools
+mnOITools=(
+  archive_builder.sh
+  docker_pullsave.sh
+  example.conf
+)
+
+
+
 f_findLastVersion(){
   local list="${1}"
   i=0
@@ -411,6 +420,7 @@ else
     roles \
     cookbooks \
     tools \
+    offline_tools \
     .chef/access_certs \
     .chef/trusted_certs \
     .chef/secrets \
@@ -436,6 +446,14 @@ else
     f_color_pr wht "-- $s"
     cp -a${VERBOSE+v} "${thisdir}/../tools/${s}" "${relDir}/tools" || \
     f_color_pr red "ERROR: script $s not found!"
+  done
+  echo
+
+  f_color_pr cyn "Copying offline installation scripts..."
+  for t in "${mnOITools[@]}" ; do
+    f_color_pr wht "-- $t"
+    cp -a${VERBOSE+v} "${t}" "${relDir}/offline_tools" || \
+    f_color_pr red "ERROR: script $t not found!"
   done
   echo
 
