@@ -1,6 +1,6 @@
 # Cumulocity Netcomm Agent #
 
-Cumulociyt Netcomm agent is a dedicated agent software for connecting the NetComm router to Cumulocity.
+Cumulocity Netcomm agent is a dedicated agent software for connecting the NetComm router to Cumulocity.
 
 ### How to build the agent? ###
 
@@ -14,6 +14,11 @@ git clone git@bitbucket.org:m2m/cumulocity-agents-netcomm.git
 
 * Build the [Cumulocity C++ library](https://bitbucket.org/m2m/cumulocity-sdk-c) with the provided *init.mk* from the repo.
 * Copy the compiled library files to the *lib/* directory under the agent root directory.
+```
+#!bash
+
+cp -rP $C8Y_LIB_PATH/lib $C8Y_LIB_PATH/bin .
+```
 * Export the Cumulocity C++ library and NetComm SDK path (add the following code to your ~/.bashrc for permanence):
 
 ```
