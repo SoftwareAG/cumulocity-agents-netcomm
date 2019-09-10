@@ -1,7 +1,7 @@
 require 'chef/provisioning/aws_driver'
 with_driver 'aws:cumulocity:eu-central-1'
 
-environment  = 'cumulocity-lukasz-test-nonprod'
+environment  = 'cumulocity-k8s-upgrade-nonprod'
 
 with_chef_environment environment
 with_chef_server(
@@ -33,7 +33,7 @@ add_machine_options(
 
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
-c8ycore_count = 1
+c8ycore_count = 2
 flavour_for_c8ycore       = "c4.2xlarge"
 
 volume_size_for_c8ycore   = 20

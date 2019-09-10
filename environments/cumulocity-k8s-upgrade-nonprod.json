@@ -1,0 +1,174 @@
+{
+  "name": "cumulocity-k8s-upgrade-nonprod",
+  "description": "The complete cumulocity plus multi master kubernetes env",
+  "cookbook_versions": {
+    "cumulocity": "1005.1.99",
+    "cumulocity-kubernetes": "1005.1.99", 
+    "cumulocity-ssagents": "1004.6.2"
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+    "extra_packages": ["mc", "telnet", "vim", "lsof", "htop"],
+    "useVaults": false,
+    "domainname": "myown.iot.com",
+    "environment": {
+      "address": "management.myown.iot.com"
+    },
+    "offline-installation": false,
+    "swapfilesize": 512,
+    "yum": {
+      "repositories": {
+        "cumulocity-testing": {
+          "enabled": "0"
+        },
+        "cumulocity": {
+          "url": "https://cumulocity:ACceP=m+2m@yum.cumulocity.com/centos/7/cumulocity/x86_64/"
+        }
+      }
+    },
+    "java": {
+      "jdk_version": "8"
+    },
+    "cumulocity": {
+      "chef-client": {
+        "enabled": false
+      }
+    },
+    "cumulocity-kubernetes": {
+      "renew-certs": false,
+      "dockerUser": "admin",
+      "dockerPassword": "admin",
+      "extPort": null,
+      "useMongoDriver": true,
+      "deployK8S4env": "cumulocity-k8s-upgrade-nonprod",
+      "attachedEnvs": [
+      ],
+      "token": "1e3145.2ff901841c48af2e",
+      "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
+      "images-version": "1004.6.2",
+      "images2install": [
+        "cep",
+        "cep-small",
+        "device-simulator",
+        "smartrule",
+        "apama-small",
+        "sms-gateway-server"
+      ],
+      "docker": {
+        "log": {
+          "on-file": true
+        }
+      },
+      "monitoring": {
+        "enabled": true,
+        "dashboard-only": true,
+        "components": {
+          "heapster": true
+        }
+      }
+    },
+    "cumulocity-karaf": {
+      "CUMULOCITY_LICENCE_KEY": "aacaffe661936cf13bd297f1c27db66405ca639b48e22b62b37c0090f1b521b8f4dd9edb4fed829b1a12db760a707012ba2329e503453d32c4baaa610da38df3",
+      "version": "1004.6.2-1",
+      "ssa-version": "1004.6.2-1",
+      "memory_left_for_system": "2048",
+      "notification": true,
+      "cep-server-enabled": true,
+      "CUMULOCITY_LICENCE_DIR": "/etc/cumulocity/",
+      "management-access": [
+        "0.0.0.0/0"
+      ],
+      "logging": {
+        "microservice_client": { "enabled": true },
+        "microservice_proxy": { "enabled": true }
+      },
+      "karaf": {
+        "memory": {
+          "xms": "1024M"
+        }
+      }
+    },
+    "cumulocity-mongo": {
+      "sharedkey-content": "1y7LbnZkJvDgtUOHN+8L++DAABlWdLO6kA+GXR23vl5QlslmqlB6goKQmDzgeMdA\nGC38ZcPLejm2Mnvk3TF7QHlhW1OvQZFOk600/Z9qbkzIjfQLNU4RIOdWq7pTq70w\nsyIbBXAZ+ZS2AUQnObxRiToIeDxakzjuiTQbwfYz7Z2bA/hJMrKNdI//IeRl93gt\nMAV5f07l5WQQ8OcKjqYlga1J2izcVmcbd6Q0PCtp38MrmBe3iEn34FpiAgDVZp06\ncuNJDUwr2YF90KWLs53g85vfhybNchxISXMSJBFApId8cuVeZ2oRKf7HjcyrsRR6\nUxk/74MMKvsXdxG2e2pfgTywyZ5Ndk5pGKXj6TZ5QY4Qw2QHryVPyRT90xogdDtg\nA4A8iSWRBgnrtJP+qvlfBSCpdN0EqmHqGuWcqzkc4sjpO9ubQdqvBFni9X0A6mxE\nWwGH2tk6uWQU4+OPfoQkVgUCFgepFWuzWHj9TA71sn0hmDLnBZDUh3yKcEz++qKy\nchfOPrnhSPpvZI0762F5LdIp7cuAwMC4wEYSSloawzqBnCpvQ0BsFAyprhZhFDdV\nUP67nmp/q5oaXgdr3TJOTGkRgcPXRSuf4zV4nKdMdyy7HM9o24LGXiJ40b3CZGhm\nyG0tRoTRNTd6hgFQWYp8hT4EK++kf60boGhUSPxvlkbERZ/mx4kPGY1fYWkRN8Y8\nbZXDnwu+A3kqCwSTJ6tjzrtqlQ51z5rJWl14eIo2Ienfym1tquoPNMeksQroivRB\n1ZXlA3v68+nHy2HljMsLUjt8oxho3HhN1RcDXazf4b39n5nZS4wOxjvPvqSrX4bw\n/Hwh8wL2+IDfOLl1yAO6isrEXApJSTiXFt5fSbaPW6T7hCiCkNPzdS+FYLArozNE\nYrzvmkbcHfMqqTCdWDSOWV7pRqvUARRFi0CvjWh85zmt4LG7IY/GBKJvmSAfFX1O\n5OCavvQrRbnH/m1xW7NHXbeWH80K",
+      "mongodb.initUser": "init-root",
+      "mongodb.initPassword": "felix",
+      "version": "3.6"
+    },
+    "cumulocity-GUI": {
+      "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
+      "version": "3.6",
+      "lwm2m-agent": {
+        "host_fwUpdate": "34.251.8.163",
+        "leshan_cluster_tenant": "management",
+        "leshan_cluster_tenant_username": "lwm2m_user",
+        "leshan_cluster_tenant_password": "passw0rd_a"
+      }
+    },
+    "cumulocity-ssagents": {
+      "useTags": true
+    },
+    "cumulocity-core": {
+      "properties": {
+        "system.connectivity.microservice.url": "http://${JWIRELESS-AGENT-SERVER}:8092/jwireless",
+        "c8y.internal.users": "service_cep,service_apama",
+        "device-simulator.microservice.url": "http://localhost:8111/service/device-simulator",
+        "smartrule.microservice.url": "http://localhost:8111/service/smartrule",
+        "smsGateway.host": "http://localhost:8111/service/sms-gateway",
+        "default.tenant.microservices": "device-simulator, smartrule, sms-gateway, cep",
+        "sendDashboardAgent.url": "http://localhost:19191/report",
+        "mongodb.user": "c8y-root",
+        "mongodb.password": "test",
+        "mongodb.admindb": "admin",
+        "migration.tomongo.default": "MONGO_READ_WRITE",
+        "contextService.rdbmsURL": "jdbc:postgresql://localhost",
+        "contextService.rdbmsDriver": "org.postgresql.Driver",
+        "contextService.rdbmsUser": "postgres",
+        "contextService.tenantManagementDB": "management",
+        "cumulocity.environment": "PRODUCTION",
+        "auth.checkBlockingFromOutside": "false",
+        "email.from": "no-reply@app.domain.com",
+        "errorMessageRepresentationBuilder.includeDebug": "false",
+        "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
+        "passwordReset.email.subject": "Password reset",
+        "passwordReset.token.email.template": "Dear app.domain.com user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
+        "passwordReset.user.not.found.email.template": "Hi there,\\n\\n\\\n            you or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            However, we could not find the email address in your account. Please contact the administrator of your \\\n            account to set your email address and password. If you are the administrator of the account,\\\n            please use the email address that you registered with.\\n\\n\\\n            If you were not expecting this email, please ignore it. In case of questions, please get in contact with the administrator of app.domain.com portal. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
+        "passwordReset.success.email.template": "Dear app.domain.com user,\\n\\n\\\n            Your password on {host} has been recently changed. \\n\\\n            If you or your administrator made this change, you do not need to do anything more. \\n\\\n            If you did not make this change, please contact your administrator.\\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
+        "passwordReset.invite.template": "Hi there,\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}/apps/devicemanagement/index.html?token={token}\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\n\\\n            app.domain.com support team\\n"
+      }
+    },
+    "cumulocity-external-lb": {
+      "landing_page": "https://myown.iot.com/apps/devicemanagement",
+      "paas_default_page": "https://$http_host/apps/devicemanagement",
+      "paas_public_default_page": "https://myown.iot.com/apps/dmpublic",
+      "usePostgresForPaaS": false,
+      "paas_redirection": true,
+      "temp_chunkin": false,
+      "useIPAddress": true,
+      "useSSL": true,
+      "useHSTS": false,
+      "useMQTTsupport": true,
+      "useMasterForPushOperations": false,
+      "useKarafWebsocket": true,
+      "proxy_cache": true,
+      "certificate_domain": "myown.iot.com",
+      "nginx": {
+        "NGinxPort": "openresty",
+        "version": "1.11.2.4-20.el7.centos.c8y.8.11.1"
+      }
+    },
+    "vendme-platform-agent": {
+      "use-internal-proxy": null,
+      "install-agent": null,
+      "install-platform": null,
+      "install-tracker": null
+    },
+    "cumulocity-rsyslog": {
+      "cross-env-log-server": "cumulocity-multinode-prod",
+      "log-server-ext-address": "monitoring.cumulocity.com"
+    }
+  }
+}
