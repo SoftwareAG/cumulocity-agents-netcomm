@@ -24,6 +24,9 @@ case $environment in
     staging-2)
         export CHEF_ENV=cumulocity-staging-pe-2-nonprod
     ;;
+    staging-3)
+        export CHEF_ENV=cumulocity-staging-pe-3-nonprod
+    ;;
     staging-007)
         export CHEF_ENV=cumulocity-staging007-nonprod
     ;;
