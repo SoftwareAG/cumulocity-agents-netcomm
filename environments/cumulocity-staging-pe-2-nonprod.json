@@ -3,7 +3,7 @@
   "description": "The production environment",
   "cookbook_versions": {
     "cumulocity": "= 1004.6.3",
-    "cumulocity-kubernetes": "= 1004.0.5",
+    "cumulocity-kubernetes": "= 1004.6.3",
     "cumulocity-ssagents": "= 1004.0.5"
   },
   "json_class": "Chef::Environment",
