@@ -267,8 +267,8 @@ static int vnc_connection_new(struct vnc_t *vnc, struct cp_t *cp)
     vnc->cusock[i] = fd;
     vnc->lobuf[i] = buf;
     vnc->cubuf[i] = buf + BUF_NSIZE;
-    vnc->losock[i] = vnc->cusock[i] = 0;
     vnc->fdmax = _max(vnc->fdmax, _max(sock, fd));
+    vnc->lonum[i] = vnc->cunum[i] = vnc->wsnum[i] = 0;
     FD_SET(fd, &vnc->rdfds);
     FD_SET(sock, &vnc->rdfds);
     syslog(LOG_NOTICE, "vnc_new %d: %s:%d <=> %s%s\n", i, cp->ip, cp->port, cp->host, cp->end);
