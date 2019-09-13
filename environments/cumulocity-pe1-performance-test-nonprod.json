@@ -2,9 +2,9 @@
   "name": "cumulocity-pe1-performance-test-nonprod",
   "description": "The Staging 7 environment for the latest released version",
   "cookbook_versions": {
-    "cumulocity": "= 1004.6.0",
-    "cumulocity-kubernetes": "= 1004.6.0",
-    "cumulocity-ssagents": "= 1004.0.3"
+    "cumulocity": "= 1004.6.3",
+    "cumulocity-kubernetes": "= 1004.6.3",
+    "cumulocity-ssagents": "= 1004.6.3"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -43,7 +43,7 @@
       ],
       "token": "1e3145.2ff901841c78af1d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.0.4",
+      "images-version": "1005.0.1",
       "images2install": [
         "cep",
         "cep-small",
@@ -67,8 +67,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "27d80a8c011a007f2a765052d6badc686c044c558c4e91221f63a174b1bc953f527fad85e33c367f108c4023b4e22c64c198bdced8234b0e491324b7fdf8c9da",
-      "version": "1004.0.4-1",
-      "ssa-version": "1004.0.4-1",
+      "version": "1005.0.1-1",
+      "ssa-version": "1005.0.1-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -128,6 +128,7 @@
         "email.host": "postfix.cumulocity-staging-nonprod.svc.cluster.local",
         "email.from": "no-reply@app.domain.com",
         "errorMessageRepresentationBuilder.includeDebug": "false",
+        "value-fragments-finder.algorithm": "traversing",
         "mqtt.max.message.size": "307200",
         "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
         "passwordReset.email.subject": "Password reset",
