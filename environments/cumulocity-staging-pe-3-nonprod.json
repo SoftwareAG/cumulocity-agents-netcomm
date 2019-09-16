@@ -2,9 +2,9 @@
   "name": "cumulocity-staging-pe-3-nonprod",
   "description": "The production environment",
   "cookbook_versions": {
-    "cumulocity": "= 9.20.3",
-    "cumulocity-kubernetes": "= 9.20.3",
-    "cumulocity-ssagents": "= 9.20.3"
+    "cumulocity": "= 9.20.4",
+    "cumulocity-kubernetes": "= 9.20.4",
+    "cumulocity-ssagents": "= 9.20.4"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -30,6 +30,11 @@
     },
     "java": {
       "jdk_version": "8"
+    },
+    "cumulocity-base": {
+      "chef-client": {
+        "enabled": true
+      }
     },
     "cumulocity-kubernetes": {
       "deployK8S4env": "cumulocity-staging-pe-3-nonprod",

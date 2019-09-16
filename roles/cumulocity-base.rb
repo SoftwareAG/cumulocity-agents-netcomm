@@ -17,7 +17,7 @@ run_list(
   'recipe[ulimit]',
   'recipe[chef-client::delete_validation]',
   'recipe[runit]',
-  'recipe[chef-client]',
+  # 'recipe[chef-client]',
   # 'recipe[el-sysctl]',
   # 'recipe[security-scripts::tmout]',
   # 'recipe[yum::config]',
