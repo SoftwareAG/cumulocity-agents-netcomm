@@ -11,7 +11,8 @@ override_attributes(
 
 run_list(
                     # 'recipe[swap::swapfile]',
-  'recipe[cumulocity-os-update]',
+                    # 'recipe[cumulocity-os-update]',
+  'recipe[chef-client::service]',
   'recipe[cumulocity]',
   'recipe[cumulocity-rsyslog]',
   'recipe[ulimit]',
