@@ -232,6 +232,7 @@ AUTO=false
 INST=false
 INSTALLONLY=false
 outputFolder="/var"
+CHEFRUN_ARGS=""
 
 while getopts "veiyYo:" opt ; do
   case $opt in
@@ -388,11 +389,19 @@ if [[ ! -e "${soloDir}/.hostRenameDONE" ]] ; then
   done
 fi
 
+while ! [[ ${k8sQ,,} =~ ^(y(es)?|no?)$ ]] ; do
+f_question "do you want to install kubernetes and microservice feature? [Y/n]: " k8sQ $AUTO
+if [[ ${k8sQ,,} =~ ^(y(es)?)?$ ]] ; then
+  export CHEFRUN_ARGS=" -m"
+  break
+fi
+done
+
 while ! [[ ${runSoloQ,,} =~ ^(y(es)?|no?)$ ]] ; do
   f_question "run chef-zero and install the platform? [Y/n]: " runSoloQ $INST
   if [[ ${runSoloQ,,} =~ ^(y(es)?)?$ ]] ; then
     cd ${soloDir}
-    "./chefrun.sh" && break
+    ./chefrun.sh${CHEFRUN_ARGS} && break
     f_color_pr red "ERROR: could not run chef-zero!"
   fi
 done

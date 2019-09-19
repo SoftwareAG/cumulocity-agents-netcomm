@@ -173,3 +173,4 @@ override_attributes(
 )
 
 #cookbook_versions(ChefConfig.cookbook_versions_for_env)
+cumulocity-dev-singlenode.rb
