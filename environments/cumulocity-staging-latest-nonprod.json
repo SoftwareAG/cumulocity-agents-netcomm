@@ -84,9 +84,9 @@
       "notification": true,
       "cep-server-enabled": true,
       "CUMULOCITY_LICENCE_DIR": null,
-      "karaf" => {
-        "memory"=> {
-          "max_direct_memory" => "2560M"
+      "karaf": {
+        "memory": {
+          "max_direct_memory": "2560M"
                  },
         },
       "management-access": [
