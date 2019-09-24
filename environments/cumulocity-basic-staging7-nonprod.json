@@ -30,6 +30,7 @@
     },
     "cumulocity-kubernetes": {
       "deployK8S4env": "cumulocity-basic-staging7-nonprod",
+      "docker-version": "1.13.1-102.git7f2769b.el7.centos",
       "attachedEnvs": [
         "cumulocity-basic-staging7-nonprod"
       ],
