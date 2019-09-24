@@ -74,7 +74,7 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "6bb04eb257929e13114e1526b0b55bd1a8861b3acc87a20d7ca4c63eb5e93a4390776b1d9953ca8096a579a2e8947e4b9c46ddbab0a5e0c38362fe141374b493",
-      "version": "1004.0.19",
+      "version": "1004.0.19-1",
       "ssa-version": "1004.0.19-1",
       "memory_left_for_system": "2048",
       "notification": true,
