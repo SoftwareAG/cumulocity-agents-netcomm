@@ -1,240 +1,324 @@
 <!doctype html>
 <html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Internet of Things</title>
-    <% include topinc_v2.inc %>
-    <!-- Common include to check the session is current -->
-    <%
-       useSession();
-       if (
-       request["SESSION_ID"] != session["sessionid"]) {
-       redirect('/index.html?src=' + request["SCRIPT_NAME"]);
-       exit(403);
-       }
-       %>
-    <script language="JavaScript">
-      if ("@@request['QUERY_STRING']" == "setdate") {
-      // Send the browser date to the router.
-      $.get("/cgi-bin/setdate.cgi?" + HostDate(),
-      function() {
-      // Restore the original page.
-      window.location = "@@request['SCRIPT_NAME']";
-      });
-      }
-    </script>
-    <%
-       if (request['REQUEST_METHOD'] == "POST") {
-       set_single_direct("-p", "service.cumulocity.connection.server", form["serverurl"]);
-       set_single_direct("-p", "service.cumulocity.log.level", form["loglevel"]);
-       set_single_direct("-p", "service.cumulocity.gpio.interval", form["gpio_interval"]);
-       set_single_direct("-p", "service.cumulocity.gps.update_interval", form["gps_update_interval"]);
-       set_single_direct("-p", "service.cumulocity.gps.interval", form["gps_interval"]);
-       set_single_direct("-p", "service.cumulocity.system_resources.interval", form["sysinterval"]);
-       set_single_direct("-p", "service.cumulocity.signal.interval", form["signalval"]);
-       set_single_direct("-p", "service.cumulocity.modbus.port", form["modbusport"]);
-       set_single_direct("-p", "service.cumulocity.modbus.readonly", form["modbusreadonly"]);
-       set_single_direct("-p", "service.cumulocity.modbus.serial.port", form["modbusserport"]);
-       set_single_direct("-p", "service.cumulocity.log.level", form["loglevel"]);
-       set_single_direct("-p", "service.cumulocity.enable", form["hidden_enable"]);
-       redirect('/iot.html?success');
-       }
-       else { /*GET*/
-       form["serverurl"] = get_single("service.cumulocity.connection.server");
-       form["loglevel"] = get_single("service.cumulocity.log.level");
-       form["gpio_interval"] = get_single("service.cumulocity.gpio.interval");
-       form["gps_update_interval"] = get_single("service.cumulocity.gps.update_interval");
-       form["gps_interval"] = get_single("service.cumulocity.gps.interval");
-       form["sysinterval"] = get_single("service.cumulocity.system_resources.interval");
-       form["signalval"] = get_single("service.cumulocity.signal.interval");
-       form["modbusport"] = get_single("service.cumulocity.modbus.port");
-       form["modbusreadonly"] = get_single("service.cumulocity.modbus.readonly");
-       form["modbusserport"] = get_single("service.cumulocity.modbus.serial.port");
-       form["hidden_enable"] = get_single("service.cumulocity.enable");
-       }
-       status = get_single("service.cumulocity.agent.status");
-       devid = get_single("uboot.sn");
-       agentver = get_single("service.cumulocity.agent.version");
-       if (get_single("service.cumulocity.connection.password") == "") {
-       registered = "registeredNo";
-       } else {
-       registered = "registeredYes";
-       }
-       %>
-    <script language="JavaScript">
-      function submitF() {
-      clear_alert();
-      if(!$("#form").validationEngine("validate")) {
-      validate_alert("","");
-      return;
-      }
-      $("#hidden_enable").val($("input:radio.access[name=enable]:checked").val());
-      document.form.submit();
-      }
-      $(document).ready(function() {
-      load_value_to_element("input:radio.access[name=enable]",$("#hidden_enable").val()=="1");
-      $("#configuration").css("display", $("#hidden_enable").val()=="1"?"":"none");
-      $("#enable-0").click(function() {
-      clear_alert();
-      $("#configuration").css("display","");
-      });
-      $("#enable-1").click(function() {
-      clear_alert();
-      $("#configuration").css("display","none");
-      });
-      $("#devid").html("@@devid");
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="stylesheet" href="/css/jquery-ui.css">
+<title>Internet of Things</title>
+<%
+if (request['REQUEST_METHOD'] == "POST") {
+  set_single_direct("-p", "service.cumulocity.connection.server", form["serverurl"]);
+  set_single_direct("-p", "service.cumulocity.log.level", form["loglevel"]);
+  set_single_direct("-p", "service.cumulocity.gpio.interval", form["gpio_interval"]);
+  set_single_direct("-p", "service.cumulocity.gps.update_interval", form["gps_update_interval"]);
+  set_single_direct("-p", "service.cumulocity.gps.interval", form["gps_interval"]);
+  set_single_direct("-p", "service.cumulocity.system_resources.interval", form["sysinterval"]);
+  set_single_direct("-p", "service.cumulocity.signal.interval", form["signalval"]);
+  set_single_direct("-p", "service.cumulocity.modbus.port", form["modbusport"]);
+  set_single_direct("-p", "service.cumulocity.modbus.readonly", form["modbusreadonly"]);
+  set_single_direct("-p", "service.cumulocity.modbus.serial.port", form["modbusserport"]);
+  set_single_direct("-p", "service.cumulocity.log.level", form["loglevel"]);
+  set_single_direct("-p", "service.cumulocity.enable", form["hidden_enable"]);
+  redirect('/iot.html?success');
+}
+else { /*GET*/
+  form["serverurl"] = get_single("service.cumulocity.connection.server");
+  form["loglevel"] = get_single("service.cumulocity.log.level");
+  form["gpio_interval"] = get_single("service.cumulocity.gpio.interval");
+  form["gps_update_interval"] = get_single("service.cumulocity.gps.update_interval");
+  form["gps_interval"] = get_single("service.cumulocity.gps.interval");
+  form["sysinterval"] = get_single("service.cumulocity.system_resources.interval");
+  form["signalval"] = get_single("service.cumulocity.signal.interval");
+  form["modbusport"] = get_single("service.cumulocity.modbus.port");
+  form["modbusreadonly"] = get_single("service.cumulocity.modbus.readonly");
+  form["modbusserport"] = get_single("service.cumulocity.modbus.serial.port");
+  form["hidden_enable"] = get_single("service.cumulocity.enable");
+}
+status = get_single("service.cumulocity.agent.status");
+devid = get_single("uboot.sn");
+agentver = get_single("service.cumulocity.agent.version");
+if (get_single("service.cumulocity.connection.password") == "") {
+  registered = "registeredNo";
+} else {
+  registered = "registeredYes";
+}
+%>
+<% 
+useSession();
+if( request["SESSION_ID"]!=session["sessionid"]) {
+  redirect('/index.html');
+  exit(403);
+}
 
-      function showBlockMessage(msg)
-      {
-      $.blockUI( {
-      message: "<div>" + msg + "						<div class='button-raw med'>						<button class='secondary med' onClick='$.unblockUI();'>"+_("CSok")+"</button>						</div></div>",
-	  css: { width: '300px' }
-	  } );
-      }
+%>
+<%_sv=get_single('sw.version');_fn=request['SCRIPT_NAME'];%>
 
-      $("#send_clear_credentials").click(function() {
-      clear_alert();
-      $.getJSON(
-      "/cgi-bin/iot.cgi?clearCredentials",
-      function(res) {
-      if(res.ok) {
-      showBlockMessage(_("credentials cleared"));
-      $("#registered").html(_("registeredNo"));
-      }
-      else {
-      showBlockMessage(_("credentials clear failed") + " (" + res.error + ")");
-      }
-      }
-      );
-      });
+<script>
+(function() {
+  var html = document.documentElement;
+  html.className = html.className.replace('no-js','') + ' js';
+})();
+var modules = [];
+</script>
 
+<link rel="stylesheet" href="/css/validationEngine.jquery.css" type="text/css"/>
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.validationEngine.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
 
-      });
-    </script>
-    <div class="header-wrap" id="main-menu"><!--Top Menu--></div>
-    <div id="content" class="site-content">
-      <div class="container">
-        <aside class="grid-3 alpha sidemenu" id="side-menu"><!--Side Menu--></aside>
-        <div class="grid-9 omega">
-          <form class="validate" name="form" id="form" novalidate="novalidate" method="POST" action="@@request['SCRIPT_NAME']?server">
-            <div class="right-column white-box">
-              <div class="pad">
-                <h2><script language=Javascript>document.write(_("cumulocityConfiguration"))</script></h2>
-                <input type="hidden" name="hidden_enable" id="hidden_enable" value="@@form['hidden_enable']"/>
-                <div class="form-row no-bg-form">
-                  <label for="field-0"><script language=Javascript>document.write(_("cumulocityEnable"))</script></label>
-                  <div class="field">
-                    <div class="location-settings">
-                      <div class="radio-switch">
-                        <input type="radio" id="enable-0" name="enable" class="access" value=1>
-                        <label for="enable-0" class="on"><script language=Javascript>document.write(_("on"))</script></label>
-                        <input type="radio" id="enable-1" name="enable" class="access" value=0>
-                        <label for="enable-1" class="off"><script language=Javascript>document.write(_("off"))</script></label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="grey-box" id="configuration">
-                  <div class="form-row">
-                    <label><script language=Javascript>document.write(_("cumulocityAgentVer"))</script></label>
-                    <span class="normal-text">@@agentver</span>
-                  </div>
-                  <div class="form-row">
-                    <label><script language=Javascript>document.write(_("cumulocityDevid"))</script></label>
-                    <span class="normal-text" id="devid"></span>
-                  </div>
-                  <div class="form-row">
-                    <label><script language=Javascript>document.write(_("cumulocityStatus"))</script></label>
-				    <span class="normal-text"><script language=Javascript>document.write(_("@@status"))</script></span>
-                  </div>
-                  <div class="form-row">
-                    <label><script language=Javascript>document.write(_("cumulocityReg"))</script></label>
-                    <span class="normal-text" id="registered"><script language=Javascript>document.write(_("@@registered"))</script></span>
-                  </div>
-                  <div class="form-row form-pad-left">
-                    <button type="button" id="send_clear_credentials" class="secondary sml" style="margin-left:0"><script language=Javascript>document.write(_("clear credentials now"))</script></button>
-                  </div>
-                  <div class="form-row">
-                    <label for="serverurl"><script language=Javascript>document.write(_("cumulocityServer"))</script></label>
-                    <div class="field">
-                      <input type="text" class="validate[required,custom[url]] required large" name="serverurl" id="serverurl" value="@@form['serverurl']">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label for="gpio_interval"><script language=Javascript>document.write(_("cumulocityGpioInterval"))</script></label>
-                    <div class="field">
-                      <input type="text" class="validate[required,custom[integer]] required medium" name="gpio_interval" id="gpio_interval" value="@@form['gpio_interval']">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label for="gps_update_interval"><script language=Javascript>document.write(_("cumulocityGpsUpdate"))</script></label>
-                    <div class="field">
-                      <input type="text" class="validate[required,custom[integer]] required medium" name="gps_update_interval" id="gps_update_interval" value="@@form['gps_update_interval']">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label for="gps_interval"><script language=Javascript>document.write(_("cumulocityGpsInterval"))</script></label>
-                    <div class="field">
-                      <input type="text" class="validate[required,custom[integer]] required medium" name="gps_interval" id="gps_interval" value="@@form['gps_interval']">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label for="sysinterval"><script language=Javascript>document.write(_("cumulocitySysInterval"))</script></label>
-                    <div class="field">
-                      <input type="text" class="validate[required,custom[integer]] required medium" name="sysinterval" id="sysinterval" value="@@form['sysinterval']">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label for="signalval"><script language=Javascript>document.write(_("cumulocitySignalVal"))</script></label>
-                    <div class="field">
-                      <input type="text" class="validate[required,custom[integer]] required medium" name="signalval" id="signalval" value="@@form['signalval']">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label for="modbusport"><script language=Javascript>document.write(_("cumulocityModBusPort"))</script></label>
-                    <div class="field">
-                      <input type="text" class="validate[required,custom[integer]] required medium" name="modbusport" id="modbusport" value="@@form['modbusport']">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label for="modbusreadonly"><script language=Javascript>document.write(_("cumulocityModBusReadOnly"))</script></label>
-                    <div class="field">
-                      <input type="text" class="validate[required,custom[integer]] required medium" name="modbusreadonly" id="modbusreadonly" maxlength="1" value="@@form['modbusreadonly']">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label for="modbusserport"><script language=Javascript>document.write(_("cumulocityModBusSerPort"))</script></label>
-                    <div class="field">
-                      <input type="text" name="modbusserport" id="modbusserport" value="@@form['modbusserport']">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <label for="loglevel"><script language=Javascript>document.write(_("cumulocityLogLevel"))</script></label>
-                    <div class="field">
-                      <input type="text" class="validate[required,custom[integer]] required medium" name="loglevel" id="loglevel" value="@@form['loglevel']">
-                    </div>
-                  </div>
-                </div>
-                <div class="submit-row">
-                  <button type="button" onclick="submitF()"><script language=Javascript>document.write(_("CSsave"))</script></button>
+<!--[if lt IE 9]>
+<script src="/js/selectivizr.js"></script>
+<script src="/js/modernizr.js"></script>
+<noscript>
+  <link rel="stylesheet" href="/css/ie.css">
+</noscript>
+<![endif]-->
+<link rel="stylesheet" href="/css/style.css?@@_sv">
+<link rel="stylesheet" href="/css/jquery-ui.css">
+</head>
+
+<!--[if IE 8]>
+<body class="ie ie8">
+<![endif]-->
+<!--[if IE 9]>
+<body class="ie ie9">
+<![endif]-->
+<!--[if gt IE 9]>
+<body>
+<![endif]-->
+<!--[if !IE]><!-->
+<body>
+<!--<![endif]-->
+<script src="/js/script.js?@@_sv"></script>
+<script type="text/javascript" src="/lang/b28n.min.js?@@_sv"></script>
+<script language='javascript'>
+var fn="@@_fn".replace(".html", "");
+if(fn=="" || fn=="/") {
+    fn="index";
+}
+Butterlate.setTextDomain(fn.replace("/", ""));
+$(window).load(function(){$("#form").validationEngine();});
+var service_pppoe_server_0_enable="<%get_single_direct('service.pppoe.server.0.enable');%>";
+var service_pppoe_server_0_wanipforward_enable="<%get_single_direct('service.pppoe.server.0.wanipforward_enable');%>";
+var nas_installed="<%get_single_direct('system.package.installed.nas');%>";
+</script>
+<script type="text/javascript" src="/util.js?@@_sv"></script>
+<script language="JavaScript" src="js/jquery.blockUI.min.js"></script>
+
+<div class="header-wrap" id="main-menu"><!--Top Menu--></div>
+<div id="content" class="site-content">
+  <div class="container">
+    <aside class="grid-3 alpha sidemenu" id="side-menu"><!--Side Menu--></aside>
+  </div>
+  <div class="grid-9 omega">
+    <form class="validate" name="form" id="form" novalidate="novalidate" method="POST" action="@@request['SCRIPT_NAME']?server">
+      <div class="pad">
+        <div class="right-column white-box">
+          <h2>
+            <script language=Javascript>document.write(_("cumulocityConfiguration"))</script>
+          </h2>
+          <input type="hidden" name="hidden_enable" id="hidden_enable" value="@@form['hidden_enable']" />
+          <div class="form-row no-bg-form">
+            <label for="field-0"><script language=Javascript>document.write(_("cumulocityEnable"))</script></label>
+            <div class="field">
+              <div class="location-settings">
+                <div class="radio-switch">
+                  <input type="radio" id="enable-0" name="enable" class="access" value=1>
+                  <label for="enable-0" class="on"><script language=Javascript>document.write(_("on"))</script></label>
+                  <input type="radio" id="enable-1" name="enable" class="access" value=0>
+                  <label for="enable-1" class="off"><script language=Javascript>document.write(_("off"))</script></label>
                 </div>
               </div>
             </div>
-          </form>
+          </div>
+          <div class="grey-box" id="configuration">
+            <div class="form-row">
+              <label><script language=Javascript>document.write(_("cumulocityAgentVer"))</script></label>
+              <span class="normal-text">@@agentver</span>
+            </div>
+            <div class="form-row">
+              <label><script language=Javascript>document.write(_("cumulocityDevid"))</script></label>
+              <span class="normal-text" id="devid"></span>
+            </div>
+            <div class="form-row">
+              <label><script language=Javascript>document.write(_("cumulocityStatus"))</script></label>
+              <span class="normal-text"><script language=Javascript>document.write(_("@@status"))</script></span>
+            </div>
+            <div class="form-row">
+              <label><script language=Javascript>document.write(_("cumulocityReg"))</script></label>
+              <span class="normal-text" id="registered"><script language=Javascript>document.write(_("@@registered"))</script></span>
+            </div>
+            <div class="form-row form-pad-left">
+              <button type="button" id="send_clear_credentials" class="secondary sml" style="margin-left: 0">
+                <script language=Javascript>document.write(_("clear credentials now"))</script>
+              </button>
+            </div>
+            <div class="form-row">
+              <label for="serverurl"><script language=Javascript>document.write(_("cumulocityServer"))</script></label>
+              <div class="field">
+                <input type="text"
+                  class="validate[required,custom[url]] required large" 
+                  name="serverurl" id="serverurl"
+                  value="@@form['serverurl']">
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="gpio_interval"><script language=Javascript>document.write(_("cumulocityGpioInterval"))</script></label>
+              <div class="field">
+                <input type="text"
+                  class="validate[required,custom[integer]] required medium"
+                  name="gpio_interval"
+                  id="gpio_interval"
+                  value="@@form['gpio_interval']">
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="gps_update_interval"><script language=Javascript>document.write(_("cumulocityGpsUpdate"))</script></label>
+              <div class="field">
+                <input type="text"
+                  class="validate[required,custom[integer]] required medium"
+                  name="gps_update_interval" id="gps_update_interval"
+                  value="@@form['gps_update_interval']">
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="gps_interval"><script language=Javascript>document.write(_("cumulocityGpsInterval"))</script></label>
+              <div class="field">
+                <input type="text"
+                  class="validate[required,custom[integer]] required medium"
+                  name="gps_interval" id="gps_interval"
+                  value="@@form['gps_interval']">
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="sysinterval"><script language=Javascript>document.write(_("cumulocitySysInterval"))</script></label>
+              <div class="field">
+                <input type="text"
+                  class="validate[required,custom[integer]] required medium"
+                  name="sysinterval" id="sysinterval"
+                  value="@@form['sysinterval']">
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="signalval"><script language=Javascript>document.write(_("cumulocitySignalVal"))</script></label>
+              <div class="field">
+                <input type="text"
+                  class="validate[required,custom[integer]] required medium"
+                  name="signalval" id="signalval" value="@@form['signalval']">
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="modbusport"><script language=Javascript>document.write(_("cumulocityModBusPort"))</script></label>
+              <div class="field">
+                <input type="text"
+                  class="validate[required,custom[integer]] required medium"
+                  name="modbusport" id="modbusport" value="@@form['modbusport']">
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="modbusreadonly"><script language=Javascript>document.write(_("cumulocityModBusReadOnly"))</script></label>
+              <div class="field">
+                <input type="text"
+                  class="validate[required,custom[integer]] required medium"
+                  name="modbusreadonly" id="modbusreadonly" maxlength="1"
+                  value="@@form['modbusreadonly']">
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="modbusserport"><script language=Javascript>document.write(_("cumulocityModBusSerPort"))</script></label>
+              <div class="field">
+                <input type="text" name="modbusserport" id="modbusserport"
+                  value="@@form['modbusserport']">
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="loglevel"><script language=Javascript>document.write(_("cumulocityLogLevel"))</script></label>
+              <div class="field">
+                <input type="text"
+                  class="validate[required,custom[integer]] required medium"
+                  name="loglevel" id="loglevel" value="@@form['loglevel']">
+              </div>
+            </div>
+          </div>
+          <div class="submit-row">
+            <button type="button" onclick="submitF()">
+              <script language=Javascript>document.write(_("CSsave"))</script>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <footer class="footer">
-      <div class="container">
-        <p class="copy-right"><script language=Javascript>document.write(_("powered by netComm"))</script></p>
-      </div>
-    </footer>
-    <script language='javascript'>
-      set_menu("System", "Internet of Things", <%_val = session["user"];%>"@@_val");
-      if("@@request['QUERY_STRING']"=="success") {
-      success_alert("","");
-      }
-    </script>
+    </form>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="copy-right"><script language=Javascript>document.write(_("powered by netComm"))</script></p>
+  </div>
+</footer>
+
+<script language="JavaScript">set_menu("System", "CustomMenu", <%_val = session["user"];%>"@@_val");</script>
+<script language="JavaScript">
+  if ("@@request['QUERY_STRING']" == "setdate") {
+  // Send the browser date to the router.
+  $.get("/cgi-bin/setdate.cgi?" + HostDate(),
+  function() {
+  // Restore the original page.
+  window.location = "@@request['SCRIPT_NAME']";
+  });
+  }
+</script>
+<script language='javascript'>
+  if("@@request['QUERY_STRING']"=="success") {
+  success_alert("","");
+  }
+</script>
+<script language="JavaScript">
+  function submitF() {
+  clear_alert();
+  if(!$("#form").validationEngine("validate")) {
+  validate_alert("","");
+  return;
+  }
+  $("#hidden_enable").val($("input:radio.access[name=enable]:checked").val());
+  document.form.submit();
+  }
+  $(document).ready(function() {
+  load_value_to_element("input:radio.access[name=enable]",$("#hidden_enable").val()=="1");
+  $("#configuration").css("display", $("#hidden_enable").val()=="1"?"":"none");
+  $("#enable-0").click(function() {
+  clear_alert();
+  $("#configuration").css("display","");
+  });
+  $("#enable-1").click(function() {
+  clear_alert();
+  $("#configuration").css("display","none");
+  });
+  $("#devid").html("@@devid");
+
+  function showBlockMessage(msg)
+  {
+  $.blockUI( {
+  message: "<div>" + msg + "            <div class='button-raw med'>            <button class='secondary med' onClick='$.unblockUI();'>"+_("CSok")+"</button>           </div></div>",
+css: { width: '300px' }
+} );
+  }
+  $("#send_clear_credentials").click(function() {
+  clear_alert();
+  $.getJSON(
+  "/cgi-bin/iot.cgi?clearCredentials",
+  function(res) {
+  if(res.ok) {
+  showBlockMessage(_("credentials cleared"));
+  $("#registered").html(_("registeredNo"));
+  }
+  else {
+  showBlockMessage(_("credentials clear failed") + " (" + res.error + ")");
+  }
+  }
+  );
+  });
+  });
+</script>
 </body>
 </html>
