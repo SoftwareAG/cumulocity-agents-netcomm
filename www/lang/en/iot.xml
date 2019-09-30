@@ -112,4 +112,6 @@
 <message msgid="registeredYes" msgstr="Yes"/>
 <message msgid="otgusb" msgstr="USB-OTG"/>
 <message msgid="nas" msgstr="Storage"/>
+<message msgid="firmwareSignature" msgstr="Firmware signature"/>
+<message msgid="DiagnosticLog" msgstr="Diagnostic Log"/>
 </po>
