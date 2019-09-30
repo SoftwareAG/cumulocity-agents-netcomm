@@ -1,7 +1,7 @@
 require 'chef/provisioning/aws_driver'
 with_driver 'aws:cumulocity-stagings:eu-central-1'
 
-environment  = 'cumulocity-latest-staging'
+environment  = 'cumulocity-staging-latest'
 
 with_chef_environment environment
 with_chef_server(

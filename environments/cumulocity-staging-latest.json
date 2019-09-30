@@ -1,5 +1,5 @@
 {
-  "name": "cumulocity-latest-staging",
+  "name": "cumulocity-staging-latest",
   "description": "The Staging environment for the latest released version",
   "cookbook_versions": {
     "cumulocity": "~> 1005.0",
@@ -10,9 +10,9 @@
   "chef_type": "environment",
   "default_attributes": {},
   "override_attributes": {
-    "domainname": "latest.staging.c8y.io",
+    "domainname": "staging-latest.c8y.io",
     "environment": {
-      "address": "management.latest.staging.c8y.io"
+      "address": "management.staging-latest.c8y.io"
     },
     "swapfilesize": 512,
     "yum": {
@@ -29,10 +29,9 @@
       "jdk_version": "8"
     },
     "cumulocity-kubernetes": {
-      "deployK8S4env": "cumulocity-latest-staging",
-      "docker-version": "1.13.1-102.git7f2769b.el7.centos",
+      "deployK8S4env": "cumulocity-staging-latest",
       "attachedEnvs": [
-        "cumulocity-latest-staging"
+        "cumulocity-staging-latest"
       ],
       "token": "1e3145.2ff901841c78af1d",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
@@ -56,8 +55,7 @@
         "opcua-mgmt-service",
         "smartgroup",
         "mibparser",
-        "provisioning",
-        "report-agent"
+        "provisioning"
       ],
       "monitoring": {
         "enabled": true,
@@ -159,9 +157,6 @@
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "system.two-factor-authentication.enabled": "true",
         "system.two-factor-authentication.enforced": "",
-        "management.admin.password": "b7596fe7ffdf9bf476d0dfb947090a56e4d5009bf7bd790abf8d658859966304",
-  	    "admin.password": "b7596fe7ffdf9bf476d0dfb947090a56e4d5009bf7bd790abf8d658859966304",
-  	    "tenant.admin.password": "b7596fe7ffdf9bf476d0dfb947090a56e4d5009bf7bd790abf8d658859966304",
         "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
         "passwordReset.email.subject": "Password reset",
         "passwordReset.token.email.template": "Dear app.domain.com user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
@@ -171,9 +166,9 @@
       }
     },
     "cumulocity-external-lb": {
-      "landing_page": "https://latest.staging.c8y.io/apps/devicemanagement",
+      "landing_page": "https://staging-latest.c8y.io/apps/devicemanagement",
       "paas_default_page": "https://$http_host/apps/$defapp",
-      "paas_public_default_page": "https://latest.staging.c8y.io/apps/dmpublic",
+      "paas_public_default_page": "https://staging-latest.c8y.io/apps/dmpublic",
       "usePostgresForPaaS": false,
       "paas_redirection": true,
       "temp_chunkin": false,
@@ -217,7 +212,7 @@
         "enable": true,
         "tenant": "environments",
         "username": "autoregister",
-        "groupName": "latest-staging"
+        "groupName": "staging-latest"
       }
     }
   }
