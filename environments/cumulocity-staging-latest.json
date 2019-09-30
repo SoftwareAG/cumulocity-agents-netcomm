@@ -30,6 +30,7 @@
     },
     "cumulocity-kubernetes": {
       "deployK8S4env": "cumulocity-staging-latest",
+      "docker-version": "1.13.1-102.git7f2769b.el7.centos",
       "attachedEnvs": [
         "cumulocity-staging-latest"
       ],
@@ -157,6 +158,9 @@
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "system.two-factor-authentication.enabled": "true",
         "system.two-factor-authentication.enforced": "",
+        "management.admin.password": "b7596fe7ffdf9bf476d0dfb947090a56e4d5009bf7bd790abf8d658859966304",
+        "admin.password": "b7596fe7ffdf9bf476d0dfb947090a56e4d5009bf7bd790abf8d658859966304",
+        "sysadmin.password": "b7596fe7ffdf9bf476d0dfb947090a56e4d5009bf7bd790abf8d658859966304",
         "default.tenant.applications": "administration,devicemanagement,cockpit,feature-microservice-hosting,feature-cep-custom-rules",
         "passwordReset.email.subject": "Password reset",
         "passwordReset.token.email.template": "Dear app.domain.com user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a app.domain.com portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            app.domain.com support team\\n",
