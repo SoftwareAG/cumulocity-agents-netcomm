@@ -56,7 +56,8 @@
         "opcua-mgmt-service",
         "smartgroup",
         "mibparser",
-        "provisioning"
+        "provisioning",
+        "report-agent"
       ],
       "monitoring": {
         "enabled": true,
