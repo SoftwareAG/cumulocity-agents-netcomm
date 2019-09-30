@@ -87,7 +87,7 @@
       "management-access": [
         "0.0.0.0/0"
       ],
-      "openrelayIP": "172.31.10.245",
+      "openrelayIP": "172.20.2.250",
       "logging": {
         "microservice_proxy": {
           "enabled": true
