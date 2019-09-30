@@ -110,4 +110,6 @@
 <message msgid="credentials clear failed" msgstr="Credentials clear failed!"/>
 <message msgid="registeredNo" msgstr="No"/>
 <message msgid="registeredYes" msgstr="Yes"/>
+<message msgid="otgusb" msgstr="USB-OTG"/>
+<message msgid="nas" msgstr="Storage"/>
 </po>
