@@ -79,7 +79,7 @@
       "mean_time_between_kills": 1
     },
     "cumulocity-karaf": {
-      "CUMULOCITY_LICENCE_KEY": "5f14ea119e2e1fdd0ad022f9255372849107c9958a27feca9dff73db31dc7d230b1ba28f3ca439e06ff17e36868b7fdb053e9b5dcee6e88820b586fd6a529a4b",
+      "CUMULOCITY_LICENCE_KEY": "35fd2a651c866163f172274ba43a1a15632c68b49f9bcd5c96ba0b2213be257b8265ab3255d20a516a7c68dff6190a698e49f613a8e61b2e3740901d8ce44f1f",
       "version": "1005.3.0-1",
       "ssa-version": "1005.3.0-1",
       "notification": true,
@@ -183,7 +183,7 @@
       "useMasterForPushOperations": false,
       "useKarafWebsocket": true,
       "proxy_cache": true,
-      "certificate_domain": "staging.c8y.io",
+      "certificate_domain": "staging-latest.c8y.io",
       "useLUAforLimits": true,
       "useLUAforSSLcerts": true,
       "useLUAforHealthCheck": true,
