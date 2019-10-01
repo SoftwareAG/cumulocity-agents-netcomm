@@ -1,0 +1,3 @@
+ cp /etc/cdcs/conf/pubkey/cumulocity-public.pem /usr/local/cdcs/conf/pubkey/
+ rdb set system.firmwarePublicKey.update.trigger 1
+ rdb set system.update.enableFirmwareSignatureCheck 1

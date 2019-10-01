@@ -1,0 +1,8 @@
+Package: cumulocity-ipk-pubkey
+Priority: optional
+Section: Misc
+Version: 1.0
+Architecture: arm
+Maintainer: support@cumulocity.com
+Depends:
+Description: Installing new public key for Cumulocity's NTC SmartREST Agent IPK package
