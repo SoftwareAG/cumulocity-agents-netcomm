@@ -24,6 +24,10 @@ VNC_SRC:=$(wildcard $(SRC_DIR)/vnc/*.c)
 VNC_OBJ:=$(addprefix $(BUILD_DIR)/,$(VNC_SRC:.c=.o))
 VNC_PKG_DIR:=build/staging/vncproxy
 
+SIGN_PUBKEY:=$(BUILD_DIR)/ipkkeys/cumulocity-public.pem
+SIGN_PRIKEY:=$(BUILD_DIR)/ipkkeys/cumulocity-private.pem
+SIGN_PKG_DIR:=build/staging/ipksignature
+
 PKG:=$(NTC_SDK_PATH)/tools/mkipk.sh
 CC:=$(NTC_SDK_PATH)/compiler/bin/arm-ntc-linux-gnueabi-gcc
 CXX:=$(NTC_SDK_PATH)/compiler/bin/arm-ntc-linux-gnueabi-g++
@@ -48,6 +52,8 @@ endif
 
 .PHONY: all clean
 
+all: ntc sms 
+
 ntc: $(BIN_DIR)/$(NTC_BIN)
 	@mkdir -p $(NTC_PKG_DIR)/usr/local/bin $(NTC_PKG_DIR)/CONTROL
 	@mkdir -p $(NTC_PKG_DIR)/usr/local/ntcagent
@@ -62,8 +68,6 @@ ntc: $(BIN_DIR)/$(NTC_BIN)
 	@cp -r srtemplate.txt lua $(NTC_PKG_DIR)/usr/local/ntcagent
 	@cp debian/ntcagent/* $(NTC_PKG_DIR)/CONTROL
 	@$(PKG) $(shell pwd)/$(NTC_PKG_DIR) $(shell pwd)/$(PKG_DIR)
-
-all: ntc sms
 
 sms: $(BIN_DIR)/$(SMS_BIN)
 	@mkdir -p $(SMS_PKG_DIR)/usr/local/bin $(SMS_PKG_DIR)/CONTROL
@@ -81,6 +85,16 @@ vnc: $(BIN_DIR)/$(VNC_BIN)
 	@cp scripts/vncproxy.sh $(VNC_PKG_DIR)/etc/init.d/rc.d
 	@cp debian/vncproxy/* $(VNC_PKG_DIR)/CONTROL
 	@$(PKG) $(shell pwd)/$(VNC_PKG_DIR) $(shell pwd)/$(PKG_DIR)
+
+signature:
+	mkdir -p $(SIGN_PKG_DIR)/CONTROL
+	mkdir -p $(SIGN_PKG_DIR)/etc/cdcs/conf/pubkey
+	mkdir -p $(BUILD_DIR)/ipkkeys
+	openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out $(SIGN_PRIKEY)
+	openssl rsa -in $(BUILD_DIR)/ipkkeys/cumulocity-private.pem -pubout -out $(SIGN_PUBKEY)
+	cp debian/ipksignature/* $(SIGN_PKG_DIR)/CONTROL
+	cp $(SIGN_PUBKEY) $(SIGN_PKG_DIR)/etc/cdcs/conf/pubkey
+	$(PKG) $(shell pwd)/$(SIGN_PKG_DIR) $(shell pwd)/$(PKG_DIR)
 
 $(BIN_DIR)/$(NTC_BIN): $(NTC_OBJ)
 	@mkdir -p $(BIN_DIR)
