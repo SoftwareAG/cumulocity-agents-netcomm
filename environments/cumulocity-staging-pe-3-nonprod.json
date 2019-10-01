@@ -28,6 +28,12 @@
         }
       }
     },
+    "openssh": {
+        "server": {
+            "permit_root_login": "no",
+            "password_authentication": "no"
+        }
+    },
     "java": {
       "jdk_version": "8"
     },
