@@ -52,6 +52,32 @@ make sms BUILD=release
 
 ### FAQ ###
 
+* Installation of IPK file failed because of signature installation. How can I fix it?
+
+There are two ways to fix it.
+
+1) Disable IPK signature checking on your Netcomm device by going to System > System Configuration > Firmware signature.
+
+2) (**Recommended**) Install a signature key on your Netcomm device and build signed package with the following instruction.
+
+First, let's generate public/private key pair and build IPK package contains the public key.
+
+```
+#!bash
+
+make signature
+```
+Note: you need to disable signature validation on your Netcomm device when you install the public key package
+
+Then, add signature (the paired-private key) to each Cumulocity package. In the root directory, run:
+
+```
+#!bash
+
+./tools/mk-signed-ipk.sh <path-to-ipk-file>
+```
+The packages created by this command can be installed even if you enable signature validation checking on your Netcomm device as long as the paired public key is stored there.
+
 * How can I query the current package versions?
 
 ```
