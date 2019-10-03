@@ -176,6 +176,7 @@
       "useSSL": true,
       "useHSTS": false,
       "useMQTTsupport": true,
+      "useMQTTlogs": true,
       "useMasterForPushOperations": false,
       "useKarafWebsocket": true,
       "proxy_cache": true,
