@@ -54,7 +54,7 @@
     },
     "cumulocity-karaf": {
       "version": "___KARAFVERSION___",
-      "memory_left_for_system": "4096",
+      "memory_left_for_system": "1536",
       "notification": true,
       "oort-enabled": true,
       "cep-server-enabled": true,

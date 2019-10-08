@@ -234,11 +234,12 @@ INSTALLONLY=false
 outputFolder="/var"
 CHEFRUN_ARGS=""
 
-while getopts "veiyYo:" opt ; do
+while getopts "veiyYom:" opt ; do
   case $opt in
     v) VERBOSE=true ;;
     e) EXTRACTONLY=true ;;
     i) INSTALLONLY=true;;
+    m) CHEFRUN_ARGS=" -m";;
     y) AUTO=true yes="-y";;
     Y) AUTO=true yes="-y" INST=true ;;
     o) outputFolder="$OPTARG" ;;
@@ -388,14 +389,6 @@ if [[ ! -e "${soloDir}/.hostRenameDONE" ]] ; then
     fi
   done
 fi
-
-while ! [[ ${k8sQ,,} =~ ^(y(es)?|no?)$ ]] ; do
-f_question "do you want to install kubernetes and microservice feature? [Y/n]: " k8sQ $AUTO
-if [[ ${k8sQ,,} =~ ^(y(es)?)?$ ]] ; then
-  export CHEFRUN_ARGS=" -m"
-  break
-fi
-done
 
 while ! [[ ${runSoloQ,,} =~ ^(y(es)?|no?)$ ]] ; do
   f_question "run chef-zero and install the platform? [Y/n]: " runSoloQ $INST

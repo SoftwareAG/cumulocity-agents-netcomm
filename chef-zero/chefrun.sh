@@ -27,6 +27,7 @@ run_chef_client()
 run_chef_client
 
 if [[ "$ENABLE_MICROSERVICE" == "false" ]]; then
+    echo "Running without microservice feature disabled"
     sed -i 's/,feature-microservice-hosting//g' ${env_file}
 fi
 
@@ -47,7 +48,7 @@ run_chef_client
 
 
 if [[ "$ENABLE_MICROSERVICE" == "true" ]]; then
-
+    echo "Running with microservice feature enabled"
     sed -i '/microservice\.provider/d' ${env_file}
     knife environment from file ${env_file} -z && echo "INFO: Successfully uploaded env file " || { echo "ERROR: failed to setup chef env. Exiting... "; exit 1; }
 
