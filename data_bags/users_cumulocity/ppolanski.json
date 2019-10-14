@@ -1,0 +1,7 @@
+{
+  "id": "ppolanski",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDrUzbFNdFUz8fgED9up6j5Fsht8Epu+I1VDjmcc8rQxRlgC6/j3vD4YxNtRtRqkY1qutEu5aGj49uPgmENLsoVvIJpZbitweefW2/ZY279fC9+9bt+CNylJhr91EBw3Ll8wes95sfQHjcou0MLQN61PNZEaQv0RTWlb89BhX394773+gxw28wfKtCllNt8BLPv2XOxeQQyNF6xHGljySqWzogNr2JeVJ2YLeqTRWHcGUjlgquYm7dRipzgzwPnmkFSYgnvMwT/g3FHVK8gpGS4SqoX1l5qR7ROslxqBucZQSwFDy3ZMJaSYnH5AmfG+yIbbo8kSKa5lqX3QK6QQ/4ejhG/s8SP1ulOiodAI+vgaCVP+6jsdKTQZOupmBGYiAM/yUI5wIRtJJ9AwyzByZOrnW+YKN4IW9/pg3+HVxvSG+0lZFFuXLkoTB9A96NGUdLurQSyNwrCZvWTE6aseg9AxcsiqJVJhuxIHfNoiNrJD6X9m19gPm+qfCzGtuRJYeFyhFmORP+Xf3O/X6lnCiJ8K9iMRsHwp7mB7J2FCWJ2o1lIwjPDLTOyFIGhY8UB4ALyjpLc3KC3nLwiixPSmHM51dYfU6sfdGfdAAJ1fc7sjW12V5wr6t2rY5L2xm35K31RtgwYBLlaVXBliWd677H3COPDCaegpx6PMt0w/eQhPw== pawel.polanski@softwareag.com"],
+  "groups": ["users"],
+  "shell": "\/bin\/bash",
+  "comment": "Paweł Polański"
+}
