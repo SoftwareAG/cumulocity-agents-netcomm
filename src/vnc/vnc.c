@@ -517,7 +517,7 @@ static void poll(struct vnc_t *vnc)
         if (FD_ISSET(sock, &rdfds))
         {
             const short num = vnc->lonum[i];
-            a = ts_recv(sock, lobuf + num, BUF_NSIZE - num, i);
+            a = ts_recv(sock, lobuf + num, BUF_NSIZE - num);
 
             if (a > 0)
             {
