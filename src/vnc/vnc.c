@@ -47,7 +47,6 @@ struct vnc_t
     int fdmax;
     fd_set rdfds;
     fd_set wrfds;
-    int is_connected;
 };
 
 struct cp_t
@@ -270,7 +269,6 @@ static int vnc_connection_new(struct vnc_t *vnc, struct cp_t *cp)
     vnc->cubuf[i] = buf + BUF_NSIZE;
     vnc->fdmax = _max(vnc->fdmax, _max(sock, fd));
     vnc->lonum[i] = vnc->cunum[i] = vnc->wsnum[i] = 0;
-    vnc->is_connected = 1;
     FD_SET(fd, &vnc->rdfds);
     FD_SET(sock, &vnc->rdfds);
     syslog(LOG_NOTICE, "vnc_new %d: %s:%d <=> %s%s\n", i, cp->ip, cp->port, cp->host, cp->end);
@@ -300,7 +298,6 @@ static void vnc_connection_free(struct vnc_t *vnc, int i)
     vnc->lobuf[i] = vnc->cubuf[i] = NULL;
     vnc->lonum[i] = vnc->cunum[i] = vnc->wsnum[i] = 0;
     vnc->fdmax = find_fdmax(&vnc->rdfds, &vnc->wrfds, vnc->fdmax);
-    vnc->is_connected = 0;
 }
 
 static int vnc_handle(struct vnc_t *vnc)
@@ -353,7 +350,7 @@ static int vnc_handle(struct vnc_t *vnc)
     return 0;
 }
 
-static int ts_recv(int fd, char *buf, size_t count, int *is_connected)
+static int ts_recv(int fd, char *buf, size_t count)
 {
     if (count < 126 + 8)
     {
@@ -386,9 +383,8 @@ static int ts_recv(int fd, char *buf, size_t count, int *is_connected)
         return ptr - buf + c;
     } else if (c == 0)
     { // When a stream socket peer has performed an orderly shutdown
-        *is_connected = 0;
         syslog(LOG_INFO, "ts_recv: Connection closed\n");
-        return 0;
+        return -1;
     } else
     { // error
         syslog(LOG_ERR, "ts_recv: %s\n", strerror(errno));
@@ -412,7 +408,7 @@ static int ts_send(int fd, char *buf, size_t count)
 }
 
 
-static int ws_recv(CURL *curl, char *buf, size_t count, uint64_t *wsnum, int *is_connected)
+static int ws_recv(CURL *curl, char *buf, size_t count, uint64_t *wsnum)
 {
         if (count < 125)
                 return 0;
@@ -430,9 +426,8 @@ static int ws_recv(CURL *curl, char *buf, size_t count, uint64_t *wsnum, int *is
                         else if (rc == CURLE_AGAIN)
                                 return 0;
                         else if (n == 0) {
-                                *is_connected = 0;
                                 syslog(LOG_INFO, "ws_rh[%zu]: Connection closed\n", n);
-                                return 0;
+                                return -1;
                         }
                         const char *msg = curl_easy_strerror(rc);
                         syslog(LOG_ERR, "ws_rh[%zu]: %s\n", n, msg);
@@ -522,7 +517,7 @@ static void poll(struct vnc_t *vnc)
         if (FD_ISSET(sock, &rdfds))
         {
             const short num = vnc->lonum[i];
-            a = ts_recv(sock, lobuf + num, BUF_NSIZE - num, &vnc->is_connected);
+            a = ts_recv(sock, lobuf + num, BUF_NSIZE - num, i);
 
             if (a > 0)
             {
@@ -549,7 +544,7 @@ static void poll(struct vnc_t *vnc)
         {
             const short num = vnc->cunum[i];
             short *lon = &vnc->lonum[i];
-            b = ws_recv(vnc->curl[i], cubuf + num, BUF_NSIZE - num, &vnc->wsnum[i], &vnc->is_connected);
+            b = ws_recv(vnc->curl[i], cubuf + num, BUF_NSIZE - num, &vnc->wsnum[i]);
 
             if (b > 0)
             {
@@ -582,7 +577,7 @@ static void poll(struct vnc_t *vnc)
             }
         }
 
-        if (a != -1 && b != -1 && c != -1 && d != -1 && vnc->is_connected == 1)
+        if (a != -1 && b != -1 && c != -1 && d != -1)
         {
             if (vnc->lonum[i])
             {
