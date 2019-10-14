@@ -3,8 +3,8 @@
   "description": "The production environment",
   "cookbook_versions": {
     "cumulocity": "~> 1004.6",
-    "cumulocity-kubernetes": "~> 9.20",
-    "cumulocity-ssagents": "~> 9.20"
+    "cumulocity-kubernetes": "~> 1004.6",
+    "cumulocity-ssagents": "~> 1004.6"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -33,12 +33,13 @@
     },
     "cumulocity": {
       "chef-client": {
-        "enabled": true
+        "enabled": false
       }
     },
     "cumulocity-kubernetes": {
       "deployK8S4env": "cumulocity-staging-pe-1-nonprod",
       "docker-version": "1.13.1-102.git7f2769b.el7.centos",
+      "renew-certificates": false,
       "attachedEnvs": [
         "cumulocity-staging-pe-1-nonprod"
       ],
