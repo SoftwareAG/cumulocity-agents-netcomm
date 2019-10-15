@@ -39,7 +39,7 @@
     },
     "cumulocity-base": {
       "chef-client": {
-        "enabled": false
+        "enabled": true
       }
     },
     "cumulocity-kubernetes": {
