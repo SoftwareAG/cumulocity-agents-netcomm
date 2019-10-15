@@ -39,12 +39,15 @@
     },
     "cumulocity-base": {
       "chef-client": {
-        "enabled": true
+        "enabled": false
       }
     },
     "cumulocity-kubernetes": {
       "deployK8S4env": "cumulocity-staging-pe-3-nonprod",
       "docker-version": "1.13.1-102.git7f2769b.el7.centos",
+      "docker": {
+              "default-pids-limit": 10240
+          },
       "attachedEnvs": [
         "cumulocity-staging-pe-3-nonprod"
       ],

@@ -31,11 +31,7 @@
     "java": {
       "jdk_version": "8"
     },
-    "cumulocity": {
-      "chef-client": {
-        "enabled": false
-      }
-    },
+    "cumulocity-base": {"chef-client": {"enabled": true}},
     "cumulocity-kubernetes": {
       "deployK8S4env": "cumulocity-staging-pe-1-nonprod",
       "docker-version": "1.13.1-102.git7f2769b.el7.centos",

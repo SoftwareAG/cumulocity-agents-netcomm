@@ -27,10 +27,18 @@
     },
     "java": {
       "jdk_version": "8"
+    },  
+    "cumulocity-base": {
+      "chef-client": {
+        "enabled": false
+      }
     },
     "cumulocity-kubernetes": {
       "deployK8S4env": "cumulocity-staging-latest",
       "docker-version": "1.13.1-102.git7f2769b.el7.centos",
+      "docker": {
+              "default-pids-limit": 10240
+          },
       "attachedEnvs": [
         "cumulocity-staging-latest"
       ],
