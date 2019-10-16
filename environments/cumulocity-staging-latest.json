@@ -162,7 +162,7 @@
         "system.feature.track.changes": "true",
         "migration.tomongo.default": "MONGO_READ_WRITE_POSTGRES_WRITE",
         "smsGateway.host": "http://localhost/service/messaging",
-        "email.host": "postfix.cumulocity-staging.svc.cluster.local",
+        "email.host": "postfix.cumulocity-staging-latest.svc.cluster.local",
         "email.from": "no-reply@app.domain.com",
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "system.two-factor-authentication.enabled": "true",
