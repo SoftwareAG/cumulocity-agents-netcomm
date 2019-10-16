@@ -67,7 +67,7 @@
         "contextService.rdbmsUser": "postgres",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
-        "mongodb.password": "Welcome123",
+        "mongodb.password": "mongodb-password",
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": false,
@@ -91,8 +91,8 @@
     },
     "cumulocity-mongo": {
       "mongodb.initUser": "init-root",
-      "mongodb.initPassword": "Welcome123",
-      "mongodb.password": "Welcome123",
+      "mongodb.initPassword": "SNinitrootPW",
+      "mongodb.password": "mongodb-password",
       "version": "3.6",
       "wiredtiger-cache": 2
     },
