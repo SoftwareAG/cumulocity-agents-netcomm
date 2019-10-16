@@ -2,6 +2,6 @@
   "id": "pawelkowalczyk",
   "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDs84v0POu2buCd34YRSdDyvnZVkJPuAgeyueduixVDCBsh2pXdq8b2Btbzi88QPEkmisoCHtwC8yIPzLvGAFOVEUP89UiQPBSswnYYy5L/XWHs/8XX8BBEU1HWvhNfuw54DcsU7/FdV6Q7G7Ie3Cphf405Z98C7YrHsKS3ZMY7N2wReByO5EacRwWppf4YCqIbLFaEUc3slacmdYFQXwhK2Un6r8eLx9fd/XfTdYJBt8YrOJW97LuIiXwB3KS7ITkX9OhwcznwdCsSK06KgvD0xm3nTmHIb9SXALikUlI6C8u6BNgzBNC5zkHbU7/nZWWiZgJmO6eY/cgzpBJOZ8yEDsG7VZYjlULEbq7DIApCJeIVod2zqosmNATl4PvJcjXy4ARHz4XR+7bXAtUnJZ7lcmERe9DHaYiHvabdw9QuAet+ZWM6CDxVAL5VhtvMezgKchFaiX/bXKXUJsdVHr6MgQ5hq7dI0dQBUDyzTHOvs4fX1q4L2Y4iUJBxSuPwdrxDBzeBpLsOFl+2xCuQyatZ1SsFeWNnGM0BCZq2bYzgAAGGz9ylw6zcRWZfwJ+6LY0BzoP9ycBgZXS70xzQ17NESTYGxTO1adJWlB3n+IoZ361vmnnEGs9Q1r1wBENww7+trpUKY3xgwKFOfnOf7IWEbquOrnJ5ReLwst4KImPf7Q== pkowalc@pkowalc-HP-EliteBook-850-G5"],
   "groups": ["wheel"],
-  "shell": "\/bin\/bash",
+  "shell": "/bin/bash",
   "comment": "Pawel Kowalczyk"
 }
