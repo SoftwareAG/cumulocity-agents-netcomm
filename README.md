@@ -52,11 +52,11 @@ make sms BUILD=release
 
 ### FAQ ###
 
-* Installation of IPK file failed because of signature installation. How can I fix it?
+* Installation of IPK file failed because of missing package sigunature. How can I fix it?
 
 There are two ways to fix it.
 
-1) Disable IPK signature checking on your Netcomm device by going to System > System Configuration > Firmware signature.
+1) Disable IPK signature checking function on your Netcomm device by going to System > System Configuration > Firmware signature.
 
 2) (**Recommended**) Install a signature key on your Netcomm device and build signed package with the following instruction.
 
@@ -69,14 +69,14 @@ make signature
 ```
 Note: you need to disable signature validation on your Netcomm device when you install the public key package
 
-Then, add signature (the paired-private key) to each Cumulocity package. In the root directory, run:
+Then, add signature (paired-private key) to each Cumulocity package. In the root directory, for example, if you want to add signature to `smartrest-agent_4.2.3_arm.ipk`, run:
 
 ```
 #!bash
 
-./tools/mk-signed-ipk.sh <path-to-ipk-file>
+./tools/mk-signed-ipk.sh build/smartrest-agent_4.2.3_arm.ipk
 ```
-The packages created by this command can be installed even if you enable signature validation checking on your Netcomm device as long as the paired public key is stored there.
+Then, you'll find `smartrest-agent_4.2.3_arm-signed.ipk` in build directory. You can install the signed packages even if the signature validation checking is enabled, as long as the corresponded paired public key exists on your Netcomm device.
 
 * How can I query the current package versions?
 
