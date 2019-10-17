@@ -44,6 +44,9 @@ case $environment in
     staging-latest)
         export CHEF_ENV=cumulocity-staging-latest-nonprod
     ;;
+    staging-latest-new)
+        export CHEF_ENV=cumulocity-staging-latest
+    ;;
     staging-performance)
         export CHEF_ENV=cumulocity-staging-performance-test-nonprod
         export ORGNAME=cumulocity-devel

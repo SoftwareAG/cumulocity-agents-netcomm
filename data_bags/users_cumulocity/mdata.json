@@ -1,0 +1,7 @@
+{
+  "id": "mdata",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDRwxoaLB+2EGzA7qHY5o+J4ZnaTFw74ZbWyjlJYSoXdJsYlXe1O/sHRMoFdLLbDPvtV8BT5eO9IkqJc1dETEaVkFPI8ouWzImYyn9rOoTIl3rw8whNgwGjIyZfa64sj0I/4MquQFpt1XH1yNLzs70+xeBJ3NIoZqFNuNYK0J6eFAf+MByFqTBUEbpgiiUmo/VHCRLqZxRyQJgNXSLURVWOtGL5a8BUWbvxujGJGkNT8FcVcia1VXg3DDaHTB213sSuCTWaxnae1rIenVsGX8f8PT6Dxcdy6a99ALv+PIasR6gEejYPtXOp/9WSNGcQVXP9gtSLVrBPSZCWGq5HVOmezxn6B5Dt5B2g0H6Nyl7V/6xBILf0zwykG3FL6Nxy2XJFgbf+VN5rOChaqH4rFHiuGx9WTmLvBhnhDs0TnV28vyX+w7OqEmjuTE9HAwuQOOEoTN/JGNrYBk9em3FXXfddP3JJo/rob1VDS5T5g5Dr/lu3awpO2neYlk9Bf8X4nZwZ40OAzkEonJpJ2Bxx/FLpquCga/tR+WP8bzGQhVah57WIlRV6KcF0IVOCvjpCY9Am7JAcK18Okq+J+3xxz8TUb/GABD+8pA4ZMNCNiCcmwTgrSyC/acXRQUmPcS1c/IKWeKqIgGC5EumndflAPUMRB9wNOxp7kQTyf2Qbq1Fqhw== Maciej.Data@softwareag.com"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Maciej Data"
+}

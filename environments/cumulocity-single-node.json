@@ -54,7 +54,7 @@
     },
     "cumulocity-karaf": {
       "version": "___KARAFVERSION___",
-      "memory_left_for_system": "4096",
+      "memory_left_for_system": "1536",
       "notification": true,
       "oort-enabled": true,
       "cep-server-enabled": true,
@@ -67,7 +67,7 @@
         "contextService.rdbmsUser": "postgres",
         "mongodb.user": "c8y-root",
         "mongodb.admindb": "admin",
-        "mongodb.password": "Welcome123",
+        "mongodb.password": "mongodb-password",
         "contextService.tenantManagementDB": "management",
         "cumulocity.environment": "PRODUCTION",
         "auth.checkBlockingFromOutside": false,
@@ -80,6 +80,7 @@
         "system.support-user.enabled": true,
         "tenantSuspend.mail.sendtosuspended": false,
         "email.from": "no-reply@server.domain.com",
+        "microservice.provider": "none",
         "errorMessageRepresentationBuilder.includeDebug": "false",
         "passwordReset.email.subject": "Password reset",
         "passwordReset.token.email.template": "Dear <Customer> user,\\n\\n\\\n            You or someone else entered this email address when trying to change the password of a <Customer> portal user.\\n\\n\\\n            Please use the following link to reset your password: \\n\\\n            {host}?token={token}&showTenant\\n\\n\\\n            If you were not expecting this email, please ignore it. \\n\\n\\\n            Kind regards,\\n\\\n            <Customer> support team\\n",
@@ -90,8 +91,8 @@
     },
     "cumulocity-mongo": {
       "mongodb.initUser": "init-root",
-      "mongodb.initPassword": "Welcome123",
-      "mongodb.password": "Welcome123",
+      "mongodb.initPassword": "SNinitrootPW",
+      "mongodb.password": "mongodb-password",
       "version": "3.6",
       "wiredtiger-cache": 2
     },

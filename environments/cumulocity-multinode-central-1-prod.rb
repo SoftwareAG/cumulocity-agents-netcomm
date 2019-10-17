@@ -6,14 +6,14 @@ cookbook_versions({
 #'cumulocity'=>'= 8.18.0',
 #'cumulocity'=>'= 9.0.11',
 #'cumulocity'=>'= 1004.0.3',
-'cumulocity'=>'= 1004.6.3',
+'cumulocity'=>'= 1004.6.2',
 #'cumulocity-kubernetes'=>'= 8.18.0',
 #'cumulocity-kubernetes'=>'= 9.0.11',
 #'cumulocity-kubernetes'=>'= 1004.0.3',
 'cumulocity-kubernetes'=>'= 1004.6.3',
 #'cumulocity-ssagents'=>'= 9.20.3'
 #'cumulocity-ssagents'=>'= 1004.0.3'
-'cumulocity-ssagents'=>'= 1004.6.3'
+'cumulocity-ssagents'=>'= 1004.6.2'
 })
 
 default_attributes(

@@ -11,13 +11,14 @@ override_attributes(
 
 run_list(
                     # 'recipe[swap::swapfile]',
-  'recipe[cumulocity-os-update]',
+                    # 'recipe[cumulocity-os-update]',
+  'recipe[chef-client::service]',
   'recipe[cumulocity]',
   'recipe[cumulocity-rsyslog]',
   'recipe[ulimit]',
   'recipe[chef-client::delete_validation]',
   'recipe[runit]',
-  'recipe[chef-client]',
+  # 'recipe[chef-client]',
   # 'recipe[el-sysctl]',
   # 'recipe[security-scripts::tmout]',
   # 'recipe[yum::config]',

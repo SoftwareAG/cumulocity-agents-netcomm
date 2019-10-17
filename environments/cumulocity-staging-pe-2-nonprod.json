@@ -2,8 +2,8 @@
   "name": "cumulocity-staging-pe-2-nonprod",
   "description": "The production environment",
   "cookbook_versions": {
-    "cumulocity": "= 1004.6.3",
-    "cumulocity-kubernetes": "= 1004.6.3",
+    "cumulocity": "~> 1004.6",
+    "cumulocity-kubernetes": "~> 1004.6",
     "cumulocity-ssagents": "= 1004.0.5"
   },
   "json_class": "Chef::Environment",
@@ -31,20 +31,19 @@
     "java": {
       "jdk_version": "8"
     },
-    "cumulocity": {
-      "chef-client": {
-        "enabled": false
-      }
-    },
+    "cumulocity-base": {"chef-client": {"enabled": true}},
     "cumulocity-kubernetes": {
       "deployK8S4env": "cumulocity-staging-pe-2-nonprod",
+      "docker-version": "1.13.1-102.git7f2769b.el7.centos",
+      "docker": {
+              "default-pids-limit": 10240
+          },
       "attachedEnvs": [
         "cumulocity-staging-pe-2-nonprod"
       ],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.0.18",
-      "renew-certificates": true,
+      "images-version": "1004.0.19",
       "images2install": [
         "cep",
         "cep-small",
@@ -75,8 +74,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "6bb04eb257929e13114e1526b0b55bd1a8861b3acc87a20d7ca4c63eb5e93a4390776b1d9953ca8096a579a2e8947e4b9c46ddbab0a5e0c38362fe141374b493",
-      "version": "1004.0.18-1",
-      "ssa-version": "1004.0.18-1",
+      "version": "1004.0.19-1",
+      "ssa-version": "1004.0.19-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
@@ -103,7 +102,7 @@
     },
     "cumulocity-GUI": {
       "connString": "https://C8YWebApps:dkieW^s99l0@resources.cumulocity.com/targets/cumulocity/e153c733d590",
-      "version": "1004.0.18"
+      "version": "1004.0.19"
     },
     "cumulocity-ssagents": {
       "useTags": true,

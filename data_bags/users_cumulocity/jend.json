@@ -1,7 +1,7 @@
 {
   "id": "jend",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDO6PcIe/mQ/5ppPwChyYyX+zIMeHlOQnRKBZN3LSMaRDNgVwEdiMNvoD7Ptan7daWXb99FGbXLlBEYTvkKyJVJtc+h0021J6bb1LKyw9xKfEd3XLSG/F6buHPGWCjxqrUudIftShtpJYLYf+belkKyiFasO0vbPTR4oZj3dKldRjHTjw2EORWVMeaqu3V/xkt/IudbROQ0To0GnZgChQCb89us0iKkhW4ZeToY+/zjP38aR9LpBm4aDlsQVIk1dTKmPWjj4GG1wQjrgMcqOz7PXoYmUDOM+TRntYpokXP6y603VZF376AWkNy7I9DywE8OTI9Xu0gngRqURsgwfzST jend@d8edevjend01",
-  "groups": ["wheelssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPSSUjpXkR2A2Ge/XTt0PzMAA9hygGPZEoM7vZ4V5BoM8JHyNdKuozjvNA8G4AE28PlLGd9BqhM6yJsGVt8OWfclzAL0Qpc3G33mH2J3yJSmbfJMWF0BQWj0KQQHmue2ggkhQXGkXUn2IwgfPeO74S0WE7eeGbX/IgsqK7/GZ58KdOQb3564Rvd2KJ49bCdnKFOqVdZKjreOHV241vVvXayNzczYBdSIp2d+DcwidlzGbbNgBlLKW4jDNjvn3YHbVysa746w/9FY0wvcSjIGMXT6sprNmKNK4N2wYSCvcsTnfj36E7McZNBgqg7JDD5WBdGXWcUDFWbFriSH7ZoAff eur\dhy@SAG-FK31P02"],
+  "ssh_keys": [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDO6PcIe/mQ/5ppPwChyYyX+zIMeHlOQnRKBZN3LSMaRDNgVwEdiMNvoD7Ptan7daWXb99FGbXLlBEYTvkKyJVJtc+h0021J6bb1LKyw9xKfEd3XLSG/F6buHPGWCjxqrUudIftShtpJYLYf+belkKyiFasO0vbPTR4oZj3dKldRjHTjw2EORWVMeaqu3V/xkt/IudbROQ0To0GnZgChQCb89us0iKkhW4ZeToY+/zjP38aR9LpBm4aDlsQVIk1dTKmPWjj4GG1wQjrgMcqOz7PXoYmUDOM+TRntYpokXP6y603VZF376AWkNy7I9DywE8OTI9Xu0gngRqURsgwfzST jend@d8edevjend01" ],
+  "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "email": "jochen.endres@cumulocity.com",
   "comment": "Jochen Endres"

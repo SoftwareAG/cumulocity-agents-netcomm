@@ -232,12 +232,14 @@ AUTO=false
 INST=false
 INSTALLONLY=false
 outputFolder="/var"
+CHEFRUN_ARGS=""
 
-while getopts "veiyYo:" opt ; do
+while getopts "veiyYom:" opt ; do
   case $opt in
     v) VERBOSE=true ;;
     e) EXTRACTONLY=true ;;
     i) INSTALLONLY=true;;
+    m) CHEFRUN_ARGS=" -m";;
     y) AUTO=true yes="-y";;
     Y) AUTO=true yes="-y" INST=true ;;
     o) outputFolder="$OPTARG" ;;
@@ -392,7 +394,7 @@ while ! [[ ${runSoloQ,,} =~ ^(y(es)?|no?)$ ]] ; do
   f_question "run chef-zero and install the platform? [Y/n]: " runSoloQ $INST
   if [[ ${runSoloQ,,} =~ ^(y(es)?)?$ ]] ; then
     cd ${soloDir}
-    "./chefrun.sh" && break
+    ./chefrun.sh${CHEFRUN_ARGS} && break
     f_color_pr red "ERROR: could not run chef-zero!"
   fi
 done
