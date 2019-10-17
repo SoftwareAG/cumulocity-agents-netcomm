@@ -24,8 +24,8 @@ VNC_SRC:=$(wildcard $(SRC_DIR)/vnc/*.c)
 VNC_OBJ:=$(addprefix $(BUILD_DIR)/,$(VNC_SRC:.c=.o))
 VNC_PKG_DIR:=build/staging/vncproxy
 
-SIGN_PUBKEY:=$(BUILD_DIR)/ipkkeys/cumulocity-public.pem
-SIGN_PRIKEY:=$(BUILD_DIR)/ipkkeys/cumulocity-private.pem
+SIGN_PUBKEY:=misc/ipkkeys/cumulocity-public.pem
+SIGN_PRIKEY:=misc/ipkkeys/cumulocity-private.pem
 SIGN_PKG_DIR:=build/staging/ipksignature
 
 PKG:=$(NTC_SDK_PATH)/tools/mkipk.sh
@@ -87,14 +87,18 @@ vnc: $(BIN_DIR)/$(VNC_BIN)
 	@$(PKG) $(shell pwd)/$(VNC_PKG_DIR) $(shell pwd)/$(PKG_DIR)
 
 signature:
-	mkdir -p $(SIGN_PKG_DIR)/CONTROL
-	mkdir -p $(SIGN_PKG_DIR)/etc/cdcs/conf/pubkey
-	mkdir -p $(BUILD_DIR)/ipkkeys
-	openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out $(SIGN_PRIKEY)
-	openssl rsa -in $(BUILD_DIR)/ipkkeys/cumulocity-private.pem -pubout -out $(SIGN_PUBKEY)
-	cp debian/ipksignature/* $(SIGN_PKG_DIR)/CONTROL
-	cp $(SIGN_PUBKEY) $(SIGN_PKG_DIR)/etc/cdcs/conf/pubkey
-	$(PKG) $(shell pwd)/$(SIGN_PKG_DIR) $(shell pwd)/$(PKG_DIR)
+	@mkdir -p $(SIGN_PKG_DIR)/CONTROL
+	@mkdir -p $(SIGN_PKG_DIR)/etc/cdcs/conf/pubkey
+	@mkdir -p misc/ipkkeys
+ifeq (,$(wildcard $(SIGN_PUBKEY)))
+	@openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out $(SIGN_PRIKEY)
+	@openssl rsa -in misc/ipkkeys/cumulocity-private.pem -pubout -out $(SIGN_PUBKEY)
+else
+	@echo "Public key already exists, won't create a new key pair"
+endif
+	@cp debian/ipksignature/* $(SIGN_PKG_DIR)/CONTROL
+	@cp $(SIGN_PUBKEY) $(SIGN_PKG_DIR)/etc/cdcs/conf/pubkey
+	@$(PKG) $(shell pwd)/$(SIGN_PKG_DIR) $(shell pwd)/$(PKG_DIR)
 
 $(BIN_DIR)/$(NTC_BIN): $(NTC_OBJ)
 	@mkdir -p $(BIN_DIR)

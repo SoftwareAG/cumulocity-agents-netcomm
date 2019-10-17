@@ -4,7 +4,7 @@ Usage:
 $(basename $0) -h                    -- Show this help.
 $(basename $0) <input ipk file>      -- IPK file to be signed by private key"
 
-PRIKEY=build/ipkkeys/cumulocity-private.pem
+PRIKEY=misc/ipkkeys/cumulocity-private.pem
 SIGN=$NTC_SDK_PATH/tools/sign.sh
 
 if [ "$1" = "" -o "$1" = "-h" ]; then
