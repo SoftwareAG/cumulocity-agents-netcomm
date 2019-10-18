@@ -8,11 +8,16 @@
   kubeadm reset
   systemctl stop kubelet
   
-  rm -rf /var/lib/etcd-cluster/ /var/lib/docker /etc/docker /etc/kube*
+  yum remove 'kube*' 'docker*' ' 'cri-tools*' -y
   
-  yum remove 'kube*' 'docker*' -y
+  rm -rf /var/lib/etcd-cluster/ /var/lib/docker /etc/docker /etc/kube*
 
   for ip in $( ip -4 address show flannel.1 | awk '/[ ]*inet/{print $2}' ) ; do
     ip address del $ip dev flannel.1
   done
+
+  echo ""
+  echo "Please reboot machine now"
+  echo ""
+
 )
