@@ -1,6 +1,6 @@
 {
   "id": "stk",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDb4kmGwX2gtr8SkYYHrHqTwV9JcXidqxiCx+thLMvMpQlSZ8wLmqZZ04f7yDCJ4Gg4+O6THZTdRYK4wQF/kznH4DOAqsHMF3eIOUmk8o6LqFsAkzpq/mKvFdthHd5kH4q4DnHwlgLSt61j3g+f6mqLeE76p82IhHB2ZhuFenJI6Zp5rkZWMduY2xFxsc5lI808g+87y4oH90R28O2ajp4iittWgQ7tR6JnKYDrBRe1v4ntbWmRqF+0bX6GBnTu5cuqtaRWFxOm2l04i2w6TSJFP6lQBSgtFCk6/X62kSsJavn9+Yxs/JcF74pE0ohEoy92IjANmHq1rioo4GQRsFTN stk@d8edevstk01",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDb4kmGwX2gtr8SkYYHrHqTwV9JcXidqxiCx+thLMvMpQlSZ8wLmqZZ04f7yDCJ4Gg4+O6THZTdRYK4wQF/kznH4DOAqsHMF3eIOUmk8o6LqFsAkzpq/mKvFdthHd5kH4q4DnHwlgLSt61j3g+f6mqLeE76p82IhHB2ZhuFenJI6Zp5rkZWMduY2xFxsc5lI808g+87y4oH90R28O2ajp4iittWgQ7tR6JnKYDrBRe1v4ntbWmRqF+0bX6GBnTu5cuqtaRWFxOm2l04i2w6TSJFP6lQBSgtFCk6/X62kSsJavn9+Yxs/JcF74pE0ohEoy92IjANmHq1rioo4GQRsFTN stk@d8edevstk01"],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Stefan Koehler"

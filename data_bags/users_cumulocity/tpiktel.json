@@ -1,6 +1,6 @@
 {
   "id": "tpiktel",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDm9lnhIg58SJEpwXMJnQtedN+tAR4a8MuDbEm6tH/O2rZoT5v9VmUo/5Yb0P14UVJ2lgyPGLpBLkTMN21yKoMh6Nv6imkpPkVxTT56R5T1FVrmfnTt39XXseJsOoByenNxat0XElmSeIRwqEJGht0k47Zq8wJ0uuCnyNTVVurkPPGybRalojufIENDrRexr4E0YbYMiSZrwyajCif3VgQnQAd3IvT6psSuf25dYlzrLSpVoTg4PkiG0s2mO3FmcfxR7VEQIbXIL9UcE1SWFGZ6PdcOr3obMaZ5rH++So58OFZBiHChDo5ANHq6HkvtQKn8gNmHwruTXLBmifWvdPxP tpiktel@pixel-hp",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDm9lnhIg58SJEpwXMJnQtedN+tAR4a8MuDbEm6tH/O2rZoT5v9VmUo/5Yb0P14UVJ2lgyPGLpBLkTMN21yKoMh6Nv6imkpPkVxTT56R5T1FVrmfnTt39XXseJsOoByenNxat0XElmSeIRwqEJGht0k47Zq8wJ0uuCnyNTVVurkPPGybRalojufIENDrRexr4E0YbYMiSZrwyajCif3VgQnQAd3IvT6psSuf25dYlzrLSpVoTg4PkiG0s2mO3FmcfxR7VEQIbXIL9UcE1SWFGZ6PdcOr3obMaZ5rH++So58OFZBiHChDo5ANHq6HkvtQKn8gNmHwruTXLBmifWvdPxP tpiktel@pixel-hp"],
   "groups": ["users"],
   "shell": "\/bin\/bash",
   "comment": "Tomasz Piktel"

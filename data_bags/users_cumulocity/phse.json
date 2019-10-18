@@ -1,6 +1,6 @@
 {
   "id": "phse",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyMnShmAHFcmUlj0B7hSUQSBYGP7KAAiqwAN83gP9C/Tt1dPGeiVJfw6H/tn7PBr5Ml4UOL7Cu3r4QJwwqK7RHJqYigTLALKv9vltG1pyH/nnCvk8MBmS1MU5pKb8mLBRNBnQIZlSyp8NoK2a0O3l/PhlBQ1LMVjq/ZzuqpWm8s7GVoXle4Lg7Wm6o4ixB0iCymaTZ3u5D1zob9+2dAyjfGBdBqIxfclrb+hlW99W74Wb9CeCr6Cq3AFjoZ6w8LKDyGJVmHqQKpgywencdSkAxqyJjpV+sjKccqZTcX/dfCdJAggdsamYi5c7dbMphKqJk5mzd1RV9OypGBFzeMped phse@phse-VirtualBox",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyMnShmAHFcmUlj0B7hSUQSBYGP7KAAiqwAN83gP9C/Tt1dPGeiVJfw6H/tn7PBr5Ml4UOL7Cu3r4QJwwqK7RHJqYigTLALKv9vltG1pyH/nnCvk8MBmS1MU5pKb8mLBRNBnQIZlSyp8NoK2a0O3l/PhlBQ1LMVjq/ZzuqpWm8s7GVoXle4Lg7Wm6o4ixB0iCymaTZ3u5D1zob9+2dAyjfGBdBqIxfclrb+hlW99W74Wb9CeCr6Cq3AFjoZ6w8LKDyGJVmHqQKpgywencdSkAxqyJjpV+sjKccqZTcX/dfCdJAggdsamYi5c7dbMphKqJk5mzd1RV9OypGBFzeMped phse@phse-VirtualBox"],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Philip Searle"

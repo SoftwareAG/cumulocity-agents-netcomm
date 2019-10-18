@@ -1,6 +1,6 @@
 {
   "id": "greenaway",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWJpddYPF8XpgbPYGpEUGSoThh9dNV/sL7KJx/lnP2hkDwAyr9nZiCNmhma6poM1MUicVNVy32cDYRkWazbYWFMMzhlsIcrez+qHHkxJIyy6hEbZ6t0tF8+jwdtiVMtEbhvRf4gLVg7oCzOpdMJOowRKQEaO5S368uqdoddHG6ldrghXCwkqcnTRQN7KxbFLNPE65ls/1omej3NuXtIPZMkP3Vlxm2nSDGVHn2ZsHgVIEiUtJz3rClUG7d8+V+q6EazV849X2QYvIngUmu+Tq/xQWJ7HkzUMUipJzh1e6fJJp5xp+lQZAfAIJA4a18+B4ZJ4Lhsj7rUeSgrJp6+3Dd CGRE@MCCGRE02",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWJpddYPF8XpgbPYGpEUGSoThh9dNV/sL7KJx/lnP2hkDwAyr9nZiCNmhma6poM1MUicVNVy32cDYRkWazbYWFMMzhlsIcrez+qHHkxJIyy6hEbZ6t0tF8+jwdtiVMtEbhvRf4gLVg7oCzOpdMJOowRKQEaO5S368uqdoddHG6ldrghXCwkqcnTRQN7KxbFLNPE65ls/1omej3NuXtIPZMkP3Vlxm2nSDGVHn2ZsHgVIEiUtJz3rClUG7d8+V+q6EazV849X2QYvIngUmu+Tq/xQWJ7HkzUMUipJzh1e6fJJp5xp+lQZAfAIJA4a18+B4ZJ4Lhsj7rUeSgrJp6+3Dd CGRE@MCCGRE02"],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Chris Greenaway"
