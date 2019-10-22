@@ -383,15 +383,11 @@ static int ts_recv(int fd, char *buf, size_t count)
         return ptr - buf + c;
     } else if (c == 0)
     { // When a stream socket peer has performed an orderly shutdown
-        syslog(LOG_INFO, "ts_recv: Connection close .. %s\n", strerror(errno));
-        return -1;
-    } else if (c == -1)
-    { // error
-        syslog(LOG_ERR, "ts_recv: %s\n", strerror(errno));
+        syslog(LOG_INFO, "ts_recv: Connection closed\n");
         return -1;
     } else
-    {
-        syslog(LOG_ERR, "ts_recv: unknown error occurred\n");
+    { // error
+        syslog(LOG_ERR, "ts_recv: %s\n", strerror(errno));
         return -1;
     }
 }
@@ -429,7 +425,7 @@ static int ws_recv(CURL *curl, char *buf, size_t count, uint64_t *wsnum)
                                 return -1;
                         else if (rc == CURLE_AGAIN)
                                 return 0;
-                        else if (n == 0 && rc == CURLE_UNSUPPORTED_PROTOCOL) {
+                        else if (n == 0) {
                                 syslog(LOG_INFO, "ws_rh[%zu]: Connection closed\n", n);
                                 return -1;
                         }
