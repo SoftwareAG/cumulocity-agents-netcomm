@@ -6,14 +6,14 @@ cookbook_versions({
 #'cumulocity'=>'= 8.18.0',
 #'cumulocity'=>'= 9.0.11',
 #'cumulocity'=>'= 1004.0.3',
-'cumulocity'=>'= 1004.6.2',
+'cumulocity'=>'= 1005.0.2',
 #'cumulocity-kubernetes'=>'= 8.18.0',
 #'cumulocity-kubernetes'=>'= 9.0.11',
 #'cumulocity-kubernetes'=>'= 1004.0.3',
-'cumulocity-kubernetes'=>'= 1004.6.3',
+'cumulocity-kubernetes'=>'= 1005.0.2',
 #'cumulocity-ssagents'=>'= 9.20.3'
 #'cumulocity-ssagents'=>'= 1004.0.3'
-'cumulocity-ssagents'=>'= 1004.6.2'
+'cumulocity-ssagents'=>'= 1005.0.2'
 })
 
 default_attributes(
@@ -78,7 +78,11 @@ override_attributes(
 #    "version" => "1004.0.7-1",
 # 09.07.2019 with fix: MTM-27156
 #    "version" => "1004.0.12-1",
-    "version" => "1004.6.12-1",
+#    "version" => "1004.6.12-1",
+# 14.10.2019
+#   "version" => "1004.6.�13-1",
+# 23.10.2019
+    "version" => "1005.0.3-1",
 #   tracker-agent-server version
 #    "ssa-version" => "9.20.0-1",
 #   lwm2m-agent-server-version
@@ -86,9 +90,13 @@ override_attributes(
 #    "ssa-version" => "1004.0.7-1",
 # 10.07.2019 upgrade, karaf 1004.0.12 but Jens Wildhagen said 1004.0.9 for ui, agents, etc.
 #    "ssa-version" => "1004.0.9-1",
-    "ssa-version" => "1004.6.12-1",
+#    "ssa-version" => "1004.6.12-1",
+# 15.10.2019
+#    "ssa-version" => "1004.6.13-1",
+# 15.10.2019
+    "ssa-version" => "1005.0.3-1",
     "memory_left_for_system" => "8192",
-    "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24", "100.64.252.0/24", "18.185.5.234", "10.201.0.0/24", "10.201.0.187" ],
+    "management-access" => [ "172.31.10.100","172.31.10.104","54.247.122.134","100.64.251.0/24", "100.64.252.0/24", "18.185.5.234", "10.201.0.0/24", "10.201.0.187", "100.64.1.0/24" ],
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,
@@ -119,6 +127,8 @@ override_attributes(
       "admin.password" => "8c4f94954348ce4770c76d63e5ed6139f06fb08c9790b45ca8c32772551824f2", # ZegAd?yLa78
       "sysadmin.password" => "",
       "cepServer.queue.batch.limit" => "5",
+      ## following line added 22102019
+      "cepServer.queue.limit": "500000",
       "cometd.heartbeat.minutes" => "3",
       #"system.two-factor-authentication.enabled" => false,
       #"system.two-factor-authentication.enforced.group" => "admins",
