@@ -1,6 +1,6 @@
 {
   "id": "gru",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrUkLcgRM/dz8WYcJ0lFtub3QNA2G/24mtccJ73n9aldhsQalqBdfak2hOVZcWElG8f/AkVxhYDKc8h/srdAKszFKpxX890wAQ4NJ6wP9qyFfhfUU8Zd/Re6yvX5u3Ju9rfYMp3qgz1fB4dLWYGJTA1/ixibJo4j5bdepAcRc7W6aJuvllzW8MPyz6koOXdNlYnpDovOo5b6tUNLb0dYG9qgIgEHnk3gZnhiY6i9KKwZjdHHj8UH11yVQfqm7h9+GCQzXPLF0Lqf8Wd9cOVRVktJJInxuopojnhscON4Qv7E58Gr0z492ZPHSrKsnkGVgiXSx0/ATnXTKN3MzNmccf gru@gru-VirtualBox",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrUkLcgRM/dz8WYcJ0lFtub3QNA2G/24mtccJ73n9aldhsQalqBdfak2hOVZcWElG8f/AkVxhYDKc8h/srdAKszFKpxX890wAQ4NJ6wP9qyFfhfUU8Zd/Re6yvX5u3Ju9rfYMp3qgz1fB4dLWYGJTA1/ixibJo4j5bdepAcRc7W6aJuvllzW8MPyz6koOXdNlYnpDovOo5b6tUNLb0dYG9qgIgEHnk3gZnhiY6i9KKwZjdHHj8UH11yVQfqm7h9+GCQzXPLF0Lqf8Wd9cOVRVktJJInxuopojnhscON4Qv7E58Gr0z492ZPHSrKsnkGVgiXSx0/ATnXTKN3MzNmccf gru@gru-VirtualBox"],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Martin Grumman",

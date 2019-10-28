@@ -1,7 +1,7 @@
 {
   "id": "jte",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQQ1wbBMda8rLhzERiKmRhAceFKz6JJNZADnIyuBDKHOXRsWQwsYLsOV/GVzYUnlm6qw7LoF++kLoZYrsTLPHbN4vqBcxj0DpaywPtYEgyvZqYbZ1IRpEt9l3nTTSEnDnb76PxEms/8XM5Ht7mD5hSIzfRntqV9dvav5FhI1Ujz3j9mz4QXHZDImozwKCLkh7tdGJYzaibEtjEVlgrpvOLO6Zxx4sck3Oj2wq8WnEdMNIFVvKRk/A5hYMiEQKuPE39SQOleNje2q2LP9HnBugoF+zJwjyrYiDMOWe/Z2CFndC1gHL3L6eBpYFQMA5VPMeI0NLPWF8rtwhm2/dstZ5D jte@d8edevjte01",
-  "groups": ["wheel"],
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQQ1wbBMda8rLhzERiKmRhAceFKz6JJNZADnIyuBDKHOXRsWQwsYLsOV/GVzYUnlm6qw7LoF++kLoZYrsTLPHbN4vqBcxj0DpaywPtYEgyvZqYbZ1IRpEt9l3nTTSEnDnb76PxEms/8XM5Ht7mD5hSIzfRntqV9dvav5FhI1Ujz3j9mz4QXHZDImozwKCLkh7tdGJYzaibEtjEVlgrpvOLO6Zxx4sck3Oj2wq8WnEdMNIFVvKRk/A5hYMiEQKuPE39SQOleNje2q2LP9HnBugoF+zJwjyrYiDMOWe/Z2CFndC1gHL3L6eBpYFQMA5VPMeI0NLPWF8rtwhm2/dstZ5D jte@d8edevjte01"],
+  "groups": ["users"],
   "shell": "\/bin\/bash",
   "comment": "Joachim Teutsch",
   "email": "joachim.teutsch@cumulocity.com"

@@ -1,6 +1,6 @@
 {
   "id": "kter",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSZm01aKPAX40L4U/DMad8f1+SELaFt7AAwqoqAN1TINKQJn+Yy8+tma1oWnwLCIJLS8X9rld/2vScKmioFSaYngNmFFt34eHr50qeOokFPhjYZpDjGbvDi72FSMRu2fUJgOI67Itq0MD838UWM56zSW80q13bt/yJz0iWQYhT7r3zNm2aTZRiL82H/J/HYx7pB+Lb2PZBunYzIeLcf4md/P9xfSRIwfIQfLq2Uz0fMS1KnJ792+T/UbsGGeZlfU2cPy15V43FcHtezibfwoQyNb5FsPMpo/fXvTR7R6l5FFFdEwy6mYq3M8DS72zVusdJCJYh7pX5RflWt+d7OgLl kacper.terebus@softwareag.com",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSZm01aKPAX40L4U/DMad8f1+SELaFt7AAwqoqAN1TINKQJn+Yy8+tma1oWnwLCIJLS8X9rld/2vScKmioFSaYngNmFFt34eHr50qeOokFPhjYZpDjGbvDi72FSMRu2fUJgOI67Itq0MD838UWM56zSW80q13bt/yJz0iWQYhT7r3zNm2aTZRiL82H/J/HYx7pB+Lb2PZBunYzIeLcf4md/P9xfSRIwfIQfLq2Uz0fMS1KnJ792+T/UbsGGeZlfU2cPy15V43FcHtezibfwoQyNb5FsPMpo/fXvTR7R6l5FFFdEwy6mYq3M8DS72zVusdJCJYh7pX5RflWt+d7OgLl kacper.terebus@softwareag.com"],
   "groups": ["users"],
   "shell": "\/bin\/bash",
   "comment": "Kacper Terebus",

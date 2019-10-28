@@ -1,6 +1,6 @@
 {
   "id": "ggac",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUQboUhRk6721JarAZ9ZQmjznUtrjWAjw23CmEKwi6Y8ixOVSIq5hZf1Qdy9om+2ZjbkV93mQ+kP04987Z4d1pP6U2iBcvVhAK+KC2E1ODucMOetxK+iDh8qS+5tv89M0EzIPReJ/iiNkO3ZfLdnNKa/qlDOF7kogaXZQbg1YZXzGYEJz289MsWyMe0UznSWEma9W1bvBNpyjfDN+Jk74NX15iPI6+L1qzQbZaThEMzwfxmjHZnAiiedlZD5tFiulZeWoc/dsMnQC7xklUkFUGayYBF2y0JmsgF/mUU+3BcWdSQwF06PbwK66l7xPDCXjE1zG3R5eWzzqjVeNPt+c9 ggac@GGF",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUQboUhRk6721JarAZ9ZQmjznUtrjWAjw23CmEKwi6Y8ixOVSIq5hZf1Qdy9om+2ZjbkV93mQ+kP04987Z4d1pP6U2iBcvVhAK+KC2E1ODucMOetxK+iDh8qS+5tv89M0EzIPReJ/iiNkO3ZfLdnNKa/qlDOF7kogaXZQbg1YZXzGYEJz289MsWyMe0UznSWEma9W1bvBNpyjfDN+Jk74NX15iPI6+L1qzQbZaThEMzwfxmjHZnAiiedlZD5tFiulZeWoc/dsMnQC7xklUkFUGayYBF2y0JmsgF/mUU+3BcWdSQwF06PbwK66l7xPDCXjE1zG3R5eWzzqjVeNPt+c9 ggac@GGF"],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Grzegorz Gaciąg",

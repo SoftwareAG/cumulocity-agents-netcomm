@@ -1,6 +1,6 @@
 {
   "id": "mbak",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIioYPTJK4+p3P5yBu/5PGEgdEm+1x1OETrys9Di1AhFKHwBiYm87hyDhiDPGYJ8dYn0et5eF5F6vSK2BbK1Tb4/OHrqRwTZsnzyJR5Xso2Qao0JVd86i1hKkykwRjqnre2XzXjzZXLAJ84z73sJqb9SPGwhDJsLANMTw3fcThMkkt/fFUDS/2OtJ/XGS2aFarJaS7Yhh/bzsfJuKCsOZuRuxBOIWMncNMePJJxGoDp02SYhuq/thsBD+VflpRQttVkLgq0hHCc00RK73Fg86jm2lVRY00dZ2nxrzU0KcrliyRUk4oYjZiQ5r2R9olLo3JZVvtEihDb8CTunZ1LQGh michal@ubuntu01",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIioYPTJK4+p3P5yBu/5PGEgdEm+1x1OETrys9Di1AhFKHwBiYm87hyDhiDPGYJ8dYn0et5eF5F6vSK2BbK1Tb4/OHrqRwTZsnzyJR5Xso2Qao0JVd86i1hKkykwRjqnre2XzXjzZXLAJ84z73sJqb9SPGwhDJsLANMTw3fcThMkkt/fFUDS/2OtJ/XGS2aFarJaS7Yhh/bzsfJuKCsOZuRuxBOIWMncNMePJJxGoDp02SYhuq/thsBD+VflpRQttVkLgq0hHCc00RK73Fg86jm2lVRY00dZ2nxrzU0KcrliyRUk4oYjZiQ5r2R9olLo3JZVvtEihDb8CTunZ1LQGh michal@ubuntu01"],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Michał Bąk"

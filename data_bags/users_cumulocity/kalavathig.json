@@ -1,6 +1,6 @@
 {
   "id": "kalavathi",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8vj/GlM/L23l4zkqo4MMM3fmd/vrBcauczEFUH+D+DW+BQTid1Cw4LgVc0loP2eP3J8W+oaSFxYaoUeHRVU8vqUQttWyfeOcj3K1if1soRAAgKr1+QvxMIvVIv1teQQJ5GjQs/uOuB4LDryIRki1atjs9Ge2OSADqjWBi8Dqi3G17J6UwzEiG5l7sqOWhMBrLgg4ctLd+vKeoEgZ9Hd12pXA6TsT5bxiTGBISKQJTsN5qapxuPVHyU8OX+WlkwlEwwBsEtg297JB+ffZzLDqbb05Ha0JSlUWN/I8mHDLSjPqGqQxagnXJKrVvyLj+OdCbSqbqpr4ob1+0BMwRA7Hd kalavathi@Kalavathis-MacBook-Pro.local",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8vj/GlM/L23l4zkqo4MMM3fmd/vrBcauczEFUH+D+DW+BQTid1Cw4LgVc0loP2eP3J8W+oaSFxYaoUeHRVU8vqUQttWyfeOcj3K1if1soRAAgKr1+QvxMIvVIv1teQQJ5GjQs/uOuB4LDryIRki1atjs9Ge2OSADqjWBi8Dqi3G17J6UwzEiG5l7sqOWhMBrLgg4ctLd+vKeoEgZ9Hd12pXA6TsT5bxiTGBISKQJTsN5qapxuPVHyU8OX+WlkwlEwwBsEtg297JB+ffZzLDqbb05Ha0JSlUWN/I8mHDLSjPqGqQxagnXJKrVvyLj+OdCbSqbqpr4ob1+0BMwRA7Hd kalavathi@Kalavathis-MacBook-Pro.local"],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Kalavathi Golla"

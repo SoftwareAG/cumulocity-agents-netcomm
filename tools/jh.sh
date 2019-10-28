@@ -17,7 +17,7 @@ f_pre_run(){
 
 f_pre_run
 
-keywords="JH([0-9]+)?|((JH|ALT_[A-Z]_)?(KEY|USER|PASSWD|PORT|TFA|OPTS))|(OPT_[A-Z])"
+keywords="JH([0-9]+)?|((JH|ALT_[A-Z]_)?(KEY|USER|PASSWD|PORT|TFA|OTP|OPTS))|(OPT_[A-Z])"
 
 _jh_complete(){
   local cur prev jhcmd
@@ -474,12 +474,14 @@ jh(){
   declare   jhpw=$sshenv["JHPASSWD"]
   declare jhport=$sshenv["JHPORT"]
   declare  jhtfa=$sshenv["JHTFA"]
+  declare jhmplx=$sshenv["JHMPLX"]
   [[ -z ${!jhopts} && ! -z ${defaultjhoptions} ]] && jhopts="defaultjhoptions"
   [[ -z ${!jhuser} && ! -z ${defaultjhuser}    ]] && jhuser="defaultjhuser"
   [[ -z ${!jhkey}  && ! -z ${defaultjhkey}     ]] &&  jhkey="defaultjhkey"
   [[ -z ${!jhotp}  && ! -z ${defaultjhotp}     ]] &&  jhotp="defaultjhotp"
   [[ -z ${!jhport} && ! -z ${defaultjhport}    ]] && jhport="defaultjhport"
   [[ -z ${!jhtfa}  && ! -z ${defaultjhtfa}     ]] &&  jhtfa="defaultjhtfa"
+  [[ -z ${!jhmplx} && ! -z ${defaultjhmplx}    ]] && jhmplx="defaultjhmplx"
   # normal hosts parameters
   f_ssh_alt_set
   declare   user="${override_USER:-$sshenv["USER"]}"
@@ -497,6 +499,14 @@ jh(){
   fi
   [[ ! -z ${!pw}   ]] && ${sshpassInstalled:-false} &&   precmd="sshpass -p ${!pw} "
 
+  psockspath="${psockspath:-"$HOME/.ssh/controlmasters"}"
+  if ${!jhmplx:-true} ; then
+    if [[ ! -d "${psockspath}" ]] ; then
+      mkdir "${psockspath}"
+    fi
+    mplxopts="-oControlPath=${psockspath}/${!jhuser:-$USER}@${!jh}:${!jhport:-22} -oControlMaster=auto -oControlPersist=60m"
+  fi
+
   declare host=$sshenv["$sshhost"]
   declare -g sshhosttoprint="$( ${sed} -r 's/[|:].*//g' <<< "${sshhost,,}" )"
   if [[ -z ${sshhost} ]] && ${gotojh:-false} ; then
@@ -504,6 +514,7 @@ jh(){
     f_color_pr cyn "${prejhcmd}${cmd:-ssh} connection to jumphost '${!jh}' (${sshenv})"
     case ${cmd:=ssh} in
        ssh) fullcmd="${prejhcmd}${cmd} -A \
+        ${mplxopts} \
         ${!jhopts} \
         ${!jhport:+-p'${!jhport}'} \
         ${!jhkey:+-i'${!jhkey}'} \
@@ -540,11 +551,12 @@ jh(){
 #    declare -g sshhosttoprint="$( ${sed} -r 's/[|:].*//g' <<< "${sshhost,,}" )"
     f_color_pr cyn "${cmd:-ssh} connection via '${!jh}' to '${!host}' (${sshenv}/${sshhosttoprint}) ${!user:+"as '${!user}' "}${!key:+"with '${!key}' "}"
     proxycmd="
-      ${prejhcmd}ssh -A -W %h:%p
-      ${!jhopts}
+      ${prejhcmd}ssh -A -W %h:%p \
+      ${mplxopts} \
+      ${!jhopts} \
       ${!jhport:+-p'${!jhport}'} \
-      ${!jhkey:+-i'${!jhkey}'}
-      ${!jhuser:+-l'${!jhuser}'}
+      ${!jhkey:+-i'${!jhkey}'} \
+      ${!jhuser:+-l'${!jhuser}'} \
       ${!jh}"
     case ${cmd:=ssh} in
        ssh) fullcmd="${precmd}${cmd} \

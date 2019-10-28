@@ -1,6 +1,6 @@
 {
   "id": "georgi",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAnGPvcXlPeQMnN6tVi4wo3uWd/qA+92lCcfdGUj+Wh7lF9vWQyqQVF2myMW+CBbiHJowrhK+6HSkSxCreT9/QqBI7s98UOB38+ge3AiRiA3y9Ga8vqQL7hmRWh6fy/HgSQF3ASCxcBSMmJznKEIr7N1YZu63thRhiVVjZP4asNeBRpx26IZ8SdgHDurdT6/tnxLWlTDbuoynW38qF9vdHi3tYGsox3exQzpSvAUQipTkz1OKUBez1Nzt4M+M4g2rgA64f27FlZL+/tBDQBSfWMAw1lcnC2CH6xAAo9ZXyKNFB7XxbBYt8eaf99doUIeQOq3lugQs63XQhImQQPYeOiQ==",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAnGPvcXlPeQMnN6tVi4wo3uWd/qA+92lCcfdGUj+Wh7lF9vWQyqQVF2myMW+CBbiHJowrhK+6HSkSxCreT9/QqBI7s98UOB38+ge3AiRiA3y9Ga8vqQL7hmRWh6fy/HgSQF3ASCxcBSMmJznKEIr7N1YZu63thRhiVVjZP4asNeBRpx26IZ8SdgHDurdT6/tnxLWlTDbuoynW38qF9vdHi3tYGsox3exQzpSvAUQipTkz1OKUBez1Nzt4M+M4g2rgA64f27FlZL+/tBDQBSfWMAw1lcnC2CH6xAAo9ZXyKNFB7XxbBYt8eaf99doUIeQOq3lugQs63XQhImQQPYeOiQ=="],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Georgi Huklev"

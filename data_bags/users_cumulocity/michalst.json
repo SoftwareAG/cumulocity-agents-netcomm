@@ -1,6 +1,6 @@
 {
   "id": "michalst",
-  "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+ljmDmvRmSc256GMBvHVusn1sHpF96bH3/rt6vpu8yw76g7qXVtb3SrcbtKYg6oSFOS/8cvlsY+aMkdDndIItZoOmyYqdOvZav8BnGTf1lJacGLPTc5491J1pD5Zl/7oWlp7dBwmRIHoQwa0N+scNzauHHqcv/NKLf2Hm/tmyjW99IiRoBFhN3Ga5NQkpJvSse0qtTVDQla4tRF/1eENQ2OxW7us4qqlILSD/k2lQ3Q+CMXe02Gan1blsmh6joq1XTkZjJzQny2BEf2+KYZS0NCqs2rCHMEvkPWlsqqti9h2aCQOHDno3dIbwCPj8tBxXBFs9CbhITKdTaHzM9Y5f mstaw@mstaw",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+ljmDmvRmSc256GMBvHVusn1sHpF96bH3/rt6vpu8yw76g7qXVtb3SrcbtKYg6oSFOS/8cvlsY+aMkdDndIItZoOmyYqdOvZav8BnGTf1lJacGLPTc5491J1pD5Zl/7oWlp7dBwmRIHoQwa0N+scNzauHHqcv/NKLf2Hm/tmyjW99IiRoBFhN3Ga5NQkpJvSse0qtTVDQla4tRF/1eENQ2OxW7us4qqlILSD/k2lQ3Q+CMXe02Gan1blsmh6joq1XTkZjJzQny2BEf2+KYZS0NCqs2rCHMEvkPWlsqqti9h2aCQOHDno3dIbwCPj8tBxXBFs9CbhITKdTaHzM9Y5f mstaw@mstaw"],
   "groups": ["wheel"],
   "shell": "\/bin\/bash",
   "comment": "Michal Stawiarski"
