@@ -58,25 +58,53 @@ override_attributes(
         }
     },
   "cumulocity-kubernetes" => {
+  ## Added following 6 rows on 01102019
+     "docker-version": "1.13.1-102.git7f2769b.el7.centos",
+     "docker" => {
+       "log" => {
+         "on-file" => true
+       }
+     },
      "deployK8S4env" => "telstra-dev-de-non-prod",
      "attachedEnvs" => ["telstra-dev-de-non-prod"],
      "token" => "2aw8ga.krilwvobqpc4vgoz",
      "images-connString" => "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-     "images-version" => "9.0.20",
+#     "images-version" => "9.16.3",
+     "images-version" => "1004.0.6-1",
 #     "images2install" => [ "cep" ]
      "images2install" => [ "" ]
   },
   "cumulocity-karaf" => {
-    "version" => "9.12.5-1",
-    "ssa-version" => "9.12.5-1",
+    #"version" => "9.12.5-1",
+    ## 29.11.2018
+    #"version" => "9.16.3-1",
+    ## 04.02.2019:
+    #"version" => "9.16.6-1",
+    ## 18.03.2019:
+    #"version" => "9.20.7-1",
+    ## 17.05.2019
+    #"version" => "9.20.10-1",
+    ## 04.06.2019
+    #"version" => "1004.0.6-1",
+    ## 14.08.2019
+    "version" => "1004.6.8-1",
+
+    #"ssa-version" => "9.16.3-1",
+    #"ssa-version" => "1004.0.6-1",
+    "ssa-version" => "1004.6.8-1",
     ##"memory_left_for_system" => "2048",
-    ## 08102018:
-    "memory_left_for_system" => "4096",
+    ## 04.02.2019:
+    "memory_left_for_system" => "6096",
     "management-access": [ "84.10.6.110", "192.168.8.0/22", "62.96.250.8/28", "52.58.107.37", "52.58.87.112", "52.63.24.152", "10.0.0.0/8", "10.60.71.217" ],
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,
-    "CUMULOCITY_LICENCE_KEY" => "7f5ca894e267fbc2c236243829389da8129f5793a696ef256f0695993954095bdbca88c745a0e360ea75ff8208366bc1303e015c59f3a90a20764727bd0dc05a"
+    "CUMULOCITY_LICENCE_KEY" => "7f5ca894e267fbc2c236243829389da8129f5793a696ef256f0695993954095bdbca88c745a0e360ea75ff8208366bc1303e015c59f3a90a20764727bd0dc05a",
+     "karaf" => {
+        "memory"=> {
+          "max_direct_memory" => "2048M"
+                 },
+        },
   },
   "cumulocity-core" => {
     "properties" => {
@@ -86,6 +114,9 @@ override_attributes(
 #      "contextService.rdbmsPassword" => "",
 #      "system.connectivity.microservice.url" => "http://192.168.17.34:8092/jwireless",
 #      "smsGateway.host" => "http://telstra-el7-dev-agents:8688/sms-gateway",
+#	04.02.2019
+       "smsGateway.host" => "http://localhost:80/service/messaging",
+       #"smsGateway.host" => "http://telstra-el7-dev-agents:8688/sms-gateway",
       "mongodb.user" => "c8y-root",
 #      "mongodb.password" => "",
       "mongodb.admindb" => "admin",
@@ -106,8 +137,12 @@ override_attributes(
         "system.two-factor-authentication.enabled": true,
         "system.two-factor-authentication.enforced.group": "admins",
 #        "system.two-factor-authentication.host": "http://sms-gateway-server-scope-management.telstra-dev-de-non-prod.svc.cluster.local/smsmessaging",
-        "system.two-factor-authentication.host": "http://sms-gateway-server-scope-management.telstra-dev-de-non-prod.svc.cluster.local",
+#        "system.two-factor-authentication.host": "http://sms-gateway-server-scope-management.telstra-dev-de-non-prod.svc.cluster.local",
+# 05.12.2018
+         "system.two-factor-authentication.host": "http://sms-gateway-scope-management.telstra-dev-de-non-prod.svc.cluster.local",
 #        "system.two-factor-authentication.host": "http://telstra-el7-dev-agents:8688/sms-gateway",
+# 04.02.2019 - doesn't work!
+#       "system.two-factor-authentication.host": "http://localhost:80/service/messaging",
         "system.two-factor-authentication.senderAddress": "+61418368753",
         "system.two-factor-authentication.senderName": "Telstra IoT",
         "system.two-factor-authentication.provider": "telstra",
@@ -165,9 +200,10 @@ override_attributes(
     "cumulocity-mongo" => {
 #        'members-check' => false,
         "installEnterprise" => true, # migration change
-        "wiredtiger-cache" => 2,
+        "wiredtiger-cache" => 3,
         "sharedkey-content" => "d+duGNkxtqehDM+97/cwPEXztjNMrApyZH6u5WBf1L6M9j2jLRVlk0Pt3u3KxAVA\nRdlOhX9fLzekQeb0ScElwPJS7IamP3kuFnbzeh9EKKcSYI555DkL1Wx3RRm7wjwW\nrAyphpH3v4MJ73240BP7KDqj87o+IijR68Z31y9JvP7m1l3G9vln0br1piEzlJg9\nLALZGOXC3V8iDvqPWDntt1dWvgQSxlu8QS9aE2qYcZDqy5E1PomRzX6KzHM/9ZXd\nOO3INgwxbZPBOrz0hjnv0EEHM7hW8TCGAjw9RL+FgI4E7fOGSco7pP7w2InYhWrW\n+6wNSVn+23CTQ+NyeIHD9ujhLKA2GBsh9PvmIGqL7krewLWQ0guuFXG1qkhghdw4\nWIfKjV0CgF5hp7nI/xX3HNRsaP4sXJoNqfURYrYOsY/mAOsSftjVJpXGqAz20l0U\nGePvsrVDw03UA/k79N0rt+z5SAf7Av0N2MWg71IoskqSr1gr2Knyzg/FsnkzKqTW\n1tRc+b5TRMIuHewvwROtgXeweAbjU7dgNnBJBOH6g3lec8pB8A0lMluY4sQ78Dby\n4xeEOCLuh9prCWaI1TFakeW/PQpmzbRm0z01tuZsyZwuZj7PYljQoNYXNhsj1nMA\n+J9Ebbkh0hlFcItMSCGfh6nB15vVTJOKO6RBkWTOxny1dJAyZxCMv7pfADsu9Yuo\nH75oJhhonnTwyWO+2lWQHPil/wC7QE79fMSpMsr61lL9CjNHXUU1Mpk9/BdNAvcI\nc/shD0eOoHWG4dRjZCk2PnlleCgM2ht0YCgH9qnZP3W0AKFg58ZTCfuMIB8f7ECe\n7todUW0Z5a4gCWcPqMdnkVpndnvUDR8/LOhVKXZC/e//2wwVanHKCxLwzs6SiN+0\n0IBqVtclXqMI8ZpuYtUKiYUFZz0sp52QZ3K8aCbY8fnkqXbl3JV4Um3w5aC/kQ6I\nuTMhRQbZ9b+GqasdKYwcGXHE7yz3",
         "mongodb.initUser" => "init-root",
+         "version" => "3.6"
 #        "mongodb.initPassword" => "edf933ds^5T"
   },
     "cumulocity-external-lb" => {
@@ -206,6 +242,16 @@ override_attributes(
        "properties" => {
          " esperha.storage" => "/mnt/esperha-storage/"
      },
+  },
+  'monitoring-agent' => {
+    #'verbose' => true,
+    #'includeCustomHosts' => "/usr/share/cumulocity-agent/lua/monitoring/hosts.custom.lua",
+    #'includeCustomPlugins' => "/usr/share/cumulocity-agent/lua/monitoring/plugins.custom.lua",
+    'createPlatformUser' => true,
+    'autoRegistration' => {
+      'enable' => true,
+      'groupName' => 'Telstra NG Development'
+    }
   },
     'backup_script' => {
       'http_proxy' => "http://192.168.15.8:14239",
