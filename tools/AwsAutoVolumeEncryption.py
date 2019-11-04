@@ -88,6 +88,7 @@ def usage():
   print "                   STEP #2 => swaps not encrypted volumes with encrypted copies"
   print "  -y --yes       : skip all confirmation requests"
   print "  -n --no        : automatically answers 'no' to questions (stop after STEP 1)"
+  print "     --checkonly : check encryption state of all attached volumes of the indicated instance and quit"
   print "     --nocolors  : disable colored output"
   print
   print color['ylw'] + "  Authentication:" + color['neu']
@@ -329,7 +330,7 @@ def step_one(encKey, instanceId, prefix, statefile):
     if CustomerIdentifierValue is not None:
       encSnapTagSpecs.append({'Key':CustomerIdentifierKey, 'Value':CustomerIdentifierValue})
     ec2.Snapshot(sCopyId).create_tags( Tags=encSnapTagSpecs )
-    logging.info("Snapshot " + s + " has been copied and encrypeted to snapshot " + sCopyId)
+    logging.info("Snapshot " + s + " has been copied and encrypted to snapshot " + sCopyId)
 
   saveState(statefile, "encSnapIdDict", encSnapIdDict)
 
