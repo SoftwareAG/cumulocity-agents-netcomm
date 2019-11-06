@@ -69,7 +69,7 @@ machine "#{dev_id}" do
             }]
         }
     )
-    tags ["standalone:mongod7:"]
+    tags ["standalone:mongod7:", "ssl-management-agent-server"]
     attributes(
       ddclient: {
         domain: "#{dev_id}.cumulocity.com",
@@ -87,5 +87,6 @@ machine "#{dev_id}" do
       role 'cumulocity-kubernetes' if step >= 3
       recipe 'cumulocity::karaf_dev-x-agents' if step >= 3
       role 'cumulocity-mn-active-core' if step >= 4
+      role 'cumulocity-ssagents' if step >= 4
     end
 end
