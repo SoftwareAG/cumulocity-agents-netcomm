@@ -1,5 +1,5 @@
 //example command to run:
-//mongo -u init-root -p <password> --authenticationDatabase admin admin --eval 'var dbs = ["anotherdatabase"]; var dropDatbase = true; ' enableSharding.js
+//mongo -u init-root -p <password> --authenticationDatabase admin admin --eval 'var dbs = ["anotherdatabase"]; var dropDatabase = true; ' enableSharding.js
 
 //config//
 if(typeof enableSharding == 'undefined'){
