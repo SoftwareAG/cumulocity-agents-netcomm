@@ -19,10 +19,16 @@ using namespace std;
 
 const char* const srTemplatePath = "/usr/local/ntcagent/srtemplate.txt";
 const string luaScriptPath = "/usr/local/ntcagent/lua/";
+
+// RDB keys
 const string keyServer = "service.cumulocity.connection.server";
 const string keyLuaPlugin = "service.cumulocity.lua.plugins";
 const string keyGpioList = "service.cumulocity.gpio.list";
 const string keyStatus = "service.cumulocity.agent.status";
+const string keyCap = "service.cumulocity.buffer.capacity";
+const string keyMqttEnable = "service.cumulocity.mqtt.enable";
+const string keyMqttKeepAlive = "service.cumulocity.mqtt.keepalive";
+const string keyPassword = "service.cumulocity.connection.password";
 
 // supported operations
 string ops = "\"" Q2(c8y_Configuration) Q(c8y_Restart) Q(c8y_Command)
@@ -145,16 +151,19 @@ int main()
     SrReporter *rpt = nullptr;
     SrDevicePush *push = nullptr;
 
-    if (rdb.get("service.cumulocity.mqtt.enable") == "1")
+    uint16_t capacity = strtol(rdb.get(keyCap).c_str(), NULL, 10);
+    capacity = capacity ? capacity : 10000;
+
+    if (rdb.get(keyMqttEnable) == "1")
     {
         const bool isssl = server.substr(0, 5) == "https";
         const string port = isssl ? ":8883" : ":1883";
 
         rpt = new SrReporter(server + port, agent.deviceID(), agent.XID(),
                 agent.tenant() + '/' + agent.username(), agent.password(),
-                agent.egress, agent.ingress, 10000, "/opt/ntcagent/msg.cache");
+                agent.egress, agent.ingress, capacity, "/opt/ntcagent/msg.cache");
 
-        string keepalive = rdb.get("service.cumulocity.mqtt.keepalive");
+        string keepalive = rdb.get(keyMqttKeepAlive);
         const int keepAlive = strtol(keepalive.c_str(), NULL, 10);
 
         rpt->mqttSetOpt(SR_MQTTOPT_KEEPALIVE, keepAlive);
@@ -162,7 +171,8 @@ int main()
     {
         agent.send("314," + agent.ID() + ",PENDING");
 
-        rpt = new SrReporter(server, agent.XID(), agent.auth(), agent.egress, agent.ingress, 10000, "/opt/ntcagent/msg.cache");
+        rpt = new SrReporter(server, agent.XID(), agent.auth(), agent.egress, agent.ingress,
+                capacity, "/opt/ntcagent/msg.cache");
         push = new SrDevicePush(server, agent.XID(), agent.auth(), agent.ID(), agent.ingress);
     }
 
@@ -229,7 +239,7 @@ static int integrate(SrAgent &agent, RdbManager &rdb)
         return 0;
     }
 
-    if (!rdb.get("service.cumulocity.connection.password").empty())
+    if (!rdb.get(keyPassword).empty())
     {
         return -1;
     }
