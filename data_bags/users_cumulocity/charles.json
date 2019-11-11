@@ -1,0 +1,9 @@
+{
+    "id": "charles",
+    "ssh_keys": [
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlrrvxJmD0MGYhqIZd5sM69iRGmGB7VzxxO1IRAr34S8RdVZAOpUdDriHVuWME4L/lg/D1YkS9ExOE4JJ6UorgNuuL6EuKVNkP8hM9grNdt3NHwWhGbnJzwhiOzuQ6X8nd2UsSwnEE1nzK07eP38Vt6+yNAhl0z0sLI6ZRA/SiICYU9Bl1phER87asghhfDiPQ9RHAL++dPUcmxWZGJhwCTCN6wWILLiMypz+JZhWGGyro2aKuxXtBXgC2c2kVIZ7RAG/yu65NF5+B8Jv/hx1OAS/0okVYlmHQsr0DPIF4+L+F2qMs/GRG1F2BfirmwobWWwZKQ3Q3E7pqIPGZDe/h y509107@eur.ad.sag@SAG-4HJRNV2-U"
+    ],
+    "groups": ["wheel"],
+    "shell": "\/bin\/bash",
+    "comment": "Komlan Gluck Charles"
+}
