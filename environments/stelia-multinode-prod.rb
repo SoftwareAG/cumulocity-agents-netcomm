@@ -3,9 +3,9 @@ name "stelia-multinode-prod"
 description "The Stelia production environment"
 
 cookbook_versions({
-'cumulocity'=>'= 9.16.3',
-'cumulocity-kubernetes'=>'= 9.16.3',
-'cumulocity-ssagents'=>'= 9.16.3'
+'cumulocity'=>'= 1004.6.3',
+'cumulocity-kubernetes'=>'= 1004.6.3',
+'cumulocity-ssagents'=>'= 1004.6.3'
 })
 
 default_attributes(
@@ -54,6 +54,13 @@ override_attributes(
         }
     },
   "cumulocity-kubernetes" => {
+   ## Added following 6 rows on 13112019
+     "docker-version": "1.13.1-102.git7f2769b.el7.centos",
+     "docker" => {
+       "log" => {
+         "on-file" => true
+       }
+     },
      "deployK8S4env" => "stelia-multinode-prod",
      "attachedEnvs" => ["stelia-multinode-prod"],
      "token" => "0w5bs8.dr1a04eb40fu0chv",
@@ -66,14 +73,21 @@ override_attributes(
 #    "version" => "8.19.27-1",
 #    "version" => "9.0.16-1",
 #    "version" => "9.12.18-1",
-    "version" => "1004.0.6-1",
-    "ssa-version" => "1004.0.6-1",
+#    "version" => "1004.0.6-1",
+    "version" => "1004.6.12-1",
+#    "ssa-version" => "1004.0.6-1",
+    "ssa-version" => "1004.6.12-1",
     "memory_left_for_system" => "2048",
     "notification" => true,
     "oort-enabled" => true,
     "cep-server-enabled" => true,
     "openrelayIP" => "52.58.146.111",
-    "CUMULOCITY_LICENCE_KEY" => "aee79821abc7fb1ec4de1c5be7117b7509f8e449d013b8bbcc0635961b5ae4fe8fa3ac182322f7a00a3bb4101af9ef6d0bcdac56412e666c12d053f9df4da055"
+    "CUMULOCITY_LICENCE_KEY" => "aee79821abc7fb1ec4de1c5be7117b7509f8e449d013b8bbcc0635961b5ae4fe8fa3ac182322f7a00a3bb4101af9ef6d0bcdac56412e666c12d053f9df4da055",
+     "karaf" => {
+        "memory"=> {
+          "max_direct_memory" => "2048M"
+                 },
+        },
   },
   "cumulocity-core" => {
     "properties" => {
