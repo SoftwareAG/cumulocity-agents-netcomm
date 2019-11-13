@@ -46,6 +46,7 @@ run_chef_client
 knife node run_list add $node 'role[cumulocity-mn-active-core]' -z  && echo "INFO: Added role[cumulocity-mn-active-core] successfully" || { echo "ERROR: failed to add role[cumulocity-mn-active-core]. Exiting..... "; exit 1; }
 run_chef_client
 
+keytool -noprompt -import -alias registry -keystore /etc/pki/java/cacerts -file /etc/nginx/certs/domain.com.cert -storepass changeit && echo "INFO: /etc/nginx/certs/domain.com.cert added successfully in cacerts" || { echo "ERROR: failed to add /etc/nginx/certs/domain.com.cert. Exiting..... "; exit 1;
 
 if [[ "$ENABLE_MICROSERVICE" == "true" ]]; then
     echo "Running with microservice feature enabled"

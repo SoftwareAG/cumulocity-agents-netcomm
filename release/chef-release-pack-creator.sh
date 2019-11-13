@@ -234,7 +234,7 @@ INSTALLONLY=false
 outputFolder="/var"
 CHEFRUN_ARGS=""
 
-while getopts "veiyYom:" opt ; do
+while getopts "veimyYo:" opt ; do
   case $opt in
     v) VERBOSE=true ;;
     e) EXTRACTONLY=true ;;
