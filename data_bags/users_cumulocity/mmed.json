@@ -1,0 +1,8 @@
+{
+  "id": "mmed",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9wo1XiARJrzB0M5i6Xkvunvj7iWGDHMcmreceRp2Lna9JJyaWXgR3amiPH5wMEvaI2PEcRLnRHX4bComdsOVx/qcynCaESg65d/BZyOJJBTL+JmYqL9FuaKqcDxbrME1CTBDLBgtZguqM2Y/6ury7wzz+cgMIAHQGWU8eRXk0Ahx3Z2PRsIz5+nieGkgSulrNGu+NNs3s5TEnG2MD6NjfWHo8IzU4C1oSsfTca96ZpqkpJ0iXeVgRg2jYnTBitFlR/bM5FWa4hyqw1noQP9LbFGkbLX1kpz/aFWq37zmc2l1X85cjp3a+WZHTpaBBLh//6MRLElt9t2F5msVICvS/ mmed@POZ-MMED3"],
+  "groups": ["wheel"],
+  "shell": "\/bin\/bash",
+  "comment": "Marcin Medon",
+  "email": "marcin.medon@softwareag.com"
+}
