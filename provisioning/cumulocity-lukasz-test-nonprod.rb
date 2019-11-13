@@ -63,7 +63,7 @@ kubernetes_master_count   = 3
 flavour_for_masters       = "m4.xlarge"
 volume_size_for_masters   = 16
 
-kubernetes_worker_count   = 3
+kubernetes_worker_count   = 5
 flavour_for_workers       = "c4.2xlarge"
 volume_size_for_workers   = 30
 
@@ -168,7 +168,7 @@ for step in initStep..7
                 role 'cumulocity-base'
                 role 'cumulocity-ontop-lb' if step == 6
                 tag 'cumulocity-chaos-monkey-operator' if i == 1
-                recipe 'cumulocity-chaos-monkey::server_terminations' if i == 6 
+                recipe 'cumulocity-chaos-monkey::server_terminations' if i == 6
             end
         end
     end

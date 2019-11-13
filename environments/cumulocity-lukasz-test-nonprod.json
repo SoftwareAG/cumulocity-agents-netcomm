@@ -2,9 +2,11 @@
   "name": "cumulocity-lukasz-test-nonprod",
   "description": "The complete cumulocity plus multi master kubernetes env",
   "cookbook_versions": {
-    "cumulocity": "1004.6.2",
-    "cumulocity-kubernetes": "1005.1.99", 
-    "cumulocity-ssagents": "1004.6.2"
+    "_cumulocity": "1005.1.99",
+    "cumulocity": "1005.7.0",
+    "cumulocity-kubernetes": "1005.7.0",
+    "_cumulocity-kubernetes": "1005.1.99",
+    "cumulocity-ssagents": "1005.7.0"
   },
   "json_class": "Chef::Environment",
   "chef_type": "environment",
@@ -33,10 +35,11 @@
     "java": {
       "jdk_version": "8"
     },
-    "cumulocity": {
+    "cumulocity-base": {
       "chef-client": {
         "enabled": false
-      }
+      },
+      "selinux_enabled": true
     },
     "cumulocity-kubernetes": {
       "renew-certs": false,
@@ -45,11 +48,10 @@
       "extPort": null,
       "useMongoDriver": true,
       "deployK8S4env": "cumulocity-lukasz-test-nonprod",
-      "attachedEnvs": [
-      ],
+      "attachedEnvs": ["cumulocity-lukasz-test-nonprod"],
       "token": "1e3145.2ff901841c48af2e",
       "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-      "images-version": "1004.6.2",
+      "images-version": "1005.6.0",
       "images2install": [
         "cep",
         "cep-small",
@@ -73,8 +75,8 @@
     },
     "cumulocity-karaf": {
       "CUMULOCITY_LICENCE_KEY": "df69c324a9b128e137df3f59785beeefd42e34cfd9698a516381895242e78de1dae7a81fb36a95298b03061323318563e1c983c8ed5d74c9b9745ff8e1f9ccb2",
-      "version": "1004.6.2-1",
-      "ssa-version": "1004.6.2-1",
+      "version": "1005.6.0-1",
+      "ssa-version": "1005.6.0-1",
       "memory_left_for_system": "2048",
       "notification": true,
       "cep-server-enabled": true,
