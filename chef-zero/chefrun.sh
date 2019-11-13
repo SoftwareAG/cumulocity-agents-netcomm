@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 export thisscript="$( readlink -f ${BASH_SOURCE[0]} )"
 export thisdir="$( dirname ${thisscript} )"
 (
@@ -46,7 +46,7 @@ run_chef_client
 knife node run_list add $node 'role[cumulocity-mn-active-core]' -z  && echo "INFO: Added role[cumulocity-mn-active-core] successfully" || { echo "ERROR: failed to add role[cumulocity-mn-active-core]. Exiting..... "; exit 1; }
 run_chef_client
 
-keytool -noprompt -import -alias registry -keystore /etc/pki/java/cacerts -file /etc/nginx/certs/domain.com.cert -storepass changeit && echo "INFO: /etc/nginx/certs/domain.com.cert added successfully in cacerts" || { echo "ERROR: failed to add /etc/nginx/certs/domain.com.cert. Exiting..... "; exit 1;
+keytool -noprompt -import -alias registry -keystore /etc/pki/java/cacerts -file /etc/nginx/certs/domain.com.cert -storepass changeit && echo "INFO: /etc/nginx/certs/domain.com.cert added successfully in cacerts" || { echo "ERROR: failed to add /etc/nginx/certs/domain.com.cert. Exiting..... "; exit 1 ;}
 
 if [[ "$ENABLE_MICROSERVICE" == "true" ]]; then
     echo "Running with microservice feature enabled"
@@ -79,5 +79,3 @@ if [[ "$ENABLE_MICROSERVICE" == "true" ]]; then
     knife tag create $node k8s-master-add  -z  && echo "INFO: Added tags k8s-master-add  successfully" || { echo "ERROR: failed to add  tags k8s-master-add . Exiting..... "; exit 1; }
     run_chef_client
 fi
-
-
