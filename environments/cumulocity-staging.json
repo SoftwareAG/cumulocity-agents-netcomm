@@ -1,9 +1,9 @@
 {
     "chef_type": "environment",
     "cookbook_versions": {
-        "cumulocity": "~> 1005.0",
-        "cumulocity-kubernetes": "~> 1005.0",
-        "cumulocity-ssagents": "~> 1005.0"
+        "cumulocity": "1005.0.2",
+        "cumulocity-kubernetes": "1005.0.2",
+        "cumulocity-ssagents": "1005.0.2"
     },
     "default_attributes": {},
     "description": "cumulocity-staging environment NG",
@@ -103,8 +103,8 @@
             ],
             "notification": true,
             "openrelayIP": "172.20.1.22",
-            "ssa-version": "1005.0.6-1",
-            "version": "1005.0.6-1"
+            "ssa-version": "1005.0.7-1",
+            "version": "1005.0.7-1"
         },
         "cumulocity-kubernetes": {
             "attachedEnvs": [
@@ -119,7 +119,7 @@
             "docker-registry-image": "cumulocity/registry:2.6.1",
             "docker-version": "1.13.1-102.git7f2769b.el7.centos",
             "images-connString": "https://K8Simages:K8S^imAgEs5000%@resources.cumulocity.com/kubernetes-images",
-            "images-version": "1005.0.6",
+            "images-version": "1005.0.7",
             "images2install": [
                 "cep",
                 "cep-small",
