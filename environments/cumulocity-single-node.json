@@ -10,6 +10,7 @@
     "chef_client": {
       "server_url": "https://<url_or_ip_chef_server>"
     },
+    "swapfilesize": 0,
     "domainname": "domain.com",
     "useVaults": false,
     "yum": {
