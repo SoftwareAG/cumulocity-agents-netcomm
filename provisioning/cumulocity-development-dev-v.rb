@@ -9,7 +9,7 @@ volume_size = 30
 
 with_chef_environment environment
 with_chef_server(
-  "https://chef12.cumulocity.com/organizations/cumulocity-stagings",
+  "https://chef12.cumulocity.com/organizations/cumulocity-devel",
   client_name: Chef::Config[:node_name],
   signing_key_filename: Chef::Config[:client_key]
 )
@@ -53,5 +53,5 @@ machine "#{environment}_#{dev_id}" do
       }
     )
     recipe 'cumulocity-ddclient'
-    role 'cumulocity-dev-singlenode' 
+    role 'cumulocity-dev-singlenode'
 end
