@@ -102,7 +102,7 @@
                 "0.0.0.0/0"
             ],
             "notification": true,
-            "openrelayIP": "172.20.1.60",
+            "openrelayIP": "172.20.1.28",
             "ssa-version": "1005.6.0-1",
             "version": "1005.6.0-1"
         },
