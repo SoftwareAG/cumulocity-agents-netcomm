@@ -1,9 +1,9 @@
 {
     "chef_type": "environment",
     "cookbook_versions": {
-        "cumulocity": "~> 1005.0",
-        "cumulocity-kubernetes": "~> 1005.0",
-        "cumulocity-ssagents": "~> 1005.0"
+        "cumulocity": "1005.0.2",
+        "cumulocity-kubernetes": "1005.0.2",
+        "cumulocity-ssagents": "1005.0.2"
     },
     "default_attributes": {},
     "description": "cumulocity-staging-devops environment NG",
@@ -102,7 +102,7 @@
                 "0.0.0.0/0"
             ],
             "notification": true,
-            "openrelayIP": "172.20.1.17",
+            "openrelayIP": "172.20.1.60",
             "ssa-version": "1005.6.0-1",
             "version": "1005.6.0-1"
         },
