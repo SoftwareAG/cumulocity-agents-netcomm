@@ -3,7 +3,7 @@
     "cookbook_versions": {
         "cumulocity": "1005.0.3",
         "cumulocity-kubernetes": "1005.0.3",
-        "cumulocity-ssagents": "1005.0.3"
+        "cumulocity-ssagents": "1005.0.2"
     },
     "default_attributes": {},
     "description": "cumulocity-staging-devops environment NG",
