@@ -165,11 +165,16 @@ static int ws_connect(CURL *curl, char *host, char *end, char *rest)
         return -1;
     }
 
-    rc = curl_easy_recv(curl, buf, sizeof(buf), &n);
-    if (n <= 0)
-    {
-        syslog(LOG_ERR, "ws_conn: %s\n", curl_easy_strerror(rc));
-        return -1;
+    for(size_t i = 0; i < sizeof(buf); i++) {
+        rc = curl_easy_recv(curl, &buf[i], 1, &n);
+        if (n <= 0)
+        {
+            syslog(LOG_ERR, "ws_conn: %s\n", curl_easy_strerror(rc));
+            return -1;
+        }
+        if (i > 2 && buf[i] == '\n' && buf[i-1] == '\r' && buf[i-2] == '\n' && buf[i-3] == '\r') {
+            break;
+        }
     }
 
     syslog(LOG_INFO, "ws_conn: OK!\n");
@@ -383,15 +388,11 @@ static int ts_recv(int fd, char *buf, size_t count)
         return ptr - buf + c;
     } else if (c == 0)
     { // When a stream socket peer has performed an orderly shutdown
-        syslog(LOG_INFO, "ts_recv: Connection close .. %s\n", strerror(errno));
-        return -1;
-    } else if (c == -1)
-    { // error
-        syslog(LOG_ERR, "ts_recv: %s\n", strerror(errno));
+        syslog(LOG_INFO, "ts_recv: Connection closed\n");
         return -1;
     } else
-    {
-        syslog(LOG_ERR, "ts_recv: unknown error occurred\n");
+    { // error
+        syslog(LOG_ERR, "ts_recv: %s\n", strerror(errno));
         return -1;
     }
 }
@@ -429,7 +430,7 @@ static int ws_recv(CURL *curl, char *buf, size_t count, uint64_t *wsnum)
                                 return -1;
                         else if (rc == CURLE_AGAIN)
                                 return 0;
-                        else if (n == 0 && rc == CURLE_UNSUPPORTED_PROTOCOL) {
+                        else if (n == 0) {
                                 syslog(LOG_INFO, "ws_rh[%zu]: Connection closed\n", n);
                                 return -1;
                         }

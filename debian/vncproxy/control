@@ -1,7 +1,7 @@
 Package: vncproxy
 Priority: optional
 Section: Misc
-Version: 2.1
+Version: 2.2
 Architecture: arm
 Maintainer: support@cumulocity.com
 Depends:
