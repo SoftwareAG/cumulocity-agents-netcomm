@@ -16,7 +16,7 @@ export ORGNAME=cumulocity-stagings
 
 case $environment in
     staging)
-        export CHEF_ENV=cumulocity-basic-staging7-nonprod
+        export CHEF_ENV=cumulocity-staging
     ;;
     staging-1)
         export CHEF_ENV=cumulocity-staging-pe-1-nonprod
@@ -42,9 +42,6 @@ case $environment in
         export ORGNAME=cumulocity-devel
     ;;
     staging-latest)
-        export CHEF_ENV=cumulocity-staging-latest-nonprod
-    ;;
-    staging-latest-new)
         export CHEF_ENV=cumulocity-staging-latest
     ;;
     staging-performance)
