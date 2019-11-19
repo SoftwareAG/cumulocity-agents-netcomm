@@ -31,7 +31,7 @@ add_machine_options(
 ### CONFIGURE YOUR CLUSTER BELOW ###
 
 c8ycore_count = 3
-flavour_for_c8ycore       = "m5.xlarge"
+flavour_for_c8ycore       = "m4.xlarge"
 
 volume_size_for_c8ycore   = 50
 private_ips_for_c8ycore   = ["172.20.5.211","172.20.5.212","172.20.5.213","172.20.5.214","172.20.5.215","172.20.5.216","172.20.5.217","172.20.5.218","172.20.5.219","172.20.5.220"]
@@ -50,7 +50,7 @@ ssagent_tags  = [
 ]
 
 mongodb_count = 6
-flavour_for_mongodb       = "m5.large"
+flavour_for_mongodb       = "m4.large"
 volume_size_for_mongodb   = 50
 private_ips_for_mongodb   = ["172.20.5.111","172.20.5.112","172.20.5.113","172.20.5.114","172.20.5.115","172.20.5.116","172.20.5.117","172.20.5.118", "172.20.5.119","172.20.5.120","172.20.5.121","172.20.5.122"]
 mongodb_cluster = [
