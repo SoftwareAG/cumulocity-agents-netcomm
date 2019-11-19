@@ -37,7 +37,7 @@ volume_size_for_c8ycore   = 50
 private_ips_for_c8ycore   = ["172.20.5.211","172.20.5.212","172.20.5.213","172.20.5.214","172.20.5.215","172.20.5.216","172.20.5.217","172.20.5.218","172.20.5.219","172.20.5.220"]
 
 ontoplb_count = 1
-flavour_for_ontoplb       = "m5.large"
+flavour_for_ontoplb       = "t3.medium"
 volume_size_for_ontoplb   = 20
 private_ips_for_ontoplb   = ["172.20.5.247","172.20.5.248","172.20.5.249"]
 
@@ -50,8 +50,8 @@ ssagent_tags  = [
 ]
 
 mongodb_count = 6
-flavour_for_mongodb       = "m5.xlarge"
-volume_size_for_mongodb   = 200
+flavour_for_mongodb       = "m5.large"
+volume_size_for_mongodb   = 50
 private_ips_for_mongodb   = ["172.20.5.111","172.20.5.112","172.20.5.113","172.20.5.114","172.20.5.115","172.20.5.116","172.20.5.117","172.20.5.118", "172.20.5.119","172.20.5.120","172.20.5.121","172.20.5.122"]
 mongodb_cluster = [
       ["configreplset:config9:P","replicaset:rs01:P","replicaset:rs02:H","replicaset:rs03:S"],
@@ -67,8 +67,8 @@ flavour_for_masters       = "m5.large"
 volume_size_for_masters   = 20
 private_ips_for_masters   = ["172.20.5.55","172.20.5.56","172.20.5.57"]
 
-kubernetes_worker_count   = 4
-flavour_for_workers       = "m5.xlarge"
+kubernetes_worker_count   = 1
+flavour_for_workers       = "m5.large"
 volume_size_for_workers   = 50
 private_ips_for_workers   = ["172.20.5.61","172.20.5.62","172.20.5.63","172.20.5.64","172.20.5.65"]
 
@@ -315,4 +315,3 @@ end
 file "/tmp/.ps-#{environment}.steps" do
     action :delete
 end
-
