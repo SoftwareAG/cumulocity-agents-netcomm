@@ -124,7 +124,7 @@ for step in initStep..7
         if step > 1
             role 'cumulocity-base'
             role 'cumulocity-mongo'
-            role 'cumulocity-mongo-configsvr'
+            role 'cumulocity-mongo-configsvr' if i>0 and i<4
 #            role 'cumulocity-chaos-monkey' if step == 7
             mongodb_cluster[i-1].each do |m_tag|
                 tag m_tag
