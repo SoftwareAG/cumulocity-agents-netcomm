@@ -5,7 +5,7 @@ const std::string keyLevel = "service.cumulocity.log.level";
 const std::string keyCap = "service.cumulocity.buffer.capacity";
 
 #define DEFAULT_QUOTA_KB 1024
-#define DEFAULT_CAPACITY_KB 10000
+#define DEFAULT_CAPACITY_SLOTS_NUM 10000
 #define MAX_LOG_LEVEL 8
 
 RdbMonitor::RdbMonitor(const RdbManager &rdb, SrAgent &agent, SrWatchdogTimer &w) :
@@ -119,6 +119,6 @@ void monitor(const RdbManager &rdb, SrReporter *rpt)
     if (rpt)
     {
         const uint16_t capacity = strtoul(rdb.get(keyCap).c_str(), NULL, 10);
-        rpt->setCapacity(capacity ? capacity : DEFAULT_CAPACITY_KB);
+        rpt->setCapacity(capacity ? capacity : DEFAULT_CAPACITY_SLOTS_NUM);
     }
 }
