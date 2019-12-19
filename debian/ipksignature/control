@@ -1,4 +1,4 @@
-Package: cumulocity-ipk-pubkey
+Package: c8y-ipk-pubkey
 Priority: optional
 Section: Misc
 Version: 1.0
