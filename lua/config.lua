@@ -90,7 +90,7 @@ function sendConfig(r)
       return
    end
    local value = '"' .. table.concat(tbl, '\\n') .. '"'
-   if http:post(table.concat({'316', c8y.ID, value}, ',')) then
+   if http:post(string.format("316,%s,%s", c8y.ID, value)) then
       c8y:send('303,' .. r:value(2) .. ',SUCCESSFUL', 1)
    end
 end
