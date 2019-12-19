@@ -3,12 +3,13 @@ local keyUser = 'service.cumulocity.connection.username'
 local keyPass = 'service.cumulocity.connection.password'
 local keyRd = 'service.cumulocity.modbus.readonly'
 local opid
-local p = '/opt/cdcs/upload/ntc_6200.cfg.tar.gz'
 local fpath = '/opt/ntcagent/config.txt'
 local savefile = '/opt/ntcagent/config.save'
-local fname = 'ntc_6200.cfg.tar.gz'
+local cfgname = 'ntc_220.cfg'
+local p = string.format('/opt/cdcs/upload/%s.tar.gz', cfgname)
 local vpncmd = 'tar -C /usr/local/cdcs -zcf - ipsec.d openvpn-keys ssh-hostkeys | openssl des3 -salt -k "$pw" | dd of=/tmp/vpn.des3'
-local tarcmd = 'cd /tmp && tar -zcf ' .. fname .. ' ntc_6200.cfg vpn.des3'
+local tarcmd = string.format('cd /tmp && tar -zcf %s.tar.gz %s vpn.des3', cfgname, cfgname)
+local snapshotname = '"NTC 220 Device Configuration"'
 
 local function _predConfig(entry)
    return string.match(entry, keyUser) or string.match(entry, keyPass) or
@@ -62,7 +63,7 @@ end
 
 
 function updateConfig(r)
-   local file = io.open('/tmp/ntc_6200.cfg', 'w')
+   local file = io.open(string.format('/tmp/%s', cfgname), 'w')
    if not file then
       c8y:send('304,' .. r:value(2) .. ',"write config failed"', 1)
       return
@@ -73,7 +74,7 @@ function updateConfig(r)
    _presaveConfig()
    os.execute(vpncmd)
    os.execute(tarcmd)
-   os.execute('mv /tmp/ntc_6200.cfg.tar.gz ' .. p)
+   os.execute(string.format('mv /tmp/%s.tar.gz %s', cfgname, p))
    if not os.execute('install_file ' .. p) then
       c8y:send('304,' .. r:value(2) .. ',"Update config failed"', 1)
       return
@@ -110,7 +111,7 @@ function uploadConfig(r)
       return
    end
    c8y:send('303,' .. r:value(2) .. ',EXECUTING')
-   local file = io.open('/tmp/ntc_6200.cfg', 'w')
+   local file = io.open(string.format('/tmp/%s', cfgname), 'w')
    if not file then
       c8y:send('304,' .. r:value(2) .. ',"Write config failed"', 1)
       return
@@ -119,7 +120,7 @@ function uploadConfig(r)
    file:close()
    os.execute(vpncmd)
    os.execute(tarcmd)
-   if c8y:postf(fname, 'text/plain', '/tmp/' .. fname) < 0 then
+   if c8y:postf(string.format('%s.tar.gz', cfgname), 'text/plain', string.format('/tmp/%s.tar.gz', cfgname)) < 0 then
       c8y:send('304,' .. r:value(2) .. ',"Post config failed"', 1)
       return
    end
@@ -128,10 +129,9 @@ function uploadConfig(r)
       c8y:send('304,' .. r:value(2) .. ',"Parse URL failed"', 1)
       return
    end
-   local name = '"NTC 6200 Device Configuration"'
    local desc = table.concat({'Upload by', rdbGetStr('uboot.sn'), 'at',
                               os.date('%x %X', os.time())}, ' ')
-   c8y:send(table.concat({'331', name, desc, url}, ','), 1)
+   c8y:send(table.concat({'331', snapshotname, desc, url}, ','), 1)
    opid = r:value(2)
 end
 

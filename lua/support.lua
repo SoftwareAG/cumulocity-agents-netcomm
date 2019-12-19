@@ -100,7 +100,7 @@ function uploadRDB(r)
       return
    end
    
-   local name = '"NTC-6200 RDB dump"'
+   local name = '"NTC-220 RDB dump"'
    local desc = os.date('"Upload at %x %X"', os.time())
    c8y:send(table.concat({'336', c8y.ID, name, desc, url}, ','), 1)
    c8y:send('303,' .. r:value(2) .. ',SUCCESSFUL', 1)
