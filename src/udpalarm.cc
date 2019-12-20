@@ -5,6 +5,29 @@
 
 using namespace std;
 
+static int getMonthIndex(const string& name)
+{
+    map<string, int> months
+    {
+        { "Jan", 1 },
+        { "Feb", 2 },
+        { "Mar", 3 },
+        { "Apr", 4 },
+        { "May", 5 },
+        { "Jun", 6 },
+        { "Jul", 7 },
+        { "Aug", 8 },
+        { "Sep", 9 },
+        { "Oct", 10 },
+        { "Nov", 11 },
+        { "Dec", 12 }
+    };
+    const auto iter = months.find(name);
+    if( iter != months.cend() )
+        return iter->second;
+    return -1;
+}
+
 static int parseEvent(const char *s, int len, int &id, char *d, char *t, int &n)
 {
     if (len < 42)
@@ -12,9 +35,15 @@ static int parseEvent(const char *s, int len, int &id, char *d, char *t, int &n)
         return -1;
     }
 
-    const int c = sscanf(s, "[EVENT#%d] %[0-9-] %[0-9:] %n", &id, d, t, &n);
+    char year[5], month[4], day[3];
+    const int c = sscanf(s, "<%*d> %s %s %[0-9:] %*s [EVENT#%d] %n", month, day, t, &id, &n);
 
-    return c == 3 ? 0 : -1;
+    time_t t0 = time(NULL);
+    strftime(year, sizeof(year), "%Y", localtime(&t0));
+
+    snprintf(d, 11, "%s-%02d-%s", year, getMonthIndex(std::string(month)), day); // format yyyy-mm-dd
+
+    return c == 4 ? 0 : -1;
 }
 
 static string sever(int i)
