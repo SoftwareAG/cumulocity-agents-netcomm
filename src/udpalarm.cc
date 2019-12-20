@@ -1,20 +1,55 @@
 #include <ctime>
 #include <cstring>
 #include <srlogger.h>
+#include <algorithm>
 #include "udpalarm.h"
 
 using namespace std;
 
-static int parseEvent(const char *s, int len, int &id, char *d, char *t, int &n)
+static int getMonthIndex(string name)
 {
-    if (len < 42)
+    std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+    map<string, int> months
+    {
+        { "jan", 1 },
+        { "feb", 2 },
+        { "mar", 3 },
+        { "apr", 4 },
+        { "may", 5 },
+        { "jun", 6 },
+        { "jul", 7 },
+        { "aug", 8 },
+        { "sep", 9 },
+        { "oct", 10 },
+        { "nov", 11 },
+        { "dec", 12 }
+    };
+    const auto iter = months.find(name);
+    if( iter != months.cend() )
+        return iter->second;
+    return -1;
+}
+
+static int parseEvent(const char *eventstr, int len, int &eventid, char *dest, char *createdtime, int &num)
+{
+    const int minlength = 47;
+    if (len < minlength)
     {
         return -1;
     }
 
-    const int c = sscanf(s, "[EVENT#%d] %[0-9-] %[0-9:] %n", &id, d, t, &n);
+    char year[5], month[4], day[3];
+    const int c = sscanf(eventstr, "<%*d> %s %s %[0-9:] %*s [EVENT#%d] %n", month, day, createdtime, &eventid, &num);
 
-    return c == 3 ? 0 : -1;
+    time_t t0 = time(NULL);
+    strftime(year, sizeof(year), "%Y", localtime(&t0));
+
+    if (c == 4) {
+        snprintf(dest, 11, "%s-%02d-%s", year, getMonthIndex(std::string(month)), day); // format yyyy-mm-dd
+    } else {
+        return -1;
+    }
+    return 0;
 }
 
 static string sever(int i)
