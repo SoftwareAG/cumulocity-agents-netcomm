@@ -35,7 +35,7 @@ service.cumulocity.modbus.readonly;0;0;0x0;0x20;0
 service.cumulocity.modbus.serial.baud;0;0;0x0;0x20;19200
 service.cumulocity.modbus.serial.databits;0;0;0x0;0x20;8
 service.cumulocity.modbus.serial.parity;0;0;0x0;0x20;E
-service.cumulocity.modbus.serial.port;0;0;0x0;0x20;/dev/ttyAPP4
+service.cumulocity.modbus.serial.port;0;0;0x0;0x20;/dev/ttyO1
 service.cumulocity.modbus.serial.stopbits;0;0;0x0;0x20;1
 service.cumulocity.modbus.transmitrate;0;0;0x0;0x20;900
 service.cumulocity.mqtt.enable;0;0;0x0;0x20;1
