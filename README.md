@@ -1,6 +1,12 @@
 # Cumulocity Netcomm Agent #
 
-Cumulocity Netcomm agent is a dedicated agent software for connecting the NetComm router to Cumulocity.
+Cumulocity Netcomm Agent is a dedicated agent software for connecting the NetComm router to Cumulocity.
+
+### Supported Netcomm Device ###
+NTC-220 series
+
+For NTC-6200 and NTC-140W, move to [our NTC-6200 branch](https://bitbucket.org/m2m/cumulocity-agents-netcomm/src/NTC-6200/).
+
 
 ### How to build the agent? ###
 
@@ -14,11 +20,13 @@ git clone git@bitbucket.org:m2m/cumulocity-agents-netcomm.git
 
 * Build the [Cumulocity C++ library](https://bitbucket.org/m2m/cumulocity-sdk-c) with the provided *init.mk* from the repo.
 * Copy the compiled library files to the *lib/* directory under the agent root directory.
+
 ```
 #!bash
 
 cp -rP $C8Y_LIB_PATH/lib $C8Y_LIB_PATH/bin .
 ```
+
 * Export the Cumulocity C++ library and NetComm SDK path (add the following code to your ~/.bashrc for permanence):
 
 ```
@@ -28,7 +36,7 @@ export C8Y_LIB_PATH=/library/root/path
 export NTC_SDK_PATH=/netcomm/sdk/path
 ```
 
-* Build the ntcagent:
+* Build the cumulocity-ntc-agent:
 
 ```
 #!bash
@@ -38,47 +46,43 @@ make
 # build in release mode and logs to file
 make BUILD=release
 ```
+The cumulocity-ntc-agent will contain agent, CA root certificate (and a package public key if you generated a key pair beforehand)
 
-* Build the smsagent:
-
-```
-#!bash
-
-# build in debug mode
-make sms
-# build in release mode
-make sms BUILD=release
-```
-
-### FAQ ###
-
-* Installation of IPK file failed because of missing package sigunature. How can I fix it?
-
-There are two ways to fix it.
-
-1) Disable IPK signature checking function on your Netcomm device by going to System > System Configuration > Firmware signature.
-
-2) (**Recommended**) Install a signature key on your Netcomm device and build signed package with the following instruction.
-
-First, let's generate public/private key pair and build IPK package contains the public key.
+* Generate a package key pair:
 
 ```
 #!bash
 
 make signature
 ```
-Note: you need to disable signature validation on your Netcomm device when you install the public key package
 
-Then, add signature (paired-private key) to each Cumulocity package. In the root directory, for example, if you want to add signature to `smartrest-agent_4.2.3_arm.ipk`, run:
+### FAQ ###
+
+* Installation of IPK file failed because of missing the package sigunature. How can I fix it?
+
+1) Disable the package signature check on your Netcomm device by navigating to System > System Configuration > Firmware signature.
+
+2) (**Recommended**) Prepare a signature key pair and build a signed package with the following instruction.
+
+First, let's generate a public/private key pair.
 
 ```
 #!bash
 
-./tools/mk-signed-ipk.sh build/smartrest-agent_4.2.3_arm.ipk
+make signature
 ```
-Then, you'll find `smartrest-agent_4.2.3_arm-signed.ipk` in build directory. You can install the signed packages even if the signature validation checking is enabled, as long as the corresponded paired public key exists on your Netcomm device.
+Note: you need to disable Firmware signature on your Netcomm device when you install any package for the first time.
 
-* How can I query the current package versions?
+Then, add signature (paired-private key) to cumulocity-ntc-agent package. In the root directory, for example, if you want to add signature to `cumulocity-ntc-agent_1.0.0_arm.ipk`, run:
+
+```
+#!bash
+
+./tools/mk-signed-ipk.sh build/cumulocity-ntc-agent_1.0.0_arm.ipk
+```
+Then, you have just created `cumulocity-ntc-agent_1.0.0_arm-signed.ipk` in build directory. You can install the signed packages even if Firmware signature is enabled as long as the corresponded paired public key exists on your Netcomm device.
+
+* How can I query the current package version?
 
 ```
 #!bash
@@ -86,30 +90,22 @@ Then, you'll find `smartrest-agent_4.2.3_arm-signed.ipk` in build directory. You
 ./version.sh ask
 ```
 
-* How can I change the ntcagent version number?
+* How can I change the cumulocity-ntc-agent version number?
 
 ```
 #!bash
 
-./version.sh <new version number> -
+./version.sh update <new version number>
 ```
 
-* How can I change the smsagent version number?
-
-```
-#!bash
-
-./version.sh - <new version number>
-```
-
-* How do I get a CA certificate bundle for verifying server TLS certificate?
+* How do I get the latest CA certificate for verifying server TLS certificate?
 
 In the root directory, run:
 ```bash
-./tools/mk-ca-cumulocity.sh pkg
+./tools/mk-ca-cumulocity.sh update
 ```
 
-This will package the Mozilla certificate bundle as a .ipk, which can be installed on the NetComm device. For more information about the `mk-ca-cumulocity.sh` script, please check its usage by directly running the command without any arguments.
+This will retrieve the Mozilla certificate from [https://curl.haxx.se](https://curl.haxx.se). For more information about the `mk-ca-cumulocity.sh` script, please check its usage by directly running the command without any arguments.
 
 * My server's certificate is not issued by a root CA that's included in the Mozilla bundle, how can I add it?
 
