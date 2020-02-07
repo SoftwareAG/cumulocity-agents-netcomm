@@ -1,0 +1,63 @@
+cp /etc/cdcs/conf/pubkey/cumulocity-public.pem /usr/local/cdcs/conf/pubkey/
+rdb set system.firmwarePublicKey.update.trigger 1
+rdb set system.update.enableFirmwareSignatureCheck 1
+
+cd /etc/init.d/rc3.d && ln -sf ../rc.d/ntcagent.sh S950ntcagent
+cd /etc/init.d/rc3.d && ln -sf ../rc.d/vncproxy.sh S950vncproxy
+mkdir -p /opt/ntcagent
+sed -i '/service.cumulocity/d' '/etc/cdcs/conf/default.conf'
+
+cat >> /etc/cdcs/conf/default.conf <<EOF
+service.cumulocity.agent.status;0;0;0x0;0x20;
+service.cumulocity.agent.version;0;0;0x0;0x20;
+service.cumulocity.buffer.capacity;0;0;0x0;0x20;10000
+service.cumulocity.connection.password;0;0;0x0;0x20;
+service.cumulocity.connection.server;0;0;0x0;0x20;https://54.75.252.207/s
+service.cumulocity.connection.username;0;0;0x0;0x20;
+service.cumulocity.enable;0;0;0x0;0x20;1
+service.cumulocity.gpio.1.alarm.severity;0;0;0x0;0x20;MAJOR
+service.cumulocity.gpio.1.alarm.text;0;0;0x0;0x20;
+service.cumulocity.gpio.1.debounce.interval;0;0;0x0;0x20;600
+service.cumulocity.gpio.1.notify;0;0;0x0;0x20;off
+service.cumulocity.gpio.2.alarm.severity;0;0;0x0;0x20;MAJOR
+service.cumulocity.gpio.2.alarm.text;0;0;0x0;0x20;
+service.cumulocity.gpio.2.debounce.interval;0;0;0x0;0x20;600
+service.cumulocity.gpio.2.notify;0;0;0x0;0x20;off
+service.cumulocity.gpio.3.alarm.severity;0;0;0x0;0x20;MAJOR
+service.cumulocity.gpio.3.alarm.text;0;0;0x0;0x20;
+service.cumulocity.gpio.3.debounce.interval;0;0;0x0;0x20;600
+service.cumulocity.gpio.3.notify;0;0;0x0;0x20;off
+service.cumulocity.gpio.interval;0;0;0x0;0x20;0
+service.cumulocity.gpio.list;0;0;0x0;0x20;xaux1,xaux2,xaux3
+service.cumulocity.gps.interval;0;0;0x0;0x20;0
+service.cumulocity.gps.update_interval;0;0;0x0;0x20;0
+service.cumulocity.log.level;0;0;0x0;0x20;4
+service.cumulocity.log.quota;0;0;0x0;0x20;4096
+service.cumulocity.lua.plugins;0;0;0x0;0x20;gps,logview,modbus,net,relay,restart,signal,software,support,system
+service.cumulocity.modbus.pollingrate;0;0;0x0;0x20;30
+service.cumulocity.modbus.port;0;0;0x0;0x20;502
+service.cumulocity.modbus.readonly;0;0;0x0;0x20;0
+service.cumulocity.modbus.serial.baud;0;0;0x0;0x20;19200
+service.cumulocity.modbus.serial.databits;0;0;0x0;0x20;8
+service.cumulocity.modbus.serial.parity;0;0;0x0;0x20;E
+service.cumulocity.modbus.serial.port;0;0;0x0;0x20;/dev/ttyO1
+service.cumulocity.modbus.serial.stopbits;0;0;0x0;0x20;1
+service.cumulocity.modbus.transmitrate;0;0;0x0;0x20;900
+service.cumulocity.mqtt.enable;0;0;0x0;0x20;1
+service.cumulocity.mqtt.keepalive;0;0;0x0;0x20;240
+service.cumulocity.network.connectTimeout;0;0;0x0;0x20;60
+service.cumulocity.network.keepAliveInterval;0;0;0x0;0x20;600
+service.cumulocity.network.keepAliveTimeout;0;0;0x0;0x20;60
+service.cumulocity.network.reconnectInterval;0;0;0x0;0x20;15
+service.cumulocity.network.timeout;0;0;0x0;0x20;120
+service.cumulocity.signal.interval;0;0;0x0;0x20;0
+service.cumulocity.sms.receiver;0;0;0x0;0x20;
+service.cumulocity.sms.report.interval;0;0;0x0;0x20;86400
+service.cumulocity.system_resources.interval;0;0;0x0;0x20;0
+service.cumulocity.udp_alarms.port;0;0;0x0;0x20;1331
+EOF
+
+PLUGINS=$(rdb_get service.cumulocity.lua.plugins)
+if ! echo "$PLUGINS" | grep -q support; then
+    rdb_set service.cumulocity.lua.plugins "support,$PLUGINS"
+fi

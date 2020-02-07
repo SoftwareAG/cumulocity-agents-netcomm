@@ -9,6 +9,10 @@ COMMON_SRC:=$(wildcard $(SRC_DIR)/common/*.cc)
 MODULE_SRC:=$(wildcard $(SRC_DIR)/module/*.cc)
 MODBUS_SRC:=$(wildcard $(SRC_DIR)/modbus/*.cc)
 
+C8Y_NTC_PKG_DIR:=build/staging/c8yntcagent
+CAFILE:=misc/certs/cacert.pem
+CA_DIR:=misc/certs/cacert.d
+
 NTC_BIN:=ntcagent
 NTC_SRC:=$(wildcard $(SRC_DIR)/*.cc) $(MODBUS_SRC) $(COMMON_SRC) $(MODULE_SRC)
 NTC_OBJ:=$(addprefix $(BUILD_DIR)/,$(NTC_SRC:.cc=.o))
@@ -52,7 +56,32 @@ endif
 
 .PHONY: all clean
 
-all: ntc sms 
+all: $(BIN_DIR)/$(NTC_BIN) $(BIN_DIR)/$(VNC_BIN)
+	@mkdir -p $(C8Y_NTC_PKG_DIR)/usr/local/bin $(C8Y_NTC_PKG_DIR)/CONTROL
+	@mkdir -p $(C8Y_NTC_PKG_DIR)/usr/local/ntcagent
+	@mkdir -p $(C8Y_NTC_PKG_DIR)/etc/init.d/rc.d
+	@mkdir -p $(C8Y_NTC_PKG_DIR)/etc/cdcs/conf/mgr_templates/
+	@mkdir -p $(C8Y_NTC_PKG_DIR)/usr/local/ssl/certs/
+	@mkdir -p $(C8Y_NTC_PKG_DIR)/etc/cdcs/conf/pubkey
+	@cp scripts/ntcagent.sh $(C8Y_NTC_PKG_DIR)/etc/init.d/rc.d
+	@cp scripts/vncproxy.sh $(C8Y_NTC_PKG_DIR)/etc/init.d/rc.d
+	@cp scripts/ntcagent.template $(C8Y_NTC_PKG_DIR)/etc/cdcs/conf/mgr_templates/
+	@cp -r www $(C8Y_NTC_PKG_DIR)/
+	@cp $^  $(C8Y_NTC_PKG_DIR)/usr/local/bin
+	@cp $(BIN_DIR)/srwatchdogd $(C8Y_NTC_PKG_DIR)/usr/local/bin/
+	@cp -rP lib $(C8Y_NTC_PKG_DIR)/usr/local/
+	@cp -r srtemplate.txt lua $(C8Y_NTC_PKG_DIR)/usr/local/ntcagent
+	@cp debian/c8yntcagent/* $(C8Y_NTC_PKG_DIR)/CONTROL
+	@cp $(CAFILE) $(C8Y_NTC_PKG_DIR)$(SR_SSL_CACERT)
+ifneq (,$(wildcard $(CA_DIR)/*))
+	@cat $(wildcard $(CA_DIR)/*) >> $(C8Y_NTC_PKG_DIR)$(SR_SSL_CACERT)
+endif
+ifeq (,$(wildcard $(SIGN_PUBKEY)))
+	@echo "Wairning: No public key generated. Run make signature first. It will create a package without public key."
+else
+	@cp $(SIGN_PUBKEY) $(C8Y_NTC_PKG_DIR)/etc/cdcs/conf/pubkey
+endif
+	@$(PKG) $(shell pwd)/$(C8Y_NTC_PKG_DIR) $(shell pwd)/$(PKG_DIR)
 
 ntc: $(BIN_DIR)/$(NTC_BIN)
 	@mkdir -p $(NTC_PKG_DIR)/usr/local/bin $(NTC_PKG_DIR)/CONTROL

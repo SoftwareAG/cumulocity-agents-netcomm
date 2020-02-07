@@ -1,0 +1,11 @@
+Package: cumulocity-ntc-agent
+Priority: optional
+Section: Misc
+Version: 0.1.0
+Architecture: arm
+Maintainer: support@cumulocity.com
+Depends:
+Description: NetComm Device Agent for Cumulocity.
+ Including
+  Mozilla CA cert bundle with Cumulocity addtions.
+  A public key for IPK packages signed by Cumulocity.
