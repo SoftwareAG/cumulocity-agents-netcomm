@@ -1,8 +1,8 @@
 # Cumulocity Netcomm Agent #
 
-Cumulocity Netcomm Agent is a dedicated agent software for connecting the NetComm router to Cumulocity.
+Cumulocity NetComm Agent is a dedicated agent software for connecting the NetComm router to Cumulocity.
 
-### Supported Netcomm Device ###
+### Supported NetComm Device ###
 NTC-220 series
 
 For NTC-6200 and NTC-140W, move to [our NTC-6200 branch](https://bitbucket.org/m2m/cumulocity-agents-netcomm/src/NTC-6200/).
@@ -60,7 +60,7 @@ make signature
 
 * Installation of IPK file failed because of missing the package sigunature. How can I fix it?
 
-1) Disable the package signature check on your Netcomm device by navigating to System > System Configuration > Firmware signature.
+1) Disable the package signature check on your NetComm device by navigating to System > System Configuration > Firmware signature.
 
 2) (**Recommended**) Prepare a signature key pair and build a signed package with the following instruction.
 
@@ -71,7 +71,7 @@ First, let's generate a public/private key pair.
 
 make signature
 ```
-Note: you need to disable Firmware signature on your Netcomm device when you install any package for the first time.
+Note: you need to disable Firmware signature on your NetComm device when you install any package for the first time.
 
 Then, add signature (paired-private key) to cumulocity-ntc-agent package. In the root directory, for example, if you want to add signature to `cumulocity-ntc-agent_1.0.0_arm.ipk`, run:
 
@@ -80,7 +80,7 @@ Then, add signature (paired-private key) to cumulocity-ntc-agent package. In the
 
 ./tools/mk-signed-ipk.sh build/cumulocity-ntc-agent_1.0.0_arm.ipk
 ```
-Then, you have just created `cumulocity-ntc-agent_1.0.0_arm-signed.ipk` in build directory. You can install the signed packages even if Firmware signature is enabled as long as the corresponded paired public key exists on your Netcomm device.
+Then, you have just created `cumulocity-ntc-agent_1.0.0_arm-signed.ipk` in build directory. You can install the signed packages even if Firmware signature is enabled as long as the corresponded paired public key exists on your NetComm device.
 
 * How can I query the current package version?
 
