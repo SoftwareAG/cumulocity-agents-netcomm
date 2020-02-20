@@ -61,3 +61,5 @@ PLUGINS=$(rdb_get service.cumulocity.lua.plugins)
 if ! echo "$PLUGINS" | grep -q support; then
     rdb_set service.cumulocity.lua.plugins "support,$PLUGINS"
 fi
+
+rdb_set service.system.reset 1
