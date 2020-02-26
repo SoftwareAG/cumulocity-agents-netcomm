@@ -11,17 +11,15 @@ end
 
 
 local function _sendSignal()
-   local rssi = rdbGetInt('wwan.0.radio.information.signal_strength')
-   local rscp = rdbGetInt('wwan.0.system_network_status.RSCPs0', -1)
-   local rsrp = rdbGetInt('wwan.0.signal.0.rsrp')
-   local a = rscp == -1 and 'RSRP' or 'RSCP'
-   local b = rscp == -1 and rsrp or rscp
-   local valid = rdbGetInt('wwan.0.system_network_status.ECN0_valid')
-   if valid == 1 then
-      local ecn0 = rdbGetInt('wwan.0.system_network_status.ECN0s0')
-      c8y:send(table.concat({'307', utcTime(), c8y.ID, rssi, a, b, ecn0}, ','), 1)
-   else
-      c8y:send(table.concat({'308', utcTime(), c8y.ID, rssi, a, b}, ','), 1)
+   local type = rdbGetStr('wwan.0.system_network_status.system_mode')
+   local signal = rdbGetInt('wwan.0.radio.information.signal_strength')
+   if type == 'LTE' then
+      local rsrq = rdbGetInt('wwan.0.signal.rsrq')
+      c8y:send(string.format("307,%s,%s,%s,%s,%s,%s,%s,%s", utcTime(), c8y.ID, 'RSRP', signal, 'dBm', 'RSRQ', rsrq, 'dB'))
+   elseif type == 'UMTS' then
+      c8y:send(string.format("308,%s,%s,%s,%s,%s", utcTime(), c8y.ID, 'RSCP', signal, 'dBm'))
+   elseif type == 'GSM' then
+      c8y:send(string.format("308,%s,%s,%s,%s,%s", utcTime(), c8y.ID, 'RSSI', signal, 'dBm'))
    end
 end
 

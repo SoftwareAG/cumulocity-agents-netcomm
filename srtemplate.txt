@@ -1,4 +1,4 @@
-netcomm_100
+netcomm_0.1.2
 
 10,300,GET,/identity/externalIds/c8y_Serial/%%,,application/vnd.com.nsn.cumulocity.externalId+json,%%,STRING,
 
@@ -15,9 +15,9 @@ netcomm_100
 
 10,306,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING NUMBER NUMBER NUMBER,"{""c8y_Mobile"":{""cellId"":""%%"",""mcc"":""%%"",""imei"":""%%"",""iccid"":""%%"",""mnc"":""%%"",""imsi"":""%%"",""lac"":""%%"",""msisdn"":""%%"",""connType"":""%%"",""currentOperator"":""%%"",""currentBand"":""%%"",""rssi"":""%%"",""ecn0"":""%%"",""rcsp"":""%%""}}"
 
-10,307,POST,/measurement/measurements,application/vnd.com.nsn.cumulocity.measurement+json,,%%,DATE UNSIGNED NUMBER STRING NUMBER NUMBER,"{""time"":""%%"",""source"":{""id"":""%%""},""c8y_SignalStrength"":{""rssi"":{""value"":%%,""unit"":""dBm""},""%%"":{""value"":%%},""ECN0"":{""value"":%%}},""type"":""c8y_SignalMeasurement""}"
+10,307,POST,/measurement/measurements,application/vnd.com.nsn.cumulocity.measurement+json,,%%,DATE UNSIGNED STRING NUMBER STRING STRING NUMBER STRING,"{""time"":""%%"",""source"":{""id"":""%%""},""c8y_SignalStrength"":{""%%"":{""value"":%%,""unit"":""%%""},""%%"":{""value"":%%,""unit"":""%%""}},""type"":""c8y_SignalMeasurement""}"
 
-10,308,POST,/measurement/measurements,application/vnd.com.nsn.cumulocity.measurement+json,,%%,DATE UNSIGNED NUMBER STRING NUMBER,"{""time"":""%%"",""source"":{""id"":""%%""},""c8y_SignalStrength"":{""rssi"":{""value"":%%,""unit"":""dBm""},""%%"":{""value"":%%}},""type"":""c8y_SignalMeasurement""}"
+10,308,POST,/measurement/measurements,application/vnd.com.nsn.cumulocity.measurement+json,,%%,DATE UNSIGNED STRING NUMBER STRING,"{""time"":""%%"",""source"":{""id"":""%%""},""c8y_SignalStrength"":{""%%"":{""value"":%%,""unit"":""%%""}},""type"":""c8y_SignalMeasurement""}"
 
 10,309,GET,/inventory/managedObjects/%%,,application/json,%%,UNSIGNED,
 

@@ -14,5 +14,6 @@ elif [ "$1" = "ask" ]; then
     grep Version: debian/c8yntcagent/control | cut -c 10-
 elif [ "$1" = "update" ]; then
     test $2 != '-' && sed -i "/Version:/c\Version: $2" debian/c8yntcagent/control
+    sed -r -i "1s/(netcomm_).*/\1$2/g" srtemplate.txt
 fi
 exit 0
