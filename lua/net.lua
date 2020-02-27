@@ -36,11 +36,21 @@ local function _updateMobile(msisdn)
    local conn = rdbGetStr("wwan.0.conn_type")
    local operator = rdbGetStr("wwan.0.system_network_status.network.unencoded")
    local band = rdbGetStr("wwan.0.system_network_status.current_band")
-   local rssi = rdbGetInt("wwan.0.radio.information.signal_strength")
-   local ecn0 = rdbGetInt("wwan.0.system_network_status.ECN0s0")
-   local rscp = rdbGetInt("wwan.0.system_network_status.RSCPs0")
-   c8y:send(table.concat({'306', c8y.ID, cell, mcc, imei, iccid, mnc, imsi, lac,
-                          msisdn, conn, operator, band, rssi, ecn0, rscp}, ','))
+   local type = rdbGetStr("wwan.0.system_network_status.system_mode")
+   if type == 'LTE' then
+      local rsrp = rdbGetInt("wwan.0.radio.information.signal_strength")
+      local rsrq = rdbGetInt('wwan.0.signal.rsrq')
+      c8y:send(table.concat({'306', c8y.ID, cell, mcc, imei, iccid, mnc, imsi, lac,
+                          msisdn, conn, operator, band, rsrp, rsrq}, ','))
+   elseif type == 'UMTS' then
+      local rscp = rdbGetInt("wwan.0.radio.information.signal_strength")
+      c8y:send(table.concat({'337', c8y.ID, cell, mcc, imei, iccid, mnc, imsi, lac,
+                          msisdn, conn, operator, band, rscp}, ','))
+   elseif type == 'GSM' then
+      local rssi = rdbGetInt("wwan.0.radio.information.signal_strength")
+      c8y:send(table.concat({'338', c8y.ID, cell, mcc, imei, iccid, mnc, imsi, lac,
+                          msisdn, conn, operator, band, rssi}, ','))
+   end
 end
 
 
