@@ -71,7 +71,7 @@ function updateNetwork()
    local mac = rdbGetStr("systeminfo.mac.eth0")
    local lanip = rdbGetStr("link.profile.0.address")
    local netmask = rdbGetStr("link.profile.0.netmask")
-   local lan = "1"
+   local lan = (rdbGetStr("network.interface.eth.0.mode") == "") and "0" or "1"
    local rangekey = "service.dhcp.range.0"
    local addrstart, addrend = rdbGetStr(rangekey):match("([^,]+),([^,]+)")
    local dns1 = rdbGetStr("service.dhcp.dns1.0")
@@ -100,6 +100,13 @@ end
 function configLAN(r)
    rdbSet('link.profile.0.address', r:value(3))
    rdbSet('link.profile.0.netmask', r:value(4))
+   if r:value(5) == '0' then
+      rdbSet('network.interface.eth.0.mode', '')
+      rdbSet('network.interface.trigger', '1')
+   elseif r:value(5) == '1' then
+      rdbSet('network.interface.eth.0.mode', 'lan')
+      rdbSet('network.interface.trigger', '1')
+   end
    c8y:send('303,' .. r:value(2) .. ',SUCCESSFUL', 1)
    updateNetwork()
 end
