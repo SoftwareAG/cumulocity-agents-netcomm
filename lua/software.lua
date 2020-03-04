@@ -1,6 +1,6 @@
 require('myrdb')
 local cmd_list = 'ipkg-cl list '
-local cmd_install = 'ipkg-cl install -force-downgrade '
+local cmd_install = 'install_file '
 local cmd_remove = 'ipkg-cl remove '
 local receives = {}
 local pkg_fmt = '{""name"":""%s"",""version"":""%s"",""url"":"" ""}'
@@ -14,7 +14,7 @@ local errmsgs = {[-1] = '"Unknown reason"',
    [129] = '"Uninstall agent not permitted"',
    [256] = '"Package not exist"'
 }
-
+local agent_name = 'cumulocity-ntc-agent'
 
 local function getFirmware()
    return rdbGetStr('system.product.model'), rdbGetStr('sw.version')
@@ -50,7 +50,7 @@ end
 local function pkg_perform(cmd, pkgs)
    local param = cmd .. pkgs
    srInfo('software: ' .. param)
-   return os.execute(param) or -3
+   return os.execute(param) == 0 and 0 or -3
 end
 
 
@@ -117,7 +117,7 @@ function perform(r)
 
    for name, _ in pairs(locallist) do
       tbl[#tbl + 1] = name
-      if name == 'smartrest-agent' then c = 129 end
+      if name == agent_name then c = 129 end
    end
    if c~= 0 then
       c8y:send('319,' .. c8y.ID .. ',' .. pack(pkg_list()))
@@ -176,7 +176,7 @@ function update_firmware(r)
       c8y:send(table.concat({'304', r:value(2), strerr(-2)}, ','), 1)
       return
    end
-   local c = os.execute('install_file ' .. filename) or -3
+   local c = os.execute('install_file ' .. filename) == 0 and 0 or -3
    if c ~= 0 then
       c8y:send(table.concat({'304', r:value(2), strerr(c)}, ','), 1)
    else
