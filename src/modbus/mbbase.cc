@@ -109,14 +109,52 @@ void ModbusModel::addAddress(uint8_t type, uint16_t addr)
         break;
     }
 
-    if (pm->empty() || pm->back().second + 1 < addr || pm->back().first + limit < addr + 1)
-    {
+    if (pm->empty()) {
         pm->emplace_back(addr, addr);
+        return;
     }
-    else
-    {
-        pm->back().second = addr;
+
+    // Make a pair (start addr, end addr) to queue
+    for(auto itr = pm->begin(); itr != pm->end(); ++itr) {
+        if (itr->first <= addr && addr <= itr->second){
+            // addr is within the pair's address range
+            return;
+        } else if (itr->second + 1 == itr->first + limit) {
+            // The pair's address range is already limit
+            continue;
+        } else if (itr->second + 2 == itr->first + limit) {
+            // The pair's address range will be limit after extension
+            if (addr + 1 == itr->first) {
+                itr->first = addr;
+                return;
+            } else if (addr == itr->second + 1) {
+                itr->second = addr;
+                return;
+            }
+        } else if (addr + 1 == itr->first) {
+            itr->first = addr;
+            for(auto i = pm->begin(); i != pm->end(); ++i) {
+                // Extend the pair's address range with another consecutive pair
+                if (addr == i->second + 1) {
+                    itr->first = i->first;
+                    pm->erase(i);
+                    break;
+                }
+            }
+            return;
+        } else if (addr == itr->second + 1){
+            itr->second = addr;
+            for(auto i = pm->begin(); i != pm->end(); ++i) {
+                if (addr + 1 == i->first) {
+                    itr->second = i->second;
+                    pm->erase(i);
+                    break;
+                }
+            }
+            return;
+        }
     }
+    pm->emplace_back(addr, addr);
 }
 
 int ModbusBase::readCO(int addr, int nb, uint8_t *dest)
