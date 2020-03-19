@@ -36,6 +36,13 @@ export C8Y_LIB_PATH=/library/root/path
 export NTC_SDK_PATH=/netcomm/sdk/path
 ```
 
+* Generate a package key pair:
+```
+#!bash
+
+make signature
+```
+
 * Build the cumulocity-ntc-agent:
 
 ```
@@ -46,15 +53,9 @@ make
 # build in release mode and logs to file
 make BUILD=release
 ```
-The cumulocity-ntc-agent will contain agent, CA root certificate (and a package public key if you generated a key pair beforehand)
+The cumulocity-ntc-agent will contain agent binary, cloud remote access binary, CA root certificate (and a public key for package signature if you generated a key pair beforehand)
 
-* Generate a package key pair:
 
-```
-#!bash
-
-make signature
-```
 
 ### FAQ ###
 
