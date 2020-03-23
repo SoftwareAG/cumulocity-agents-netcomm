@@ -10,6 +10,8 @@ local subnetmasklist = {
    "255.255.248.0", "255.255.252.0", "255.255.254.0", "255.255.255.0",
    "255.255.255.128", "255.255.255.192", "255.255.255.224", "255.255.255.240",
    "255.255.255.248", "255.255.255.252"}
+local monitorTimer
+local networktbl = {}
 
 
 function init()
@@ -26,6 +28,9 @@ function init()
    c8y:addMsgHandler(867, 'configDHCP')
    updateNetwork()
    c8y:send('309,' .. c8y.ID)
+   updateNetworkTable(networktbl)
+   monitorTimer = c8y:addTimer(1*1000, 'configMonitor')
+   monitorTimer:start()
    return 0
 end
 
@@ -64,7 +69,7 @@ local function bitNOT(n)
 end
 
 
-function bitLshift(x, by)
+local function bitLshift(x, by)
   return x * 2 ^ by
 end
 
@@ -300,4 +305,36 @@ end
 
 function setDeliveryType(r)
    isSMS = r:value(2) == 'SMS'
+end
+
+
+function updateNetworkTable(tbl)
+   tbl["simstatus"] = rdbGetStr("wwan.0.sim.status.status")
+   tbl["apn"] = rdbGetStr("link.profile.1.apn")
+   tbl["user"] = rdbGetStr("link.profile.1.user")
+   tbl["pass"] = rdbGetStr("link.profile.1.pass")
+   tbl["auth"] = rdbGetStr("link.profile.1.auth_type")
+   tbl["wanip"] = rdbGetStr("link.profile.1.iplocal")
+   tbl["lanip"] = rdbGetStr("link.profile.0.address")
+   tbl["netmask"] = rdbGetStr("link.profile.0.netmask")
+   tbl["lan"] = rdbGetStr("network.interface.eth.0.mode")
+   local rangekey = "service.dhcp.range.0"
+   tbl["addrstart"], tbl["addrend"] = rdbGetStr(rangekey):match("([^,]+),([^,]+)")
+   tbl["dns1"] = rdbGetStr("service.dhcp.dns1.0")
+   tbl["dns2"] = rdbGetStr("service.dhcp.dns2.0")
+   tbl["domain"] = rdbGetStr("service.dhcp.suffix.0")
+   tbl["dhcp"] = rdbGetInt("service.dhcp.enable")
+end
+
+
+function configMonitor()
+   local tbl = {}
+   updateNetworkTable(tbl)
+   for key in pairs(tbl) do
+      if tbl[key] ~= networktbl[key] then
+         updateNetworkTable(networktbl)
+         updateNetwork()
+         return
+      end
+   end
 end
