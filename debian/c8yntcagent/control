@@ -1,7 +1,7 @@
 Package: cumulocity-ntc-agent
 Priority: optional
 Section: Misc
-Version: 1.0.0
+Version: 1.0.1
 Architecture: arm
 Maintainer: support@cumulocity.com
 Depends:
