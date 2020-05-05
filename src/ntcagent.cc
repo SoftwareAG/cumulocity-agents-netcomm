@@ -83,10 +83,13 @@ int main()
 
     srDebug("Checking network connection and NTP synchronisation...");
 
-    // need to wait until WWAN connection is up and if enabled, NTP synchronisation is done.
+    // need to wait until WAN connection is up and if enabled, NTP synchronisation is done.
     // When the agent starts before NTP synch is done, the secure TCP connection used for the PushService is broken and
     // agent does not get any server commands until first heartbeat is missed and re-connection is triggered.
-    while (rdb.get("wwan.0.connection.status") != "up" || ((rdb.get("service.ntp.enable") == "1") && (rdb.get("system.ntp.time") == "")))
+    while ((rdb.get("wwan.0.connection.status") != "up" && // Cellular WWAN
+            rdb.get("link.profile.7.status") != "up" && // Ethernet WAN
+            rdb.get("link.profile.8.status") != "up") || // USB WAN
+            ((rdb.get("service.ntp.enable") == "1") && (rdb.get("system.ntp.time") == "")))
     {
         wdt.kick();
         sleep(2);
