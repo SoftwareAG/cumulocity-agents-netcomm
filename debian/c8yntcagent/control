@@ -3,7 +3,7 @@ Priority: optional
 Section: Misc
 Version: 1.0.1
 Architecture: arm
-Maintainer: support@cumulocity.com
+Maintainer: Software AG Cumulocity IoT <Helpdesk-CumulocityIoT@softwareag.com>
 Depends:
 Description: NetComm Device Agent for Cumulocity.
  Including

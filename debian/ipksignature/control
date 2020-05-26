@@ -3,6 +3,6 @@ Priority: optional
 Section: Misc
 Version: 1.0
 Architecture: arm
-Maintainer: support@cumulocity.com
+Maintainer: Software AG Cumulocity IoT <Helpdesk-CumulocityIoT@softwareag.com>
 Depends:
 Description: Installing new public key for Cumulocity's NTC SmartREST Agent IPK package
