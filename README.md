@@ -51,7 +51,7 @@ make signature
 # build in debug mode and logs to stdout.
 make
 # build in release mode and logs to file
-make BUILD=release
+make release
 ```
 The cumulocity-ntc-agent will contain agent binary, cloud remote access binary, CA root certificate (and a public key for package signature if you generated a key pair beforehand)
 

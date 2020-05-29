@@ -54,7 +54,7 @@ CFLAGS+=-O0 -g
 LDFLAGS+=-O0 -g
 endif
 
-.PHONY: all clean
+.PHONY: all release clean
 
 all: $(BIN_DIR)/$(NTC_BIN) $(BIN_DIR)/$(VNC_BIN)
 	@mkdir -p $(C8Y_NTC_PKG_DIR)/usr/local/bin $(C8Y_NTC_PKG_DIR)/CONTROL
@@ -82,6 +82,9 @@ else
 	@cp $(SIGN_PUBKEY) $(C8Y_NTC_PKG_DIR)/etc/cdcs/conf/pubkey
 endif
 	@$(PKG) $(shell pwd)/$(C8Y_NTC_PKG_DIR) $(shell pwd)/$(PKG_DIR)
+
+release:
+	@make -s "BUILD=release"
 
 ntc: $(BIN_DIR)/$(NTC_BIN)
 	@mkdir -p $(NTC_PKG_DIR)/usr/local/bin $(NTC_PKG_DIR)/CONTROL
