@@ -51,11 +51,11 @@ function update()
 
    local t = os.time()
    val, upval = rdbGetInt(keyVal), rdbGetInt(keyUpVal)
-   if val > 0 and val + t0 < t then
+   if val > 0 and val + t0 <= t then
       t0 = t
       updateEvent(alt, lat, lon)
    end
-   if upval > 0 and upval + t1 < t then
+   if upval > 0 and upval + t1 <= t then
       t1 = t
       c8y:send(table.concat({'328', c8y.ID, alt, lat, lon}, ','))
    end
@@ -77,7 +77,7 @@ end
 
 
 function init()
-   timer = c8y:addTimer(10*1000, 'update')
+   timer = c8y:addTimer(1 * 1000, 'update')
    timer:start()
    puTimer = c8y:addTimer(180 * 1000, 'reportPos')
    puTimer:start()
