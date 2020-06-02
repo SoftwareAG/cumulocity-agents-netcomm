@@ -357,17 +357,22 @@ function transmit()
    if t1 + transmitRate > t then return end
    t1 = t
    for device, _ in pairs(MBDEVICES) do
-      local msgtbl, dtype = {}, MBDEVICES[device][dtypeno]
-      transmitData(device, true, msgtbl)
-      transmitData(device, false, msgtbl)
+      if MBDEVICES[device][dunvno] then
+         local addr, slave = MBDEVICES[device][daddrno], MBDEVICES[device][dslaveno]
+         srDebug('Modbus: transmit unavailable ' .. addr .. '@' .. slave)
+      else
+         local msgtbl, dtype = {}, MBDEVICES[device][dtypeno]
+         transmitData(device, true, msgtbl)
+         transmitData(device, false, msgtbl)
 
-      local msgs, serverTime = {}, MBTYPES[dtype][tstno]
-      for msgid, values in pairs(msgtbl) do
-         msgs[#msgs + 1] = pack({msgid, device}, serverTime, values)
-      end
-      if #msgs > 0 then
-         msgs[1] = dtype .. ',' .. msgs[1]
-         c8y:send(table.concat(msgs, '\n'), serverTime and 2 or 3)
+         local msgs, serverTime = {}, MBTYPES[dtype][tstno]
+         for msgid, values in pairs(msgtbl) do
+            msgs[#msgs + 1] = pack({msgid, device}, serverTime, values)
+         end
+         if #msgs > 0 then
+            msgs[1] = dtype .. ',' .. msgs[1]
+            c8y:send(table.concat(msgs, '\n'), serverTime and 2 or 3)
+         end
       end
    end
 end
@@ -521,7 +526,7 @@ function init()
    c8y:addMsgHandler(878, 'saveSerialConfiguration')
 
    timer0 = c8y:addTimer(1000, 'poll')
-   timer1 = c8y:addTimer(5000, 'transmit')
+   timer1 = c8y:addTimer(1000, 'transmit')
    c8y:send(table.concat({'321', c8y.ID, pollingRate, transmitRate, 5}, ','))
    if rdbGetStr('uboot.hw_id') ~= 'NTC-140W-02' then
       c8y:send(table.concat({'335', c8y.ID, serBaud, serData,
