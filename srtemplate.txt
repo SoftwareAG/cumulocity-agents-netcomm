@@ -1,9 +1,9 @@
-netcomm_1.0.3
+netcomm_1.1.0
 
 10,300,GET,/identity/externalIds/c8y_Serial/%%,,application/vnd.com.nsn.cumulocity.externalId+json,%%,STRING,
 
 # Device Capability
-10,301,POST,/inventory/managedObjects,application/json,application/json,%%,STRING UNSIGNED,"{""name"":""%%"",""type"":""POSIX Agent"",""c8y_IsDevice"":{},""com_cumulocity_model_Agent"":{},""c8y_RequiredAvailability"":{""responseInterval"":%%}}"
+10,301,POST,/inventory/managedObjects,application/json,application/json,%%,STRING UNSIGNED,"{""name"":""%%"",""type"":""NTC-220 Agent"",""c8y_IsDevice"":{},""com_cumulocity_model_Agent"":{},""c8y_RequiredAvailability"":{""responseInterval"":%%}}"
 
 10,302,POST,/identity/globalIds/%%/externalIds,application/json,,%%,UNSIGNED STRING,"{""externalId"":""%%"",""type"":""c8y_Serial""}"
 
@@ -78,6 +78,8 @@ netcomm_1.0.3
 10,337,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING NUMBER,"{""c8y_Mobile"":{""cellId"":""%%"",""mcc"":""%%"",""imei"":""%%"",""iccid"":""%%"",""mnc"":""%%"",""imsi"":""%%"",""lac"":""%%"",""msisdn"":""%%"",""connType"":""%%"",""currentOperator"":""%%"",""currentBand"":""%%"",""rscp"":""%%""}}"
 
 10,338,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING NUMBER,"{""c8y_Mobile"":{""cellId"":""%%"",""mcc"":""%%"",""imei"":""%%"",""iccid"":""%%"",""mnc"":""%%"",""imsi"":""%%"",""lac"":""%%"",""msisdn"":""%%"",""connType"":""%%"",""currentOperator"":""%%"",""currentBand"":""%%"",""rssi"":""%%""}}"
+
+10,339,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED,"{""type"":""NTC-220 Agent""}"
 
 11,800,$.managedObject,,$.id
 11,801,,$.c8y_IsDevice,$.id

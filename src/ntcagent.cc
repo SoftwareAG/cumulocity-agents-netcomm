@@ -128,6 +128,7 @@ int main()
     agent.send("323," + agent.ID());
     agent.send("311," + agent.ID() + ",ACTIVE");
     agent.send("311," + agent.ID() + ",ACKNOWLEDGED");
+    agent.send("339," + agent.ID()); // Update type to NTC-220 Agent
 
     // update agent status in realtime database
     rdb.set(keyStatus, "Loading plugins");
