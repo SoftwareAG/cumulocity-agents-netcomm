@@ -110,12 +110,22 @@ function uploadRDB(r)
 end
 
 
+function clearNTPSynchAlarm(r)
+   if r:value(3) == 'c8y_NTPSynchAlarm' then
+      if rdbGetInt('service.ntp.enable') == 1 and rdbGetStr('system.ntp.time') ~= '' then
+         c8y:send('313,' .. r:value(2))
+      end
+   end
+end
+
+
 function init()
    mload()
    c8y:addMsgHandler(846, 'start')
    c8y:addMsgHandler(850, 'uploadRDB')
    c8y:addMsgHandler(875, 'start')
    c8y:addMsgHandler(877, 'uploadRDB')
+   c8y:addMsgHandler(851, 'clearNTPSynchAlarm')
    timer = c8y:addTimer(0, 'stop')
    return 0
 end
