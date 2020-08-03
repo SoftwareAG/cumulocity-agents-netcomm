@@ -1,4 +1,4 @@
-netcomm_1.1.0
+netcomm_1.1.1
 
 10,300,GET,/identity/externalIds/c8y_Serial/%%,,application/vnd.com.nsn.cumulocity.externalId+json,%%,STRING,
 
