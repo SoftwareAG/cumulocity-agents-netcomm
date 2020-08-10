@@ -78,6 +78,10 @@ int main()
         return 0;
     }
 
+    // need to wait until WAN connection is up and if enabled, NTP synchronisation is done.
+    // When the agent starts before NTP synch is done, the secure TCP connection used for the PushService is broken and
+    // agent does not get any server commands until first heartbeat is missed and re-connection is triggered.
+
     // update agent status in realtime database
     rdb.set(keyStatus, "Checking network connection and NTP synchronisation");
 
@@ -90,19 +94,21 @@ int main()
         wdt.kick();
         sleep(2);
     }
-    // need to wait until WAN connection is up and if enabled, NTP synchronisation is done.
-    // When the agent starts before NTP synch is done, the secure TCP connection used for the PushService is broken and
-    // agent does not get any server commands until first heartbeat is missed and re-connection is triggered.
+
+    // Wait 5 mins to finish NTP synch. (excluding the time during disconnected)
+    // If timeout occurs, the agent goes to limited mode, which is intended only to
+    // give an option to the agent to change NTP server configuration from c8y UI.
     int count = 0;
     bool NTPSynchError = false;
     while (rdb.get("service.ntp.enable") == "1" && rdb.get("system.ntp.time") == "")
     {
-        if (count > 4) {
+        if (count > 149) { // timeout is 5 mins
             NTPSynchError = true;
             srError("NTP synchronisation timeout. Update your NTP configuration");
             break;
         }
-        count++;
+        if (rdb.get("wwan.0.connection.status") == "up")
+            count++;
         wdt.kick();
         sleep(2);
     }
@@ -147,7 +153,7 @@ int main()
     rdb.set(keyStatus, "Loading plugins");
     lua.addLibPath(luaScriptPath + "?.lua");
 
-    if (NTPSynchError) // no NTP mode
+    if (NTPSynchError) // NTP synch failed mode
     {
         SrNews news;
         string text = "NTP synchronisation failed. Update your NTP server configuration and restart the agent";
