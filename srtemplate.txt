@@ -1,4 +1,4 @@
-netcomm_100
+netcomm_101
 
 10,300,GET,/identity/externalIds/c8y_Serial/%%,,application/vnd.com.nsn.cumulocity.externalId+json,%%,STRING,
 
@@ -13,7 +13,7 @@ netcomm_100
 
 10,305,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING INTEGER STRING STRING STRING STRING STRING INTEGER,"{""c8y_Network"":{""c8y_WAN"":{""simStatus"":""%%"",""apn"":""%%"",""username"":""%%"",""password"":""%%"",""authType"":""%%"",""ip"":""%%""},""c8y_LAN"":{""name"":""%%"",""mac"":""%%"",""ip"":""%%"",""netmask"":""%%"",""enabled"":%%},""c8y_DHCP"":{""addressRange"":{""start"":""%%"",""end"":""%%""},""dns1"":""%%"",""dns2"":""%%"",""domainName"":""%%"",""enabled"":%%}}}"
 
-10,306,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING NUMBER NUMBER NUMBER,"{""c8y_Mobile"":{""cellId"":""%%"",""mcc"":""%%"",""imei"":""%%"",""iccid"":""%%"",""mnc"":""%%"",""imsi"":""%%"",""lac"":""%%"",""msisdn"":""%%"",""connType"":""%%"",""currentOperator"":""%%"",""currentBand"":""%%"",""rssi"":""%%"",""ecn0"":""%%"",""rcsp"":""%%""}}"
+10,306,PUT,/inventory/managedObjects/%%,application/json,,%%,UNSIGNED STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING STRING NUMBER NUMBER NUMBER,"{""c8y_Mobile"":{""cellId"":""%%"",""mcc"":""%%"",""imei"":""%%"",""iccid"":""%%"",""mnc"":""%%"",""imsi"":""%%"",""lac"":""%%"",""msisdn"":""%%"",""connType"":""%%"",""currentOperator"":""%%"",""currentBand"":""%%"",""rssi"":""%%"",""ecn0"":""%%"",""rscp"":""%%""}}"
 
 10,307,POST,/measurement/measurements,application/vnd.com.nsn.cumulocity.measurement+json,,%%,DATE UNSIGNED NUMBER STRING NUMBER NUMBER,"{""time"":""%%"",""source"":{""id"":""%%""},""c8y_SignalStrength"":{""rssi"":{""value"":%%,""unit"":""dBm""},""%%"":{""value"":%%},""ECN0"":{""value"":%%}},""type"":""c8y_SignalMeasurement""}"
 
