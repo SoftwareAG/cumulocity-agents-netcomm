@@ -183,7 +183,7 @@ function init()
       local tbl = _getConfig()
       if tbl then
          local value = '"' .. table.concat(tbl, '\\n') .. '"'
-         c8y:send(table.concat({'316', c8y.ID, value}, ','))
+         http:post(table.concat({'316', c8y.ID, value}, ','))
       end
       c8y:send('303,' .. id .. ',SUCCESSFUL', 1)
    end

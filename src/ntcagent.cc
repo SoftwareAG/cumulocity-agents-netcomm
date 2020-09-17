@@ -78,16 +78,35 @@ int main()
         return 0;
     }
 
+    // need to wait until WWAN connection is up and if enabled, NTP synchronisation is done.
+    // When the agent starts before NTP synch is done, the secure TCP connection used for the PushService is broken and
+    // agent does not get any server commands until first heartbeat is missed and re-connection is triggered.
+
     // update agent status in realtime database
     rdb.set(keyStatus, "Checking network connection and NTP synchronisation");
 
     srDebug("Checking network connection and NTP synchronisation...");
 
-    // need to wait until WWAN connection is up and if enabled, NTP synchronisation is done.
-    // When the agent starts before NTP synch is done, the secure TCP connection used for the PushService is broken and
-    // agent does not get any server commands until first heartbeat is missed and re-connection is triggered.
-    while (rdb.get("wwan.0.connection.status") != "up" || ((rdb.get("service.ntp.enable") == "1") && (rdb.get("system.ntp.time") == "")))
+    while (rdb.get("wwan.0.connection.status") != "up")
     {
+        wdt.kick();
+        sleep(2);
+    }
+
+    // Wait 5 mins to finish NTP synch. (excluding the time during disconnected)
+    // If timeout occurs, the agent goes to limited mode, which is intended only to
+    // give an option to the agent to change NTP server configuration from c8y UI.
+    int count = 0;
+    bool NTPSynchError = false;
+    while (rdb.get("service.ntp.enable") == "1" && rdb.get("system.ntp.time") == "")
+    {
+        if (count > 149) { // timeout is 5 mins
+            NTPSynchError = true;
+            srError("NTP synchronisation timeout. Update your NTP configuration");
+            break;
+        }
+        if (rdb.get("wwan.0.connection.status") == "up")
+            count++;
         wdt.kick();
         sleep(2);
     }
@@ -126,21 +145,35 @@ int main()
     agent.send("311," + agent.ID() + ",ACTIVE");
     agent.send("311," + agent.ID() + ",ACKNOWLEDGED");
 
+    LuaManager lua(agent);
     // update agent status in realtime database
     rdb.set(keyStatus, "Loading plugins");
-
-    // load lua plugin's
-    LuaManager lua(agent);
     lua.addLibPath(luaScriptPath + "?.lua");
-    lua.load(luaScriptPath + "shell.lua");
-    lua.load(luaScriptPath + "config.lua");
+
+    if (NTPSynchError) // NTP synch failed mode
     {
-        istringstream iss(rdb.get(keyLuaPlugin));
-        for (string sub; getline(iss, sub, ',');)
+        SrNews news;
+        string text = "NTP synchronisation failed. Update your NTP server configuration and restart the agent";
+        news.data = "312," + agent.ID() + ",c8y_NTPSynchAlarm,CRITICAL," + text;
+        agent.send(news);
+
+        // allow only configuration and restart operations
+        lua.load(luaScriptPath + "config.lua");
+        lua.load(luaScriptPath + "restart.lua");
+    }
+    else // normal mode
+    {
+        // load lua plugin's
+        lua.load(luaScriptPath + "shell.lua");
+        lua.load(luaScriptPath + "config.lua");
         {
-            if (sub != "shell" && sub != "config")
+            istringstream iss(rdb.get(keyLuaPlugin));
+            for (string sub; getline(iss, sub, ',');)
             {
-                lua.load(luaScriptPath + sub + ".lua");
+                if (sub != "shell" && sub != "config")
+                {
+                    lua.load(luaScriptPath + sub + ".lua");
+                }
             }
         }
     }
