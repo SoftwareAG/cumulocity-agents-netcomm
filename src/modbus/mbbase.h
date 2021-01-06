@@ -60,7 +60,7 @@ public:
         tv.tv_usec = usec % 1000000;
     }
 
-    long timeout() const
+    long getTimeout() const
     {
         return tv.tv_sec * 1000000 + tv.tv_usec;
     }
