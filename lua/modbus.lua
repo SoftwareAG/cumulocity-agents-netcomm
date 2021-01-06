@@ -29,6 +29,7 @@ local keyPort = 'service.cumulocity.modbus.port'
 local keyPollingRate = 'service.cumulocity.modbus.pollingrate'
 local keyTransmitRate = 'service.cumulocity.modbus.transmitrate'
 local keyReadonly = 'service.cumulocity.modbus.readonly'
+local keyTimeout = 'service.cumulocity.modbus.timeout.usec'
 local keySerPort = 'service.cumulocity.modbus.serial.port'
 local keySerBaud = 'service.cumulocity.modbus.serial.baud'
 local keySerData = 'service.cumulocity.modbus.serial.databits'
@@ -56,6 +57,9 @@ function addDevice(r)
       MB:newRTU(addr, serBaud, serPar, serData, serStop)
    DTYPE = tonumber(string.match(r:value(5), '/(%d+)$'))
    MBDEVICES[device] = {{}, {}, {}, {}, addr, slave, DTYPE, obj}
+
+   local timeout = rdbGetInt(keyTimeout, 5000000)
+   obj:setTimeout(timeout)
 
    if not MBTYPES[DTYPE] then        -- new unknow modbus type
       local model = MB:newModel()

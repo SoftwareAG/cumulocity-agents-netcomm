@@ -37,6 +37,7 @@ service.cumulocity.lua.plugins;0;0;0x0;0x20;gps,logview,modbus,net,relay,restart
 service.cumulocity.modbus.pollingrate;0;0;0x0;0x20;30
 service.cumulocity.modbus.port;0;0;0x0;0x20;502
 service.cumulocity.modbus.readonly;0;0;0x0;0x20;0
+service.cumulocity.modbus.timeout.usec;0;0;0x0;0x20;5000000
 service.cumulocity.modbus.serial.baud;0;0;0x0;0x20;19200
 service.cumulocity.modbus.serial.databits;0;0;0x0;0x20;8
 service.cumulocity.modbus.serial.parity;0;0;0x0;0x20;E

@@ -29,8 +29,8 @@ protected:
                 .addFunction("updateCO", &ModbusBase::updateCO)
                 .addFunction("updateHRBits", &ModbusBase::updateHRBits)
                 .addFunction("errMsg", &ModbusBase::errMsg)
-                .addProperty("timeout", &ModbusBase::timeout,
-                             &ModbusBase::setTimeout)
+                .addFunction("getTimeout", &ModbusBase::getTimeout)
+                .addFunction("setTimeout", &ModbusBase::setTimeout)
                 .endClass()
                 .deriveClass<ModbusTCP, ModbusBase>("ModbusTCP")
                 .endClass()
