@@ -39,7 +39,7 @@ pipeline {
                         cp Makefile.template Makefile
                         cp ../agent/init.mk init.mk
                         make clean
-                        make release   
+                        make release
                         '''
                     }
                 }
@@ -51,7 +51,7 @@ pipeline {
             }
             steps {
                 container('ansic') {
-                    sshagent (['jenkins-hg-key']) {
+                    sshagent (['jenkins-master']) {
                         dir('agent') {
                             sh '''
                             export NTC_SDK_PATH=/opt/SDK_Bovine_ntc_6200_2.0.36.10
@@ -71,7 +71,7 @@ pipeline {
             }
             steps {
                 container('ansic') {
-                    sshagent (['jenkins-hg-key']) {
+                    sshagent (['jenkins-master']) {
                         dir('agent') {
                             sh '''
                             export NTC_SDK_PATH=/opt/SDK_Bovine_ntc_6200_2.0.36.10
@@ -90,7 +90,7 @@ pipeline {
             }
             steps {
                 container('ansic') {
-                    sshagent (['jenkins-hg-key']) {
+                    sshagent (['jenkins-master']) {
                         dir('agent') {
                             sh '''
                             export NTC_SDK_PATH=/opt/SDK_Bovine_ntc_6200_2.0.36.10

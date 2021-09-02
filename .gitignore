@@ -5,3 +5,4 @@ runagent
 lua/a.lua
 .dir-locals.el
 misc/ipkkeys/
+/.idea/
