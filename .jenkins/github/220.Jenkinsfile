@@ -14,11 +14,11 @@ pipeline {
             steps {
                 container('ansic') {
                     dir('c-sdk') {
-                        git branch: "$sdkbranch", credentialsId: "jenkins-hg-key", url:'git@bitbucket.org:m2m/cumulocity-sdk-c.git'
+                        git branch: "$sdkbranch", credentialsId: "jenkins-master", url:'git@github.com:SoftwareAG/cumulocity-sdk-c.git'
                         sh 'git submodule update --init --recursive'
                     }
                     dir('agent') {
-                        git branch: "$agentbranch", credentialsId: "jenkins-hg-key", url:'git@bitbucket.org:m2m/cumulocity-agents-netcomm.git'
+                        git branch: "$agentbranch", credentialsId: "jenkins-master", url:'git@github.com:SoftwareAG/cumulocity-agents-netcomm.git'
                         sh 'git submodule update --init --recursive'
                     }
                 }
@@ -33,7 +33,7 @@ pipeline {
                         cp Makefile.template Makefile
                         cp ../agent/init.mk init.mk
                         make clean
-                        make release   
+                        make release
                         '''
                     }
                 }
@@ -61,7 +61,7 @@ pipeline {
             steps {
                 container('ansic') {
                     withCredentials([file(credentialsId: 'netcomm-cumulocity-private-key', variable: 'PRIVATE_KEY')]) {
-                        sshagent (['jenkins-hg-key']) {
+                        sshagent (['jenkins-master']) {
                             dir('agent') {
                                 sh '''
                                 export NTC_SDK_PATH=/opt/SDK_Bovine_ntc_220_2.0.99.0
